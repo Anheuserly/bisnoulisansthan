@@ -1,0 +1,17 @@
+import Link from "next/link";
+import { ArrowUpRight, FileText, Image, UsersRound, WalletCards } from "lucide-react";
+import { requireAdmin } from "@/lib/auth/require-admin";
+import { db } from "@/lib/db";
+
+const modules = [
+  { title: "Programmes & projects", description: "Create and publish education, health, skills and women’s empowerment initiatives.", icon: FileText, status: "Coming next" },
+  { title: "Gallery & media", description: "Organise field photographs, captions and featured stories.", icon: Image, status: "Coming next" },
+  { title: "Donations & documents", description: "Publish bank details, reports, registrations and compliance documents.", icon: WalletCards, status: "Coming next" },
+];
+
+export default async function AdminDashboard() {
+  const admin = await requireAdmin();
+  const { rows } = await db.query<{ count: string }>("SELECT count(*) FROM users WHERE is_active = true");
+  const activeUsers = Number(rows[0]?.count ?? 0);
+  return <main className="min-h-screen bg-sand-50"><header className="border-b border-line bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">BSGSS Control Centre</p><h1 className="font-display text-xl font-bold text-ink">Welcome, {admin.displayName || admin.email}</h1></div><form action="/api/admin/logout" method="post"><button className="rounded-md border border-line px-3 py-2 text-sm font-semibold text-ink hover:bg-sand-50">Sign out</button></form></div></header><div className="mx-auto max-w-6xl px-5 py-10 md:px-8"><div className="flex flex-wrap items-end justify-between gap-4"><div><h2 className="font-display text-3xl font-bold text-ink">Website management</h2><p className="mt-2 text-sm text-ink-muted">A secure workspace for the BSGSS team.</p></div><Link href="/admin/admins" className="inline-flex items-center gap-2 rounded-md bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-800"><UsersRound className="h-4 w-4" />Manage users</Link></div><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"><article className="rounded-xl border border-line bg-white p-5"><p className="text-sm text-ink-muted">Active users</p><p className="mt-2 font-display text-4xl font-bold text-ink">{activeUsers}</p><Link href="/admin/admins" className="mt-4 inline-block text-sm font-semibold text-brand-700 hover:underline">View access</Link></article>{modules.map(({ title, description, icon: Icon, status }) => <article key={title} className="rounded-xl border border-line bg-white p-5"><Icon className="h-5 w-5 text-brand-700" /><h3 className="mt-4 font-semibold text-ink">{title}</h3><p className="mt-2 text-sm leading-relaxed text-ink-muted">{description}</p><span className="mt-4 inline-flex rounded-full bg-sand-50 px-2.5 py-1 text-xs font-semibold text-ink-muted">{status}</span></article>)}</div><section className="mt-10 rounded-xl border border-brand-200 bg-brand-50 p-6"><h2 className="font-display text-xl font-bold text-ink">Next step</h2><p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted">The login and team-access layer is ready. The next build phase can add content forms for programmes, gallery items, reports, donation details, and news, using this dashboard.</p><Link href="/" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:underline">View public website <ArrowUpRight className="h-4 w-4" /></Link></section></div></main>;
+}
