@@ -15,11 +15,6 @@ const programs = [
   { title: "Women’s empowerment", text: "Action for Micro-Finance and Rehabilitation (AMAR), self-help groups and income-generation opportunities.", icon: Users },
 ];
 
-const gallery = [
-  "banners/589-banner-1.webp", "banners/590-banner-2.webp", "banners/591-banner-2-1.webp", "banners/592-banner-3.webp",
-  "banners/593-untitled-4.webp", "branding/579-logo-3.webp", "branding/573-logo-2-png-1.png", "branding/565-logo-2-png.png",
-];
-
 export default function HomePage() {
   return (
     <>
@@ -81,12 +76,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <section className="py-20" id="management">
-        <div className="mx-auto max-w-6xl px-5 md:px-8"><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Message from the management</p><div className="mt-8 grid gap-6 md:grid-cols-2"><blockquote className="rounded-xl border border-line bg-sand-50 p-7 text-ink"><p className="font-display text-xl leading-relaxed">“Our work resonates with dignity, justice and equal opportunity for all.”</p><footer className="mt-6 text-sm text-ink-muted"><strong className="text-ink">Nandita Bakshi</strong><br />Ex-IRS · CEO, BSGSS, New Delhi</footer></blockquote><blockquote className="rounded-xl border border-line bg-sand-50 p-7 text-ink"><p className="font-display text-xl leading-relaxed">“We bring positive change through practical, sustainable, community-driven solutions.”</p><footer className="mt-6 text-sm text-ink-muted"><strong className="text-ink">Vijay Kumar Jha</strong><br />Ex-IPS · Chairperson, BSGSS, New Delhi</footer></blockquote></div></div>
-      </section>
-
-      <section className="bg-sand-50 py-20" id="gallery"><div className="mx-auto max-w-6xl px-5 md:px-8"><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Gallery</p><h2 className="mt-3 font-display text-3xl font-bold text-ink">The work, in action.</h2><div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">{gallery.map((image, i) => <div key={image} className="aspect-square overflow-hidden rounded-lg bg-brand-100">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={`/images/bsgss/${image}`} alt={`BSGSS community programme ${i + 1}`} className="h-full w-full object-cover" /></div>)}</div></div></section>
 
       <section className="py-20" id="support"><div className="mx-auto grid max-w-6xl gap-8 rounded-2xl bg-brand-700 px-7 py-10 text-white md:grid-cols-[1fr_auto] md:items-center md:px-12"><div><div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/15"><Landmark className="h-6 w-6" /></div><h2 className="font-display text-3xl font-bold">Support Us</h2><p className="mt-3 max-w-2xl leading-relaxed text-brand-100">Your contribution helps strengthen healthcare, education, livelihood and women’s empowerment initiatives in underserved communities.</p></div><a href="mailto:bsgssindia@yahoo.co.in?subject=Support%20BSGSS" className="inline-flex items-center justify-center rounded-md bg-white px-5 py-3 font-semibold text-brand-900 hover:bg-sand-100">Get involved</a></div></section>
     </>

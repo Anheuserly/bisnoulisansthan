@@ -16,7 +16,7 @@ export function Footer() {
           </div>
 
           <FooterColumn title="Explore">
-            <FooterLink href="/about">About BSGSS</FooterLink><FooterLink href="/about/our-story">Our story</FooterLink><FooterLink href="/about/legal-status">Legal status</FooterLink><FooterLink href="/our-work">Our work</FooterLink><FooterLink href="/activities">Activities</FooterLink><FooterLink href="/impact">Impact</FooterLink><FooterLink href="/about/partners">Our partners</FooterLink>
+            <FooterLink href="/about">About BSGSS</FooterLink><FooterLink href="/about/our-story">Our story</FooterLink><FooterLink href="/about/legal-status">Legal status</FooterLink><FooterLink href="/our-work">Our work</FooterLink><FooterLink href="/activities">Activities</FooterLink><FooterLink href="/activities/gallery">Gallery</FooterLink><FooterLink href="/activities/shg-products">SHG products</FooterLink><FooterLink href="/impact">Impact</FooterLink><FooterLink href="/about/partners">Our partners</FooterLink>
           </FooterColumn>
           <FooterColumn title="Get involved">
             <FooterLink href="/#support">Donate</FooterLink><FooterLink href="/contact">Volunteer with us</FooterLink><FooterLink href="/contact">Internships</FooterLink><FooterLink href="/contact">CSR partnerships</FooterLink><FooterLink href="/contact">Institutional partnerships</FooterLink>

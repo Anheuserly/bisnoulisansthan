@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, MapPin, Menu, Phone, Route, Search, Users, X } from "lucide-react";
+import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, Image as ImageIcon, MapPin, Menu, Phone, Route, Search, ShoppingBag, Users, X } from "lucide-react";
 import { aboutNav, mainNav } from "@/config/navigation";
 import { directionsUrl, site, telHref } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -201,7 +201,7 @@ export function Header() {
                   >
                     {item.label}
                   </Link>
-                  {item.label === "About" && <ul className="ml-4 border-l border-line py-1">{aboutNav.slice(1).map((subItem) => <li key={subItem.href}><Link href={subItem.href} tabIndex={open ? 0 : -1} className="flex min-h-10 items-center px-3 text-sm font-medium text-ink-muted hover:text-brand-700">{subItem.label}</Link></li>)}</ul>}
+                  {mobileSubNavigation[item.label]?.length ? <ul className="ml-4 border-l border-line py-1">{(mobileSubNavigation[item.label] ?? []).map((subItem) => <li key={subItem.href}><Link href={subItem.href} tabIndex={open ? 0 : -1} className="flex min-h-10 items-center px-3 text-sm font-medium text-ink-muted hover:text-brand-700">{subItem.label}</Link></li>)}</ul> : null}
                 </li>
               ))}
             </ul>
@@ -235,7 +235,7 @@ export function Header() {
   );
 }
 
-type MegaMenuKey = "About" | "Our work" | "Impact";
+type MegaMenuKey = "About" | "Our work" | "Activities" | "Impact";
 
 const megaMenus = {
   About: {
@@ -262,6 +262,18 @@ const megaMenus = {
       { title: "Economic opportunity", links: [{ label: "Skills & livelihoods", description: "Vocational pathways towards income.", href: "/our-work", icon: HandHeart }, { label: "Women’s empowerment", description: "Agency, self-help and economic opportunity.", href: "/our-work", icon: Users }] },
     ],
   },
+  Activities: {
+    eyebrow: "Activities & media",
+    title: "See community work, skills and creativity in action.",
+    description: "Explore programme moments and handmade products created through women’s self-help groups supported by BSGSS.",
+    href: "/activities",
+    cta: "Explore all activities",
+    feature: { icon: ShoppingBag, title: "SHG products", description: "Handmade products that support women’s livelihoods and enterprise.", href: "/activities/shg-products" },
+    columns: [
+      { title: "Explore", links: [{ label: "Activity gallery", description: "Programme, training and outreach moments.", href: "/activities/gallery", icon: ImageIcon }, { label: "Programme activities", description: "Community, health, education and youth initiatives.", href: "/activities", icon: Activity }] },
+      { title: "Community enterprise", links: [{ label: "SHG products", description: "Handmade items created by women’s self-help groups.", href: "/activities/shg-products", icon: ShoppingBag }, { label: "Partner stories", description: "See the partnerships behind community work.", href: "/about/partners", icon: Handshake }] },
+    ],
+  },
   Impact: {
     eyebrow: "Impact",
     title: "Useful change that communities can carry forward.",
@@ -277,7 +289,7 @@ const megaMenus = {
 } as const;
 
 function isMegaMenu(label: string): label is MegaMenuKey {
-  return label === "About" || label === "Our work" || label === "Impact";
+  return label === "About" || label === "Our work" || label === "Activities" || label === "Impact";
 }
 
 function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey]; onNavigate: () => void }) {
@@ -305,7 +317,14 @@ const searchItems = [
   { title: "Our partners", href: "/about/partners", description: "CSR and government partners.", keywords: "csr corporate government funders partnership" },
   { title: "Our work", href: "/our-work", description: "Education, healthcare, skills and women’s empowerment.", keywords: "education health livelihood training women microfinance" },
   { title: "Activities", href: "/activities", description: "Community programmes in action.", keywords: "photos events camps activities gallery" },
+  { title: "Activity gallery", href: "/activities/gallery", description: "Programme, training and outreach moments.", keywords: "photos gallery community healthcare education events" },
+  { title: "SHG products", href: "/activities/shg-products", description: "Handmade products created by women’s self-help groups.", keywords: "shg products handmade shawl muffler women livelihood enterprise" },
   { title: "Impact", href: "/impact", description: "How BSGSS creates change.", keywords: "beneficiaries outcomes statistics reach" },
   { title: "Support BSGSS", href: "/#support", description: "Donate, partner or volunteer.", keywords: "donate contribution csr volunteer internship partnership" },
   { title: "Contact us", href: "/contact", description: "Office, phone and email details.", keywords: "address phone email noida" },
 ];
+
+const mobileSubNavigation: Record<string, Array<{ label: string; href: string }>> = {
+  About: aboutNav.slice(1),
+  Activities: [{ label: "Activity gallery", href: "/activities/gallery" }, { label: "SHG products", href: "/activities/shg-products" }],
+};
