@@ -24,7 +24,7 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           <div className="sm:col-span-2">
             <Logo inverted />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-200">{content.site.footerDescription}</p>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-200">{content.site.footerDescription}</p>
             <Link href={links.support} className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100 transition">Support BSGSS</Link>
             <div className="mt-6">
               <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow & Connect</p>

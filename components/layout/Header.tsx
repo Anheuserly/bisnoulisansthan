@@ -107,7 +107,7 @@ export function Header() {
                           "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
                           isSelected
                             ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
-                            : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",
+                            : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
                         )}
                       >
                         <span>{item.label}</span>
@@ -127,7 +127,7 @@ export function Header() {
                           "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
                           active
                             ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
-                            : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",
+                            : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
                         )}
                       >
                         <span>{item.label}</span>
@@ -172,7 +172,7 @@ export function Header() {
       </div>
 
       <div className="hidden xl:block">
-        {megaOpen && <MegaMenu menu={megaMenus[megaOpen]} onNavigate={() => setMegaOpen(null)} />}
+        {megaOpen && <MegaMenu menu={megaMenus[megaOpen]} currentPath={pathname} onNavigate={() => setMegaOpen(null)} />}
       </div>
 
       {searchOpen && (
@@ -338,7 +338,15 @@ function isMegaMenu(label: string): label is MegaMenuKey {
   return label === "About" || label === "Our work" || label === "Activities" || label === "Impact";
 }
 
-function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey]; onNavigate: () => void }) {
+function MegaMenu({
+  menu,
+  currentPath,
+  onNavigate,
+}: {
+  menu: (typeof megaMenus)[MegaMenuKey];
+  currentPath?: string;
+  onNavigate: () => void;
+}) {
   const FeatureIcon = menu.feature.icon;
   return (
     <section role="dialog" aria-label={`${menu.eyebrow} navigation`} className="mega-menu-panel absolute inset-x-0 top-full z-50 border-y border-line bg-white shadow-lift">
@@ -352,22 +360,53 @@ function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey];
         {menu.columns.map((column) => (
           <div key={column.title}>
             <p className="text-[0.6875rem] font-bold uppercase tracking-[.16em] text-ink-muted">{column.title}</p>
-            <div className="mt-2 space-y-0.5">
+            <div className="mt-2 space-y-1">
               {column.links.map((link) => {
                 const Icon = link.icon;
+                const isSelected = currentPath === link.href;
                 return (
                   <Link
                     key={link.label}
                     href={link.href}
                     onClick={onNavigate}
-                    className="group flex gap-2.5 rounded-lg p-2 transition hover:bg-brand-50"
+                    className={cn(
+                      "group flex gap-2.5 rounded-lg p-2 transition-all duration-150",
+                      isSelected
+                        ? "bg-brand-50 text-brand-900 ring-1 ring-brand-300 shadow-2xs"
+                        : "hover:bg-brand-50/80 hover:shadow-2xs",
+                    )}
                   >
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-700 transition group-hover:bg-white">
+                    <span
+                      className={cn(
+                        "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-all duration-150",
+                        isSelected
+                          ? "bg-brand-700 text-white shadow-xs"
+                          : "bg-brand-50 text-brand-700 group-hover:bg-brand-700 group-hover:text-white group-hover:shadow-xs",
+                      )}
+                    >
                       <Icon className="h-3.5 w-3.5" />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-[0.8125rem] font-semibold text-ink leading-tight">{link.label}</span>
-                      <span className="mt-0.5 block text-[0.75rem] leading-snug text-ink-muted line-clamp-1">{link.description}</span>
+                      <span
+                        className={cn(
+                          "block text-[0.8125rem] leading-tight transition-colors duration-150",
+                          isSelected
+                            ? "font-bold text-brand-850"
+                            : "font-semibold text-ink group-hover:text-brand-800",
+                        )}
+                      >
+                        {link.label}
+                      </span>
+                      <span
+                        className={cn(
+                          "mt-0.5 block text-[0.75rem] leading-snug line-clamp-1 transition-colors duration-150",
+                          isSelected
+                            ? "text-brand-700 font-medium"
+                            : "text-ink-muted group-hover:text-brand-800",
+                        )}
+                      >
+                        {link.description}
+                      </span>
                     </span>
                   </Link>
                 );
@@ -378,14 +417,14 @@ function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey];
         <Link
           href={menu.feature.href}
           onClick={onNavigate}
-          className="group flex flex-col justify-between rounded-xl border border-brand-200 bg-brand-50 p-4 text-ink shadow-2xs transition hover:border-brand-300 hover:bg-brand-100 hover:shadow-xs"
+          className="group flex flex-col justify-between rounded-xl border border-brand-200 bg-brand-50 p-4 text-ink shadow-2xs transition-all hover:border-brand-400 hover:bg-brand-100/70 hover:shadow-xs"
         >
           <div>
-            <FeatureIcon className="h-5 w-5 text-brand-700" />
-            <p className="mt-3 font-display text-base font-bold text-ink">{menu.feature.title}</p>
-            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.feature.description}</p>
+            <FeatureIcon className="h-5 w-5 text-brand-700 transition duration-150 group-hover:scale-110 group-hover:text-brand-850" />
+            <p className="mt-3 font-display text-base font-bold text-ink transition-colors duration-150 group-hover:text-brand-800">{menu.feature.title}</p>
+            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-ink-muted transition-colors duration-150 group-hover:text-brand-800">{menu.feature.description}</p>
           </div>
-          <span className="mt-3 inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brand-700">
+          <span className="mt-3 inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brand-700 transition duration-150 group-hover:text-brand-900">
             Explore <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
           </span>
         </Link>
