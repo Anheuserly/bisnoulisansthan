@@ -13,12 +13,14 @@ const messages = [
     name: "Nandita Bakshi",
     role: "Ex-IRS · CEO, BSGSS, New Delhi",
     image: "/images/bsgss/other-source-assets/334-111.jpg",
+    imageSide: "right",
     message: "BSGSS is grounded in the values of dignity, justice and equal opportunity. Its steady work in villages and small towns creates meaningful change for people who are too often left out of mainstream conversations, especially women.",
   },
   {
     name: "Vijay Kumar Jha",
     role: "Ex-IPS · Chairperson, BSGSS, New Delhi",
     image: "/images/bsgss/other-source-assets/335-11111.jpg",
+    imageSide: "left",
     message: "Our purpose is to create positive change for poor and marginalised communities through practical, sustainable and community-led solutions—with special focus on women’s empowerment and access to quality healthcare.",
   },
 ];
@@ -49,27 +51,46 @@ export default function ManagementPage() {
           </section>
 
           <div className="mt-10 sm:mt-12 space-y-8">
-            {messages.map((person, index) => (
-              <article
-                key={person.name}
-                className="grid overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition hover:border-brand-300 hover:shadow-soft md:grid-cols-[minmax(14rem,0.65fr)_1fr]"
-              >
-                <div className={index % 2 ? "md:order-2" : ""}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={person.image} alt={person.name} className="aspect-square h-full w-full object-cover" />
-                </div>
-                <div className="flex flex-col justify-center p-6 sm:p-8">
-                  <Quote className="h-6 w-6 text-brand-600" />
-                  <blockquote className="mt-3 font-display text-lg font-semibold leading-relaxed text-ink sm:text-xl">
-                    “{person.message}”
-                  </blockquote>
-                  <footer className="mt-5 border-t border-line/60 pt-4">
-                    <p className="font-semibold text-ink text-sm sm:text-base">{person.name}</p>
-                    <p className="mt-0.5 text-xs text-ink-muted">{person.role}</p>
-                  </footer>
-                </div>
-              </article>
-            ))}
+            {messages.map((person) => {
+              const isImageRight = person.imageSide === "right";
+              return (
+                <article
+                  key={person.name}
+                  className={`grid overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition hover:border-brand-300 hover:shadow-soft ${
+                    isImageRight
+                      ? "md:grid-cols-[1fr_minmax(15rem,0.68fr)]"
+                      : "md:grid-cols-[minmax(15rem,0.68fr)_1fr]"
+                  }`}
+                >
+                  <div
+                    className={`overflow-hidden ${
+                      isImageRight ? "order-1 md:order-2" : "order-1 md:order-1"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={person.image}
+                      alt={person.name}
+                      className="aspect-square h-full w-full object-cover"
+                    />
+                  </div>
+                  <div
+                    className={`flex flex-col justify-center p-6 sm:p-8 ${
+                      isImageRight ? "order-2 md:order-1" : "order-2 md:order-2"
+                    }`}
+                  >
+                    <Quote className="h-6 w-6 text-brand-600" />
+                    <blockquote className="mt-3 font-display text-lg font-semibold leading-relaxed text-ink sm:text-xl">
+                      “{person.message}”
+                    </blockquote>
+                    <footer className="mt-5 border-t border-line/60 pt-4">
+                      <p className="font-semibold text-ink text-sm sm:text-base">{person.name}</p>
+                      <p className="mt-0.5 text-xs text-ink-muted">{person.role}</p>
+                    </footer>
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
           <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
