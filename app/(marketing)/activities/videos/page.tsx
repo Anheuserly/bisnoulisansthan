@@ -11,5 +11,22 @@ export const revalidate = 300;
 export default async function VideosPage() {
   const { videos: fallbackVideos, videoGallery } = content.activities;
   const videos = await getChannelVideos(fallbackVideos);
-  return <><PageHeader title={videoGallery.title} lead={videoGallery.lead} crumbs={[{ name: "Activities", path: links.activities }, { name: "Videos", path: links.videos }]} /><main className="py-16 sm:py-24"><div className="mx-auto max-w-6xl px-5 md:px-8"><div className="mb-10"><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{videoGallery.eyebrow}</p><h1 className="mt-3 font-display text-3xl font-bold text-ink">{videoGallery.heading}</h1></div><VideoGallery videos={videos} youtubeUrl={content.site.youtubeUrl} /></div></main></>;
+  return (
+    <>
+      <PageHeader
+        title={videoGallery.title}
+        lead={videoGallery.lead}
+        crumbs={[{ name: "Activities", path: links.activities }, { name: "Videos", path: links.videos }]}
+      />
+      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+          <div className="mb-8">
+            <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{videoGallery.eyebrow}</p>
+            <h2 className="mt-1 font-display text-2xl font-bold text-ink sm:text-3xl">{videoGallery.heading}</h2>
+          </div>
+          <VideoGallery videos={videos} youtubeUrl={content.site.youtubeUrl} />
+        </div>
+      </div>
+    </>
+  );
 }

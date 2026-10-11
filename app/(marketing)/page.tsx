@@ -20,10 +20,33 @@ export default function HomePage() {
     <>
       <HomeHero />
 
-      <section className="border-y border-brand-100 bg-brand-50 py-16 sm:py-20">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[.9fr_1.1fr] md:items-center md:px-8">
-          <div className="rounded-2xl bg-brand-700 p-8 text-white sm:p-10"><Building2 className="h-9 w-9 text-brand-200" /><p className="mt-6 text-sm font-bold uppercase tracking-[.18em] text-brand-200">{government.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white">{government.title}</h2><p className="mt-5 leading-relaxed text-brand-100">{government.text}</p><Link href={links.government} className="mt-7 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-brand-900 hover:bg-brand-50">{government.cta} <ArrowRight className="h-4 w-4" /></Link></div>
-          <div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{government.overviewEyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">{government.overviewTitle}</h2><p className="mt-5 max-w-2xl leading-relaxed text-ink-muted">{government.overviewText}</p><Link href={links.government} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">{government.overviewCta} <ArrowRight className="h-4 w-4" /></Link></div>
+      <section className="border-y border-brand-100 bg-sand-50/70 py-10 sm:py-14">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.9fr_1.1fr] md:items-center md:px-8">
+          <div className="rounded-2xl border border-brand-200/80 bg-white p-6 sm:p-8 text-ink shadow-2xs">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 shadow-2xs">
+              <Building2 className="h-6 w-6" />
+            </span>
+            <p className="mt-5 text-xs font-bold uppercase tracking-wider text-brand-700">{government.eyebrow}</p>
+            <h2 className="mt-2 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">{government.title}</h2>
+            <p className="mt-3 text-xs leading-relaxed text-ink-muted sm:text-sm">{government.text}</p>
+            <Link
+              href={links.government}
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
+            >
+              {government.cta} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{government.overviewEyebrow}</p>
+            <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">{government.overviewTitle}</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">{government.overviewText}</p>
+            <Link
+              href={links.government}
+              className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline sm:text-sm"
+            >
+              {government.overviewCta} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 

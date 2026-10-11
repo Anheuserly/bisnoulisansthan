@@ -16,5 +16,65 @@ export function HomeHero() {
     return () => window.clearInterval(interval);
   }, []);
 
-  return <section className="relative isolate overflow-hidden bg-[#182226] text-white"><div className="absolute inset-0">{slides.map((src, index) => <img key={src} src={src} alt="" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${activeSlide === index ? "opacity-100" : "opacity-0"}`} />)}</div><div className="absolute inset-0 bg-gradient-to-r from-[#182226]/95 via-[#182226]/76 to-[#182226]/20" /><div className="relative mx-auto grid min-h-[34rem] max-w-6xl items-center px-5 py-20 md:px-8 lg:min-h-[39rem]"><div className="max-w-3xl"><p className="mb-5 text-sm font-bold uppercase tracking-[0.22em] text-white/75">{hero.eyebrow}</p><h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">{hero.title}</h1><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/85">{hero.text}</p><div className="mt-9 flex flex-wrap gap-3"><Link href={links.support} className="inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 font-semibold text-[#182226] transition hover:bg-brand-50">{hero.supportCta} <ArrowRight className="h-4 w-4" /></Link><Link href={links.about} className="inline-flex items-center gap-2 rounded-md border border-white/50 px-5 py-3 font-semibold text-white transition hover:bg-white/10">{hero.aboutCta}</Link></div><div className="mt-10 flex gap-2" aria-label={`Slide ${activeSlide + 1} of ${slides.length}`}>{slides.map((_, index) => <button key={index} type="button" aria-label={`Show slide ${index + 1}`} aria-current={activeSlide === index} onClick={() => setActiveSlide(index)} className={`h-1.5 rounded-full transition-all ${activeSlide === index ? "w-9 bg-white" : "w-4 bg-white/45 hover:bg-white/80"}`} />)}</div></div></div></section>;
+  return (
+    <section className="relative isolate overflow-hidden bg-[#182226] text-white">
+      <div className="absolute inset-0">
+        {slides.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+              activeSlide === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#182226]/95 via-[#182226]/76 to-[#182226]/20" />
+      <div className="relative mx-auto grid min-h-[30rem] max-w-6xl items-center px-4 py-14 sm:px-6 md:px-8 lg:min-h-[34rem]">
+        <div className="max-w-3xl">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+            {hero.eyebrow}
+          </p>
+          <h1 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+            {hero.title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
+            {hero.text}
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link
+              href={links.support}
+              className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-semibold text-[#182226] shadow-2xs transition hover:bg-brand-50 sm:text-sm"
+            >
+              {hero.supportCta} <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href={links.about}
+              className="inline-flex items-center gap-2 rounded-lg border border-white/50 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-white/10 sm:text-sm"
+            >
+              {hero.aboutCta}
+            </Link>
+          </div>
+          <div
+            className="mt-8 flex gap-2"
+            aria-label={`Slide ${activeSlide + 1} of ${slides.length}`}
+          >
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`Show slide ${index + 1}`}
+                aria-current={activeSlide === index}
+                onClick={() => setActiveSlide(index)}
+                className={`h-1.5 rounded-full transition-all ${
+                  activeSlide === index ? "w-8 bg-white" : "w-3.5 bg-white/45 hover:bg-white/80"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -21,7 +21,7 @@ export default function ContactPage() {
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
 
-      <main className="bg-sand-50/50 py-12 sm:py-20">
+      <div className="bg-sand-50/40 pt-6 pb-14 sm:pt-8 sm:pb-16">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
             {/* Left: Contact Form Card */}
@@ -150,7 +150,7 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

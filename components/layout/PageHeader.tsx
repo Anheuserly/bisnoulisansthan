@@ -39,9 +39,9 @@ export function PageHeader({
   const subtitle = lead ?? description;
   return (
     <div className="border-b border-brand-100 bg-white">
-      <Container className="py-7 md:py-9">
+      <Container className="py-5 sm:py-6 md:py-7">
         <nav aria-label="Breadcrumb">
-          <ol className="flex flex-wrap items-center gap-1 text-sm text-ink-muted">
+          <ol className="flex flex-wrap items-center gap-1 text-xs sm:text-sm text-ink-muted">
             {trail.map((c, i) => {
               const last = i === trail.length - 1;
               return (
@@ -55,7 +55,7 @@ export function PageHeader({
                       <Link href={c.path} className="hover:text-brand-700 hover:underline">
                         {c.name}
                       </Link>
-                      <ChevronRight className="h-3.5 w-3.5 text-ink-subtle" aria-hidden="true" />
+                      <ChevronRight className="h-3 w-3 text-ink-subtle" aria-hidden="true" />
                     </>
                   )}
                 </li>
@@ -63,8 +63,8 @@ export function PageHeader({
             })}
           </ol>
         </nav>
-        <h1 className="mt-3 max-w-3xl font-display text-3xl font-semibold text-ink sm:text-4xl">{title}</h1>
-        {subtitle && <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-muted">{subtitle}</p>}
+        <h1 className="mt-2.5 max-w-3xl font-display text-2xl font-bold text-ink sm:text-3xl">{title}</h1>
+        {subtitle && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">{subtitle}</p>}
         {children}
       </Container>
       <JsonLd data={breadcrumbJsonLd(trail)} />

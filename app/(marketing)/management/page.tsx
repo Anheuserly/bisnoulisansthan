@@ -24,23 +24,67 @@ const messages = [
 ];
 
 export default function ManagementPage() {
-  return <>
-    <PageHeader title="Message from the Management" lead="The values and purpose guiding BSGSS work with communities." crumbs={[{ name: "About", path: "/about" }, { name: "Management", path: "/management" }]} />
-    <main className="py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <section className="rounded-2xl border border-brand-100 bg-brand-50 px-6 py-8 sm:px-10 sm:py-12">
-          <HeartHandshake className="h-8 w-8 text-brand-700" />
-          <p className="mt-6 max-w-3xl font-display text-2xl font-bold leading-snug text-ink sm:text-3xl">Leadership that keeps people, dignity and practical progress at the centre.</p>
-          <p className="mt-4 max-w-3xl leading-relaxed text-ink-muted">The BSGSS leadership vision is rooted in equal opportunity and community participation, shaping programmes in healthcare, education, livelihoods and women’s empowerment.</p>
-        </section>
-        <div className="mt-14 space-y-10">
-          {messages.map((person, index) => <article key={person.name} className="grid overflow-hidden rounded-2xl border border-line bg-white shadow-sm md:grid-cols-[minmax(15rem,.7fr)_1fr]">
-            <div className={index % 2 ? "md:order-2" : ""}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={person.image} alt={person.name} className="aspect-square h-full w-full object-cover" /></div>
-            <div className="flex flex-col justify-center p-7 sm:p-10"><Quote className="h-7 w-7 text-brand-600" /><blockquote className="mt-5 font-display text-2xl font-semibold leading-snug text-ink">“{person.message}”</blockquote><footer className="mt-7 border-t border-line pt-5"><p className="font-semibold text-ink">{person.name}</p><p className="mt-1 text-sm text-ink-muted">{person.role}</p></footer></div>
-          </article>)}
+  return (
+    <>
+      <PageHeader
+        title="Message from the Management"
+        lead="The values and purpose guiding BSGSS work with communities."
+        crumbs={[
+          { name: "About", path: "/about" },
+          { name: "Management", path: "/management" },
+        ]}
+      />
+      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+          <section className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:p-8 shadow-2xs">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand-700 shadow-2xs">
+              <HeartHandshake className="h-6 w-6" />
+            </span>
+            <h2 className="mt-4 max-w-3xl font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
+              Leadership that keeps people, dignity and practical progress at the centre.
+            </h2>
+            <p className="mt-2.5 max-w-3xl text-xs leading-relaxed text-ink-muted sm:text-sm">
+              The BSGSS leadership vision is rooted in equal opportunity and community participation, shaping programmes in healthcare, education, livelihoods and women’s empowerment.
+            </p>
+          </section>
+
+          <div className="mt-10 sm:mt-12 space-y-8">
+            {messages.map((person, index) => (
+              <article
+                key={person.name}
+                className="grid overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition hover:border-brand-300 hover:shadow-soft md:grid-cols-[minmax(14rem,0.65fr)_1fr]"
+              >
+                <div className={index % 2 ? "md:order-2" : ""}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={person.image} alt={person.name} className="aspect-square h-full w-full object-cover" />
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-8">
+                  <Quote className="h-6 w-6 text-brand-600" />
+                  <blockquote className="mt-3 font-display text-lg font-semibold leading-relaxed text-ink sm:text-xl">
+                    “{person.message}”
+                  </blockquote>
+                  <footer className="mt-5 border-t border-line/60 pt-4">
+                    <p className="font-semibold text-ink text-sm sm:text-base">{person.name}</p>
+                    <p className="mt-0.5 text-xs text-ink-muted">{person.role}</p>
+                  </footer>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
+            <p className="max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
+              Learn more about the programmes that turn this vision into practical support for communities.
+            </p>
+            <Link
+              href="/our-work"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
+            >
+              Explore our work <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8"><p className="max-w-2xl text-sm leading-relaxed text-ink-muted">Learn more about the programmes that turn this vision into practical support for communities.</p><Link href="/our-work" className="inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800">Explore our work <ArrowRight className="h-4 w-4" /></Link></div>
       </div>
-    </main>
-  </>;
+    </>
+  );
 }

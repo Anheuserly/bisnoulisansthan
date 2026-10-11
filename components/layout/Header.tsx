@@ -84,14 +84,63 @@ export function Header() {
         <div className="flex min-w-0 items-center gap-4 xl:gap-5">
           <Logo />
           <nav aria-label="Main" className="hidden shrink-0 whitespace-nowrap xl:block">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-1.5">
               {mainNav.slice(1).map((item) => {
                 const megaLabel = isMegaMenu(item.label) ? item.label : null;
-                return <li key={item.href}>
-                  {megaLabel ? <button type="button" onMouseEnter={() => { setMegaOpen(megaLabel); setSearchOpen(false); }} onFocus={() => setMegaOpen(megaLabel)} onClick={() => setMegaOpen((value) => value === megaLabel ? null : megaLabel)} aria-expanded={megaOpen === megaLabel} aria-haspopup="dialog" className={cn("inline-flex whitespace-nowrap items-center gap-1 rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) || megaOpen === megaLabel ? "text-brand-700" : "text-ink-muted hover:text-ink")}>
-                    {item.label} <ChevronDown className={cn("h-4 w-4 transition-transform", megaOpen === megaLabel && "rotate-180")} />
-                  </button> : <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={cn("whitespace-nowrap rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) ? "text-brand-700" : "text-ink-muted hover:text-ink")}>{item.label}</Link>}
-                </li>;
+                const active = isActive(item.href);
+                const isOpen = megaOpen === megaLabel;
+                const isSelected = active || isOpen;
+                return (
+                  <li key={item.href}>
+                    {megaLabel ? (
+                      <button
+                        type="button"
+                        onMouseEnter={() => {
+                          setMegaOpen(megaLabel);
+                          setSearchOpen(false);
+                        }}
+                        onFocus={() => setMegaOpen(megaLabel)}
+                        onClick={() => setMegaOpen((value) => (value === megaLabel ? null : megaLabel))}
+                        aria-expanded={isOpen}
+                        aria-haspopup="dialog"
+                        className={cn(
+                          "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ease-out",
+                          isSelected
+                            ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
+                            : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",
+                        )}
+                      >
+                        <span>{item.label}</span>
+                        <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", isOpen && "rotate-180 text-brand-700")} />
+                        {active && (
+                          <span
+                            className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ease-out",
+                          active
+                            ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
+                            : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",
+                        )}
+                      >
+                        <span>{item.label}</span>
+                        {active && (
+                          <span
+                            className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </Link>
+                    )}
+                  </li>
+                );
               })}
             </ul>
           </nav>
@@ -190,8 +239,10 @@ export function Header() {
                     tabIndex={open ? 0 : -1}
                     aria-current={isActive(item.href) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-12 items-center rounded-md px-3 text-[1.0625rem] font-medium",
-                      isActive(item.href) ? "bg-brand-50 text-brand-800" : "text-ink hover:bg-mist",
+                      "flex min-h-11 items-center rounded-lg px-3 text-sm font-medium transition-colors",
+                      isActive(item.href)
+                        ? "border-l-4 border-brand-600 bg-brand-50 font-semibold text-brand-850 pl-2.5 shadow-2xs"
+                        : "text-ink hover:bg-sand-50",
                     )}
                   >
                     {item.label}
