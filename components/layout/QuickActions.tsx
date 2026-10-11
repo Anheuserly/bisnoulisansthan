@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Mail, MessageCircle, Phone, Send, X } from "lucide-react";
 import { site, telHref } from "@/config/site";
 
+import { openContactModal } from "@/components/contact/ContactModal";
+
 export function QuickActions() {
   const [open, setOpen] = useState(false);
   const whatsappNumber = site.contact.whatsapp?.replace(/[^\d]/g, "");
@@ -12,7 +14,20 @@ export function QuickActions() {
   return (
     <aside className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3" aria-label="Quick contact options">
       {open && <div className="flex flex-col items-end gap-2" role="menu">
-        <QuickAction href="/contact" icon={MessageCircle} label="Contact BSGSS" internal />
+        <button
+          type="button"
+          onClick={() => {
+            setOpen(false);
+            openContactModal();
+          }}
+          className="group flex items-center gap-3 rounded-full border border-brand-200 bg-white py-2 pl-3 pr-4 text-sm font-semibold text-ink shadow-lift transition hover:-translate-y-0.5 hover:border-brand-400 cursor-pointer text-left"
+        >
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-700 text-white">
+            <MessageCircle className="h-4 w-4" />
+          </span>
+          <span>Send a message</span>
+        </button>
+        <QuickAction href="/contact" icon={MessageCircle} label="Contact details" internal />
         <QuickAction href={telHref(site.contact.phone)} icon={Phone} label={`Call ${site.contact.phone}`} />
         <QuickAction href={`mailto:${site.contact.email}`} icon={Mail} label="Email BSGSS" />
         {whatsappNumber && <QuickAction href={`https://wa.me/${whatsappNumber}`} icon={Send} label="WhatsApp BSGSS" external />}

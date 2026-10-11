@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, FileCheck2, Image, LayoutPanelTop, UsersRound, WalletCards } from "lucide-react";
+import { ArrowUpRight, FileCheck2, Image, LayoutPanelTop, MessageSquare, UsersRound, WalletCards } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 
 const modules = [
+  { title: "Contact inquiries", description: "Review and respond to messages, partnership enquiries and volunteer requests.", icon: MessageSquare, status: "Live inbox", href: "/admin/inquiries" },
   { title: "Content hub", description: "Plan and manage pages, programmes, galleries, SHG products, documents and impact content.", icon: LayoutPanelTop, status: "Content model ready", href: "/admin/content" },
   { title: "Gallery & media", description: "Organise field photographs, captions and featured stories.", icon: Image, status: "Build first", href: "/admin/content" },
   { title: "Documents & reports", description: "Publish bank details, reports, registrations and compliance documents.", icon: WalletCards, status: "Build second", href: "/admin/content" },

@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS contact_inquiries (
   email TEXT NOT NULL,
   phone TEXT,
   subject TEXT,
-  message TEXT NOT NULL,
+  message TEXT DEFAULT '',
   status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'in_progress', 'closed', 'spam')),
   assigned_to UUID REFERENCES users(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
