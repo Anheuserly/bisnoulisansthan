@@ -6,10 +6,8 @@ import {
   CheckCircle2,
   ExternalLink,
   FileCheck2,
-  HelpCircle,
   LoaderCircle,
   Search,
-  ShieldCheck,
 } from "lucide-react";
 
 type State = {
@@ -30,7 +28,15 @@ type LookupResult = {
 export function DonationVerificationForm() {
   const [activeTab, setActiveTab] = useState<"submit" | "check">("submit");
 
-  // Form submission state
+  // Controlled form input state to prevent DOM reset errors
+  const [donorName, setDonorName] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("upi");
+  const [paymentDate, setPaymentDate] = useState("");
+  const [paymentReference, setPaymentReference] = useState("");
+
   const [state, setState] = useState<State>({ kind: "idle" });
   const [loading, setLoading] = useState(false);
 
@@ -44,14 +50,21 @@ export function DonationVerificationForm() {
     setLoading(true);
     setState({ kind: "idle" });
 
-    const form = new FormData(event.currentTarget);
-    const formElement = event.currentTarget;
+    const payload = {
+      donorName: donorName.trim(),
+      donorEmail: donorEmail.trim(),
+      donorPhone: donorPhone.trim(),
+      amount: amount.trim(),
+      paymentMethod,
+      paymentDate: paymentDate.trim(),
+      paymentReference: paymentReference.trim(),
+    };
 
     try {
       const response = await fetch("/api/donations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(form)),
+        body: JSON.stringify(payload),
       });
 
       const result = (await response.json().catch(() => null)) as {
@@ -71,11 +84,19 @@ export function DonationVerificationForm() {
         });
       }
 
-      formElement.reset();
+      // Reset controlled states safely
+      setDonorName("");
+      setDonorEmail("");
+      setDonorPhone("");
+      setAmount("");
+      setPaymentMethod("upi");
+      setPaymentDate("");
+      setPaymentReference("");
+
       setState({
         kind: "success",
         reference: result?.reference,
-        message: `Thank you for your generous contribution. Your acknowledgement reference is ${
+        message: `Thank you for your contribution. Your acknowledgement reference is ${
           result?.reference || "registered"
         }. BSGSS checks each reference before issuing a numbered certificate.`,
       });
@@ -169,23 +190,66 @@ export function DonationVerificationForm() {
           className="mt-6 grid gap-4 rounded-xl border border-brand-200 bg-white p-5 sm:grid-cols-2 shadow-2xs"
           noValidate
         >
-          <Field label="Full name" name="donorName" required placeholder="e.g. Ramesh Chandra" />
-          <Field label="Email address" name="donorEmail" type="email" required placeholder="name@domain.com" />
-          <Field label="Phone number" name="donorPhone" type="tel" placeholder="+91 98765 43210" />
-          <Field
-            label="Amount donated (INR)"
-            name="amount"
-            type="number"
-            min="1"
-            step="0.01"
-            required
-            placeholder="e.g. 2500"
-          />
+          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+            <span>
+              Write your full name <span className="text-red-500">*</span>
+            </span>
+            <input
+              type="text"
+              required
+              value={donorName}
+              onChange={(e) => setDonorName(e.target.value)}
+              placeholder="Write your full name"
+              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+            />
+          </label>
+
+          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+            <span>
+              Write your email address <span className="text-red-500">*</span>
+            </span>
+            <input
+              type="email"
+              required
+              value={donorEmail}
+              onChange={(e) => setDonorEmail(e.target.value)}
+              placeholder="Write your email address"
+              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+            />
+          </label>
+
+          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+            <span>Write your phone number</span>
+            <input
+              type="tel"
+              value={donorPhone}
+              onChange={(e) => setDonorPhone(e.target.value)}
+              placeholder="Write your phone number"
+              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+            />
+          </label>
+
+          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+            <span>
+              Write amount donated (INR) <span className="text-red-500">*</span>
+            </span>
+            <input
+              type="number"
+              min="1"
+              step="0.01"
+              required
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Write contribution amount"
+              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+            />
+          </label>
 
           <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
             Payment method
             <select
-              name="paymentMethod"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
               required
               className="rounded-lg border border-line bg-white px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none focus:border-brand-600"
             >
@@ -195,15 +259,30 @@ export function DonationVerificationForm() {
             </select>
           </label>
 
-          <Field label="Payment date" name="paymentDate" type="date" />
+          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+            <span>Payment date</span>
+            <input
+              type="date"
+              value={paymentDate}
+              onChange={(e) => setPaymentDate(e.target.value)}
+              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none focus:border-brand-600 transition"
+            />
+          </label>
 
           <div className="sm:col-span-2">
-            <Field
-              label="UPI / bank transaction reference"
-              name="paymentReference"
-              required
-              placeholder="e.g. UPI Ref / UTR / Transaction ID from your payment app"
-            />
+            <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
+              <span>
+                Write transaction reference <span className="text-red-500">*</span>
+              </span>
+              <input
+                type="text"
+                required
+                value={paymentReference}
+                onChange={(e) => setPaymentReference(e.target.value)}
+                placeholder="Write transaction reference (UPI Ref / Bank UTR)"
+                className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+              />
+            </label>
           </div>
 
           <div className="sm:col-span-2 flex flex-wrap items-center justify-between gap-4 pt-1">
@@ -330,41 +409,5 @@ export function DonationVerificationForm() {
         </div>
       )}
     </section>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  required,
-  min,
-  step,
-  placeholder,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-  min?: string;
-  step?: string;
-  placeholder?: string;
-}) {
-  return (
-    <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
-      <span>
-        {label}
-        {required ? <span className="text-red-500 ml-0.5">*</span> : null}
-      </span>
-      <input
-        name={name}
-        type={type}
-        required={required}
-        min={min}
-        step={step}
-        placeholder={placeholder}
-        className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
-      />
-    </label>
   );
 }

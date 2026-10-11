@@ -120,14 +120,14 @@ export function ContactForm({ onSuccess, className = "", defaultSubject = "" }: 
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your full name"
+          placeholder="Write your full name"
           className="mt-1.5 block w-full rounded-lg border border-line bg-sand-50/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100"
         />
       </div>
 
       <div>
         <label htmlFor="contact-email" className="block text-sm font-medium text-ink">
-          Your email <span className="text-red-500">*</span>
+          Email address <span className="text-red-500">*</span>
         </label>
         <input
           id="contact-email"
@@ -135,7 +135,21 @@ export function ContactForm({ onSuccess, className = "", defaultSubject = "" }: 
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="name@example.com"
+          placeholder="Write your email address"
+          className="mt-1.5 block w-full rounded-lg border border-line bg-sand-50/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="contact-phone" className="block text-sm font-medium text-ink">
+          Phone number <span className="text-xs text-ink-muted font-normal">(optional)</span>
+        </label>
+        <input
+          id="contact-phone"
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Write your phone number"
           className="mt-1.5 block w-full rounded-lg border border-line bg-sand-50/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100"
         />
       </div>
@@ -149,7 +163,7 @@ export function ContactForm({ onSuccess, className = "", defaultSubject = "" }: 
           type="text"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          placeholder="e.g. Volunteer Enquiry, CSR Partnership, General Support"
+          placeholder="Write message subject"
           className="mt-1.5 block w-full rounded-lg border border-line bg-sand-50/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100"
         />
       </div>

@@ -244,7 +244,7 @@ export function JoinUsForm() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Rahul Sharma"
+                placeholder="Write your full name"
                 className="mt-1.5 h-10 w-full rounded-lg border border-line bg-sand-50/40 px-3 text-xs text-ink placeholder:text-ink-subtle focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-600 sm:text-sm"
               />
             </div>
@@ -259,7 +259,7 @@ export function JoinUsForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. rahul@example.com"
+                placeholder="Write your email address"
                 className="mt-1.5 h-10 w-full rounded-lg border border-line bg-sand-50/40 px-3 text-xs text-ink placeholder:text-ink-subtle focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-600 sm:text-sm"
               />
             </div>
@@ -275,7 +275,7 @@ export function JoinUsForm() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+91 98765 43210"
+                placeholder="Write your phone number"
                 className="mt-1.5 h-10 w-full rounded-lg border border-line bg-sand-50/40 px-3 text-xs text-ink placeholder:text-ink-subtle focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-600 sm:text-sm"
               />
             </div>
