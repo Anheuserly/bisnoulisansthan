@@ -1,11 +1,23 @@
 import Link from "next/link";
-import { FileText, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import {
+  Facebook,
+  FileText,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 import { directionsUrl, fullAddress, site, telHref } from "@/config/site";
 import { content, links } from "@/config/content";
 import { Logo } from "./Logo";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const social = content.site.social;
+
   return (
     <footer className="bg-brand-900 text-brand-100">
       <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
@@ -13,10 +25,61 @@ export function Footer() {
           <div className="sm:col-span-2">
             <Logo inverted />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-200">{content.site.footerDescription}</p>
-            <Link href={links.support} className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100">Support BSGSS</Link>
+            <Link href={links.support} className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100 transition">Support BSGSS</Link>
             <div className="mt-6">
-              <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow BSGSS</p>
-              <a href={content.site.youtubeUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-100 hover:text-white"><Youtube className="h-5 w-5" />YouTube</a>
+              <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow & Connect</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <a
+                  href={social.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-red-600 hover:text-white"
+                  title="YouTube"
+                  aria-label="YouTube Channel"
+                >
+                  <Youtube className="h-4 w-4" />
+                </a>
+                <a
+                  href={social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-[#1877F2] hover:text-white"
+                  title="Facebook"
+                  aria-label="Facebook Page"
+                >
+                  <Facebook className="h-4 w-4" />
+                </a>
+                <a
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white"
+                  title="Instagram"
+                  aria-label="Instagram Profile"
+                >
+                  <Instagram className="h-4 w-4" />
+                </a>
+                <a
+                  href={social.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-black hover:text-white"
+                  title="Twitter / X"
+                  aria-label="Twitter Profile"
+                >
+                  <Twitter className="h-4 w-4" />
+                </a>
+                <a
+                  href={social.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-[#25D366] hover:text-white"
+                  title="WhatsApp"
+                  aria-label="Connect on WhatsApp"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -35,6 +98,7 @@ export function Footer() {
             <address className="mt-4 space-y-3 text-sm not-italic leading-relaxed text-brand-200">
               <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-white"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-300" /><span>{fullAddress}</span></a>
               <a href={telHref(site.contact.phone)} className="flex items-center gap-2 hover:text-white"><Phone className="h-4 w-4 shrink-0 text-brand-300" />{site.contact.phone}</a>
+              <a href={social.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white"><MessageCircle className="h-4 w-4 shrink-0 text-brand-300" />WhatsApp Chat</a>
               <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-white"><Mail className="h-4 w-4 shrink-0 text-brand-300" />{site.contact.email}</a>
             </address>
           </div>
