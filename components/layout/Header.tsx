@@ -80,11 +80,11 @@ export function Header() {
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >
-      <div className="mx-auto flex h-20 max-w-[90rem] items-center gap-3 px-3 md:px-5">
-        <div className="flex min-w-0 items-center gap-4 xl:gap-5">
+      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center gap-3 px-3 md:px-5">
+        <div className="flex min-w-0 items-center gap-3.5 xl:gap-4">
           <Logo />
           <nav aria-label="Main" className="hidden shrink-0 whitespace-nowrap xl:block">
-            <ul className="flex items-center gap-1.5">
+            <ul className="flex items-center gap-1">
               {mainNav.slice(1).map((item) => {
                 const megaLabel = isMegaMenu(item.label) ? item.label : null;
                 const active = isActive(item.href);
@@ -104,7 +104,7 @@ export function Header() {
                         aria-expanded={isOpen}
                         aria-haspopup="dialog"
                         className={cn(
-                          "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ease-out",
+                          "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
                           isSelected
                             ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
                             : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",
@@ -124,7 +124,7 @@ export function Header() {
                         href={item.href}
                         aria-current={active ? "page" : undefined}
                         className={cn(
-                          "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ease-out",
+                          "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
                           active
                             ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
                             : "text-ink-muted hover:bg-sand-100 hover:text-ink active:scale-[0.98]",

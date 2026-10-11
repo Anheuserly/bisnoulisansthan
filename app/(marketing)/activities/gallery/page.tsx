@@ -13,7 +13,7 @@ export default function GalleryPage() {
 
   return <>
     <PageHeader title={gallery.title} lead={gallery.lead} crumbs={[{ name: "Activities", path: links.activities }, { name: "Photo gallery", path: links.gallery }]} />
-    <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+    <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
         <section className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-brand-200/80 bg-sand-50/80 p-5 sm:p-6 shadow-2xs">
           <div className="flex items-center gap-4">

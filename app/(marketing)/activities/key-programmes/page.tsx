@@ -24,7 +24,7 @@ export default function KeyProgrammesPage() {
           { name: "Our Key Programmes", path: links.programmes },
         ]}
       />
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           <section className="grid gap-6 rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:grid-cols-[auto_1fr] sm:p-8 shadow-2xs">
             <span className="grid h-12 w-12 place-items-center rounded-xl bg-white text-brand-700 shadow-2xs">

@@ -19,7 +19,7 @@ export default function ImpactPage() {
         crumbs={[{ name: "Impact", path: links.impact }]}
       />
       <div>
-        <div className="pt-6 pb-12 sm:pt-8 sm:pb-16">
+        <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
           <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:px-8">
             {/* Light Card Replacing Previous Dark Card */}
             <div className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 text-ink shadow-2xs">

@@ -25,7 +25,7 @@ export default function ActivitiesPage() {
         lead="A view into BSGSS programmes, training, community outreach and women-led enterprise."
         crumbs={[{ name: "Activities", path: "/activities" }]}
       />
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             <ActivityLink

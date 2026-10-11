@@ -38,7 +38,7 @@ export default function GovernmentActivitiesPage() {
           { name: "Government programmes", path: "/activities-under-state-central-government" },
         ]}
       />
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>

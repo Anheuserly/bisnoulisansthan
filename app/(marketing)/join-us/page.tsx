@@ -31,7 +31,7 @@ export default function JoinUsPage() {
         crumbs={[{ name: "Join us", path: links.join }]}
       />
 
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           {/* Top Mission Banner */}
           <section className="grid gap-6 rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 md:grid-cols-[1.15fr_0.85fr] md:items-center shadow-2xs">

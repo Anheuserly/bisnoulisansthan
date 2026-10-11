@@ -43,7 +43,7 @@ export default function OurWorkPage() {
         lead="Integrated programmes that support learning, health, livelihoods and the leadership of women."
         crumbs={[{ name: "Our work", path: "/our-work" }]}
       />
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           <div className="grid gap-6 md:grid-cols-2">
             {work.map(({ title, icon: Icon, text, image }) => (

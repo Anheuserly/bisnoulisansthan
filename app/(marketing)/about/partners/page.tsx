@@ -37,7 +37,7 @@ export default function PartnersPage() {
         ]}
       />
       <PartnersSection />
-      <div className="pt-6 pb-14 sm:pt-8 sm:pb-16">
+      <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           {/* Light Card Replacing Previous Dark Card */}
           <section className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:p-8 text-ink sm:flex sm:items-center sm:justify-between sm:gap-8 shadow-2xs">

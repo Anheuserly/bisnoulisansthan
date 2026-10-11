@@ -20,7 +20,7 @@ export default function HomePage() {
     <>
       <HomeHero />
 
-      <section className="border-y border-brand-100 bg-sand-50/70 py-10 sm:py-14">
+      <section className="border-y border-brand-100 bg-sand-50/70 py-8 sm:py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.9fr_1.1fr] md:items-center md:px-8">
           <div className="rounded-2xl border border-brand-200/80 bg-white p-6 sm:p-8 text-ink shadow-2xs">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 shadow-2xs">
@@ -50,39 +50,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-sand-50 py-16" id="about">
+      <section className="bg-sand-50 py-10 sm:py-12" id="about">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-2 md:items-center md:px-8">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{about.eyebrow}</p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">{about.title}</h2>
+            <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">{about.title}</h2>
           </div>
           <p className="text-base leading-relaxed text-ink-muted">{about.text}</p>
         </div>
       </section>
 
-      <section className="py-16 sm:py-20" id="programs">
+      <section className="py-10 sm:py-14" id="programs">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Our key programmes</p>
-          <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="mt-3 max-w-2xl font-display text-3xl font-bold text-ink sm:text-4xl">Development that meets people where they are.</h2><Link href={links.programmes} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">Explore our key programmes <ArrowRight className="h-4 w-4" /></Link></div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="mt-2 max-w-2xl font-display text-2xl font-bold text-ink sm:text-3xl">Development that meets people where they are.</h2><Link href={links.programmes} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">Explore our key programmes <ArrowRight className="h-4 w-4" /></Link></div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {programs.map(({ title, text, icon: Icon, href }) => <Link key={title} href={href} className="group rounded-xl border border-line bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft"><div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-50 text-brand-700"><Icon className="h-5 w-5" /></div><h3 className="mt-5 font-display text-lg font-semibold text-ink">{title}</h3><p className="mt-2 text-sm leading-relaxed text-ink-muted">{text}</p><span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-700">Explore programme <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>)}
           </div>
         </div>
       </section>
 
-      <section className="border-y border-brand-100 bg-brand-50 py-16 sm:py-20" id="impact">
-        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{impact.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">{impact.title}</h2></div><Link href={links.impact} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">{impact.cta} <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-10 grid gap-4 sm:grid-cols-3">{impact.stats.map((stat) => <Stat key={stat.label} {...stat} />)}</div></div>
+      <section className="border-y border-brand-100 bg-brand-50 py-10 sm:py-14" id="impact">
+        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{impact.eyebrow}</p><h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">{impact.title}</h2></div><Link href={links.impact} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">{impact.cta} <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-8 grid gap-4 sm:grid-cols-3">{impact.stats.map((stat) => <Stat key={stat.label} {...stat} />)}</div></div>
       </section>
 
       <InteractiveIndiaMap />
 
-      <section className="bg-brand-50 py-16 sm:py-20" id="partners">
+      <section className="bg-brand-50 py-10 sm:py-14" id="partners">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.1fr_.9fr] md:items-center md:px-8">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Partnerships</p>
-            <h2 className="mt-3 max-w-xl font-display text-3xl font-bold text-ink sm:text-4xl">Collaboration that turns support into local action.</h2>
-            <p className="mt-5 max-w-2xl leading-relaxed text-ink-muted">BSGSS works alongside CSR and institutional partners to bring healthcare, women&apos;s vocational training and practical community support to places where it is needed most.</p>
-            <Link href="/about/partners" className="mt-7 inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-3 font-semibold text-white transition hover:bg-brand-900">Explore partner stories <ArrowRight className="h-4 w-4" /></Link>
+            <h2 className="mt-2 max-w-xl font-display text-2xl font-bold text-ink sm:text-3xl">Collaboration that turns support into local action.</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink-muted">BSGSS works alongside CSR and institutional partners to bring healthcare, women&apos;s vocational training and practical community support to places where it is needed most.</p>
+            <Link href="/about/partners" className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-900">Explore partner stories <ArrowRight className="h-4 w-4" /></Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
             <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Handshake className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-3xl font-bold text-ink">30</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">CSR partner profiles with an individual BSGSS record.</p></div>
@@ -92,11 +92,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="max-w-2xl"><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{management.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">{management.title}</h2><p className="mt-5 leading-relaxed text-ink-muted">{management.text}</p></div><div className="mt-10 grid gap-6 md:grid-cols-2"><ManagementCard name="Nandita Bakshi" role="Ex-IRS · CEO, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/334-111.jpg" message="BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women." /><ManagementCard name="Vijay Kumar Jha" role="Ex-IPS · Chairperson, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/335-11111.jpg" message="Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare." /></div><Link href={links.management} className="mt-8 inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50">{management.cta} <ArrowRight className="h-4 w-4" /></Link></div>
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="max-w-2xl"><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{management.eyebrow}</p><h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">{management.title}</h2><p className="mt-4 leading-relaxed text-ink-muted">{management.text}</p></div><div className="mt-8 grid gap-6 md:grid-cols-2"><ManagementCard name="Vijay Kumar Jha" role="Ex-IPS · Chairperson, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/335-11111.jpg" message="Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare." /><ManagementCard name="Nandita Bakshi" role="Ex-IRS · CEO, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/334-111.jpg" message="BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women." /></div><Link href={links.management} className="mt-6 inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-50">{management.cta} <ArrowRight className="h-4 w-4" /></Link></div>
       </section>
 
-      <section className="py-16 sm:py-20"><div className="mx-auto grid max-w-6xl gap-8 rounded-2xl border border-brand-200 bg-brand-50 px-7 py-10 md:grid-cols-[1fr_auto] md:items-center md:px-12"><div><div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-700 shadow-sm"><Landmark className="h-6 w-6" /></div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Support BSGSS</p><h2 className="mt-3 font-display text-3xl font-bold text-ink">Your contribution can strengthen a community.</h2><p className="mt-3 max-w-2xl leading-relaxed text-ink-muted">Explore secure support options, including bank transfer and UPI donation details.</p></div><Link href="/support" className="inline-flex items-center justify-center rounded-md bg-brand-700 px-5 py-3 font-semibold text-white hover:bg-brand-800">Support us <ArrowRight className="ml-2 h-4 w-4" /></Link></div></section>
+      <section className="py-10 sm:py-12"><div className="mx-auto grid max-w-6xl gap-8 rounded-2xl border border-brand-200 bg-brand-50 px-7 py-8 md:grid-cols-[1fr_auto] md:items-center md:px-12"><div><div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-700 shadow-sm"><Landmark className="h-6 w-6" /></div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Support BSGSS</p><h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Your contribution can strengthen a community.</h2><p className="mt-2 max-w-2xl leading-relaxed text-ink-muted">Explore secure support options, including bank transfer and UPI donation details.</p></div><Link href="/support" className="inline-flex items-center justify-center rounded-md bg-brand-700 px-5 py-2.5 font-semibold text-white hover:bg-brand-800">Support us <ArrowRight className="ml-2 h-4 w-4" /></Link></div></section>
     </>
   );
 }

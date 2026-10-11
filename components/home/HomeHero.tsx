@@ -31,33 +31,33 @@ export function HomeHero() {
         ))}
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-[#182226]/95 via-[#182226]/76 to-[#182226]/20" />
-      <div className="relative mx-auto grid min-h-[30rem] max-w-6xl items-center px-4 py-14 sm:px-6 md:px-8 lg:min-h-[34rem]">
+      <div className="relative mx-auto grid min-h-[26rem] max-w-6xl items-center px-4 py-10 sm:px-6 md:px-8 lg:min-h-[30rem]">
         <div className="max-w-3xl">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
             {hero.eyebrow}
           </p>
-          <h1 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+          <h1 className="font-display text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
             {hero.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/85 sm:text-[15px]">
             {hero.text}
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href={links.support}
-              className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-semibold text-[#182226] shadow-2xs transition hover:bg-brand-50 sm:text-sm"
+              className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-[#182226] shadow-2xs transition hover:bg-brand-50 sm:text-sm"
             >
               {hero.supportCta} <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href={links.about}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/50 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-white/10 sm:text-sm"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/50 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10 sm:text-sm"
             >
               {hero.aboutCta}
             </Link>
           </div>
           <div
-            className="mt-8 flex gap-2"
+            className="mt-6 flex gap-2"
             aria-label={`Slide ${activeSlide + 1} of ${slides.length}`}
           >
             {slides.map((_, index) => (
