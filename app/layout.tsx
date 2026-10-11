@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   formatDetection: { telephone: true, address: true, email: true },
+  icons: { icon: "/images/bsgss/branding/11-cropped-logo-1.jpg" },
 };
 
 export const viewport: Viewport = {

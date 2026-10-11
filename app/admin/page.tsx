@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Image, LayoutPanelTop, UsersRound, WalletCards } from "lucide-react";
+import { ArrowUpRight, FileCheck2, Image, LayoutPanelTop, UsersRound, WalletCards } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 
@@ -7,6 +7,7 @@ const modules = [
   { title: "Content hub", description: "Plan and manage pages, programmes, galleries, SHG products, documents and impact content.", icon: LayoutPanelTop, status: "Content model ready", href: "/admin/content" },
   { title: "Gallery & media", description: "Organise field photographs, captions and featured stories.", icon: Image, status: "Build first", href: "/admin/content" },
   { title: "Documents & reports", description: "Publish bank details, reports, registrations and compliance documents.", icon: WalletCards, status: "Build second", href: "/admin/content" },
+  { title: "Donations", description: "Verify payment references and issue numbered donor acknowledgements.", icon: FileCheck2, status: "Verification workflow", href: "/admin/donations" },
 ];
 
 export default async function AdminDashboard() {

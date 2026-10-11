@@ -207,6 +207,30 @@ CREATE TABLE IF NOT EXISTS contact_inquiries (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- A payment reference is submitted by the donor after making a UPI or bank
+-- transfer. A BSGSS administrator must verify it before an acknowledgement
+-- certificate is issued; no public form can create a certificate by itself.
+CREATE TABLE IF NOT EXISTS donation_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  donor_name TEXT NOT NULL,
+  donor_email TEXT NOT NULL,
+  donor_phone TEXT,
+  donor_address TEXT,
+  amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
+  currency CHAR(3) NOT NULL DEFAULT 'INR',
+  payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'other')),
+  payment_reference TEXT NOT NULL,
+  payment_date DATE,
+  status TEXT NOT NULL DEFAULT 'submitted' CHECK (status IN ('submitted', 'under_review', 'verified', 'rejected', 'certificate_issued')),
+  certificate_number TEXT UNIQUE,
+  certificate_issued_at TIMESTAMPTZ,
+  verified_at TIMESTAMPTZ,
+  verified_by UUID REFERENCES users(id) ON DELETE SET NULL,
+  notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 CREATE TABLE IF NOT EXISTS admin_audit_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   actor_id UUID REFERENCES users(id) ON DELETE SET NULL,
@@ -225,12 +249,13 @@ CREATE INDEX IF NOT EXISTS shg_products_status_idx ON shg_products (status, publ
 CREATE INDEX IF NOT EXISTS partner_profiles_status_idx ON partner_profiles (status);
 CREATE INDEX IF NOT EXISTS public_documents_type_idx ON public_documents (document_type, is_public);
 CREATE INDEX IF NOT EXISTS contact_inquiries_status_idx ON contact_inquiries (status, created_at DESC);
+CREATE INDEX IF NOT EXISTS donation_requests_status_idx ON donation_requests (status, created_at DESC);
 CREATE INDEX IF NOT EXISTS admin_audit_logs_actor_idx ON admin_audit_logs (actor_id, created_at DESC);
 
 DO $$
 DECLARE table_name TEXT;
 BEGIN
-  FOREACH table_name IN ARRAY ARRAY['users', 'content_pages', 'programs', 'media_assets', 'activity_albums', 'shg_products', 'partner_profiles', 'public_documents', 'impact_metrics', 'site_settings', 'navigation_items', 'contact_inquiries']
+  FOREACH table_name IN ARRAY ARRAY['users', 'content_pages', 'programs', 'media_assets', 'activity_albums', 'shg_products', 'partner_profiles', 'public_documents', 'impact_metrics', 'site_settings', 'navigation_items', 'contact_inquiries', 'donation_requests']
   LOOP
     EXECUTE format('DROP TRIGGER IF EXISTS %I ON %I', table_name || '_updated_at', table_name);
     EXECUTE format('CREATE TRIGGER %I BEFORE UPDATE ON %I FOR EACH ROW EXECUTE FUNCTION set_updated_at()', table_name || '_updated_at', table_name);

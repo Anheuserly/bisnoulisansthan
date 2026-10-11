@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { FileText, Mail, MapPin, Phone } from "lucide-react";
+import { FileText, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { directionsUrl, fullAddress, site, telHref } from "@/config/site";
+import { content, links } from "@/config/content";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -11,15 +12,19 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           <div className="sm:col-span-2">
             <Logo inverted />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-200">A voluntary organisation advancing education, healthcare, skills and women’s empowerment through practical, community-led development since 1994.</p>
-            <Link href="/#support" className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100">Support BSGSS</Link>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-200">{content.site.footerDescription}</p>
+            <Link href={links.support} className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100">Support BSGSS</Link>
+            <div className="mt-6">
+              <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow BSGSS</p>
+              <a href={content.site.youtubeUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-100 hover:text-white"><Youtube className="h-5 w-5" />YouTube</a>
+            </div>
           </div>
 
           <FooterColumn title="Explore">
-            <FooterLink href="/about">About BSGSS</FooterLink><FooterLink href="/about/our-story">Our story</FooterLink><FooterLink href="/about/legal-status">Legal status</FooterLink><FooterLink href="/our-work">Our work</FooterLink><FooterLink href="/activities">Activities</FooterLink><FooterLink href="/activities/gallery">Gallery</FooterLink><FooterLink href="/activities/shg-products">SHG products</FooterLink><FooterLink href="/impact">Impact</FooterLink><FooterLink href="/about/partners">Our partners</FooterLink>
+            <FooterLink href="/about">About BSGSS</FooterLink><FooterLink href="/about/our-story">Our story</FooterLink><FooterLink href="/management">Management</FooterLink><FooterLink href="/about/legal-status">Legal status</FooterLink><FooterLink href="/our-work">Our work</FooterLink><FooterLink href="/activities">Activities</FooterLink><FooterLink href="/activities/gallery">Gallery</FooterLink><FooterLink href="/activities/videos">Videos</FooterLink><FooterLink href="/activities/work-in-media">Work in media</FooterLink><FooterLink href="/activities/shg-products">SHG products</FooterLink><FooterLink href="/activities-under-state-central-government">Government programmes</FooterLink><FooterLink href="/impact">Impact</FooterLink><FooterLink href="/about/partners">Our partners</FooterLink><FooterLink href="/join-us">Join us</FooterLink>
           </FooterColumn>
           <FooterColumn title="Get involved">
-            <FooterLink href="/#support">Donate</FooterLink><FooterLink href="/contact">Volunteer with us</FooterLink><FooterLink href="/contact">Internships</FooterLink><FooterLink href="/contact">CSR partnerships</FooterLink><FooterLink href="/contact">Institutional partnerships</FooterLink>
+            <FooterLink href="/support">Support us</FooterLink><FooterLink href="/contact">Volunteer with us</FooterLink><FooterLink href="/contact">Internships</FooterLink><FooterLink href="/contact">CSR partnerships</FooterLink><FooterLink href="/contact">Institutional partnerships</FooterLink>
           </FooterColumn>
           <FooterColumn title="Transparency">
             <FooterLink href="/about/legal-status">Registration & compliance</FooterLink><FooterLink href="/about/legal-status">12A & 80G documents</FooterLink><FooterLink href="/about/legal-status">CSR-1 registration</FooterLink><FooterLink href="/documents/bsgss-funding-partners-2024.pdf">Funding partners list</FooterLink><FooterLink href="/about/legal-status">All public documents</FooterLink>
@@ -37,6 +42,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-brand-800 pt-6 text-xs text-brand-300 md:flex-row md:items-center md:justify-between">
           <p>© {year} {site.name}. All rights reserved.</p>
+          <p>{content.site.developerCredit}</p>
           <a href="mailto:bsgssindia@yahoo.co.in?subject=Document%20request" className="inline-flex items-center gap-2 hover:text-white"><FileText className="h-4 w-4" />Request public documents or reports</a>
         </div>
       </div>

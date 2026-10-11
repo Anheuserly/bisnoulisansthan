@@ -8,3 +8,4 @@ This folder describes the content-management foundation for the BSGSS website.
 - [Operations](OPERATIONS.md): safe setup, media and access-control guidance.
 
 The public website should only display records with `status = 'published'` (and public documents/media with their public flag enabled).
+- [Donation acknowledgement certificates](DONATION_CERTIFICATES.md): verification and certificate issuance workflow.

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, Image as ImageIcon, MapPin, Menu, Phone, Route, Search, ShoppingBag, Users, X } from "lucide-react";
+import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, Image as ImageIcon, MapPin, Menu, Phone, Route, Search, ShoppingBag, Users, Video, X } from "lucide-react";
 import { aboutNav, mainNav } from "@/config/navigation";
 import { directionsUrl, site, telHref } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -80,37 +80,32 @@ export function Header() {
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-6 px-5 md:px-8">
-        <Logo />
+      <div className="mx-auto flex h-20 max-w-[90rem] items-center gap-3 px-3 md:px-5">
+        <div className="flex min-w-0 items-center gap-4 xl:gap-5">
+          <Logo />
+          <nav aria-label="Main" className="hidden shrink-0 whitespace-nowrap xl:block">
+            <ul className="flex items-center gap-1">
+              {mainNav.slice(1).map((item) => {
+                const megaLabel = isMegaMenu(item.label) ? item.label : null;
+                return <li key={item.href}>
+                  {megaLabel ? <button type="button" onMouseEnter={() => { setMegaOpen(megaLabel); setSearchOpen(false); }} onFocus={() => setMegaOpen(megaLabel)} onClick={() => setMegaOpen((value) => value === megaLabel ? null : megaLabel)} aria-expanded={megaOpen === megaLabel} aria-haspopup="dialog" className={cn("inline-flex whitespace-nowrap items-center gap-1 rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) || megaOpen === megaLabel ? "text-brand-700" : "text-ink-muted hover:text-ink")}>
+                    {item.label} <ChevronDown className={cn("h-4 w-4 transition-transform", megaOpen === megaLabel && "rotate-180")} />
+                  </button> : <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={cn("whitespace-nowrap rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) ? "text-brand-700" : "text-ink-muted hover:text-ink")}>{item.label}</Link>}
+                </li>;
+              })}
+            </ul>
+          </nav>
+        </div>
 
-        <nav aria-label="Main" className="hidden xl:block">
-          <ul className="flex items-center gap-1">
-            {mainNav.slice(1).map((item) => {
-              const megaLabel = isMegaMenu(item.label) ? item.label : null;
-              return <li key={item.href}>
-                {megaLabel ? <button type="button" onMouseEnter={() => { setMegaOpen(megaLabel); setSearchOpen(false); }} onFocus={() => setMegaOpen(megaLabel)} onClick={() => setMegaOpen((value) => value === megaLabel ? null : megaLabel)} aria-expanded={megaOpen === megaLabel} aria-haspopup="dialog" className={cn("inline-flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) || megaOpen === megaLabel ? "text-brand-700" : "text-ink-muted hover:text-ink")}>
-                  {item.label} <ChevronDown className={cn("h-4 w-4 transition-transform", megaOpen === megaLabel && "rotate-180")} />
-                </button> : <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={cn("rounded-md px-2.5 py-2 text-[0.9375rem] font-medium transition-colors", isActive(item.href) ? "text-brand-700" : "text-ink-muted hover:text-ink")}>{item.label}</Link>}
-              </li>;
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex items-center gap-2">
-          {phone && (
-            <a
-              href={telHref(phone)}
-              className="hidden h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-brand-800 hover:bg-brand-50 md:inline-flex"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span>{phone}</span>
-            </a>
-          )}
-          <LinkButton href="/#support" className="hidden sm:inline-flex">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <button type="button" onClick={() => { setSearchOpen((value) => !value); setQuery(""); setMegaOpen(null); }} className="hidden h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-brand-50 xl:inline-flex" aria-label="Search this website" aria-expanded={searchOpen} aria-controls="site-search">
+            <Search className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <LinkButton href="/support" className="hidden sm:inline-flex">
             <Heart className="h-4 w-4" aria-hidden="true" />
             Support us
           </LinkButton>
-          <button type="button" onClick={() => { setSearchOpen((value) => !value); setQuery(""); setMegaOpen(null); }} className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-brand-50" aria-label="Search this website" aria-expanded={searchOpen} aria-controls="site-search">
+          <button type="button" onClick={() => { setSearchOpen((value) => !value); setQuery(""); setMegaOpen(null); }} className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-brand-50 xl:hidden" aria-label="Search this website" aria-expanded={searchOpen} aria-controls="site-search">
             <Search className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
@@ -170,7 +165,7 @@ export function Header() {
             open ? "translate-x-0" : "translate-x-full",
           )}
         >
-          <div className="flex h-[4.5rem] items-center justify-between border-b border-line px-5">
+          <div className="flex h-16 items-center justify-between border-b border-line px-5">
             <Logo />
             <button
               type="button"
@@ -208,7 +203,7 @@ export function Header() {
           </nav>
 
           <div className="space-y-2 border-t border-line p-5">
-            <LinkButton href="/#support" size="lg" className="w-full" tabIndex={open ? 0 : -1}>
+            <LinkButton href="/support" size="lg" className="w-full" tabIndex={open ? 0 : -1}>
               <Heart className="h-5 w-5" aria-hidden="true" />
               Support us
             </LinkButton>
@@ -246,8 +241,8 @@ const megaMenus = {
     cta: "Explore About BSGSS",
     feature: { icon: FileCheck2, title: "Transparency, made accessible", description: "Registrations, certificates and public documents in one place.", href: "/about/legal-status" },
     columns: [
-      { title: "Discover", links: [{ label: "Our story", description: "The BSGSS journey since 1994.", href: "/about/our-story", icon: Route }, { label: "Legal status", description: "Registration and compliance documents.", href: "/about/legal-status", icon: FileCheck2 }] },
-      { title: "Connect", links: [{ label: "Our partners", description: "CSR and institutional partnerships.", href: "/about/partners", icon: Handshake }, { label: "Contact BSGSS", description: "Speak with our team.", href: "/contact", icon: MapPin }] },
+      { title: "Discover", links: [{ label: "About us", description: "Our mission, reach and community focus.", href: "/about", icon: BookOpen }, { label: "Our story", description: "The BSGSS journey since 1994.", href: "/about/our-story", icon: Route }, { label: "Management", description: "Messages from BSGSS leadership.", href: "/management", icon: Users }] },
+      { title: "Trust & connect", links: [{ label: "Legal status", description: "Registration and compliance documents.", href: "/about/legal-status", icon: FileCheck2 }, { label: "Our partners", description: "CSR and institutional partnerships.", href: "/about/partners", icon: Handshake }, { label: "Join BSGSS", description: "Volunteer, intern, partner or support our work.", href: "/join-us", icon: HandHeart }] },
     ],
   },
   "Our work": {
@@ -268,10 +263,10 @@ const megaMenus = {
     description: "Explore programme moments and handmade products created through women’s self-help groups supported by BSGSS.",
     href: "/activities",
     cta: "Explore all activities",
-    feature: { icon: ShoppingBag, title: "SHG products", description: "Handmade products that support women’s livelihoods and enterprise.", href: "/activities/shg-products" },
+    feature: { icon: Video, title: "Video gallery", description: "Watch BSGSS programmes, camps and community activity on YouTube.", href: "/activities/videos" },
     columns: [
-      { title: "Explore", links: [{ label: "Activity gallery", description: "Programme, training and outreach moments.", href: "/activities/gallery", icon: ImageIcon }, { label: "Programme activities", description: "Community, health, education and youth initiatives.", href: "/activities", icon: Activity }] },
-      { title: "Community enterprise", links: [{ label: "SHG products", description: "Handmade items created by women’s self-help groups.", href: "/activities/shg-products", icon: ShoppingBag }, { label: "Partner stories", description: "See the partnerships behind community work.", href: "/about/partners", icon: Handshake }] },
+      { title: "Explore", links: [{ label: "Activity gallery", description: "Programme, training and outreach moments.", href: "/activities/gallery", icon: ImageIcon }, { label: "Video gallery", description: "Watch BSGSS videos on YouTube.", href: "/activities/videos", icon: Video }, { label: "Work in media", description: "Public media clippings about BSGSS activities.", href: "/activities/work-in-media", icon: FileCheck2 }, { label: "Programme activities", description: "Community, health, education and youth initiatives.", href: "/activities", icon: Activity }] },
+      { title: "Community enterprise", links: [{ label: "SHG products", description: "Handmade items created by women’s self-help groups.", href: "/activities/shg-products", icon: ShoppingBag }, { label: "Government programmes", description: "Awareness, skill and welfare collaboration.", href: "/activities-under-state-central-government", icon: FileCheck2 }, { label: "Partner stories", description: "See the partnerships behind community work.", href: "/about/partners", icon: Handshake }] },
     ],
   },
   Impact: {
@@ -282,7 +277,7 @@ const megaMenus = {
     cta: "Explore our impact",
     feature: { icon: Activity, title: "See work in action", description: "View programme moments, camps and community activity.", href: "/activities" },
     columns: [
-      { title: "Impact overview", links: [{ label: "How we measure progress", description: "Practical outcomes beyond a one-time intervention.", href: "/impact", icon: Activity }, { label: "Our reach", description: "People reached through BSGSS programmes.", href: "/#impact", icon: Users }] },
+      { title: "Impact overview", links: [{ label: "How we measure progress", description: "Practical outcomes beyond a one-time intervention.", href: "/impact", icon: Activity }, { label: "Our reach", description: "People reached through BSGSS programmes.", href: "/impact", icon: Users }] },
       { title: "Explore the evidence", links: [{ label: "Activities in action", description: "A visual view of programmes and outreach.", href: "/activities", icon: Route }, { label: "Partner stories", description: "Programme focus and locations by CSR partner.", href: "/about/partners", icon: Handshake }] },
     ],
   },
@@ -296,15 +291,15 @@ function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey];
   const FeatureIcon = menu.feature.icon;
   return (
     <section role="dialog" aria-label={`${menu.eyebrow} navigation`} className="mega-menu-panel absolute inset-x-0 top-full z-50 border-y border-line bg-white shadow-lift">
-      <div className="mx-auto grid max-w-6xl grid-cols-[1.05fr_1fr_1fr_.9fr] gap-8 px-8 py-8">
-        <div className="border-r border-line pr-8">
-          <p className="text-xs font-bold uppercase tracking-[.18em] text-brand-700">{menu.eyebrow}</p>
-          <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-ink">{menu.title}</h2>
-          <p className="mt-3 text-sm leading-relaxed text-ink-muted">{menu.description}</p>
-          <Link href={menu.href} onClick={onNavigate} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-900">{menu.cta} <ArrowRight className="h-4 w-4" /></Link>
+      <div className="mx-auto grid max-w-6xl grid-cols-[1.05fr_1fr_1fr_.9fr] gap-6 px-8 py-6">
+        <div className="border-r border-brand-100 pr-6">
+          <p className="text-[0.6875rem] font-bold uppercase tracking-[.2em] text-brand-700">{menu.eyebrow}</p>
+          <h2 className="mt-2.5 font-display text-[1.625rem] font-semibold leading-[1.12] text-ink">{menu.title}</h2>
+          <p className="mt-3 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.description}</p>
+          <Link href={menu.href} onClick={onNavigate} className="mt-4 inline-flex items-center gap-2 text-[0.8125rem] font-semibold text-brand-700 transition hover:text-brand-900">{menu.cta} <ArrowRight className="h-4 w-4" /></Link>
         </div>
-        {menu.columns.map((column) => <div key={column.title}><p className="text-xs font-bold uppercase tracking-[.16em] text-ink-muted">{column.title}</p><div className="mt-3 space-y-1">{column.links.map((link) => { const Icon = link.icon; return <Link key={link.label} href={link.href} onClick={onNavigate} className="group flex gap-3 rounded-lg p-3 transition hover:bg-brand-50"><span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-700 transition group-hover:bg-white"><Icon className="h-4 w-4" /></span><span><span className="block text-sm font-semibold text-ink">{link.label}</span><span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">{link.description}</span></span></Link>; })}</div></div>)}
-        <Link href={menu.feature.href} onClick={onNavigate} className="group rounded-xl border border-brand-200 bg-brand-50 p-5 text-ink shadow-sm transition hover:border-brand-300 hover:bg-brand-100 hover:shadow-md"><FeatureIcon className="h-6 w-6 text-brand-700" /><p className="mt-6 font-display text-xl font-bold text-ink">{menu.feature.title}</p><p className="mt-2 text-sm leading-relaxed text-ink-muted">{menu.feature.description}</p><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Explore <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>
+        {menu.columns.map((column) => <div key={column.title}><p className="text-[0.6875rem] font-bold uppercase tracking-[.16em] text-ink-muted">{column.title}</p><div className="mt-2 space-y-0.5">{column.links.map((link) => { const Icon = link.icon; return <Link key={link.label} href={link.href} onClick={onNavigate} className="group flex gap-3 rounded-lg p-2.5 transition hover:bg-brand-50"><span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-700 transition group-hover:bg-white"><Icon className="h-4 w-4" /></span><span><span className="block text-[0.875rem] font-semibold text-ink">{link.label}</span><span className="mt-0.5 block text-[0.75rem] leading-relaxed text-ink-muted">{link.description}</span></span></Link>; })}</div></div>)}
+        <Link href={menu.feature.href} onClick={onNavigate} className="group rounded-xl border border-brand-200 bg-brand-50 p-5 text-ink shadow-sm transition hover:border-brand-300 hover:bg-brand-100 hover:shadow-md"><FeatureIcon className="h-5 w-5 text-brand-700" /><p className="mt-5 font-display text-lg font-semibold text-ink">{menu.feature.title}</p><p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.feature.description}</p><span className="mt-4 inline-flex items-center gap-2 text-[0.8125rem] font-semibold text-brand-700">Explore <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>
       </div>
     </section>
   );
@@ -313,18 +308,23 @@ function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey];
 const searchItems = [
   { title: "About BSGSS", href: "/about", description: "Our purpose, mission and leadership.", keywords: "history mission leadership organisation" },
   { title: "Our story", href: "/about/our-story", description: "The BSGSS journey since 1994.", keywords: "history journey timeline bisnouli" },
+  { title: "Management", href: "/management", description: "Messages from BSGSS leadership.", keywords: "management leadership nandita bakshi vijay kumar jha" },
   { title: "Legal status", href: "/about/legal-status", description: "Registrations, certificates and public documents.", keywords: "legal status mca csr 12a 80g ngo darpan gst registration" },
   { title: "Our partners", href: "/about/partners", description: "CSR and government partners.", keywords: "csr corporate government funders partnership" },
   { title: "Our work", href: "/our-work", description: "Education, healthcare, skills and women’s empowerment.", keywords: "education health livelihood training women microfinance" },
   { title: "Activities", href: "/activities", description: "Community programmes in action.", keywords: "photos events camps activities gallery" },
   { title: "Activity gallery", href: "/activities/gallery", description: "Programme, training and outreach moments.", keywords: "photos gallery community healthcare education events" },
+  { title: "Video gallery", href: "/activities/videos", description: "BSGSS programme films on YouTube.", keywords: "videos youtube rites khora hilalpur cancer camp" },
+  { title: "Work in media", href: "/activities/work-in-media", description: "Public media clippings about BSGSS activities.", keywords: "media press newspaper news coverage clippings" },
+  { title: "Government programmes", href: "/activities-under-state-central-government", description: "State and Central Government-supported community initiatives.", keywords: "government central state awareness welfare grant aid health social schemes" },
   { title: "SHG products", href: "/activities/shg-products", description: "Handmade products created by women’s self-help groups.", keywords: "shg products handmade shawl muffler women livelihood enterprise" },
   { title: "Impact", href: "/impact", description: "How BSGSS creates change.", keywords: "beneficiaries outcomes statistics reach" },
-  { title: "Support BSGSS", href: "/#support", description: "Donate, partner or volunteer.", keywords: "donate contribution csr volunteer internship partnership" },
+  { title: "Support BSGSS", href: "/support", description: "Donate, partner or volunteer.", keywords: "donate contribution csr volunteer internship partnership" },
+  { title: "Join us", href: "/join-us", description: "Volunteer, intern, partner or support BSGSS.", keywords: "volunteer internship join csr partnership contribute" },
   { title: "Contact us", href: "/contact", description: "Office, phone and email details.", keywords: "address phone email noida" },
 ];
 
 const mobileSubNavigation: Record<string, Array<{ label: string; href: string }>> = {
   About: aboutNav.slice(1),
-  Activities: [{ label: "Activity gallery", href: "/activities/gallery" }, { label: "SHG products", href: "/activities/shg-products" }],
+  Activities: [{ label: "Activity gallery", href: "/activities/gallery" }, { label: "Video gallery", href: "/activities/videos" }, { label: "Work in media", href: "/activities/work-in-media" }, { label: "SHG products", href: "/activities/shg-products" }, { label: "Government programmes", href: "/activities-under-state-central-government" }],
 };
