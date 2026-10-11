@@ -1,3 +1,114 @@
+import { partners } from "@/components/partners/partners-data";
+
+export interface StoryMilestone {
+  id: string;
+  year: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  location: string;
+}
+
+export const storyMilestones: StoryMilestone[] = [
+  {
+    id: "1994",
+    year: "1994",
+    category: "Foundation",
+    title: "A village-rooted beginning",
+    description: "BSGSS was founded in Bisnouli village, Dadri Tehsil, Uttar Pradesh, with a clear conviction: underprivileged families thrive when given access to self-reliance, village industries and practical development.",
+    image: "/images/bsgss/legacy-page-assets/44-homepage-aboutus.jpg",
+    imageAlt: "Authentic historical BSGSS village outreach and community gathering",
+    location: "Bisnouli village, Dadri Tehsil, Uttar Pradesh",
+  },
+  {
+    id: "community",
+    year: "1990s",
+    category: "Community education",
+    title: "Grassroots literacy & learning",
+    description: "The work grew around children's learning, community-based literacy classes, and awareness drives that brought non-formal education to rural households.",
+    image: "/images/bsgss/education/146-class1.jpeg",
+    imageAlt: "BSGSS community classroom education session in progress",
+    location: "Rural learning centres in Uttar Pradesh & Delhi NCR",
+  },
+  {
+    id: "skills",
+    year: "2000s",
+    category: "Skills and livelihoods",
+    title: "Vocational empowerment for women",
+    description: "Practical vocational training centres in tailoring, cutting, embroidery, and computer literacy gave thousands of women pathways towards income generation and micro-enterprise.",
+    image: "/images/bsgss/gallery-training/185-tal1.jpeg",
+    imageAlt: "Women operating sewing machines at BSGSS tailoring training centre",
+    location: "Community vocational training centres",
+  },
+  {
+    id: "health",
+    year: "2010s",
+    category: "Health access",
+    title: "Preventive healthcare closer to home",
+    description: "Free medical check-up camps, cancer screenings, eye examinations and medicine distribution brought specialized medical consultation directly to rural and underserved populations.",
+    image: "/images/bsgss/healthcare-camps/150-camp3.jpeg",
+    imageAlt: "Medical team and doctors providing free health checkups at BSGSS camp",
+    location: "Rural camps in Bastar, Khora Colony and Western UP",
+  },
+  {
+    id: "today",
+    year: "Today",
+    category: "Institutional CSR & Scale",
+    title: "Sustainable partnerships & progress",
+    description: "Today, BSGSS connects education, healthcare, skills, women’s empowerment and institutional CSR partnerships with RITES, IRCON, and REC—sustaining community self-reliance across North India.",
+    image: "/images/bsgss/gallery-events/355-1-1.jpg",
+    imageAlt: "BSGSS leadership and community partners at formal event",
+    location: "Uttar Pradesh, Delhi, Haryana and Punjab",
+  },
+];
+
+export interface IndiaStateProgram {
+  state: string;
+  districts: string[];
+  villages: number | null;
+  programs: number;
+}
+
+const stateLabels = ["Uttar Pradesh", "Haryana", "Punjab", "Rajasthan", "Chhattisgarh"] as const;
+
+const normalise = (value: string) => value.toLowerCase().replace(/[^a-z]/g, "");
+
+const aliases: Record<string, string> = {
+  delhi: "delhi",
+  nctofdelhi: "delhi",
+  orissa: "odisha",
+  uttaranchal: "uttarakhand",
+};
+
+export function normaliseStateName(name: string) {
+  const cleaned = normalise(name);
+  return aliases[cleaned] ?? cleaned;
+}
+
+function stateFromLocation(location: string) {
+  return stateLabels.find((state) => normaliseStateName(location).includes(normaliseStateName(state)));
+}
+
+export const indiaProgramData: IndiaStateProgram[] = stateLabels.map((state) => {
+  const records = partners.filter((partner) => partner.locations.some((location) => stateFromLocation(location) === state));
+  const districts = [...new Set(records.flatMap((partner) => partner.locations.filter((location) => stateFromLocation(location) === state).map((location) => location.split(",")[0]!)))].sort();
+
+  return { state, districts, villages: null, programs: records.length };
+});
+
+export const indiaProgrammeTotals = {
+  states: indiaProgramData.length,
+  districts: indiaProgramData.reduce((total, state) => total + state.districts.length, 0),
+  villages: 60,
+};
+
+export function getIndiaStateProgram(stateName: string) {
+  const target = normaliseStateName(stateName);
+  return indiaProgramData.find((state) => normaliseStateName(state.state) === target);
+}
+
 /**
  * BSGSS public-site content registry.
  *
@@ -87,7 +198,80 @@ export const content = {
       { image: "191-whatsapp-image-2025-10-09-at-15-55-32-c60ee022.jpg", outlet: "Dainik Bhaskar", title: "Cleanliness fortnight campaign in Noida" }, { image: "192-whatsapp-image-2025-10-09-at-15-55-32-dd874b0a.jpg", outlet: "Veer Arjun", title: "Joint cleanliness campaign in Noida" }, { image: "193-whatsapp-image-2025-10-09-at-15-55-33-3c50f567.jpg", outlet: "Jagat Kranti", title: "Free health camp in Bastar" }, { image: "194-whatsapp-image-2025-10-09-at-15-55-33-532afc9f.jpg", outlet: "Media coverage", title: "BSGSS community programme" }, { image: "196-whatsapp-image-2025-10-09-at-16-49-28-cc32c34a.jpg", outlet: "Media coverage", title: "Community outreach activity" }, { image: "198-whatsapp-image-2025-10-09-at-16-49-29-e802fef2.jpg", outlet: "Media coverage", title: "BSGSS programme coverage" }, { image: "200-whatsapp-image-2025-10-09-at-16-49-32-aab7df99.jpg", outlet: "Media coverage", title: "Community-development initiative" }, { image: "201-whatsapp-image-2025-10-09-at-16-49-34-40e80876.jpg", outlet: "Media coverage", title: "Local community activity" }, { image: "202-whatsapp-image-2025-10-09-at-16-49-35-5e1b9a12.jpg", outlet: "Media coverage", title: "BSGSS field work" }, { image: "203-whatsapp-image-2025-10-09-at-16-49-35-618e38b6.jpg", outlet: "Media coverage", title: "Community support programme" }, { image: "204-whatsapp-image-2025-10-09-at-16-49-35-fd267bae.jpg", outlet: "Media coverage", title: "Public-interest initiative" }, { image: "205-whatsapp-image-2025-10-09-at-16-49-36-3cba5966.jpg", outlet: "Media coverage", title: "BSGSS in the media" }, { image: "206-whatsapp-image-2025-10-09-at-16-49-36-d00f56ee.jpg", outlet: "Media coverage", title: "Community programme coverage" },
     ],
   },
-  join: { metadataTitle: "Join Us", title: "Join Us", lead: "Bring your time, skills, ideas or support to a community-led mission for a more inclusive and self-reliant society.", emailSubject: "Joining BSGSS" },
+  story: {
+    metadataTitle: "Our Story",
+    title: "Our Story",
+    lead: "The journey of Bisnouli Sarvodaya Gramodyog Sewa Sansthan since 1994.",
+    eyebrow: "Our journey",
+    heading: "A journey of practical change, shaped with communities.",
+    heroDescription: "Since 1994, BSGSS has worked alongside people across North India to turn access to learning, health and livelihoods into lasting opportunity.",
+    heroImage: "/images/bsgss/banners/589-banner-1.webp",
+  },
+  join: {
+    metadataTitle: "Join Us & Volunteer",
+    title: "Join Us",
+    lead: "Bring your time, skills, ideas or institutional support to empower rural communities and advance women's self-reliance.",
+    eyebrow: "Get Involved with BSGSS",
+    heading: "Choose how you would like to contribute.",
+    description: "Whether you want to volunteer on the ground, explore student internships, establish a CSR partnership, or share vocational skills, BSGSS welcomes your participation.",
+    emailSubject: "Joining BSGSS",
+    roles: [
+      {
+        id: "volunteer",
+        label: "Volunteer (Field & Community Outreach)",
+        shortTitle: "Volunteer",
+        badge: "Grassroots Support",
+        suggestedSubject: "Volunteering Interest — Field Outreach & Community Support",
+        suggestedMessage: "I would like to volunteer my time with BSGSS. I am interested in supporting community education drives, health camps, or women's empowerment initiatives on the ground. Please connect me with upcoming programmes.",
+        description: "Contribute your time to grassroots camps, literacy activities, and community drives.",
+      },
+      {
+        id: "internship",
+        label: "Student & Academic Internship",
+        shortTitle: "Internship",
+        badge: "Students & Youth",
+        suggestedSubject: "Student Internship Application — Social Sector Exposure",
+        suggestedMessage: "I am applying for an internship opportunity with BSGSS. I want to contribute to programme documentation, field coordination, and community learning while building practical social sector experience.",
+        description: "Build hands-on social work experience in field coordination, research, and documentation.",
+      },
+      {
+        id: "csr_partner",
+        label: "Corporate CSR & Institutional Partner",
+        shortTitle: "CSR Partnership",
+        badge: "Organisations & CSR",
+        suggestedSubject: "CSR Collaboration & Institutional Project Enquiry",
+        suggestedMessage: "We represent an organisation interested in exploring CSR partnership and grant-in-aid opportunities with BSGSS in healthcare, women's skill development, or rural livelihoods. We would like to discuss potential alignment.",
+        description: "Partner with BSGSS on compliant, impactful CSR programmes with full reporting and audit transparency.",
+      },
+      {
+        id: "trainer",
+        label: "Vocational Trainer & Skills Mentor",
+        shortTitle: "Skill Mentor",
+        badge: "Knowledge Sharing",
+        suggestedSubject: "Vocational Training & Skill Mentorship Collaboration",
+        suggestedMessage: "I would like to contribute my vocational skills (tailoring, cutting, digital literacy, beauty culture, or entrepreneurship) to train rural women and young people towards financial independence.",
+        description: "Teach and mentor women and youth in vocational crafts, digital tools, and micro-business skills.",
+      },
+      {
+        id: "supporter",
+        label: "Resource & Community Supporter",
+        shortTitle: "Supporter",
+        badge: "Resource Contribution",
+        suggestedSubject: "Community Support & Resource Contribution",
+        suggestedMessage: "I would like to support BSGSS with learning materials, health resources, technical tools, or donor contributions to strengthen community programmes.",
+        description: "Contribute learning materials, health supplies, or resources for rural community centres.",
+      },
+      {
+        id: "other",
+        label: "General Community Contributor",
+        shortTitle: "General",
+        badge: "Collaborate",
+        suggestedSubject: "General Collaboration Enquiry with BSGSS",
+        suggestedMessage: "I would like to connect with the BSGSS team to discuss how my background and ideas can support your mission.",
+        description: "Connect with our team to explore customised ways to participate and support our mission.",
+      },
+    ],
+  },
   contact: {
     metadataTitle: "Contact BSGSS",
     title: "Contact Us",
