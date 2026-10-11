@@ -39,9 +39,9 @@ export function PageHeader({
   const subtitle = lead ?? description;
   return (
     <div className="border-b border-brand-100 bg-white">
-      <Container className="py-5 sm:py-6 md:py-7">
+      <Container className="py-4 sm:py-5">
         <nav aria-label="Breadcrumb">
-          <ol className="flex flex-wrap items-center gap-1 text-xs sm:text-sm text-ink-muted">
+          <ol className="flex flex-wrap items-center gap-1 text-xs text-ink-muted">
             {trail.map((c, i) => {
               const last = i === trail.length - 1;
               return (
@@ -63,8 +63,8 @@ export function PageHeader({
             })}
           </ol>
         </nav>
-        <h1 className="mt-2.5 max-w-3xl font-display text-2xl font-bold text-ink sm:text-3xl">{title}</h1>
-        {subtitle && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">{subtitle}</p>}
+        <h1 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">{title}</h1>
+        {subtitle && <p className="mt-1.5 max-w-4xl text-sm leading-normal text-ink-muted sm:text-[15px]">{subtitle}</p>}
         {children}
       </Container>
       <JsonLd data={breadcrumbJsonLd(trail)} />

@@ -286,11 +286,11 @@ type MegaMenuKey = "About" | "Our work" | "Activities" | "Impact";
 const megaMenus = {
   About: {
     eyebrow: "About BSGSS",
-    title: "A community-led organisation, rooted in practical action.",
-    description: "Learn about BSGSS, the journey since 1994, public registrations and the institutions that have supported our work.",
+    title: "Rooted in community action since 1994",
+    description: "Learn about our mission, journey since 1994, statutory compliance and partners.",
     href: "/about",
     cta: "Explore About BSGSS",
-    feature: { icon: FileCheck2, title: "Transparency, made accessible", description: "Registrations, certificates and public documents in one place.", href: "/about/legal-status" },
+    feature: { icon: FileCheck2, title: "Transparency & Trust", description: "Registrations, certificates and public documents in one place.", href: "/about/legal-status" },
     columns: [
       { title: "Discover", links: [{ label: "About us", description: "Our mission, reach and community focus.", href: "/about", icon: BookOpen }, { label: "Our story", description: "The BSGSS journey since 1994.", href: "/about/our-story", icon: Route }, { label: "Management", description: "Messages from BSGSS leadership.", href: "/management", icon: Users }] },
       { title: "Trust & connect", links: [{ label: "Legal status", description: "Registration and compliance documents.", href: "/about/legal-status", icon: FileCheck2 }, { label: "Our partners", description: "CSR and institutional partnerships.", href: "/about/partners", icon: Handshake }, { label: "Join BSGSS", description: "Volunteer, intern, partner or support our work.", href: "/join-us", icon: HandHeart }] },
@@ -298,20 +298,20 @@ const megaMenus = {
   },
   "Our work": {
     eyebrow: "What we do",
-    title: "Integrated work that supports stronger, more self-reliant communities.",
-    description: "BSGSS brings education, healthcare, livelihood pathways and women’s empowerment together around everyday community needs.",
+    title: "Programmes for self-reliance",
+    description: "Education, healthcare, livelihood pathways and women’s empowerment.",
     href: "/our-work",
     cta: "Explore our work",
     feature: { icon: HandHeart, title: "Work with BSGSS", description: "Explore CSR, institutional and community collaboration.", href: "/contact" },
     columns: [
-      { title: "Programme areas", links: [{ label: "Education & digital inclusion", description: "Learning support and digital literacy.", href: "/our-work", icon: BookOpen }, { label: "Healthcare & awareness", description: "Camps, prevention and access-oriented outreach.", href: "/our-work", icon: HeartPulse }] },
+      { title: "Programme areas", links: [{ label: "Education & digital", description: "Learning support and digital literacy.", href: "/our-work", icon: BookOpen }, { label: "Healthcare & awareness", description: "Camps, prevention and access outreach.", href: "/our-work", icon: HeartPulse }] },
       { title: "Economic opportunity", links: [{ label: "Skills & livelihoods", description: "Vocational pathways towards income.", href: "/our-work", icon: HandHeart }, { label: "Women’s empowerment", description: "Agency, self-help and economic opportunity.", href: "/our-work", icon: Users }] },
     ],
   },
   Activities: {
     eyebrow: "Activities & media",
-    title: "See community work, skills and creativity in action.",
-    description: "Explore programme moments and handmade products created through women’s self-help groups supported by BSGSS.",
+    title: "Community skills in action",
+    description: "Explore programme moments and handmade products created by women’s SHGs.",
     href: "/activities",
     cta: "Explore all activities",
     feature: { icon: Video, title: "Video gallery", description: "Watch BSGSS programmes, camps and community activity on YouTube.", href: "/activities/videos" },
@@ -322,8 +322,8 @@ const megaMenus = {
   },
   Impact: {
     eyebrow: "Impact",
-    title: "Useful change that communities can carry forward.",
-    description: "See the outcomes BSGSS works towards—from access and awareness to livelihoods, women’s agency and community participation.",
+    title: "Practical change across communities",
+    description: "Outcomes across awareness, livelihoods, women’s agency and local growth.",
     href: "/impact",
     cta: "Explore our impact",
     feature: { icon: Activity, title: "See work in action", description: "View programme moments, camps and community activity.", href: "/activities" },
@@ -342,15 +342,53 @@ function MegaMenu({ menu, onNavigate }: { menu: (typeof megaMenus)[MegaMenuKey];
   const FeatureIcon = menu.feature.icon;
   return (
     <section role="dialog" aria-label={`${menu.eyebrow} navigation`} className="mega-menu-panel absolute inset-x-0 top-full z-50 border-y border-line bg-white shadow-lift">
-      <div className="mx-auto grid max-w-6xl grid-cols-[1.05fr_1fr_1fr_.9fr] gap-6 px-8 py-6">
-        <div className="border-r border-brand-100 pr-6">
+      <div className="mx-auto grid max-w-7xl grid-cols-[1.1fr_1fr_1fr_0.95fr] gap-5 px-6 py-5">
+        <div className="border-r border-brand-100 pr-5">
           <p className="text-[0.6875rem] font-bold uppercase tracking-[.2em] text-brand-700">{menu.eyebrow}</p>
-          <h2 className="mt-2.5 font-display text-[1.625rem] font-semibold leading-[1.12] text-ink">{menu.title}</h2>
-          <p className="mt-3 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.description}</p>
-          <Link href={menu.href} onClick={onNavigate} className="mt-4 inline-flex items-center gap-2 text-[0.8125rem] font-semibold text-brand-700 transition hover:text-brand-900">{menu.cta} <ArrowRight className="h-4 w-4" /></Link>
+          <h2 className="mt-1.5 font-display text-lg font-bold leading-snug text-ink sm:text-xl">{menu.title}</h2>
+          <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.description}</p>
+          <Link href={menu.href} onClick={onNavigate} className="mt-3.5 inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brand-700 transition hover:text-brand-900">{menu.cta} <ArrowRight className="h-4 w-4" /></Link>
         </div>
-        {menu.columns.map((column) => <div key={column.title}><p className="text-[0.6875rem] font-bold uppercase tracking-[.16em] text-ink-muted">{column.title}</p><div className="mt-2 space-y-0.5">{column.links.map((link) => { const Icon = link.icon; return <Link key={link.label} href={link.href} onClick={onNavigate} className="group flex gap-3 rounded-lg p-2.5 transition hover:bg-brand-50"><span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-700 transition group-hover:bg-white"><Icon className="h-4 w-4" /></span><span><span className="block text-[0.875rem] font-semibold text-ink">{link.label}</span><span className="mt-0.5 block text-[0.75rem] leading-relaxed text-ink-muted">{link.description}</span></span></Link>; })}</div></div>)}
-        <Link href={menu.feature.href} onClick={onNavigate} className="group rounded-xl border border-brand-200 bg-brand-50 p-5 text-ink shadow-sm transition hover:border-brand-300 hover:bg-brand-100 hover:shadow-md"><FeatureIcon className="h-5 w-5 text-brand-700" /><p className="mt-5 font-display text-lg font-semibold text-ink">{menu.feature.title}</p><p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.feature.description}</p><span className="mt-4 inline-flex items-center gap-2 text-[0.8125rem] font-semibold text-brand-700">Explore <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>
+        {menu.columns.map((column) => (
+          <div key={column.title}>
+            <p className="text-[0.6875rem] font-bold uppercase tracking-[.16em] text-ink-muted">{column.title}</p>
+            <div className="mt-2 space-y-0.5">
+              {column.links.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={onNavigate}
+                    className="group flex gap-2.5 rounded-lg p-2 transition hover:bg-brand-50"
+                  >
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-700 transition group-hover:bg-white">
+                      <Icon className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[0.8125rem] font-semibold text-ink leading-tight">{link.label}</span>
+                      <span className="mt-0.5 block text-[0.75rem] leading-snug text-ink-muted line-clamp-1">{link.description}</span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+        <Link
+          href={menu.feature.href}
+          onClick={onNavigate}
+          className="group flex flex-col justify-between rounded-xl border border-brand-200 bg-brand-50 p-4 text-ink shadow-2xs transition hover:border-brand-300 hover:bg-brand-100 hover:shadow-xs"
+        >
+          <div>
+            <FeatureIcon className="h-5 w-5 text-brand-700" />
+            <p className="mt-3 font-display text-base font-bold text-ink">{menu.feature.title}</p>
+            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-ink-muted">{menu.feature.description}</p>
+          </div>
+          <span className="mt-3 inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brand-700">
+            Explore <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+          </span>
+        </Link>
       </div>
     </section>
   );

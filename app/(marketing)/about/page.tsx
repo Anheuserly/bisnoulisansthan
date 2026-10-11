@@ -21,7 +21,7 @@ export default function AboutPage() {
   return (
     <div>
       {/* Intro hero band */}
-      <section className="border-b border-line bg-sand-50/70 py-8 sm:py-12 md:py-14">
+      <section className="border-b border-line bg-sand-50/70 py-6 sm:py-8 md:py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{about.eyebrow}</p>
@@ -61,7 +61,7 @@ export default function AboutPage() {
       </section>
 
       {/* How it began & Journey (Light theme) */}
-      <section className="py-8 sm:py-12 md:py-14">
+      <section className="py-6 sm:py-8 md:py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:items-start md:px-8">
           {/* Light Card Replacing Previous Dark Card */}
           <div className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 text-ink shadow-2xs">
@@ -100,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Purpose */}
-      <section className="border-y border-brand-100 bg-brand-50/50 py-8 sm:py-12 md:py-14">
+      <section className="border-y border-brand-100 bg-brand-50/50 py-6 sm:py-8 md:py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
@@ -121,7 +121,7 @@ export default function AboutPage() {
       </section>
 
       {/* Explore BSGSS */}
-      <section className="py-8 sm:py-12 md:py-14">
+      <section className="py-6 sm:py-8 md:py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Explore BSGSS</p>
           <h2 className="mt-1 font-display text-2xl font-bold text-ink sm:text-3xl">
