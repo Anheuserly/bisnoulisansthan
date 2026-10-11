@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Heart, Landmark, Mail, ShieldCheck } from "lucide-react";
+import { Heart, Mail, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { BankDetailsCard } from "@/components/support/BankDetailsCard";
 import { DonationVerificationForm } from "@/components/support/DonationVerificationForm";
 import { content, links } from "@/config/content";
 
@@ -36,28 +37,15 @@ export default function SupportPage() {
                 {support.text}
               </p>
 
-              <div className="mt-6 overflow-hidden rounded-xl border border-brand-200/80 bg-white shadow-2xs">
-                <div className="flex items-center gap-2.5 border-b border-brand-100 bg-sand-50/80 px-4 py-3">
-                  <Landmark className="h-4 w-4 text-brand-700" />
-                  <h3 className="font-display text-sm font-bold text-ink sm:text-base">
-                    {support.bankTitle}
-                  </h3>
-                </div>
-                <dl className="text-xs sm:text-sm">
-                  <div className="grid gap-1 border-b border-line px-4 py-3 sm:grid-cols-[11rem_1fr]">
-                    <dt className="font-semibold text-ink">Account name</dt>
-                    <dd className="text-ink-muted">{support.accountName}</dd>
-                  </div>
-                  <div className="grid gap-1 border-b border-line px-4 py-3 sm:grid-cols-[11rem_1fr]">
-                    <dt className="font-semibold text-ink">Current account no.</dt>
-                    <dd className="font-mono font-medium text-ink-muted">{support.accountNumber}</dd>
-                  </div>
-                  <div className="grid gap-1 px-4 py-3 sm:grid-cols-[11rem_1fr]">
-                    <dt className="font-semibold text-ink">IFSC code</dt>
-                    <dd className="font-mono font-medium text-ink-muted">{support.ifsc}</dd>
-                  </div>
-                </dl>
-              </div>
+              <BankDetailsCard
+                bankTitle={support.bankTitle}
+                bankName={support.bankName}
+                branchName={support.branchName}
+                accountName={support.accountName}
+                accountNumber={support.accountNumber}
+                accountType={support.accountType}
+                ifsc={support.ifsc}
+              />
 
               <a
                 href="mailto:bsgssindia@yahoo.co.in?subject=Support%20BSGSS"
