@@ -1,4 +1,5 @@
 import type { OpeningHours, SocialLink } from "@/types";
+import { content } from "./content";
 
 const env = (key: string): string | null => {
   const value = process.env[key];
@@ -10,8 +11,7 @@ export const site = {
   name: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
   shortName: "BSGSS",
   url: env("NEXT_PUBLIC_SITE_URL") ?? "https://bisnoulisansthan.in",
-  description:
-    "BSGSS is a voluntary organisation empowering communities through education, healthcare, skill development and women's empowerment.",
+  description: content.site.description,
   address: {
     line1: "B-180, Sector–31", line2: "Noida – 201301", locality: "Noida", district: "Gautam Buddha Nagar",
     region: "Uttar Pradesh", country: "India", countryCode: "IN", postalCode: "201301",

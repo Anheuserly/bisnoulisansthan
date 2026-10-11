@@ -4,45 +4,43 @@ import { ArrowRight, BookOpen, Building2, HandHeart, Handshake, HeartPulse, Land
 import { InteractiveIndiaMap } from "@/components/impact/InteractiveIndiaMap";
 import { HomeHero } from "@/components/home/HomeHero";
 import { site } from "@/config/site";
+import { content, links } from "@/config/content";
 
 export const metadata: Metadata = {
-  title: "Community development since 1994",
+  title: content.home.metadataTitle,
   description: site.description,
 };
 
-const programs = [
-  { title: "Education & digital literacy", text: "Supporting learning opportunities and practical digital skills for children, young people and families.", icon: BookOpen, href: "/our-work" },
-  { title: "Healthcare initiatives", text: "Mobile clinics, free health check-up camps, immunisation, nutrition drives and health awareness programmes.", icon: HeartPulse, href: "/our-work" },
-  { title: "Skills & livelihoods", text: "Vocational training in tailoring, computer literacy, beauty culture, English communication and entrepreneurship.", icon: HandHeart, href: "/our-work" },
-  { title: "Women’s empowerment", text: "Action for Micro-Finance and Rehabilitation (AMAR), self-help groups and income-generation opportunities.", icon: Users, href: "/our-work" },
-];
+const programmeIcons = [BookOpen, HeartPulse, HandHeart, Users];
+const programs = content.home.programmes.map((programme, index) => ({ ...programme, icon: programmeIcons[index] ?? BookOpen, href: links.programmes }));
 
 export default function HomePage() {
+  const { about, government, impact, management } = content.home;
   return (
     <>
       <HomeHero />
 
       <section className="border-y border-brand-100 bg-brand-50 py-16 sm:py-20">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[.9fr_1.1fr] md:items-center md:px-8">
-          <div className="rounded-2xl bg-brand-700 p-8 text-white sm:p-10"><Building2 className="h-9 w-9 text-brand-200" /><p className="mt-6 text-sm font-bold uppercase tracking-[.18em] text-brand-200">Public-purpose programmes</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white">Government-supported work, made practical at community level.</h2><p className="mt-5 leading-relaxed text-brand-100">Awareness, education, health and livelihood activity helps communities understand public support, strengthen local groups and access services.</p><Link href="/activities-under-state-central-government" className="mt-7 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-brand-900 hover:bg-brand-50">Learn about the programmes <ArrowRight className="h-4 w-4" /></Link></div>
-          <div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Activities under State & Central Government</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">Connecting people with knowledge, services and opportunity.</h2><p className="mt-5 max-w-2xl leading-relaxed text-ink-muted">BSGSS has implemented community-based initiatives supported through Central and State Government schemes, combining outreach with training, awareness, health and livelihood support in Uttar Pradesh and neighbouring states.</p><Link href="/activities-under-state-central-government" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">Read more <ArrowRight className="h-4 w-4" /></Link></div>
+          <div className="rounded-2xl bg-brand-700 p-8 text-white sm:p-10"><Building2 className="h-9 w-9 text-brand-200" /><p className="mt-6 text-sm font-bold uppercase tracking-[.18em] text-brand-200">{government.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white">{government.title}</h2><p className="mt-5 leading-relaxed text-brand-100">{government.text}</p><Link href={links.government} className="mt-7 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-brand-900 hover:bg-brand-50">{government.cta} <ArrowRight className="h-4 w-4" /></Link></div>
+          <div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{government.overviewEyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">{government.overviewTitle}</h2><p className="mt-5 max-w-2xl leading-relaxed text-ink-muted">{government.overviewText}</p><Link href={links.government} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">{government.overviewCta} <ArrowRight className="h-4 w-4" /></Link></div>
         </div>
       </section>
 
       <section className="bg-sand-50 py-16" id="about">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-2 md:items-center md:px-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">About us</p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">A practical commitment to dignity and self-reliance.</h2>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{about.eyebrow}</p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">{about.title}</h2>
           </div>
-          <p className="text-base leading-relaxed text-ink-muted">Founded in Bisnouli village, Dadri Tehsil, BSGSS is a registered voluntary organisation. Its community-led work brings together education, healthcare, vocational training, micro-finance and support for women so that families can create sustainable futures.</p>
+          <p className="text-base leading-relaxed text-ink-muted">{about.text}</p>
         </div>
       </section>
 
       <section className="py-16 sm:py-20" id="programs">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Our key programmes</p>
-          <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold text-ink sm:text-4xl">Development that meets people where they are.</h2>
+          <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="mt-3 max-w-2xl font-display text-3xl font-bold text-ink sm:text-4xl">Development that meets people where they are.</h2><Link href={links.programmes} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">Explore our key programmes <ArrowRight className="h-4 w-4" /></Link></div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {programs.map(({ title, text, icon: Icon, href }) => <Link key={title} href={href} className="group rounded-xl border border-line bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft"><div className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-50 text-brand-700"><Icon className="h-5 w-5" /></div><h3 className="mt-5 font-display text-lg font-semibold text-ink">{title}</h3><p className="mt-2 text-sm leading-relaxed text-ink-muted">{text}</p><span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-700">Explore programme <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span></Link>)}
           </div>
@@ -50,7 +48,7 @@ export default function HomePage() {
       </section>
 
       <section className="border-y border-brand-100 bg-brand-50 py-16 sm:py-20" id="impact">
-        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Our reach and measurable outcomes</p><h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">Progress that is practical and people-centred.</h2></div><Link href="/impact" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">Explore our impact <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-10 grid gap-4 sm:grid-cols-3"><Stat number="50,000+" label="individuals reached across North India" /><Stat number="30,000+" label="patients treated and counselled" /><Stat number="5,000+" label="women trained in 60+ villages" /></div></div>
+        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{impact.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">{impact.title}</h2></div><Link href={links.impact} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">{impact.cta} <ArrowRight className="h-4 w-4" /></Link></div><div className="mt-10 grid gap-4 sm:grid-cols-3">{impact.stats.map((stat) => <Stat key={stat.label} {...stat} />)}</div></div>
       </section>
 
       <InteractiveIndiaMap />
@@ -72,7 +70,7 @@ export default function HomePage() {
       </section>
 
       <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="max-w-2xl"><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Message from the Management</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">Dignity, justice and equal opportunity guide our work.</h2><p className="mt-5 leading-relaxed text-ink-muted">BSGSS leadership is focused on practical, sustainable solutions that support women, families and communities to build healthier, more self-reliant futures.</p></div><div className="mt-10 grid gap-6 md:grid-cols-2"><ManagementCard name="Nandita Bakshi" role="Ex-IRS · CEO, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/334-111.jpg" message="BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women." /><ManagementCard name="Vijay Kumar Jha" role="Ex-IPS · Chairperson, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/335-11111.jpg" message="Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare." /></div><Link href="/management" className="mt-8 inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50">Read leadership messages <ArrowRight className="h-4 w-4" /></Link></div>
+        <div className="mx-auto max-w-6xl px-5 md:px-8"><div className="max-w-2xl"><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{management.eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">{management.title}</h2><p className="mt-5 leading-relaxed text-ink-muted">{management.text}</p></div><div className="mt-10 grid gap-6 md:grid-cols-2"><ManagementCard name="Nandita Bakshi" role="Ex-IRS · CEO, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/334-111.jpg" message="BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women." /><ManagementCard name="Vijay Kumar Jha" role="Ex-IPS · Chairperson, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/335-11111.jpg" message="Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare." /></div><Link href={links.management} className="mt-8 inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50">{management.cta} <ArrowRight className="h-4 w-4" /></Link></div>
       </section>
 
       <section className="py-16 sm:py-20"><div className="mx-auto grid max-w-6xl gap-8 rounded-2xl border border-brand-200 bg-brand-50 px-7 py-10 md:grid-cols-[1fr_auto] md:items-center md:px-12"><div><div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-700 shadow-sm"><Landmark className="h-6 w-6" /></div><p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Support BSGSS</p><h2 className="mt-3 font-display text-3xl font-bold text-ink">Your contribution can strengthen a community.</h2><p className="mt-3 max-w-2xl leading-relaxed text-ink-muted">Explore secure support options, including bank transfer and UPI donation details.</p></div><Link href="/support" className="inline-flex items-center justify-center rounded-md bg-brand-700 px-5 py-3 font-semibold text-white hover:bg-brand-800">Support us <ArrowRight className="ml-2 h-4 w-4" /></Link></div></section>

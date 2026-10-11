@@ -1,10 +1,28 @@
 import type { Metadata } from "next";
+import { ExternalLink, Images } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { content, links } from "@/config/content";
 
-export const metadata: Metadata = { title: "Activity Gallery", description: "BSGSS programmes and community outreach in action." };
+export const metadata: Metadata = {
+  title: content.activities.photoGallery.metadataTitle,
+  description: content.activities.photoGallery.lead,
+};
 
-const gallery = [
-  ["Community programmes", "gallery-community/192-whatsapp-image-2025-10-09-at-15-55-32-dd874b0a.jpg"], ["Healthcare camps", "healthcare-camps/150-camp3.jpeg"], ["Vocational training", "gallery-training/186-tal2.jpeg"], ["Education initiatives", "education/153-class4.jpeg"], ["Youth activities", "gallery-jac/161-jac3.jpg"], ["Events and outreach", "gallery-events/355-1-1.jpg"], ["Women’s skills training", "gallery-training/185-tal1.jpeg"], ["Community engagement", "gallery-community/191-whatsapp-image-2025-10-09-at-15-55-32-c60ee022.jpg"], ["Programme event", "gallery-events/367-16.jpg"],
-] as const;
+export default function GalleryPage() {
+  const gallery = content.activities.photoGallery;
 
-export default function GalleryPage() { return <><PageHeader title="Activity gallery" lead="A visual record of BSGSS programmes, people and community participation." crumbs={[{ name: "Activities", path: "/activities" }, { name: "Gallery", path: "/activities/gallery" }]} /><main className="py-16 sm:py-24"><div className="mx-auto max-w-6xl px-5 md:px-8"><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{gallery.map(([title, image]) => <figure key={image} className="group overflow-hidden rounded-xl border border-line bg-white shadow-sm"><div className="aspect-[4/3] overflow-hidden">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={`/images/bsgss/${image}`} alt={title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /></div><figcaption className="px-5 py-4 text-sm font-semibold text-ink">{title}</figcaption></figure>)}</div></div></main></> }
+  return <>
+    <PageHeader title={gallery.title} lead={gallery.lead} crumbs={[{ name: "Activities", path: links.activities }, { name: "Photo gallery", path: links.gallery }]} />
+    <main className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <section className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-brand-200 bg-brand-50 p-6 sm:p-8">
+          <div className="flex items-center gap-4"><span className="grid h-12 w-12 place-items-center rounded-xl bg-white text-brand-700 shadow-sm"><Images className="h-6 w-6" /></span><div><p className="font-display text-xl font-bold text-ink">{gallery.images.length} photo moments</p><p className="mt-1 text-sm text-ink-muted">Community programmes, people and outreach captured by BSGSS.</p></div></div>
+          <a href={gallery.source} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">View source gallery <ExternalLink className="h-4 w-4" /></a>
+        </section>
+        <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {gallery.images.map((image, index) => <a key={image.src} href={image.src} target="_blank" rel="noreferrer" className="group overflow-hidden rounded-xl border border-line bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lift"><div className="aspect-square overflow-hidden bg-sand-50">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={image.src} alt={image.title} loading={index < 6 ? "eager" : "lazy"} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /></div><div className="flex items-center justify-between gap-3 px-5 py-4"><span className="text-sm font-semibold text-ink">{image.title}</span><ExternalLink className="h-4 w-4 shrink-0 text-brand-700" /></div></a>)}
+        </section>
+      </div>
+    </main>
+  </>;
+}

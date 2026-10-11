@@ -265,7 +265,7 @@ const megaMenus = {
     cta: "Explore all activities",
     feature: { icon: Video, title: "Video gallery", description: "Watch BSGSS programmes, camps and community activity on YouTube.", href: "/activities/videos" },
     columns: [
-      { title: "Explore", links: [{ label: "Activity gallery", description: "Programme, training and outreach moments.", href: "/activities/gallery", icon: ImageIcon }, { label: "Video gallery", description: "Watch BSGSS videos on YouTube.", href: "/activities/videos", icon: Video }, { label: "Work in media", description: "Public media clippings about BSGSS activities.", href: "/activities/work-in-media", icon: FileCheck2 }, { label: "Programme activities", description: "Community, health, education and youth initiatives.", href: "/activities", icon: Activity }] },
+      { title: "Explore", links: [{ label: "Our Key Programmes", description: "Healthcare, livelihoods and skill development.", href: "/activities/key-programmes", icon: HeartPulse }, { label: "Photo gallery", description: "Programme, training and outreach moments.", href: "/activities/gallery", icon: ImageIcon }, { label: "Video gallery", description: "Watch BSGSS videos on YouTube.", href: "/activities/videos", icon: Video }, { label: "Work in media", description: "Public media clippings about BSGSS activities.", href: "/activities/work-in-media", icon: FileCheck2 }] },
       { title: "Community enterprise", links: [{ label: "SHG products", description: "Handmade items created by women’s self-help groups.", href: "/activities/shg-products", icon: ShoppingBag }, { label: "Government programmes", description: "Awareness, skill and welfare collaboration.", href: "/activities-under-state-central-government", icon: FileCheck2 }, { label: "Partner stories", description: "See the partnerships behind community work.", href: "/about/partners", icon: Handshake }] },
     ],
   },
@@ -313,7 +313,8 @@ const searchItems = [
   { title: "Our partners", href: "/about/partners", description: "CSR and government partners.", keywords: "csr corporate government funders partnership" },
   { title: "Our work", href: "/our-work", description: "Education, healthcare, skills and women’s empowerment.", keywords: "education health livelihood training women microfinance" },
   { title: "Activities", href: "/activities", description: "Community programmes in action.", keywords: "photos events camps activities gallery" },
-  { title: "Activity gallery", href: "/activities/gallery", description: "Programme, training and outreach moments.", keywords: "photos gallery community healthcare education events" },
+  { title: "Our Key Programmes", href: "/activities/key-programmes", description: "Healthcare, livelihoods and skill development programmes.", keywords: "programmes programs amar healthcare skills vocational training livelihoods" },
+  { title: "Photo gallery", href: "/activities/gallery", description: "Programme, training and outreach moments.", keywords: "photos gallery community healthcare education events" },
   { title: "Video gallery", href: "/activities/videos", description: "BSGSS programme films on YouTube.", keywords: "videos youtube rites khora hilalpur cancer camp" },
   { title: "Work in media", href: "/activities/work-in-media", description: "Public media clippings about BSGSS activities.", keywords: "media press newspaper news coverage clippings" },
   { title: "Government programmes", href: "/activities-under-state-central-government", description: "State and Central Government-supported community initiatives.", keywords: "government central state awareness welfare grant aid health social schemes" },
@@ -326,5 +327,5 @@ const searchItems = [
 
 const mobileSubNavigation: Record<string, Array<{ label: string; href: string }>> = {
   About: aboutNav.slice(1),
-  Activities: [{ label: "Activity gallery", href: "/activities/gallery" }, { label: "Video gallery", href: "/activities/videos" }, { label: "Work in media", href: "/activities/work-in-media" }, { label: "SHG products", href: "/activities/shg-products" }, { label: "Government programmes", href: "/activities-under-state-central-government" }],
+  Activities: [{ label: "Our Key Programmes", href: "/activities/key-programmes" }, { label: "Photo gallery", href: "/activities/gallery" }, { label: "Video gallery", href: "/activities/videos" }, { label: "Work in media", href: "/activities/work-in-media" }, { label: "SHG products", href: "/activities/shg-products" }, { label: "Government programmes", href: "/activities-under-state-central-government" }],
 };
