@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CheckCircle2, FileCheck, ShieldCheck } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ShieldCheck } from "lucide-react";
 import { db } from "@/lib/db";
 import { CertificateActions } from "@/components/support/CertificateActions";
+import { CertificateSeal } from "@/components/support/CertificateSeal";
+import { CertificateSignature } from "@/components/support/CertificateSignature";
 import { amountInWords } from "@/lib/utils/number-to-words";
 import { links } from "@/config/content";
 
@@ -107,7 +109,7 @@ export default async function DonationCertificate({
 
   return (
     <main className="min-h-screen bg-sand-50 px-3 py-6 print:min-h-0 print:bg-white print:p-0 md:px-6">
-      <div className="mx-auto max-w-3xl print:max-w-none">
+      <div className="mx-auto max-w-5xl print:max-w-none">
         {/* Top Control Bar (Hidden on Print) */}
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <Link
@@ -117,157 +119,172 @@ export default async function DonationCertificate({
             <ArrowLeft className="h-4 w-4" />
             Back to Support BSGSS
           </Link>
-          <CertificateActions
-            certificateNumber={donation.certificateNumber}
-            donorName={donation.donorName}
-          />
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline-block rounded-md bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-850 border border-brand-200">
+              Format: A4 Landscape (Horizontal)
+            </span>
+            <CertificateActions
+              certificateNumber={donation.certificateNumber}
+              donorName={donation.donorName}
+            />
+          </div>
         </div>
 
-        {/* Official Certificate Card */}
-        <article className="certificate-card relative overflow-hidden rounded-2xl border-[3px] border-brand-800 bg-white p-6 sm:p-10 shadow-lg print:rounded-none print:border-[2.5px] print:border-brand-900 print:p-8 print:shadow-none">
-          {/* Decorative Corner Filigree Marks */}
-          <div className="absolute top-2 left-2 h-5 w-5 border-t-2 border-l-2 border-brand-700" />
-          <div className="absolute top-2 right-2 h-5 w-5 border-t-2 border-r-2 border-brand-700" />
-          <div className="absolute bottom-2 left-2 h-5 w-5 border-b-2 border-l-2 border-brand-700" />
-          <div className="absolute bottom-2 right-2 h-5 w-5 border-b-2 border-r-2 border-brand-700" />
+        {/* Official Certificate Card - HORIZONTAL / LANDSCAPE DESIGN */}
+        <article className="certificate-card relative overflow-hidden rounded-2xl border-[3.5px] border-brand-850 bg-white p-5 sm:p-8 shadow-xl print:rounded-none print:border-[2.5px] print:border-brand-900 print:p-6 print:shadow-none">
+          {/* Ornamental Corner Filigree Accents */}
+          <div className="absolute top-2 left-2 h-6 w-6 border-t-2 border-l-2 border-brand-700" />
+          <div className="absolute top-2 right-2 h-6 w-6 border-t-2 border-r-2 border-brand-700" />
+          <div className="absolute bottom-2 left-2 h-6 w-6 border-b-2 border-l-2 border-brand-700" />
+          <div className="absolute bottom-2 right-2 h-6 w-6 border-b-2 border-r-2 border-brand-700" />
 
-          {/* Inner Double-Line Framing */}
-          <div className="relative border border-brand-200/90 p-4 sm:p-6 print:p-4">
-            {/* Header: Official Logo */}
-            <div className="text-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/bsgss/branding/581-logo-4.png"
-                alt="Bisnouli Sarvodaya Gramodyog Sewa Sansthan"
-                className="mx-auto h-14 sm:h-16 w-auto object-contain max-w-[280px] sm:max-w-[340px]"
-              />
+          {/* Inner Double Pinstripe Frame */}
+          <div className="relative rounded-lg border border-brand-300 p-4 sm:p-6 print:p-4">
+            {/* 1. Header Row (Horizontal 3-Section Balance) */}
+            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b border-brand-200 pb-4">
+              {/* Left: Official BSGSS Logo */}
+              <div className="shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/bsgss/branding/581-logo-4.png"
+                  alt="Bisnouli Sarvodaya Gramodyog Sewa Sansthan"
+                  className="h-12 sm:h-14 w-auto object-contain max-w-[200px] sm:max-w-[260px]"
+                />
+              </div>
 
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[.18em] text-brand-800 sm:text-xs">
-                Bisnouli Sarvodaya Gramodyog Sewa Sansthan
-              </p>
-              <p className="mt-1 text-[10px] sm:text-[11px] text-ink-muted leading-tight">
-                Registered under the Societies Registration Act XXI of 1860 (Reg. No. S-26792/1994)
-              </p>
-              <p className="mt-0.5 text-[10px] text-ink-muted leading-tight">
-                NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">DL/2016/0111645</strong> • 12A &amp; 80G Statutory Registered Voluntary Organisation
-              </p>
-              <p className="mt-0.5 text-[9.5px] text-ink-muted">
-                Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in
-              </p>
+              {/* Center: Legal & Statutory Identity */}
+              <div className="text-center px-2">
+                <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] text-brand-900 leading-tight">
+                  Bisnouli Sarvodaya Gramodyog Sewa Sansthan
+                </p>
+                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
+                  Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)
+                </p>
+                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
+                  NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">DL/2016/0111645</strong> • Tax Exemptions under 12A &amp; 80G
+                </p>
+                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
+                  Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in
+                </p>
+              </div>
+
+              {/* Right: Certificate Meta Badge */}
+              <div className="shrink-0 text-right">
+                <div className="inline-block rounded-lg border border-brand-200 bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs">
+                  <span className="block text-[9px] uppercase font-bold tracking-wider text-brand-700">
+                    Receipt Number
+                  </span>
+                  <span className="font-mono text-xs sm:text-sm font-bold text-brand-950">
+                    {donation.certificateNumber}
+                  </span>
+                  <span className="block text-[9px] text-ink-muted mt-0.5">
+                    Date: <strong className="text-ink">{issued}</strong>
+                  </span>
+                </div>
+              </div>
             </div>
 
-            {/* Divider Rule */}
-            <div className="my-4 flex items-center justify-center gap-3">
-              <div className="h-[1px] flex-1 bg-brand-200" />
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-50 text-brand-800 ring-1 ring-brand-300">
-                <CheckCircle2 className="h-4 w-4" />
-              </span>
-              <div className="h-[1px] flex-1 bg-brand-200" />
-            </div>
-
-            {/* Certificate Title */}
-            <div className="text-center">
-              <h1 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-ink uppercase">
-                Donation Acknowledgement Receipt
+            {/* 2. Certificate Title Ribbon */}
+            <div className="mt-4 text-center">
+              <h1 className="font-display text-xl sm:text-2xl lg:text-[1.65rem] font-bold uppercase tracking-wider text-ink leading-tight">
+                Donation Acknowledgement Certificate
               </h1>
-              <p className="mt-0.5 text-[11px] font-medium text-brand-700 italic">
-                Official Digital Receipt for Voluntary Contribution
+              <p className="mt-0.5 text-[11px] font-medium italic text-brand-700">
+                Official Receipt Issued for Voluntary Support Towards Social &amp; Community Welfare
               </p>
             </div>
 
-            {/* Certificate Metadata Ribbon */}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-brand-200 bg-sand-50/70 px-4 py-2 text-xs">
-              <div>
-                <span className="text-[10px] uppercase font-semibold text-ink-muted">Receipt No: </span>
-                <strong className="font-mono text-brand-900 font-bold">{donation.certificateNumber}</strong>
-              </div>
-              <div>
-                <span className="text-[10px] uppercase font-semibold text-ink-muted">Date of Issue: </span>
-                <span className="font-semibold text-ink">{issued}</span>
-              </div>
-            </div>
-
-            {/* Donor Acknowledgement Statement */}
-            <div className="mt-5 text-center">
-              <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-                This acknowledges with heartfelt gratitude and sincere appreciation the voluntary contribution received with thanks from:
+            {/* 3. Citation & Donor Highlight */}
+            <div className="mt-3 text-center">
+              <p className="text-xs sm:text-[0.82rem] text-ink-muted leading-relaxed">
+                This certifies with deepest appreciation and heartfelt gratitude that a voluntary contribution has been generously received from
               </p>
 
-              <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold text-ink tracking-tight">
+              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-extrabold text-brand-950 tracking-tight">
                 {donation.donorName}
               </h2>
 
-              <p className="mx-auto mt-2 max-w-xl text-xs sm:text-sm text-ink-muted leading-relaxed">
-                towards advancing grassroots rural education, women’s vocational skill development, healthcare clinics, and community self-reliance initiatives.
+              <p className="mx-auto mt-1 max-w-2xl text-[11px] sm:text-xs text-ink-muted leading-relaxed">
+                towards advancing rural healthcare clinics, women&apos;s vocational skill training, education, and community self-reliance initiatives across underprivileged regions.
               </p>
             </div>
 
-            {/* Financial Contribution Details Box */}
-            <div className="mt-5 rounded-xl border border-brand-200 bg-brand-50/40 p-4 text-center">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-brand-700">
-                Contribution Received
-              </span>
-              <p className="mt-1 font-display text-2xl sm:text-3xl font-black text-brand-900">
-                {formattedAmount}
-              </p>
-              {inWords && (
-                <p className="mt-1 text-xs font-semibold italic text-brand-800">
-                  ({inWords})
-                </p>
-              )}
-
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 border-t border-brand-200/80 pt-2 text-[11px] text-ink-muted">
-                <div>
-                  <span>Payment Mode: </span>
-                  <strong className="text-ink font-semibold uppercase">{donation.paymentMethod.replace("_", " ")}</strong>
-                </div>
-                <div>
-                  <span>Transaction Reference: </span>
-                  <code className="font-mono text-ink font-semibold">{donation.paymentReference}</code>
-                </div>
-                <div>
-                  <span>Status: </span>
-                  <strong className="text-emerald-700 font-semibold">Reconciled &amp; Verified</strong>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Signatory & Verification Block */}
-            <div className="mt-6 grid grid-cols-2 items-end gap-4 border-t border-brand-100 pt-4 text-xs">
-              {/* Left: Verification Badge */}
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-brand-800 font-semibold text-[11px]">
-                  <ShieldCheck className="h-4 w-4 shrink-0 text-brand-700" />
-                  <span>Statutory Digital Record</span>
-                </div>
-                <p className="text-[10px] text-ink-muted leading-tight">
-                  This receipt is digitally issued and verified from official statutory records. Authenticity can be verified online at <strong className="text-ink">bisnoulisansthan.in</strong>.
-                </p>
-              </div>
-
-              {/* Right: Authorised Signatory */}
-              <div className="text-right">
-                <div className="inline-block text-center min-w-[150px]">
-                  {/* Decorative Signature Line */}
-                  <div className="mb-1 text-center font-serif text-[11px] italic text-brand-900 tracking-wider">
-                    Bisnouli Sarvodaya
+            {/* 4. Contribution Details Box (Horizontal Split) */}
+            <div className="mt-3.5 rounded-xl border border-brand-200/90 bg-brand-50/40 p-3 sm:p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                {/* Left: Amount Highlight */}
+                <div className="text-center sm:text-left sm:border-r sm:border-brand-200 sm:pr-4">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-brand-700">
+                    Contribution Received
+                  </span>
+                  <div className="mt-0.5 flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
+                    <span className="font-display text-2xl sm:text-3xl font-black text-brand-900 tracking-tight">
+                      {formattedAmount}
+                    </span>
+                    {inWords && (
+                      <span className="text-xs font-semibold italic text-brand-800">
+                        ({inWords})
+                      </span>
+                    )}
                   </div>
-                  <div className="h-[1px] w-full bg-brand-800" />
-                  <p className="mt-1 text-[11px] font-bold text-ink">
-                    Authorized Signatory
-                  </p>
-                  <p className="text-[9.5px] text-ink-muted leading-tight">
-                    BSGSS, New Delhi &amp; Noida
-                  </p>
                 </div>
+
+                {/* Right: Payment Metadata */}
+                <div className="text-center sm:text-left text-[11px] space-y-1">
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-ink-muted">
+                    <div>
+                      <span>Payment Mode: </span>
+                      <strong className="text-ink font-semibold uppercase">{donation.paymentMethod.replace("_", " ")}</strong>
+                    </div>
+                    <div>
+                      <span>Transaction Ref: </span>
+                      <code className="font-mono text-ink font-semibold bg-white/80 px-1 py-0.5 rounded border border-brand-200/60">
+                        {donation.paymentReference}
+                      </code>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-emerald-800 font-medium">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>Statutory Banking Reconciled &amp; Approved</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}
+            <div className="mt-4 grid grid-cols-[auto_1fr_auto] items-end gap-4 border-t border-brand-200/80 pt-3">
+              {/* Left: Official Circular Rosette Seal */}
+              <div className="shrink-0 flex items-center gap-2">
+                <CertificateSeal />
+                <div className="hidden lg:block text-[9.5px] text-ink-muted leading-tight">
+                  <p className="font-bold text-brand-850 uppercase">Statutory Seal</p>
+                  <p>Registered Voluntary Body</p>
+                  <p>Estd. 1994, New Delhi</p>
+                </div>
+              </div>
+
+              {/* Center: Legal Record Digital Authenticity */}
+              <div className="text-center px-3">
+                <div className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-brand-850">
+                  <ShieldCheck className="h-4 w-4 text-brand-700 shrink-0" />
+                  <span>Official Digital Acknowledgement Record</span>
+                </div>
+                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight max-w-sm mx-auto">
+                  Issued under the authority of BSGSS Executive Committee. Authenticity verifiable online at <strong className="text-ink">bisnoulisansthan.in</strong>.
+                </p>
+              </div>
+
+              {/* Right: Authorized Handwritten Signature */}
+              <div className="shrink-0 text-right">
+                <CertificateSignature />
               </div>
             </div>
           </div>
         </article>
 
-        {/* Print Instruction Note (Screen Only) */}
-        <p className="mt-4 text-center text-xs text-ink-muted print:hidden">
-          Tip: Click <strong className="text-ink font-semibold">Download / Save as PDF</strong> or <strong className="text-ink font-semibold">Print</strong>. Only the official acknowledgement receipt above will be printed on a single clean page.
+        {/* Print Note */}
+        <p className="mt-3 text-center text-xs text-ink-muted print:hidden">
+          Page Format: <strong className="text-ink font-semibold">A4 Landscape</strong>. Click <strong className="text-ink font-semibold">Download / Save as PDF</strong> or <strong className="text-ink font-semibold">Print</strong> to generate the single-page official certificate.
         </p>
       </div>
     </main>
