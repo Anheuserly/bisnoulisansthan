@@ -1,15 +1,68 @@
 import Link from "next/link";
-import { ArrowUpRight, FileCheck2, Image, KeyRound, LayoutPanelTop, MessageSquare, UsersRound, WalletCards } from "lucide-react";
+import {
+  ArrowUpRight,
+  FileCheck2,
+  Image,
+  KeyRound,
+  LayoutPanelTop,
+  MessageSquare,
+  Palette,
+  UsersRound,
+  WalletCards,
+} from "lucide-react";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 
 const modules = [
-  { title: "Contact inquiries", description: "Review and respond to general enquiries and website messages.", icon: MessageSquare, status: "Live inbox", href: "/admin/inquiries" },
-  { title: "Join & Volunteers", description: "Manage incoming applications for volunteering, internships, CSR partnerships and skills mentorship.", icon: UsersRound, status: "Applications inbox", href: "/admin/join" },
-  { title: "Donations", description: "Verify payment references and issue numbered donor acknowledgements.", icon: FileCheck2, status: "Verification workflow", href: "/admin/donations" },
-  { title: "Content hub", description: "Plan and manage pages, programmes, galleries, SHG products, documents and impact content.", icon: LayoutPanelTop, status: "Content model ready", href: "/admin/content" },
-  { title: "Gallery & media", description: "Organise field photographs, captions and featured stories.", icon: Image, status: "Build first", href: "/admin/content" },
-  { title: "Documents & reports", description: "Publish bank details, reports, registrations and compliance documents.", icon: WalletCards, status: "Build second", href: "/admin/content" },
+  {
+    title: "Theme & Design Studio",
+    description: "Customise site-wide institutional presets, brand colors, typography pairings, corner curvature and shadow depth.",
+    icon: Palette,
+    status: "Global theme engine",
+    href: "/admin/theme",
+  },
+  {
+    title: "Contact inquiries",
+    description: "Review and respond to general enquiries and website messages.",
+    icon: MessageSquare,
+    status: "Live inbox",
+    href: "/admin/inquiries",
+  },
+  {
+    title: "Join & Volunteers",
+    description: "Manage incoming applications for volunteering, internships, CSR partnerships and skills mentorship.",
+    icon: UsersRound,
+    status: "Applications inbox",
+    href: "/admin/join",
+  },
+  {
+    title: "Donations",
+    description: "Verify payment references and issue numbered donor acknowledgements.",
+    icon: FileCheck2,
+    status: "Verification workflow",
+    href: "/admin/donations",
+  },
+  {
+    title: "Content hub",
+    description: "Plan and manage pages, programmes, galleries, SHG products, documents and impact content.",
+    icon: LayoutPanelTop,
+    status: "Content model ready",
+    href: "/admin/content",
+  },
+  {
+    title: "Gallery & media",
+    description: "Organise field photographs, captions and featured stories.",
+    icon: Image,
+    status: "Build first",
+    href: "/admin/content",
+  },
+  {
+    title: "Documents & reports",
+    description: "Publish bank details, reports, registrations and compliance documents.",
+    icon: WalletCards,
+    status: "Build second",
+    href: "/admin/content",
+  },
 ];
 
 export default async function AdminDashboard() {
@@ -26,6 +79,13 @@ export default async function AdminDashboard() {
             <h1 className="font-display text-xl font-bold text-ink">Welcome, {admin.displayName || admin.email}</h1>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/admin/theme"
+              className="inline-flex items-center gap-1.5 rounded-md border border-brand-200 bg-white px-3 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
+            >
+              <Palette className="h-4 w-4" />
+              <span className="hidden sm:inline">Theme Studio</span>
+            </Link>
             <Link
               href="/admin/admins"
               className="inline-flex items-center gap-1.5 rounded-md border border-line bg-white px-3 py-2 text-sm font-semibold text-ink transition hover:bg-sand-50"
@@ -49,7 +109,13 @@ export default async function AdminDashboard() {
             <h2 className="font-display text-3xl font-bold text-ink">Website management</h2>
             <p className="mt-2 text-sm text-ink-muted">A secure workspace for the BSGSS team.</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/admin/theme"
+              className="inline-flex items-center gap-2 rounded-md border border-brand-300 bg-brand-50 px-4 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-brand-100"
+            >
+              <Palette className="h-4 w-4 text-brand-700" />Theme Studio
+            </Link>
             <Link
               href="/admin/content"
               className="inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-4 py-2.5 text-sm font-semibold text-brand-700 hover:bg-brand-50"

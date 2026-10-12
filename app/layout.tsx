@@ -3,6 +3,8 @@ import { Public_Sans, Source_Serif_4 } from "next/font/google";
 import { site } from "@/config/site";
 import { organisationJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { getActiveTheme } from "@/lib/theme/get-active-theme";
+import { ThemeScript } from "@/components/theme/ThemeScript";
 import "./globals.css";
 
 const sans = Public_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -28,9 +30,14 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const activeTheme = await getActiveTheme();
+
   return (
     <html lang="en-IN" className={`${sans.variable} ${display.variable}`}>
+      <head>
+        <ThemeScript initialTheme={activeTheme} />
+      </head>
       <body className="min-h-screen font-sans">
         <a
           href="#main"
