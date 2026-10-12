@@ -19,7 +19,7 @@ export function Footer() {
   const social = content.site.social;
 
   return (
-    <footer className="bg-brand-900 text-brand-100">
+    <footer className="bg-brand-900 text-brand-100 print:hidden">
       <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           <div className="sm:col-span-2">

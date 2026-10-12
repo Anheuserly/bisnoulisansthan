@@ -12,7 +12,7 @@ export function QuickActions() {
   const whatsappNumber = site.contact.whatsapp?.replace(/[^\d]/g, "");
 
   return (
-    <aside className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3" aria-label="Quick contact options">
+    <aside className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 print:hidden" aria-label="Quick contact options">
       {open && <div className="flex flex-col items-end gap-2" role="menu">
         <button
           type="button"

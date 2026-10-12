@@ -76,7 +76,7 @@ export function Header() {
     <header
       onMouseLeave={() => setMegaOpen(null)}
       className={cn(
-        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-200",
+        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-200 print:hidden",
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >

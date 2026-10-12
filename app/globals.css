@@ -110,3 +110,38 @@
 .mega-menu-panel {
   animation: mega-menu-enter 180ms ease-out both;
 }
+
+/* Print Styles: Hide website navigation, footers and widgets so only certificate prints */
+@media print {
+  header,
+  footer,
+  aside,
+  nav,
+  .print-hidden,
+  .print\:hidden,
+  #bsgss-quick-actions,
+  [data-quick-actions] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #1b2326 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0.8cm;
+  }
+
+  .certificate-card {
+    border-width: 3px !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
