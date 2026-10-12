@@ -80,73 +80,77 @@ export function Header() {
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center gap-3 px-3 md:px-5">
-        <div className="flex min-w-0 items-center gap-3.5 xl:gap-4">
+      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-3 px-3 md:px-5">
+        {/* Left: Logo */}
+        <div className="flex shrink-0 items-center xl:min-w-[18rem]">
           <Logo />
-          <nav aria-label="Main" className="hidden shrink-0 whitespace-nowrap xl:block">
-            <ul className="flex items-center gap-1">
-              {mainNav.slice(1).map((item) => {
-                const megaLabel = isMegaMenu(item.label) ? item.label : null;
-                const active = isActive(item.href);
-                const isOpen = megaOpen === megaLabel;
-                const isSelected = active || isOpen;
-                return (
-                  <li key={item.href}>
-                    {megaLabel ? (
-                      <button
-                        type="button"
-                        onMouseEnter={() => {
-                          setMegaOpen(megaLabel);
-                          setSearchOpen(false);
-                        }}
-                        onFocus={() => setMegaOpen(megaLabel)}
-                        onClick={() => setMegaOpen((value) => (value === megaLabel ? null : megaLabel))}
-                        aria-expanded={isOpen}
-                        aria-haspopup="dialog"
-                        className={cn(
-                          "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
-                          isSelected
-                            ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
-                            : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
-                        )}
-                      >
-                        <span>{item.label}</span>
-                        <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", isOpen && "rotate-180 text-brand-700")} />
-                        {active && (
-                          <span
-                            className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </button>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        aria-current={active ? "page" : undefined}
-                        className={cn(
-                          "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-2.5 py-1.5 text-[0.84rem] font-medium transition-all duration-200 ease-out",
-                          active
-                            ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
-                            : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
-                        )}
-                      >
-                        <span>{item.label}</span>
-                        {active && (
-                          <span
-                            className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Link>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
         </div>
 
-        <div className="ml-auto flex shrink-0 items-center gap-2">
+        {/* Center: Main Navigation (Centralized) */}
+        <nav aria-label="Main" className="hidden flex-1 items-center justify-center whitespace-nowrap xl:flex">
+          <ul className="flex items-center gap-1 xl:gap-1.5 justify-center">
+            {mainNav.slice(1).map((item) => {
+              const megaLabel = isMegaMenu(item.label) ? item.label : null;
+              const active = isActive(item.href);
+              const isOpen = megaOpen === megaLabel;
+              const isSelected = active || isOpen;
+              return (
+                <li key={item.href}>
+                  {megaLabel ? (
+                    <button
+                      type="button"
+                      onMouseEnter={() => {
+                        setMegaOpen(megaLabel);
+                        setSearchOpen(false);
+                      }}
+                      onFocus={() => setMegaOpen(megaLabel)}
+                      onClick={() => setMegaOpen((value) => (value === megaLabel ? null : megaLabel))}
+                      aria-expanded={isOpen}
+                      aria-haspopup="dialog"
+                      className={cn(
+                        "relative inline-flex cursor-pointer whitespace-nowrap items-center gap-1 rounded-lg px-2.5 py-1.5 text-[0.85rem] font-medium transition-all duration-200 ease-out",
+                        isSelected
+                          ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
+                          : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
+                      )}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", isOpen && "rotate-180 text-brand-700")} />
+                      {active && (
+                        <span
+                          className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "relative inline-flex cursor-pointer whitespace-nowrap items-center rounded-lg px-2.5 py-1.5 text-[0.85rem] font-medium transition-all duration-200 ease-out",
+                        active
+                          ? "bg-brand-50 font-semibold text-brand-850 shadow-2xs ring-1 ring-brand-200"
+                          : "text-ink-muted hover:bg-brand-50/70 hover:text-brand-800 active:scale-[0.98]",
+                      )}
+                    >
+                      <span>{item.label}</span>
+                      {active && (
+                        <span
+                          className="absolute -bottom-1 left-2.5 right-2.5 h-[2px] rounded-full bg-brand-600"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        {/* Right: Actions */}
+        <div className="flex shrink-0 items-center justify-end gap-2 xl:min-w-[18rem]">
           <button type="button" onClick={() => { setSearchOpen((value) => !value); setQuery(""); setMegaOpen(null); }} className="hidden h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-brand-50 xl:inline-flex" aria-label="Search this website" aria-expanded={searchOpen} aria-controls="site-search">
             <Search className="h-5 w-5" aria-hidden="true" />
           </button>
