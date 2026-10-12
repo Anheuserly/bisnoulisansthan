@@ -109,6 +109,42 @@ export default async function DonationCertificate({
 
   return (
     <main className="min-h-screen bg-sand-50 px-3 py-6 print:min-h-0 print:bg-white print:p-0 md:px-6">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @page {
+              size: A4 landscape !important;
+              margin: 6mm !important;
+            }
+            @media print {
+              @page {
+                size: A4 landscape !important;
+                margin: 6mm !important;
+              }
+              html, body {
+                width: 297mm !important;
+                height: 210mm !important;
+                background: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              header, footer, nav, aside, #bsgss-quick-actions, [data-quick-actions] {
+                display: none !important;
+              }
+              .certificate-card {
+                width: 100% !important;
+                max-width: 285mm !important;
+                margin: 0 auto !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+              }
+            }
+          `,
+        }}
+      />
       <div className="mx-auto max-w-5xl print:max-w-none">
         {/* Top Control Bar (Hidden on Print) */}
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
@@ -126,12 +162,16 @@ export default async function DonationCertificate({
             <CertificateActions
               certificateNumber={donation.certificateNumber}
               donorName={donation.donorName}
+              targetId="donation-certificate"
             />
           </div>
         </div>
 
         {/* Official Certificate Card - HORIZONTAL / LANDSCAPE DESIGN */}
-        <article className="certificate-card relative overflow-hidden rounded-2xl border-[3.5px] border-brand-850 bg-white p-5 sm:p-8 shadow-xl print:rounded-none print:border-[2.5px] print:border-brand-900 print:p-6 print:shadow-none">
+        <article
+          id="donation-certificate"
+          className="certificate-card relative overflow-hidden rounded-2xl border-[3.5px] border-brand-850 bg-white p-5 sm:p-8 shadow-xl print:rounded-none print:border-[2.5px] print:border-brand-900 print:p-6 print:shadow-none"
+        >
           {/* Ornamental Corner Filigree Accents */}
           <div className="absolute top-2 left-2 h-6 w-6 border-t-2 border-l-2 border-brand-700" />
           <div className="absolute top-2 right-2 h-6 w-6 border-t-2 border-r-2 border-brand-700" />

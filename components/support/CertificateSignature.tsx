@@ -1,10 +1,20 @@
-export function CertificateSignature() {
+interface CertificateSignatureProps {
+  name?: string;
+  role?: string;
+  organization?: string;
+}
+
+export function CertificateSignature({
+  name = "Nandita Bakshi",
+  role = "Chief Executive Officer (CEO)",
+  organization = "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
+}: CertificateSignatureProps) {
   return (
-    <div className="inline-block text-center select-none" aria-label="Authorized Signatory Signature">
+    <div className="inline-block text-center select-none" aria-label={`Authorized Signature of ${name}`}>
       {/* Authentic Blue-Ink Cursive Signature SVG */}
       <svg
         viewBox="0 0 200 65"
-        className="h-12 sm:h-14 w-auto mx-auto -mb-2"
+        className="h-11 sm:h-12 w-auto mx-auto -mb-1.5"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -34,12 +44,19 @@ export function CertificateSignature() {
       {/* Signature Underline */}
       <div className="h-[1.5px] w-48 sm:w-56 bg-brand-850 mx-auto" />
 
-      {/* Signatory Title */}
-      <p className="mt-1 text-xs font-bold text-ink tracking-tight">
-        Authorized Signatory
+      {/* Signatory Full Name */}
+      <p className="mt-1 font-serif text-xs sm:text-[13px] font-bold text-ink tracking-tight">
+        {name}
       </p>
-      <p className="text-[10px] text-ink-muted leading-tight font-medium">
-        Bisnouli Sarvodaya Gramodyog Sewa Sansthan
+
+      {/* Signatory Designation */}
+      <p className="text-[10px] font-semibold text-brand-850 leading-tight">
+        Authorized Signatory · {role}
+      </p>
+
+      {/* Organization */}
+      <p className="text-[8.5px] sm:text-[9px] text-ink-muted leading-tight font-medium">
+        {organization}
       </p>
     </div>
   );
