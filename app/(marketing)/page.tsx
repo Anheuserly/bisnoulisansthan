@@ -14,6 +14,7 @@ import {
 import { InteractiveIndiaMap } from "@/components/impact/InteractiveIndiaMap";
 import { HomeHero } from "@/components/home/HomeHero";
 import { HomeMediaShowcase } from "@/components/home/HomeMediaShowcase";
+import { PartnerLogoWall } from "@/components/partners/PartnerLogoWall";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
 
@@ -199,17 +200,30 @@ export default function HomePage() {
 
       {/* 6. Partnerships */}
       <section className="bg-brand-50 py-10 sm:py-14 border-b border-brand-100" id="partners">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.1fr_.9fr] md:items-center md:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Partnerships</p>
-            <h2 className="mt-2 max-w-xl font-display text-2xl font-bold text-ink sm:text-3xl">Collaboration that turns support into local action.</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink-muted">BSGSS works alongside CSR and institutional partners to bring healthcare, women&apos;s vocational training and practical community support to places where it is needed most.</p>
-            <Link href="/about/partners" className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-900">Explore partner stories <ArrowRight className="h-4 w-4" /></Link>
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <div className="grid gap-10 md:grid-cols-[1.1fr_.9fr] md:items-center">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Partnerships</p>
+              <h2 className="mt-2 max-w-xl font-display text-2xl font-bold text-ink sm:text-3xl">Collaboration that turns support into local action.</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-ink-muted">BSGSS works alongside CSR and institutional partners to bring healthcare, women&apos;s vocational training and practical community support to places where it is needed most.</p>
+              <Link href="/about/partners" className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-900">Explore partner stories <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
+              <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Handshake className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-3xl font-bold text-ink">30</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">CSR partner profiles with an individual BSGSS record.</p></div>
+              <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><HeartPulse className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Healthcare</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">A central focus across many recorded partnerships.</p></div>
+              <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Users className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Skills for women</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">Vocational pathways that support income and agency.</p></div>
+            </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
-            <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Handshake className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-3xl font-bold text-ink">30</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">CSR partner profiles with an individual BSGSS record.</p></div>
-            <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><HeartPulse className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Healthcare</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">A central focus across many recorded partnerships.</p></div>
-            <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Users className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Skills for women</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">Vocational pathways that support income and agency.</p></div>
+
+          {/* Interactive Marquee Wall */}
+          <div className="mt-10 rounded-2xl border border-brand-200/80 bg-white p-3.5 shadow-2xs sm:p-5">
+            <PartnerLogoWall />
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-muted">
+            <p>Logos reproduced from official statutory records. Hover over any column to pause scrolling, or select to view partnership details.</p>
+            <Link href="/about/partners" className="font-semibold text-brand-700 hover:text-brand-900 transition-colors">
+              View all 30 partner profiles →
+            </Link>
           </div>
         </div>
       </section>
