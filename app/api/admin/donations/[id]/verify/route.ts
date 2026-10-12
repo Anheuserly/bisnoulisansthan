@@ -45,7 +45,7 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
          certificate_issued_at = COALESCE(certificate_issued_at, now()),
          verified_at = now(),
          verified_by = $2
-       WHERE id = $1 AND status <> 'certificate_issued'
+       WHERE id::text = $1 AND status <> 'certificate_issued'
        RETURNING id, certificate_number AS "certificateNumber"`,
       [id, actor.id]
     );
@@ -58,7 +58,7 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
     try {
       await client.query(
         `INSERT INTO admin_audit_logs (actor_id, action, entity_type, entity_id, metadata)
-         VALUES ($1, 'issue_donation_certificate', 'donation_request', $2, jsonb_build_object('certificate_number', $3))`,
+         VALUES ($1, 'issue_donation_certificate', 'donation_request', $2, jsonb_build_object('certificate_number', $3::text))`,
         [actor.id, id, rows[0].certificateNumber]
       );
     } catch (auditErr) {

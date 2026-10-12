@@ -14,8 +14,9 @@ type Certificate = {
   currency: string;
   paymentMethod: string;
   paymentReference: string;
-  certificateNumber: string;
-  issuedAt: string;
+  certificateNumber: string | null;
+  issuedAt: string | null;
+  status: string;
 };
 
 export default async function DonationCertificate({
@@ -26,7 +27,7 @@ export default async function DonationCertificate({
   const { id } = await params;
   if (!id || !process.env.DATABASE_URL) notFound();
 
-  const isUuid = /^[0-9a-f-]{36}$/i.test(id);
+  const lookup = id.trim();
 
   const { rows } = await db.query<Certificate>(
     `SELECT
@@ -37,27 +38,67 @@ export default async function DonationCertificate({
       payment_method AS "paymentMethod",
       payment_reference AS "paymentReference",
       certificate_number AS "certificateNumber",
-      certificate_issued_at AS "issuedAt"
+      certificate_issued_at::text AS "issuedAt",
+      status
     FROM donation_requests
     WHERE
-      (${isUuid ? "id = $1" : "false"}
-       OR certificate_number ILIKE $1
-       OR id::text ILIKE $1)
-      AND status = 'certificate_issued'
+      id::text = $1
+      OR certificate_number = $1
+      OR replace(id::text, '-', '') = replace($1, '-', '')
     LIMIT 1`,
-    [id]
+    [lookup]
   );
 
   const donation = rows[0];
   if (!donation) notFound();
 
-  const issued = new Intl.DateTimeFormat("en-IN", {
-    dateStyle: "long",
-  }).format(new Date(donation.issuedAt));
+  // If the donation request exists but has not been verified/issued yet:
+  if (donation.status !== "certificate_issued" || !donation.certificateNumber) {
+    return (
+      <main className="min-h-screen bg-sand-50 px-4 py-16 text-center md:px-8">
+        <div className="mx-auto max-w-lg rounded-2xl border border-line bg-white p-8 shadow-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-50 text-amber-700 ring-4 ring-amber-100">
+            <ShieldCheck className="h-7 w-7 text-amber-700" />
+          </div>
+          <h1 className="mt-4 font-display text-2xl font-bold text-ink">
+            Verification In Progress
+          </h1>
+          <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+            Thank you, <strong className="text-ink">{donation.donorName}</strong>. Your voluntary contribution of{" "}
+            <strong className="text-ink">
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: donation.currency || "INR",
+              }).format(Number(donation.amount))}
+            </strong>{" "}
+            with payment reference (<code className="font-mono text-xs bg-sand-100 px-1.5 py-0.5 rounded">{donation.paymentReference}</code>) is currently awaiting administrative bank verification.
+          </p>
+          <p className="mt-2 text-xs text-ink-muted">
+            Once bank records are cross-checked, your numbered certificate will be generated and viewable here automatically.
+          </p>
+          <div className="mt-6">
+            <Link
+              href={links.support}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:underline"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Support BSGSS
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  const issued = donation.issuedAt
+    ? new Intl.DateTimeFormat("en-IN", {
+        dateStyle: "long",
+      }).format(new Date(donation.issuedAt))
+    : "Recently Verified";
 
   const amount = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: donation.currency,
+    currency: donation.currency || "INR",
   }).format(Number(donation.amount));
 
   return (
