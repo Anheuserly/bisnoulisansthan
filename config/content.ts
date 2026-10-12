@@ -127,6 +127,7 @@ export const content = {
     footerDescription: "A voluntary organisation advancing education, healthcare, skills and women’s empowerment through practical, community-led development since 1994.",
     youtubeUrl: "https://www.youtube.com/@BISNOULISANSTHAN",
     developerCredit: "Developed by Star Computer Solutions & Infosys",
+    developerUrl: "https://www.scsi.in/",
     social: {
       youtube: "https://www.youtube.com/@BISNOULISANSTHAN",
       facebook: "https://www.facebook.com/bisnoulisansthan/",

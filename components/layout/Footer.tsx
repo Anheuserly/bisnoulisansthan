@@ -106,7 +106,16 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-brand-800 pt-6 text-xs text-brand-300 md:flex-row md:items-center md:justify-between">
           <p>© {year} {site.name}. All rights reserved.</p>
-          <p>{content.site.developerCredit}</p>
+          <p>
+            <a
+              href={content.site.developerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-300 hover:text-white hover:underline underline-offset-2 transition-colors"
+            >
+              {content.site.developerCredit}
+            </a>
+          </p>
           <a href="mailto:bsgssindia@yahoo.co.in?subject=Document%20request" className="inline-flex items-center gap-2 hover:text-white"><FileText className="h-4 w-4" />Request public documents or reports</a>
         </div>
       </div>
