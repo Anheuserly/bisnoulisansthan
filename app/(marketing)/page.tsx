@@ -44,7 +44,36 @@ export default async function HomePage() {
   const renderSection = (sectionId: string) => {
     switch (sectionId) {
       case "hero":
-        return <HomeHero key="hero" slides={customizer.images.heroSlides} />;
+        return (
+          <div key="hero-group">
+            <HomeHero slides={customizer.images.heroSlides} />
+            {/* International Institutional Credibility & Statutory Trust Strip */}
+            <div className="border-b border-brand-200/60 bg-white py-3 shadow-2xs">
+              <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 sm:px-6 md:px-8">
+                <div className="flex flex-wrap items-center gap-6 text-[0.75rem] font-semibold text-brand-950">
+                  <span className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-700" />
+                    <span>NITI Aayog Darpan Verified (DL/2016/0107779)</span>
+                  </span>
+                  <span className="hidden sm:inline text-brand-300">|</span>
+                  <span className="flex items-center gap-2">
+                    <Landmark className="h-4 w-4 text-brand-700" />
+                    <span>Income Tax 12A & 80G Certified</span>
+                  </span>
+                  <span className="hidden md:inline text-brand-300">|</span>
+                  <span className="hidden md:flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-brand-700" />
+                    <span>MCA Registered for CSR (CSR00004514)</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[0.6875rem] font-bold tracking-wider text-brand-800 uppercase">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                  <span>Audited Grassroots Accountability</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
 
       case "live_ticker":
         return <HomeLiveTyping key="live_ticker" data={customizer.typing} />;

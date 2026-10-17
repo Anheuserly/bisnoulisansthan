@@ -102,16 +102,21 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
 
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-0.5 text-[0.6875rem] font-bold text-brand-900 shadow-2xs backdrop-blur-md">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-0.5 text-[0.6875rem] font-bold text-brand-900 shadow-2xs backdrop-blur-md">
                       <Tag className="h-3 w-3 text-brand-700" />
                       {photo.category}
                     </span>
-                    {photo.tag && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-black/50 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-white/90 backdrop-blur-md border border-white/20">
-                        <MapPin className="h-3 w-3 text-emerald-400" />
-                        {photo.tag}
+                    <div className="flex items-center gap-1.5">
+                      {photo.tag && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-white/95 backdrop-blur-md border border-white/20">
+                          <MapPin className="h-3 w-3 text-emerald-400" />
+                          {photo.tag}
+                        </span>
+                      )}
+                      <span className="hidden sm:inline-flex items-center rounded-xs bg-amber-500/20 px-1.5 py-0.5 text-[0.6rem] font-mono font-bold tracking-widest text-amber-200 uppercase border border-amber-400/30">
+                        DOC #{String(index + 1).padStart(3, "0")}
                       </span>
-                    )}
+                    </div>
                   </div>
 
                   {/* Bottom Caption Overlay */}
@@ -124,15 +129,18 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
                         <ZoomIn className="h-3.5 w-3.5" />
                       </span>
                     </div>
-                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/80">
+                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/85">
                       {photo.caption}
                     </p>
-                    {photo.year && (
-                      <div className="mt-2 flex items-center gap-2 text-[0.6875rem] font-medium text-white/70">
+                    <div className="mt-2.5 flex items-center justify-between border-t border-white/15 pt-2 text-[0.6875rem] font-medium text-white/70">
+                      <div className="flex items-center gap-1.5">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        <span>{photo.year}</span>
+                        <span>{photo.year || "BSGSS Field Chronicle"}</span>
                       </div>
-                    )}
+                      <span className="text-[0.625rem] font-mono tracking-wider text-white/60 uppercase">
+                        Grassroots Archival
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

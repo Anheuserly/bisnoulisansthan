@@ -24,36 +24,40 @@ export function HomeLiveTyping({ data }: HomeLiveTypingProps) {
 
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(45);
+  const [phase, setPhase] = useState<"typing" | "pausing" | "deleting">("typing");
 
   useEffect(() => {
-    const currentFullText = phrases[phraseIndex] || "";
+    const currentPhrase = phrases[phraseIndex] || "";
+    let timeoutId: NodeJS.Timeout;
 
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        // Typing characters
-        setDisplayText(currentFullText.slice(0, displayText.length + 1));
-        setTypingSpeed(40 + Math.random() * 20);
-
-        if (displayText.length + 1 >= currentFullText.length) {
-          // Pause at end of phrase
-          setTimeout(() => setIsDeleting(true), 2800);
-        }
+    if (phase === "typing") {
+      if (displayText.length < currentPhrase.length) {
+        // Natural human keystroke timing with slight variance
+        const variance = Math.floor(Math.random() * 25);
+        timeoutId = setTimeout(() => {
+          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        }, 45 + variance);
       } else {
-        // Backspacing characters
-        setDisplayText(currentFullText.slice(0, displayText.length - 1));
-        setTypingSpeed(22);
-
-        if (displayText.length <= 0) {
-          setIsDeleting(false);
-          setPhraseIndex((prev) => (prev + 1) % phrases.length);
-        }
+        // Full phrase displayed — hold comfortably for 3600ms so user can read with ease
+        timeoutId = setTimeout(() => {
+          setPhase("deleting");
+        }, 3600);
       }
-    }, typingSpeed);
+    } else if (phase === "deleting") {
+      if (displayText.length > 0) {
+        // Crisp, steady backspacing
+        timeoutId = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, 20);
+      } else {
+        // Transition cleanly to next phrase
+        setPhase("typing");
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      }
+    }
 
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, phraseIndex, phrases, typingSpeed]);
+    return () => clearTimeout(timeoutId);
+  }, [displayText, phase, phraseIndex, phrases]);
 
   return (
     <section className="relative isolate overflow-hidden border-y border-brand-200/80 bg-gradient-to-r from-sand-50 via-white to-brand-50/50 py-5 sm:py-6 shadow-2xs">
@@ -74,18 +78,29 @@ export function HomeLiveTyping({ data }: HomeLiveTypingProps) {
               </p>
             </div>
 
-            {/* Typewriter Display Area */}
-            <div className="mt-2 flex min-h-[3.25rem] items-center">
-              <p className="font-display text-base font-bold text-ink sm:text-xl md:text-[1.35rem] leading-snug">
-                <span>{displayText}</span>
-                <span className="ml-1 inline-block h-5 w-0.5 animate-pulse bg-brand-700 align-middle" />
-              </p>
+            {/* Typewriter Display Area with Luxury Editorial Polish */}
+            <div className="mt-2.5 flex min-h-[3.75rem] items-start sm:items-center">
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-xs font-bold text-brand-700 bg-brand-100/70 px-2 py-0.5 rounded-md border border-brand-200/80">
+                  {String(phraseIndex + 1).padStart(2, "0")} / {String(phrases.length).padStart(2, "0")}
+                </span>
+                <p className="font-display text-base font-bold text-ink sm:text-xl md:text-[1.35rem] leading-snug tracking-tight">
+                  <span className="text-brand-950">{displayText}</span>
+                  <span className="ml-1 inline-block h-5 w-[3px] animate-pulse rounded-full bg-brand-700 align-middle shadow-[0_0_8px_rgba(35,104,115,0.6)]" />
+                </p>
+              </div>
             </div>
 
             {/* Real-Time Operational Breadcrumb */}
-            <div className="mt-1 flex items-center gap-1.5 text-xs text-ink-muted">
-              <MapPin className="h-3.5 w-3.5 text-brand-700 shrink-0" />
-              <span className="font-medium text-ink-muted">{statusText}</span>
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-ink-muted">
+              <span className="inline-flex items-center gap-1.5 font-medium text-ink-muted">
+                <MapPin className="h-3.5 w-3.5 text-brand-700 shrink-0" />
+                {statusText}
+              </span>
+              <span className="hidden sm:inline text-brand-300">•</span>
+              <span className="hidden sm:inline-flex items-center gap-1 text-[0.6875rem] text-emerald-700 font-semibold">
+                <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Ground Verified
+              </span>
             </div>
           </div>
 
