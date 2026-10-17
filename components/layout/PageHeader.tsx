@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Home } from "lucide-react";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Layout";
@@ -37,25 +37,34 @@ export function PageHeader({
       ? normalized
       : [{ name: "Home", path: "/" }, ...normalized];
   const subtitle = lead ?? description;
+
   return (
-    <div className="page-intro border-b border-brand-100 bg-white">
-      <Container className="page-intro-content py-4 sm:py-5">
+    <div className="page-intro relative isolate border-b border-brand-100 bg-gradient-to-b from-white via-sand-50/40 to-white py-1">
+      {/* Subtle decorative radial accent */}
+      <div className="pointer-events-none absolute -right-20 top-0 h-48 w-48 rounded-full bg-brand-100/30 blur-3xl" />
+      
+      <Container className="page-intro-content py-5 sm:py-6">
         <nav aria-label="Breadcrumb">
-          <ol className="flex flex-wrap items-center gap-1 text-xs text-ink-muted">
+          <ol className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
             {trail.map((c, i) => {
-              const last = i === trail.length - 1;
+              const isFirst = i === 0;
+              const isLast = i === trail.length - 1;
               return (
-                <li key={c.path} className="flex items-center gap-1">
-                  {last ? (
-                    <span aria-current="page" className="font-medium text-ink">
+                <li key={c.path} className="flex items-center gap-1.5">
+                  {isLast ? (
+                    <span aria-current="page" className="font-semibold text-brand-900 bg-brand-50/80 px-2.5 py-0.5 rounded-md border border-brand-200/60">
                       {c.name}
                     </span>
                   ) : (
                     <>
-                      <Link href={c.path} className="hover:text-brand-700 hover:underline">
-                        {c.name}
+                      <Link
+                        href={c.path}
+                        className="inline-flex items-center gap-1 text-ink-muted hover:text-brand-800 transition-colors"
+                      >
+                        {isFirst && <Home className="h-3 w-3 text-brand-600 shrink-0" />}
+                        <span>{c.name}</span>
                       </Link>
-                      <ChevronRight className="h-3 w-3 text-ink-subtle" aria-hidden="true" />
+                      <ChevronRight className="h-3 w-3 text-brand-300" aria-hidden="true" />
                     </>
                   )}
                 </li>
@@ -63,8 +72,14 @@ export function PageHeader({
             })}
           </ol>
         </nav>
-        <h1 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">{title}</h1>
-        {subtitle && <p className="mt-1.5 max-w-4xl text-sm leading-normal text-ink-muted sm:text-[15px]">{subtitle}</p>}
+        <h1 className="mt-2.5 font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl lg:text-[2rem] leading-tight">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-ink-muted sm:text-base">
+            {subtitle}
+          </p>
+        )}
         {children}
       </Container>
       <JsonLd data={breadcrumbJsonLd(trail)} />
