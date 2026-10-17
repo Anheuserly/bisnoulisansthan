@@ -398,7 +398,7 @@ function SoundscapeDrawer({
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
-    { id: "all", label: "All (100+)" },
+    { id: "all", label: "All (112)" },
     { id: "raga", label: "Classical Ragas" },
     { id: "nature", label: "Nature & Rivers" },
     { id: "solfeggio", label: "Healing 432Hz/Om" },
@@ -408,18 +408,33 @@ function SoundscapeDrawer({
 
   const filteredTracks = AMBIENT_TRACK_PRESETS.filter((t) => {
     if (t.id === "custom-stream") return false;
-    
+
     // Category match
     if (selectedCategory === "raga") {
       if (!t.genre.toLowerCase().includes("raga") && !t.name.toLowerCase().includes("raga")) return false;
     } else if (selectedCategory === "nature") {
-      if (!t.genre.toLowerCase().includes("nature") && !t.description.toLowerCase().includes("water") && !t.description.toLowerCase().includes("wind") && !t.description.toLowerCase().includes("rain")) return false;
+      if (
+        !t.genre.toLowerCase().includes("nature") &&
+        !t.description.toLowerCase().includes("water") &&
+        !t.description.toLowerCase().includes("wind") &&
+        !t.description.toLowerCase().includes("rain")
+      )
+        return false;
     } else if (selectedCategory === "solfeggio") {
-      if (!t.genre.toLowerCase().includes("solfeggio") && !t.id.includes("hz") && !t.id.includes("om") && !t.id.includes("drone")) return false;
+      if (!t.genre.toLowerCase().includes("solfeggio") && !t.id.includes("hz") && !t.id.includes("om") && !t.id.includes("drone"))
+        return false;
     } else if (selectedCategory === "instrument") {
-      if (!t.genre.toLowerCase().includes("acoustic") && !t.genre.toLowerCase().includes("flute") && !t.genre.toLowerCase().includes("sitar") && !t.genre.toLowerCase().includes("santoor") && !t.genre.toLowerCase().includes("sarod")) return false;
+      if (
+        !t.genre.toLowerCase().includes("acoustic") &&
+        !t.genre.toLowerCase().includes("flute") &&
+        !t.genre.toLowerCase().includes("sitar") &&
+        !t.genre.toLowerCase().includes("santoor") &&
+        !t.genre.toLowerCase().includes("sarod")
+      )
+        return false;
     } else if (selectedCategory === "ambient") {
-      if (!t.genre.toLowerCase().includes("ambient") && !t.genre.toLowerCase().includes("pad") && !t.genre.toLowerCase().includes("soundscape")) return false;
+      if (!t.genre.toLowerCase().includes("ambient") && !t.genre.toLowerCase().includes("pad") && !t.genre.toLowerCase().includes("soundscape"))
+        return false;
     }
 
     // Search query match
@@ -437,48 +452,71 @@ function SoundscapeDrawer({
   const activeTrackObj = AMBIENT_TRACK_PRESETS.find((t) => t.id === currentTrackId);
 
   return (
-    <div className="absolute bottom-14 left-0 mb-1 w-84 sm:w-96 max-h-[32rem] flex flex-col rounded-2xl border border-brand-200 bg-white/98 p-4 shadow-2xl backdrop-blur-xl animate-scaleUp">
-      {/* Drawer Header */}
-      <div className="flex items-center justify-between text-xs font-semibold text-ink border-b border-brand-100 pb-2.5">
-        <div className="flex items-center gap-1.5">
-          <Music className="h-3.5 w-3.5 text-brand-700" />
-          <span className="font-bold text-sm">Grand Soundscape Library</span>
-          <span className="text-[0.625rem] px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 font-extrabold border border-brand-200">
-            {AMBIENT_TRACK_PRESETS.length - 1} Tracks
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Grand Soundscape Library"
+      className="absolute bottom-16 left-0 mb-1 w-[22rem] sm:w-[26rem] max-h-[34rem] flex flex-col rounded-2xl border-2 border-brand-300 bg-white p-4 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] ring-1 ring-black/10 z-50 animate-scaleUp text-slate-900"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-700 text-white shadow-xs">
+            <Music className="h-4 w-4" />
           </span>
+          <div>
+            <h3 className="font-display text-sm font-bold text-slate-900 leading-tight">
+              Grand Soundscape Library
+            </h3>
+            <p className="text-[0.625rem] font-semibold text-brand-700">
+              {AMBIENT_TRACK_PRESETS.length - 1} Indian classical &amp; natural tracks
+            </p>
+          </div>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="rounded-md p-1 text-ink-muted hover:bg-sand-100 hover:text-ink transition"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 font-bold text-sm transition"
           aria-label="Close sound library"
         >
           ✕
         </button>
       </div>
 
-      {/* Currently Playing Card */}
+      {/* Now Playing Banner */}
       {activeTrackObj && (
-        <div className="mt-2.5 rounded-xl border border-brand-200 bg-brand-50/70 p-2.5 flex items-center justify-between gap-2 shadow-xs">
+        <div className="mt-3 rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 flex items-center justify-between gap-3 shadow-xs">
           <div className="min-w-0">
-            <span className="text-[0.5625rem] font-bold uppercase tracking-wider text-brand-700 flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-              Now Playing
-            </span>
-            <p className="text-xs font-bold text-ink truncate mt-0.5">{activeTrackObj.name}</p>
-            <p className="text-[0.625rem] text-brand-700 font-medium truncate">{activeTrackObj.genre}</p>
+            <div className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="text-[0.6875rem] font-extrabold uppercase tracking-wider text-emerald-800">
+                Now Playing
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs font-bold text-slate-900 truncate">
+              {activeTrackObj.name}
+            </p>
+            <p className="text-[0.6875rem] font-semibold text-emerald-700 truncate">
+              {activeTrackObj.genre}
+            </p>
           </div>
-          <span className="shrink-0 text-xs px-2 py-1 rounded-md bg-brand-700 text-white font-bold">
-            {isPlaying ? "Active" : "Paused"}
+          <span
+            className={`shrink-0 text-xs px-2.5 py-1 rounded-full font-bold shadow-xs ${
+              isPlaying ? "bg-emerald-700 text-white" : "bg-slate-300 text-slate-800"
+            }`}
+          >
+            {isPlaying ? "Playing" : "Paused"}
           </span>
         </div>
       )}
 
-      {/* Volume Slider */}
-      <div className="py-2.5 border-b border-brand-100">
-        <div className="flex justify-between text-[0.6875rem] text-ink-muted mb-1 font-medium">
+      {/* Volume Control */}
+      <div className="py-2.5 border-b border-slate-200">
+        <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1.5">
           <span>Master Volume</span>
-          <span className="font-bold text-brand-700">{Math.round(volume * 100)}%</span>
+          <span className="font-extrabold text-brand-800 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200">
+            {Math.round(volume * 100)}%
+          </span>
         </div>
         <input
           type="range"
@@ -487,41 +525,56 @@ function SoundscapeDrawer({
           step="0.05"
           value={volume}
           onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
-          className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-sand-200 accent-brand-700"
+          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-brand-700"
+          aria-label="Volume slider"
         />
       </div>
 
       {/* Search Input */}
-      <div className="pt-2">
-        <input
-          type="text"
-          placeholder="Search ragas, sitar, flute, 432Hz, rain..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full rounded-lg border border-brand-200 bg-sand-50/80 px-2.5 py-1.5 text-xs text-ink placeholder:text-ink-muted focus:border-brand-500 focus:bg-white focus:outline-none"
-        />
+      <div className="pt-2.5">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search ragas, sitar, flute, 432Hz, rain..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full rounded-xl border-2 border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 placeholder:text-slate-500 focus:border-brand-600 focus:outline-none shadow-xs"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              className="absolute right-2.5 top-2 text-xs font-bold text-slate-400 hover:text-slate-700"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Category Tabs */}
-      <div className="flex gap-1 overflow-x-auto py-2 no-scrollbar">
-        {categories.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => setSelectedCategory(c.id)}
-            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[0.625rem] font-bold transition ${
-              selectedCategory === c.id
-                ? "bg-brand-700 text-white shadow-2xs"
-                : "bg-sand-100 text-ink-muted hover:bg-sand-200 hover:text-ink"
-            }`}
-          >
-            {c.label}
-          </button>
-        ))}
+      {/* Category Filter Chips */}
+      <div className="flex gap-1.5 overflow-x-auto py-2.5 no-scrollbar">
+        {categories.map((c) => {
+          const isActive = selectedCategory === c.id;
+          return (
+            <button
+              key={c.id}
+              type="button"
+              onClick={() => setSelectedCategory(c.id)}
+              className={`shrink-0 rounded-lg px-2.5 py-1 text-[0.6875rem] font-bold transition border ${
+                isActive
+                  ? "bg-brand-700 text-white border-brand-700 shadow-xs"
+                  : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 hover:text-slate-900"
+              }`}
+            >
+              {c.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Scrollable Tracklist */}
-      <div className="overflow-y-auto space-y-1 pr-1 flex-1 max-h-52">
+      {/* Track List */}
+      <div className="overflow-y-auto space-y-1.5 pr-1 flex-1 max-h-56 divide-y divide-slate-100">
         {filteredTracks.map((track, idx) => {
           const isCurrent = currentTrackId === track.id;
           return (
@@ -529,40 +582,58 @@ function SoundscapeDrawer({
               key={track.id}
               type="button"
               onClick={() => onSelectTrack(track.id)}
-              className={`w-full text-left rounded-xl p-2 transition flex items-start gap-2 text-xs ${
+              className={`w-full text-left rounded-xl p-2.5 transition flex items-start gap-2.5 ${
                 isCurrent
-                  ? "bg-brand-50 border border-brand-300 text-brand-900 font-bold ring-1 ring-brand-400"
-                  : "hover:bg-sand-50 text-ink border border-transparent"
+                  ? "bg-brand-50/90 border-2 border-brand-500 text-slate-900 shadow-xs"
+                  : "bg-white hover:bg-slate-50 text-slate-900 border border-slate-100"
               }`}
             >
               <span
-                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-bold mt-0.5 ${
-                  isCurrent ? "bg-brand-700 text-white" : "bg-sand-100 text-ink-muted"
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold mt-0.5 ${
+                  isCurrent
+                    ? "bg-brand-700 text-white shadow-2xs"
+                    : "bg-slate-100 text-slate-600"
                 }`}
               >
                 {isCurrent && isPlaying ? "▶" : idx + 1}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate font-semibold leading-tight">{track.name}</p>
-                <p className="truncate text-[0.625rem] text-brand-700 font-medium">{track.genre}</p>
-                <p className="line-clamp-1 text-[0.5625rem] text-ink-muted mt-0.5 leading-snug">{track.description}</p>
+                <div className="flex items-center justify-between gap-1">
+                  <p className="truncate text-xs font-bold text-slate-900 leading-tight">
+                    {track.name}
+                  </p>
+                  {isCurrent && (
+                    <span className="shrink-0 text-[0.5625rem] font-extrabold text-brand-700 uppercase tracking-wider bg-brand-100 px-1.5 py-0.5 rounded">
+                      Current
+                    </span>
+                  )}
+                </div>
+                <p className="truncate text-[0.6875rem] font-semibold text-brand-700 mt-0.5">
+                  {track.genre}
+                </p>
+                <p className="line-clamp-2 text-[0.625rem] text-slate-600 mt-1 leading-snug">
+                  {track.description}
+                </p>
               </div>
             </button>
           );
         })}
         {filteredTracks.length === 0 && (
-          <div className="py-6 text-center text-xs text-ink-muted">
+          <div className="py-8 text-center text-xs font-medium text-slate-500">
             No soundscapes matched &ldquo;{searchQuery}&rdquo;. Try another term!
           </div>
         )}
       </div>
 
-      <div className="mt-2.5 pt-2 border-t border-brand-100 flex items-center justify-between text-[0.625rem] text-ink-muted">
-        <span>Showing {filteredTracks.length} tracks</span>
+      {/* Footer */}
+      <div className="mt-2.5 pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-slate-700">
+        <span>
+          Showing <strong className="text-slate-900">{filteredTracks.length}</strong> soundscapes
+        </span>
         <button
           type="button"
           onClick={onClose}
-          className="font-bold text-brand-700 hover:underline"
+          className="rounded-lg bg-brand-700 px-3 py-1 font-bold text-white hover:bg-brand-800 transition shadow-2xs"
         >
           Done
         </button>
