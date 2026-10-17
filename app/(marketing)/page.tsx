@@ -18,6 +18,7 @@ import { HomeLiveTyping } from "@/components/home/HomeLiveTyping";
 import { HomePhotoCollage } from "@/components/home/HomePhotoCollage";
 import { HomeMediaShowcase } from "@/components/home/HomeMediaShowcase";
 import { HomeImpactCounters } from "@/components/home/HomeImpactCounters";
+import { HomeManagementSection } from "@/components/home/HomeManagementSection";
 import { PartnerLogoWall } from "@/components/partners/PartnerLogoWall";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
@@ -350,24 +351,7 @@ export default async function HomePage() {
         );
 
       case "management":
-        return (
-          <section key="management" className="py-10 sm:py-14 border-b border-brand-100">
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
-              <div className="max-w-2xl">
-                <p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">{management.eyebrow}</p>
-                <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">{management.title}</h2>
-                <p className="mt-4 leading-relaxed text-ink-muted">{management.text}</p>
-              </div>
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
-                <ManagementCard name="Vijay Kumar Jha" role="Ex-IPS · Chairperson, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/335-11111.jpg" message="Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare." />
-                <ManagementCard name="Nandita Bakshi" role="Ex-IRS · CEO, BSGSS, New Delhi" image="/images/bsgss/other-source-assets/334-111.jpg" message="BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women." />
-              </div>
-              <Link href={links.management} className="mt-6 inline-flex items-center gap-2 rounded-md border border-brand-200 bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-50">
-                {management.cta} <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </section>
-        );
+        return <HomeManagementSection key="management" />;
 
       case "support_cta":
         return (
@@ -400,19 +384,4 @@ export default async function HomePage() {
   );
 }
 
-function ManagementCard({ name, role, image, message }: { name: string; role: string; image: string; message: string }) {
-  return (
-    <article className="group grid overflow-hidden rounded-2xl border border-brand-200 bg-gradient-to-br from-white to-brand-50/70 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lift sm:grid-cols-[10rem_1fr]">
-      <div className="overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt={name} className="aspect-square h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-      </div>
-      <div className="relative p-6">
-        <span className="absolute left-6 top-0 h-1 w-12 rounded-b-full bg-brand-500" />
-        <p className="mt-2 font-display text-xl font-semibold text-ink">{name}</p>
-        <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-[.14em] text-brand-700">{role}</p>
-        <p className="mt-4 border-t border-brand-100 pt-4 text-sm leading-relaxed text-ink-muted">{message}</p>
-      </div>
-    </article>
-  );
-}
+
