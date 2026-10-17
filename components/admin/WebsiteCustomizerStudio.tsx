@@ -13,6 +13,7 @@ import {
   Eye,
   EyeOff,
   GripVertical,
+  Globe,
   HelpCircle,
   Image as ImageIcon,
   Layers,
@@ -60,7 +61,7 @@ const GALLERY_PRESET_IMAGES = [
 
 export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "collage" | "audio" | "typing">("sections");
+  const [activeTab, setActiveTab] = useState<"sections" | "collage" | "audio" | "typing" | "footprint">("sections");
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -324,6 +325,7 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
       <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2">
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
+          { id: "footprint", label: "Footprint & Global Reach", icon: Globe },
           { id: "collage", label: "Stylish Photo Collage & Imagery", icon: Camera },
           { id: "audio", label: "Relaxing Ambient Music & Sounds", icon: Music },
           { id: "typing", label: "Live Mission & Typing Ticker", icon: Type },
@@ -842,6 +844,154 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 5: Footprint & Global Reach Configuration */}
+      {activeTab === "footprint" && (
+        <div className="space-y-6 rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm">
+          <div>
+            <h3 className="font-display text-lg font-bold text-ink">
+              Interactive Map &amp; Global Outreach Horizon
+            </h3>
+            <p className="mt-1 text-xs text-ink-muted">
+              Configure the headline narrative, default view mode, and strategic vision statements for both the World Map and India Grassroots Network.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Section Eyebrow Pill
+              </label>
+              <input
+                type="text"
+                value={settings.footprint?.eyebrow ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    footprint: { ...prev.footprint, eyebrow: e.target.value },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                placeholder="Global Alliances & Verified Grassroots Footprint"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Default Map View Mode
+              </label>
+              <select
+                value={settings.footprint?.defaultMode ?? "world"}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    footprint: {
+                      ...prev.footprint,
+                      defaultMode: e.target.value as "world" | "india",
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none bg-white"
+              >
+                <option value="world">🌍 World / International Map (Default)</option>
+                <option value="india">🇮🇳 India Grassroots Network</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+              Main Display Heading
+            </label>
+            <input
+              type="text"
+              value={settings.footprint?.heading ?? ""}
+              onChange={(e) =>
+                setSettings((prev) => ({
+                  ...prev,
+                  footprint: { ...prev.footprint, heading: e.target.value },
+                }))
+              }
+              className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+              placeholder="Where grassroots action meets international vision."
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+              Institutional Narrative Description
+            </label>
+            <textarea
+              rows={3}
+              value={settings.footprint?.description ?? ""}
+              onChange={(e) =>
+                setSettings((prev) => ({
+                  ...prev,
+                  footprint: { ...prev.footprint, description: e.target.value },
+                }))
+              }
+              className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+              placeholder="Describe BSGSS's 30+ years of verified grassroots field execution..."
+            />
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                World Map Context Explanatory Note
+              </label>
+              <textarea
+                rows={2}
+                value={settings.footprint?.worldNote ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    footprint: { ...prev.footprint, worldNote: e.target.value },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                placeholder="Uncolored international territories represent our strategic global outreach roadmap..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                India Grassroots Context Explanatory Note
+              </label>
+              <textarea
+                rows={2}
+                value={settings.footprint?.indiaNote ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    footprint: { ...prev.footprint, indiaNote: e.target.value },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                placeholder="Grassroots presence verified through official statutory filings..."
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+              Global Vision Target Goal Banner
+            </label>
+            <input
+              type="text"
+              value={settings.footprint?.globalVisionGoal ?? ""}
+              onChange={(e) =>
+                setSettings((prev) => ({
+                  ...prev,
+                  footprint: { ...prev.footprint, globalVisionGoal: e.target.value },
+                }))
+              }
+              className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+              placeholder="Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances."
+            />
           </div>
         </div>
       )}

@@ -313,7 +313,7 @@ export default async function HomePage() {
       case "india_map":
         return (
           <ScrollReveal key="india_map" direction="scale" delay={80}>
-            <InteractiveIndiaMap />
+            <InteractiveIndiaMap customizerConfig={customizer.footprint} />
           </ScrollReveal>
         );
 

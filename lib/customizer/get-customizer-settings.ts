@@ -29,6 +29,10 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           ...DEFAULT_CUSTOMIZER_SETTINGS.images,
           ...(val.images || {}),
         },
+        footprint: {
+          ...DEFAULT_CUSTOMIZER_SETTINGS.footprint,
+          ...(val.footprint || {}),
+        },
       };
     }
   } catch (err) {

@@ -65,11 +65,22 @@ export type CustomizerImagesConfig = {
   collagePhotos: CollagePhotoItem[];
 };
 
+export type MapFootprintConfig = {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  defaultMode: "world" | "india";
+  worldNote: string;
+  indiaNote: string;
+  globalVisionGoal: string;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
   typing: LiveTypingConfig;
   images: CustomizerImagesConfig;
+  footprint: MapFootprintConfig;
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1052,5 +1063,14 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
         tilt: "rotate-2",
       },
     ],
+  },
+  footprint: {
+    eyebrow: "Global Alliances & Verified Grassroots Footprint",
+    heading: "Where grassroots action meets international vision.",
+    description: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in India, with our institutional target to reach, connect, and collaborate globally across diaspora networks and UN SDG frameworks.",
+    defaultMode: "world",
+    worldNote: "Uncolored international territories represent our strategic global outreach roadmap and diaspora engagement horizon.",
+    indiaNote: "Grassroots presence verified through official statutory filings across Uttar Pradesh, Delhi NCR, Haryana, Punjab, and Rajasthan.",
+    globalVisionGoal: "Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances.",
   },
 };

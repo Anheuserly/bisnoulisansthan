@@ -87,6 +87,15 @@ export async function POST(request: Request) {
         ? incoming.images.collagePhotos
         : current.images.collagePhotos,
     },
+    footprint: {
+      eyebrow: incoming.footprint?.eyebrow || current.footprint.eyebrow,
+      heading: incoming.footprint?.heading || current.footprint.heading,
+      description: incoming.footprint?.description || current.footprint.description,
+      defaultMode: incoming.footprint?.defaultMode === "india" ? "india" : "world",
+      worldNote: incoming.footprint?.worldNote || current.footprint.worldNote,
+      indiaNote: incoming.footprint?.indiaNote || current.footprint.indiaNote,
+      globalVisionGoal: incoming.footprint?.globalVisionGoal || current.footprint.globalVisionGoal,
+    },
   };
 
   await db.query(

@@ -20,7 +20,6 @@ import {
   GLOBAL_REGIONS,
   GLOBAL_SUMMARY_TOTALS,
   getGlobalRegion,
-  getRegionForCountryCode,
   type GlobalRegion,
 } from "@/data/global-program-data";
 import {
@@ -28,6 +27,7 @@ import {
   indiaProgrammeTotals,
   type IndiaStateProgram,
 } from "@/data/india-program-data";
+import { type MapFootprintConfig } from "@/config/customizer";
 import { cn } from "@/lib/utils/cn";
 
 type MapViewMode = "world" | "india";
@@ -43,6 +43,10 @@ interface IndiaLocation {
   id: string;
   name: string;
   path: string;
+}
+
+interface InteractiveIndiaMapProps {
+  customizerConfig?: MapFootprintConfig;
 }
 
 const worldLocations = (World.locations || []) as WorldLocation[];
@@ -71,31 +75,24 @@ function useCountUp(value: number) {
   return count;
 }
 
-export function InteractiveIndiaMap() {
-  const [viewMode, setViewMode] = useState<MapViewMode>("world");
+export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapProps) {
+  const [viewMode, setViewMode] = useState<MapViewMode>(customizerConfig?.defaultMode || "world");
   const [selectedRegionId, setSelectedRegionId] = useState<string>("india");
   const [selectedStateName, setSelectedStateName] = useState<string>("Uttar Pradesh");
   const [tooltip, setTooltip] = useState<TooltipState>(null);
 
   // Selected entities
-  const selectedRegion = getGlobalRegion(selectedRegionId) || GLOBAL_REGIONS[0];
+  const selectedRegion = getGlobalRegion(selectedRegionId);
   const selectedState = getIndiaStateProgram(selectedStateName);
 
-  // Animated metric counters
-  const globalRegionsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.regions);
-  const globalCountriesCount = useCountUp(GLOBAL_SUMMARY_TOTALS.countriesReached);
-  const globalSdgsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.sdgsAligned);
+  // Animated metric counters with real, accurate data
+  const verifiedStatesCount = useCountUp(GLOBAL_SUMMARY_TOTALS.verifiedStates);
+  const verifiedDistrictsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.verifiedDistricts);
+  const globalTargetHubsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.targetGlobalHubs);
 
   const indiaStatesCount = useCountUp(indiaProgrammeTotals.states);
   const indiaDistrictsCount = useCountUp(indiaProgrammeTotals.districts);
   const indiaVillagesCount = useCountUp(350);
-
-  const handleWorldCountryClick = (countryId: string) => {
-    const region = getRegionForCountryCode(countryId);
-    if (region) {
-      setSelectedRegionId(region.id);
-    }
-  };
 
   const handleIndiaStateClick = (stateName: string) => {
     setSelectedStateName(stateName);
@@ -121,56 +118,57 @@ export function InteractiveIndiaMap() {
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-gradient-to-b from-white via-sand-50/70 to-white py-14 sm:py-20 border-b border-brand-100"
+      className="relative isolate overflow-hidden bg-sand-50/40 py-16 sm:py-24"
       id="interactive-map"
     >
       {/* Decorative ambient radial blurs */}
-      <div className="pointer-events-none absolute -left-28 top-1/4 h-96 w-96 rounded-full bg-brand-200/20 blur-3xl" />
-      <div className="pointer-events-none absolute -right-28 bottom-1/4 h-96 w-96 rounded-full bg-emerald-200/20 blur-3xl" />
+      <div className="pointer-events-none absolute -left-28 top-1/4 h-96 w-96 rounded-full bg-brand-200/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-28 bottom-1/4 h-96 w-96 rounded-full bg-emerald-200/15 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
         {/* Main Grid: Left Narrative & Telemetry Panel (5 cols) + Right Map Canvas (7 cols) */}
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
           
-          {/* Left Column: Context, Mode Switcher & Dynamic Detail Card */}
+          {/* Left Column: Context, Mode Switcher & Borderless Dynamic Detail Panel */}
           <div className="lg:col-span-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand-200/90 bg-white/95 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs">
               <Globe2 className="h-4 w-4 text-brand-600 animate-pulse" />
-              <span>International &amp; Grassroots Footprint</span>
+              <span>{customizerConfig?.eyebrow || "Global Alliances & Verified Grassroots Footprint"}</span>
             </div>
 
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl lg:text-[2.65rem]">
-              Where we create change.
+            <h2 className="mt-3.5 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl lg:text-[2.65rem]">
+              {customizerConfig?.heading || "Where grassroots action meets international vision."}
             </h2>
 
             <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
-              BSGSS anchors 30+ years of deep grassroots field action across 350+ villages in India with an expanding international presence — collaborating with the global diaspora, international CSR alliances, and United Nations Sustainable Development Goals (SDGs).
+              {customizerConfig?.description ||
+                "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in India, with our institutional target to reach, connect, and collaborate globally across diaspora networks and UN SDG frameworks."}
             </p>
 
-            {/* View Mode Switcher Pills */}
-            <div className="mt-6 flex items-center rounded-xl border border-brand-200/90 bg-white/90 p-1.5 shadow-2xs backdrop-blur-sm">
+            {/* Seamless View Mode Switcher Pills (Without harsh boxer borders) */}
+            <div className="mt-6 flex items-center rounded-xl bg-white p-1.5 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode("world")}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-2 rounded-lg py-2 px-3 text-xs font-bold transition-all duration-200",
+                  "flex-1 flex items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs font-bold transition-all duration-200",
                   viewMode === "world"
                     ? "bg-brand-700 text-white shadow-soft"
-                    : "text-ink-muted hover:text-brand-900 hover:bg-brand-50"
+                    : "text-ink-muted hover:text-brand-900 hover:bg-sand-50"
                 )}
               >
                 <Globe2 className="h-4 w-4" />
-                <span>World / International Map</span>
+                <span>World / International Vision</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setViewMode("india")}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-2 rounded-lg py-2 px-3 text-xs font-bold transition-all duration-200",
+                  "flex-1 flex items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs font-bold transition-all duration-200",
                   viewMode === "india"
                     ? "bg-brand-700 text-white shadow-soft"
-                    : "text-ink-muted hover:text-brand-900 hover:bg-brand-50"
+                    : "text-ink-muted hover:text-brand-900 hover:bg-sand-50"
                 )}
               >
                 <MapPin className="h-4 w-4" />
@@ -178,48 +176,72 @@ export function InteractiveIndiaMap() {
               </button>
             </div>
 
-            {/* 3 High-Impact Numeric Badges */}
-            <div className="mt-7 grid grid-cols-3 gap-3 border-y border-line/70 py-5">
+            {/* 3 High-Impact Numeric Badges with Accurate Verified Data */}
+            <div className="mt-8 grid grid-cols-3 gap-3 border-y border-line/60 py-5">
               {viewMode === "world" ? (
                 <>
                   <div className="border-l-2 border-brand-400 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">{globalRegionsCount}+</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">Global Regions</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                      {verifiedStatesCount}
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                      Active Indian States
+                    </p>
                   </div>
                   <div className="border-l-2 border-brand-400 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">{globalCountriesCount}+</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">Countries Linked</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                      {indiaVillagesCount}+
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                      Villages Mobilized
+                    </p>
                   </div>
                   <div className="border-l-2 border-emerald-500 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">{globalSdgsCount}</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-700">UN SDGs Aligned</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
+                      {globalTargetHubsCount}
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-700">
+                      Global Target Hubs
+                    </p>
                   </div>
                 </>
               ) : (
                 <>
                   <div className="border-l-2 border-brand-400 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">{indiaStatesCount}</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">States</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                      {indiaStatesCount}
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                      States Covered
+                    </p>
                   </div>
                   <div className="border-l-2 border-brand-400 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">{indiaDistrictsCount}</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">Districts</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                      {indiaDistrictsCount}
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                      District Clusters
+                    </p>
                   </div>
                   <div className="border-l-2 border-emerald-500 pl-3">
-                    <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">{indiaVillagesCount}+</p>
-                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-700">Villages</p>
+                    <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
+                      {indiaVillagesCount}+
+                    </p>
+                    <p className="mt-1 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-700">
+                      Panchayats
+                    </p>
                   </div>
                 </>
               )}
             </div>
 
-            {/* Dynamic Selected Location & Detail Card */}
+            {/* Dynamic Selected Location Panel (Borderless, clean editorial style) */}
             <div className="mt-7">
               {viewMode === "world" ? (
-                <div className="rounded-2xl border border-brand-200/90 bg-white p-6 shadow-2xs transition-all">
+                <div className="rounded-2xl bg-white p-6 shadow-soft transition-all">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="inline-flex items-center gap-1.5 rounded-md bg-brand-50 px-2.5 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-brand-800">
-                      <span className="text-base">{selectedRegion.flag}</span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-sand-100 px-3 py-1 text-[0.6875rem] font-bold uppercase tracking-wider text-brand-900">
+                      <span className="text-sm">{selectedRegion.flag}</span>
                       <span>{selectedRegion.category}</span>
                     </span>
                     <span className="text-xs font-semibold text-brand-700">
@@ -227,17 +249,17 @@ export function InteractiveIndiaMap() {
                     </span>
                   </div>
 
-                  <h3 className="mt-3 font-display text-xl sm:text-2xl font-bold text-ink">
+                  <h3 className="mt-3.5 font-display text-xl sm:text-2xl font-bold text-ink">
                     {selectedRegion.name}
                   </h3>
                   <p className="mt-0.5 text-xs font-semibold text-brand-800">
                     {selectedRegion.subtitle}
                   </p>
 
-                  {/* Regional Key Metrics */}
+                  {/* Regional Key Metrics (Clean card pills without harsh box borders) */}
                   <div className="mt-4 grid grid-cols-2 gap-2.5">
                     {selectedRegion.metrics.map((metric) => (
-                      <div key={metric.label} className="rounded-xl border border-brand-100 bg-sand-50/60 p-2.5">
+                      <div key={metric.label} className="rounded-xl bg-sand-50/70 p-3">
                         <p className="font-display text-lg font-bold text-brand-900">{metric.value}</p>
                         <p className="text-[0.6875rem] font-medium text-ink-muted">{metric.label}</p>
                       </div>
@@ -250,11 +272,16 @@ export function InteractiveIndiaMap() {
                   </p>
 
                   {/* Focus Areas Pills */}
-                  <div className="mt-4 border-t border-brand-100/70 pt-3">
-                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-800">Focus Areas &amp; Pillars</p>
+                  <div className="mt-4 pt-3 border-t border-line/50">
+                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-800">
+                      Strategic Focus &amp; Pillars
+                    </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {selectedRegion.focusAreas.map((focus) => (
-                        <span key={focus} className="rounded-md bg-sand-100/90 px-2 py-0.5 text-[0.6875rem] font-medium text-ink">
+                        <span
+                          key={focus}
+                          className="rounded-lg bg-sand-100/70 px-2.5 py-1 text-[0.6875rem] font-medium text-ink"
+                        >
                           {focus}
                         </span>
                       ))}
@@ -262,11 +289,16 @@ export function InteractiveIndiaMap() {
                   </div>
 
                   {/* UN SDG Alignments */}
-                  <div className="mt-3.5 border-t border-brand-100/70 pt-3">
-                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800">UN SDG Alignment</p>
+                  <div className="mt-3.5 pt-3 border-t border-line/50">
+                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800">
+                      UN SDG Alignment Framework
+                    </p>
                     <div className="mt-1.5 flex flex-wrap gap-1.5">
                       {selectedRegion.sdgAlignments.map((sdg) => (
-                        <span key={sdg} className="rounded-md bg-emerald-50 px-2 py-0.5 text-[0.6875rem] font-semibold text-emerald-800 border border-emerald-200/60">
+                        <span
+                          key={sdg}
+                          className="rounded-lg bg-emerald-50 px-2.5 py-1 text-[0.6875rem] font-semibold text-emerald-800"
+                        >
                           {sdg}
                         </span>
                       ))}
@@ -274,29 +306,39 @@ export function InteractiveIndiaMap() {
                   </div>
                 </div>
               ) : (
-                /* India Selected State Card */
-                <div className="rounded-2xl border border-brand-200/90 bg-white p-6 shadow-2xs">
+                /* India Selected State Card (Borderless clean style) */
+                <div className="rounded-2xl bg-white p-6 shadow-soft transition-all">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs font-bold uppercase tracking-[.16em] text-brand-700">Selected State</span>
-                    <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-[0.6875rem] font-semibold text-emerald-800">
-                      Active Field Records
+                    <span className="text-xs font-bold uppercase tracking-[.16em] text-brand-700">
+                      Selected State
+                    </span>
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-emerald-800">
+                      Statutory Field Records
                     </span>
                   </div>
 
-                  <h3 className="mt-2 font-display text-2xl font-bold text-ink">
+                  <h3 className="mt-3 font-display text-2xl font-bold text-ink">
                     {selectedState?.state || "Select a State"}
                   </h3>
 
                   {selectedState ? (
                     <>
                       <div className="mt-4 grid grid-cols-2 gap-3">
-                        <div className="rounded-xl bg-brand-50 p-3">
-                          <p className="font-display text-2xl font-bold text-brand-900">{selectedState.districts.length}</p>
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Districts Covered</p>
+                        <div className="rounded-xl bg-sand-50/70 p-3">
+                          <p className="font-display text-2xl font-bold text-brand-900">
+                            {selectedState.districts.length}
+                          </p>
+                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                            Districts Active
+                          </p>
                         </div>
-                        <div className="rounded-xl bg-brand-50 p-3">
-                          <p className="font-display text-2xl font-bold text-brand-900">{selectedState.programs}</p>
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">Programme Records</p>
+                        <div className="rounded-xl bg-sand-50/70 p-3">
+                          <p className="font-display text-2xl font-bold text-brand-900">
+                            {selectedState.programs}
+                          </p>
+                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                            PSU CSR Projects
+                          </p>
                         </div>
                       </div>
 
@@ -308,38 +350,61 @@ export function InteractiveIndiaMap() {
                       </p>
                     </>
                   ) : (
-                    <p className="mt-4 text-xs text-ink-muted">Select any highlighted state to inspect district programmes.</p>
+                    <p className="mt-4 text-xs text-ink-muted">
+                      Select any highlighted state to inspect district programmes.
+                    </p>
                   )}
                 </div>
               )}
             </div>
           </div>
 
-          {/* Right Column: Interactive Map Canvas (7 cols) */}
+          {/* Right Column: Interactive Map Canvas (7 cols) - Borderless Clean Aesthetic */}
           <div className="relative lg:col-span-7">
-            <div className="relative overflow-hidden rounded-2xl border-2 border-brand-100 bg-white p-4 shadow-soft sm:p-6">
+            <div className="relative overflow-hidden rounded-3xl bg-white p-5 shadow-soft sm:p-7">
               
               {/* Header inside Map Canvas */}
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-brand-100 pb-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line/60 pb-3.5">
                 <div className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="text-xs font-bold uppercase tracking-wider text-ink">
-                    {viewMode === "world" ? "Interactive Global Alliances Map" : "Interactive India Grassroots Map"}
+                    {viewMode === "world"
+                      ? "Global Outreach Horizon & Alliances Map"
+                      : "Interactive India Grassroots Map"}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-[0.6875rem] font-semibold text-ink-muted">
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
-                    <span>Active Region / State</span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
-                    <span>Affiliated</span>
-                  </span>
+                  {viewMode === "world" ? (
+                    <>
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
+                        <span>India (Field Base HQ)</span>
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse" />
+                        <span>Target Global Hubs</span>
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
+                        <span>Global Expansion Horizon</span>
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
+                        <span>Active Field State</span>
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
+                        <span>Other States</span>
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
 
-              {/* WORLD MAP VIEW */}
+              {/* WORLD MAP VIEW - Uncolored, honest global map with target hubs */}
               {viewMode === "world" ? (
                 <div className="relative mt-4">
                   <svg
@@ -356,11 +421,9 @@ export function InteractiveIndiaMap() {
                       </radialGradient>
                     </defs>
 
-                    {/* All World Countries */}
+                    {/* All World Countries: Uncolored clean neutral paths as requested */}
                     {worldLocations.map((location) => {
-                      const region = getRegionForCountryCode(location.id);
-                      const isActive = Boolean(region);
-                      const isSelected = selectedRegion.countryCodes.includes(location.id);
+                      const isIndia = location.id.toLowerCase() === "in";
 
                       return (
                         <path
@@ -368,42 +431,52 @@ export function InteractiveIndiaMap() {
                           d={location.path}
                           role="button"
                           tabIndex={0}
-                          aria-label={`${location.name}${region ? `: ${region.name} (${region.category})` : ""}`}
-                          aria-pressed={isSelected}
-                          onClick={() => handleWorldCountryClick(location.id)}
+                          aria-label={
+                            isIndia
+                              ? "India: National Grassroots Headquarters & 350+ Village Operations"
+                              : `${location.name}: Global Expansion Horizon`
+                          }
+                          onClick={() => {
+                            if (isIndia) {
+                              setSelectedRegionId("india");
+                            }
+                          }}
                           onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
+                            if ((e.key === "Enter" || e.key === " ") && isIndia) {
                               e.preventDefault();
-                              handleWorldCountryClick(location.id);
+                              setSelectedRegionId("india");
                             }
                           }}
                           onMouseEnter={(e) =>
                             updateTooltip(
                               location.name,
-                              region ? `${region.category} · ${region.hub.city}` : "Global Affiliation",
+                              isIndia
+                                ? "🇮🇳 National Grassroots Base & 350+ Village Network"
+                                : "Global Expansion Horizon (Target Outreach)",
                               e
                             )
                           }
                           onMouseMove={(e) =>
                             updateTooltip(
                               location.name,
-                              region ? `${region.category} · ${region.hub.city}` : "Global Affiliation",
+                              isIndia
+                                ? "🇮🇳 National Grassroots Base & 350+ Village Network"
+                                : "Global Expansion Horizon (Target Outreach)",
                               e
                             )
                           }
                           onMouseLeave={() => setTooltip(null)}
                           className={cn(
-                            "cursor-pointer stroke-white stroke-[0.8] outline-none transition-all duration-300",
-                            isActive
-                              ? "fill-brand-700 hover:fill-brand-600 hover:drop-shadow-[0_2px_8px_rgba(45,125,136,0.35)]"
-                              : "fill-slate-200/90 hover:fill-slate-300",
-                            isSelected && "fill-brand-900 stroke-brand-200 stroke-[1.8]"
+                            "cursor-default stroke-white stroke-[0.8] outline-none transition-all duration-300",
+                            isIndia
+                              ? "cursor-pointer fill-brand-700 hover:fill-brand-600 hover:drop-shadow-[0_2px_8px_rgba(45,125,136,0.35)]"
+                              : "fill-slate-100 hover:fill-slate-200"
                           )}
                         />
                       );
                     })}
 
-                    {/* Connection Arcs from New Delhi Headquarters to International Hubs */}
+                    {/* Target Connection Arcs radiating from New Delhi Headquarters to International Target Hubs */}
                     {GLOBAL_REGIONS.filter((r) => r.id !== "india").map((r) => {
                       const hq = { x: 707, y: 400 };
                       const target = r.hub;
@@ -427,7 +500,7 @@ export function InteractiveIndiaMap() {
                       );
                     })}
 
-                    {/* Pulsing Radar Hubs at International Centres */}
+                    {/* Target Radar Hubs at International Strategic Centres */}
                     {GLOBAL_REGIONS.map((region) => {
                       const { x, y } = region.hub;
                       const isSelected = selectedRegionId === region.id;
@@ -438,8 +511,24 @@ export function InteractiveIndiaMap() {
                           key={`hub-${region.id}`}
                           className="cursor-pointer"
                           onClick={() => setSelectedRegionId(region.id)}
-                          onMouseEnter={(e) => updateTooltip(region.name, region.subtitle, e)}
-                          onMouseMove={(e) => updateTooltip(region.name, region.subtitle, e)}
+                          onMouseEnter={(e) =>
+                            updateTooltip(
+                              region.name,
+                              isHQ
+                                ? "🇮🇳 National Operational Headquarters"
+                                : `Target Hub: ${region.hub.city}`,
+                              e
+                            )
+                          }
+                          onMouseMove={(e) =>
+                            updateTooltip(
+                              region.name,
+                              isHQ
+                                ? "🇮🇳 National Operational Headquarters"
+                                : `Target Hub: ${region.hub.city}`,
+                              e
+                            )
+                          }
                           onMouseLeave={() => setTooltip(null)}
                         >
                           {/* Outer Pulsing Glow */}
@@ -455,7 +544,7 @@ export function InteractiveIndiaMap() {
                             cx={x}
                             cy={y}
                             r={isHQ ? 6 : 4.5}
-                            fill={isHQ ? "#D97706" : isSelected ? "#123F48" : "#2D7D88"}
+                            fill={isHQ ? "#D97706" : isSelected ? "#0F766E" : "#2D7D88"}
                             stroke="#FFFFFF"
                             strokeWidth={1.5}
                             className="transition-transform duration-200 hover:scale-125"
@@ -513,7 +602,7 @@ export function InteractiveIndiaMap() {
                             "cursor-pointer stroke-white stroke-[1.2] outline-none transition-all duration-200",
                             active
                               ? "fill-brand-700 hover:scale-[1.015] hover:fill-brand-600 hover:drop-shadow-[0_2px_6px_rgba(9,83,92,.35)]"
-                              : "fill-slate-200 hover:fill-slate-300",
+                              : "fill-slate-100 hover:fill-slate-200",
                             selected && "fill-brand-900 stroke-brand-200 stroke-[2.2]"
                           )}
                         />
@@ -527,7 +616,7 @@ export function InteractiveIndiaMap() {
               {tooltip && (
                 <div
                   role="status"
-                  className="pointer-events-none absolute z-30 w-52 -translate-x-1/2 -translate-y-[115%] rounded-xl bg-brand-950/95 p-3 text-white shadow-lift backdrop-blur-sm transition-opacity duration-150 border border-brand-700/60"
+                  className="pointer-events-none absolute z-30 w-56 -translate-x-1/2 -translate-y-[115%] rounded-xl bg-brand-950/95 p-3 text-white shadow-lift backdrop-blur-sm transition-opacity duration-150 border border-brand-700/60"
                   style={{ left: `${tooltip.x}%`, top: `${tooltip.y}%` }}
                 >
                   <p className="text-xs font-bold uppercase tracking-wider text-brand-200">{tooltip.title}</p>
@@ -535,12 +624,14 @@ export function InteractiveIndiaMap() {
                 </div>
               )}
 
-              {/* Bottom Instructions / Explanatory Note */}
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-brand-100 pt-3 text-xs text-ink-muted">
+              {/* Bottom Instructions / Strategic Vision Goal Note */}
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-line/60 pt-3.5 text-xs text-ink-muted">
                 <span>
                   {viewMode === "world"
-                    ? "Click or hover over any international hub (New Delhi, New York, London, Dubai, Singapore, Sydney) to view global mission parameters."
-                    : "Click any highlighted Indian state to view district-level program records transcribed from statutory filings."}
+                    ? (customizerConfig?.worldNote ||
+                        "Uncolored international territories represent our strategic global outreach roadmap and diaspora engagement horizon.")
+                    : (customizerConfig?.indiaNote ||
+                        "Click any highlighted Indian state to view district-level program records transcribed from statutory filings.")}
                 </span>
                 <button
                   type="button"
@@ -550,6 +641,14 @@ export function InteractiveIndiaMap() {
                   Switch to {viewMode === "world" ? "India Grassroots Network →" : "World Map View →"}
                 </button>
               </div>
+
+              {/* Global Vision Banner */}
+              {viewMode === "world" && customizerConfig?.globalVisionGoal && (
+                <div className="mt-3 rounded-xl bg-emerald-50/80 px-3.5 py-2 text-xs font-medium text-emerald-900 border border-emerald-200/50">
+                  <span className="font-bold text-emerald-800">Global Vision: </span>
+                  {customizerConfig.globalVisionGoal}
+                </div>
+              )}
             </div>
           </div>
         </div>
