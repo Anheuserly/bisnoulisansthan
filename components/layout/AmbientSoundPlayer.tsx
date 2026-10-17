@@ -74,7 +74,66 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
 
   // Determine active track audio source URL
   const selectedPreset = AMBIENT_TRACK_PRESETS.find((t) => t.id === audioConfig.trackId) || AMBIENT_TRACK_PRESETS[0];
-  const audioSrc = audioConfig.customUrl || selectedPreset?.audioUrl || "/audio/bansuri-meditation.mp3";
+  const audioSrc = audioConfig.customUrl || selectedPreset?.audioUrl || "/audio/gramodyog-santoor-serenity.m4a";
+
+  // Cycle to Next Track
+  const handleNextTrack = () => {
+    const currentIndex = AMBIENT_TRACK_PRESETS.findIndex((t) => t.id === audioConfig.trackId);
+    const nextIndex = (currentIndex + 1) % AMBIENT_TRACK_PRESETS.length;
+    const nextTrack = AMBIENT_TRACK_PRESETS[nextIndex] || AMBIENT_TRACK_PRESETS[0];
+    if (nextTrack) {
+      setAudioConfig((prev) => ({
+        ...prev,
+        trackId: nextTrack.id,
+        customUrl: "",
+      }));
+      try {
+        localStorage.setItem("bsgss_ambient_track_id", nextTrack.id);
+      } catch {}
+    }
+  };
+
+  // Cycle to Previous Track
+  const handlePrevTrack = () => {
+    const currentIndex = AMBIENT_TRACK_PRESETS.findIndex((t) => t.id === audioConfig.trackId);
+    const prevIndex = (currentIndex - 1 + AMBIENT_TRACK_PRESETS.length) % AMBIENT_TRACK_PRESETS.length;
+    const prevTrack = AMBIENT_TRACK_PRESETS[prevIndex] || AMBIENT_TRACK_PRESETS[0];
+    if (prevTrack) {
+      setAudioConfig((prev) => ({
+        ...prev,
+        trackId: prevTrack.id,
+        customUrl: "",
+      }));
+      try {
+        localStorage.setItem("bsgss_ambient_track_id", prevTrack.id);
+      } catch {}
+    }
+  };
+
+  // Select Specific Track
+  const handleSelectTrack = (trackId: string) => {
+    setAudioConfig((prev) => ({
+      ...prev,
+      trackId,
+      customUrl: "",
+    }));
+    try {
+      localStorage.setItem("bsgss_ambient_track_id", trackId);
+    } catch {}
+    if (!isPlaying && audioRef.current) {
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  };
+
+  // Restore visitor saved track on load
+  useEffect(() => {
+    try {
+      const savedTrack = localStorage.getItem("bsgss_ambient_track_id");
+      if (savedTrack && AMBIENT_TRACK_PRESETS.some((t) => t.id === savedTrack)) {
+        setAudioConfig((prev) => ({ ...prev, trackId: savedTrack }));
+      }
+    } catch {}
+  }, []);
 
   // Initialize Audio Element
   useEffect(() => {
@@ -90,6 +149,7 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
       if (audioRef.current.src !== audioSrc && !audioRef.current.src.endsWith(audioSrc)) {
         const wasPlaying = isPlaying;
         audioRef.current.src = audioSrc;
+        audioRef.current.load();
         if (wasPlaying) {
           audioRef.current.play().catch(() => {});
         }
@@ -199,16 +259,38 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
       aria-label="Relaxing ambient audio player"
       className="fixed bottom-4 left-4 z-40 select-none animate-fadeIn"
     >
-      <div className="relative flex items-center gap-2.5 rounded-full border border-brand-200/90 bg-white/95 px-3.5 py-2 shadow-2xl backdrop-blur-xl transition-all hover:border-brand-300 hover:shadow-soft">
+      <div className="relative flex items-center gap-1.5 sm:gap-2.5 rounded-full border border-brand-200/90 bg-white/95 px-2.5 sm:px-3.5 py-2 shadow-2xl backdrop-blur-xl transition-all hover:border-brand-300 hover:shadow-soft">
         {/* Play / Pause Toggle Button */}
         <button
           type="button"
           onClick={handleTogglePlay}
           aria-label={isPlaying ? "Pause ambient sound" : "Play ambient relaxation sound"}
           className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-700 text-white shadow-2xs transition hover:bg-brand-800 hover:scale-105 active:scale-95"
-          title={isPlaying ? "Pause soothing music" : "Play soothing Sarvodaya flute music"}
+          title={isPlaying ? "Pause relaxing music" : "Play relaxing soundscape"}
         >
           {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
+        </button>
+
+        {/* Previous Track Button */}
+        <button
+          type="button"
+          onClick={handlePrevTrack}
+          aria-label="Previous music soundscape track"
+          className="flex h-7 w-7 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 hover:text-brand-800 transition active:scale-95"
+          title="Previous track"
+        >
+          <span className="text-xs font-bold">⏮</span>
+        </button>
+
+        {/* Next Track Button */}
+        <button
+          type="button"
+          onClick={handleNextTrack}
+          aria-label="Next music soundscape track"
+          className="flex h-7 w-7 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 hover:text-brand-800 transition active:scale-95"
+          title="Next track"
+        >
+          <span className="text-xs font-bold">⏭</span>
         </button>
 
         {/* Animated Sound Wave Equalizer Bars */}
@@ -241,17 +323,17 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
 
           {/* Track Name & Status */}
           <div className="hidden sm:block text-left">
-            <div className="text-[0.6875rem] font-bold text-ink truncate max-w-[150px]">
-              {selectedPreset?.name || "Sarvodaya Flute Serenity"}
+            <div className="text-[0.6875rem] font-bold text-ink truncate max-w-[155px]">
+              {selectedPreset?.name || "Gramodyog Santoor Serenity"}
             </div>
             <div className="text-[0.625rem] text-brand-700 font-semibold flex items-center gap-1">
               {isPlaying ? (
                 <>
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span>Relaxing Ambient Playing</span>
+                  <span className="truncate max-w-[120px]">{selectedPreset?.genre || "Playing"}</span>
                 </>
               ) : (
-                <span>Tap to Play Flute Ambient</span>
+                <span>Tap to Play Sound</span>
               )}
             </div>
           </div>
@@ -268,39 +350,95 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
           {isMuted ? <VolumeX className="h-4 w-4 text-amber-700" /> : <Volume2 className="h-4 w-4" />}
         </button>
 
-        {/* Volume Slider Popout Toggle */}
+        {/* Track List & Settings Popout Toggle */}
         <button
           type="button"
           onClick={() => setShowControls((prev) => !prev)}
-          aria-label="Adjust volume"
+          aria-label="Choose from 20 music tracks and adjust volume"
           className={`flex h-8 w-8 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 transition ${
             showControls ? "bg-sand-100 text-brand-800" : ""
           }`}
-          title="Adjust volume"
+          title="Browse 20+ music soundscapes"
         >
           <SlidersHorizontal className="h-4 w-4" />
         </button>
       </div>
 
-      {/* Popout Volume Controls */}
+      {/* Popout Soundscape Selector & Volume Controls */}
       {showControls && (
-        <div className="absolute bottom-14 left-0 mb-1 w-60 rounded-2xl border border-brand-200 bg-white p-4 shadow-2xl backdrop-blur-xl animate-scaleUp">
-          <div className="flex items-center justify-between text-xs font-semibold text-ink">
-            <span>Ambient Volume</span>
+        <div className="absolute bottom-14 left-0 mb-1 w-80 max-h-[28rem] flex flex-col rounded-2xl border border-brand-200 bg-white/95 p-4 shadow-2xl backdrop-blur-xl animate-scaleUp">
+          <div className="flex items-center justify-between text-xs font-semibold text-ink border-b border-brand-100 pb-2.5">
+            <div className="flex items-center gap-1.5">
+              <Music className="h-3.5 w-3.5 text-brand-700" />
+              <span className="font-bold">Soundscape Library</span>
+              <span className="text-[0.625rem] px-1.5 py-0.2 rounded-full bg-brand-50 text-brand-700 font-bold">
+                {AMBIENT_TRACK_PRESETS.length} tracks
+              </span>
+            </div>
             <span className="text-brand-700 font-bold">{Math.round(volume * 100)}%</span>
           </div>
-          <input
-            type="range"
-            min="0.05"
-            max="1.0"
-            step="0.05"
-            value={volume}
-            onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-            className="mt-2.5 h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-sand-200 accent-brand-700"
-          />
-          <p className="mt-2.5 text-[0.6875rem] text-ink-muted leading-relaxed">
-            Gentle authentic Indian flute melody played in the classical Mayamalavagowla/Bansuri tradition.
-          </p>
+
+          {/* Volume Slider */}
+          <div className="py-2.5 border-b border-brand-100">
+            <div className="flex justify-between text-[0.6875rem] text-ink-muted mb-1 font-medium">
+              <span>Volume</span>
+              <span>{Math.round(volume * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min="0.05"
+              max="1.0"
+              step="0.05"
+              value={volume}
+              onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+              className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-sand-200 accent-brand-700"
+            />
+          </div>
+
+          {/* Scrollable Tracklist */}
+          <div className="mt-2.5 overflow-y-auto space-y-1.5 pr-1 flex-1 max-h-56">
+            <p className="text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted px-1 mb-1">
+              Select or change sound anytime:
+            </p>
+            {AMBIENT_TRACK_PRESETS.filter((t) => t.id !== "custom-stream").map((track, idx) => {
+              const isCurrent = audioConfig.trackId === track.id;
+              return (
+                <button
+                  key={track.id}
+                  type="button"
+                  onClick={() => handleSelectTrack(track.id)}
+                  className={`w-full text-left rounded-xl p-2 transition flex items-start gap-2.5 text-xs ${
+                    isCurrent
+                      ? "bg-brand-50 border border-brand-300 text-brand-900 font-bold"
+                      : "hover:bg-sand-50 text-ink border border-transparent"
+                  }`}
+                >
+                  <span
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-bold ${
+                      isCurrent ? "bg-brand-700 text-white" : "bg-sand-100 text-ink-muted"
+                    }`}
+                  >
+                    {isCurrent && isPlaying ? "▶" : idx + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-semibold leading-tight">{track.name}</p>
+                    <p className="truncate text-[0.625rem] text-brand-700 font-medium">{track.genre}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-2.5 pt-2 border-t border-brand-100 flex items-center justify-between text-[0.625rem] text-ink-muted">
+            <span>Next/Prev buttons enabled</span>
+            <button
+              type="button"
+              onClick={() => setShowControls(false)}
+              className="font-bold text-brand-700 hover:underline"
+            >
+              Done
+            </button>
+          </div>
         </div>
       )}
     </aside>
