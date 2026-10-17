@@ -14,11 +14,14 @@ import {
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.legalStatus.metadataTitle,
-  description: content.legalStatus.lead,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Legal Status & Transparency Disclosures | BSGSS",
+  description:
+    "Inspect BSGSS statutory records, 12A/80G tax exemptions, MCA CSR-1 registration, and NITI Aayog Darpan public credentials.",
+  path: "/about/legal-status",
+});
 
 const credentialIcons = [
   FileCheck2,

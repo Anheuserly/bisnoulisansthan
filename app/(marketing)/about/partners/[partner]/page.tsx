@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { getPartner, partners } from "@/components/partners/partners-data";
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ partner: string }> };
 
@@ -16,12 +17,25 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { partner: partnerId } = await params;
   const partner = getPartner(partnerId);
-  if (!partner) return { title: "Partner not found" };
+  if (!partner) {
+    return buildMetadata({
+      title: "Partner Not Found",
+      description: "Partner profile not found in BSGSS statutory records.",
+      path: "/about/partners",
+      noIndex: true,
+    });
+  }
 
-  return {
-    title: `${partner.name} CSR Partnership Profile | BSGSS`,
-    description: `BSGSS verified CSR partnership profile and community programs for ${partner.name}.`,
-  };
+  const rawTitle = `${partner.name} CSR Partnership | BSGSS`;
+  const title = rawTitle.length > 60 ? `${partner.name} | BSGSS` : rawTitle;
+  const rawDesc = `Verified CSR partnership profile and programmatic field records for ${partner.name} with BSGSS community initiatives.`;
+  const description = rawDesc.length > 155 ? `${rawDesc.slice(0, 151)}...` : rawDesc;
+
+  return buildMetadata({
+    title,
+    description,
+    path: partner.href,
+  });
 }
 
 export default async function PartnerStoryPage({ params }: PageProps) {

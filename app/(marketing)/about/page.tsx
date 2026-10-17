@@ -16,11 +16,14 @@ import {
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.about.metadataTitle,
-  description: site.description,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "About BSGSS | Mission, Values & History",
+  description:
+    "Learn about BSGSS, founded in 1994 to empower rural communities through healthcare, women's self-help groups, and vocational training.",
+  path: "/about",
+});
 
 const exploreIcons = [Route, Users, FileCheck2, Handshake, BookOpen];
 const cards = content.about.explore.map((card, index) => ({

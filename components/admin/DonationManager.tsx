@@ -13,6 +13,7 @@ import {
   Mail,
   Search,
 } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 export type DonationRow = {
   id: string;
@@ -212,7 +213,7 @@ export function DonationManager({
                     `View Certificate: ${certLink}\n\n` +
                     `With gratitude,\n` +
                     `Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS)\n` +
-                    `Website: https://bisnoulisansthan.in`
+                    `Website: ${SITE_URL}`
                 );
 
                 return (

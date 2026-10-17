@@ -24,11 +24,14 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.home.metadataTitle,
-  description: site.description,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Bisnouli Sarvodaya | Community Development Since 1994",
+  description:
+    "Discover BSGSS community development across North India since 1994. Supporting rural women, healthcare camps, skill training, and village self-reliance.",
+  path: "/",
+});
 
 const programmeIcons = [BookOpen, HeartPulse, HandHeart, Users];
 const programs = content.home.programmes.map((programme, index) => ({

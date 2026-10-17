@@ -5,11 +5,14 @@ import { BankDetailsCard } from "@/components/support/BankDetailsCard";
 import { DonationVerificationForm } from "@/components/support/DonationVerificationForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.support.metadataTitle,
-  description: "Support BSGSS community development work through bank transfer or UPI.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Support Our Work | 80G Tax Exemption | BSGSS",
+  description:
+    "Support rural empowerment and healthcare with BSGSS. Donate securely via NEFT/RTGS or UPI with eligible Section 80G tax exemptions.",
+  path: "/support",
+});
 
 export default function SupportPage() {
   const support = content.support;

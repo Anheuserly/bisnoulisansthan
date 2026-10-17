@@ -5,11 +5,14 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { PartnersSection } from "@/components/partners/PartnersSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { partners } from "@/components/partners/partners-data";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our Partners | Institutional CSR Alliances",
-  description: "BSGSS partners in social development and public sector collaborations since 1994.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "CSR & Institutional Partners Directory | BSGSS",
+  description:
+    "Browse 30+ public sector enterprises and government departments partnered with BSGSS for impactful community development.",
+  path: "/about/partners",
+});
 
 const governmentPartners = [
   "Ministry of Women & Child Development, Govt. of India",

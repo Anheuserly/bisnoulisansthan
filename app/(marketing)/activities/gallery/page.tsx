@@ -3,11 +3,14 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { InteractiveActivitiesGallery } from "@/components/gallery/InteractiveActivitiesGallery";
 import { links } from "@/config/content";
 
-export const metadata: Metadata = {
-  title: "Field Photo Chronicle & Gallery | BSGSS",
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Field Photo Gallery & Archive | BSGSS",
   description:
-    "An authentic photographic archive of Bisnouli Sarvodaya Gramodyog Sewa Sansthan field programs, healthcare camps, tailoring craft centers, and women self-help councils since 1994.",
-};
+    "View authentic field photographs of BSGSS rural healthcare camps, women self-help councils, and youth vocational workshops.",
+  path: "/activities/gallery",
+});
 
 export default function GalleryPage() {
   return (

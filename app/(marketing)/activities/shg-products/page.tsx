@@ -15,11 +15,14 @@ import {
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Women SHG Handcrafted Products | BSGSS",
-  description: "Handcrafted textiles, shawls, mufflers, and artisan eco-crafts made by women’s Self-Help Groups supported by BSGSS.",
-};
+  description:
+    "Support rural women artisans. Explore handcrafted Khadi apparel, handloom textiles, and craft items produced by BSGSS SHG guilds.",
+  path: "/activities/shg-products",
+});
 
 const products = [
   {

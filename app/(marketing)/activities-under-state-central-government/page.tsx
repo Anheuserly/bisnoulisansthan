@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ArrowRight, Building2, CheckCircle2, HeartPulse, Lightbulb, MapPin, ShieldCheck, Sprout } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Activities under State & Central Government | BSGSS",
+export const metadata: Metadata = buildMetadata({
+  title: "Government-Supported Programmes | BSGSS",
   description:
-    "BSGSS awareness, education, health and livelihood activities supported through State and Central Government schemes across North India.",
-};
+    "Review BSGSS grassroots welfare initiatives implemented in partnership with State and Central Government schemes across India.",
+  path: "/activities-under-state-central-government",
+});
 
 const areas = [
   {

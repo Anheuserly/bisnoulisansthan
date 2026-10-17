@@ -3,11 +3,14 @@ import { ExternalLink, Eye, Newspaper, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Work in Media & Press Archives | BSGSS",
-  description: "Official newspaper clippings and independent media coverage documenting BSGSS community activities and health camps.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Press Coverage & Media Archives | BSGSS",
+  description:
+    "Read print journalism records, newspaper reports, and media coverage spotlighting BSGSS grassroots social initiatives.",
+  path: "/activities/work-in-media",
+});
 
 export default function WorkInMediaPage() {
   const { media, clippings } = content.activities;

@@ -3,11 +3,14 @@ import Link from "next/link";
 import { ArrowRight, FileCheck2, HeartPulse, Image as ImageIcon, Newspaper, ShoppingBag, Video } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Activities & Community Action | BSGSS",
-  description: "Explore BSGSS healthcare camps, women's self-help groups, vocational training, education initiatives, and media records.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Activities & Field Initiatives | BSGSS",
+  description:
+    "Discover field initiatives by BSGSS: medical screening camps, vocational guilds, women's empowerment drives, and rural workshops.",
+  path: "/activities",
+});
 
 const activities = [
   {

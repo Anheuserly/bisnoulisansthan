@@ -4,13 +4,16 @@ import { ArrowRight, BriefcaseBusiness, HeartPulse, UsersRound } from "lucide-re
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
 const programmeIcons = [UsersRound, HeartPulse, BriefcaseBusiness];
 
-export const metadata: Metadata = {
-  title: content.activities.keyProgrammes.metadataTitle,
-  description: content.activities.keyProgrammes.lead,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Key Programmes & Initiatives | BSGSS",
+  description:
+    "Explore core BSGSS initiatives: mobile health clinics, self-help group microfinance, vocational training, and youth literacy.",
+  path: "/activities/key-programmes",
+});
 
 export default function KeyProgrammesPage() {
   const programmes = content.activities.keyProgrammes;

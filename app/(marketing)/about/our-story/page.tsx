@@ -4,11 +4,14 @@ import { ArrowRight, Compass, Handshake, HeartPulse } from "lucide-react";
 import { StoryExperience } from "@/components/about/StoryExperience";
 import { StoryHero } from "@/components/about/StoryHero";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our 30-Year Story | Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
-  description: "The historical journey, grassroots milestones, and community leadership of BSGSS since 1994.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Our 30-Year Grassroots Story | BSGSS",
+  description:
+    "Explore the 30-year journey of BSGSS since 1994, advancing village self-reliance, women empowerment, and healthcare milestones.",
+  path: "/about/our-story",
+});
 
 export default function OurStoryPage() {
   return (

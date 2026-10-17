@@ -4,11 +4,14 @@ import { ArrowRight, CheckCircle2, HeartHandshake, ShieldCheck } from "lucide-re
 import { PageHeader } from "@/components/layout/PageHeader";
 import { HomeManagementSection } from "@/components/home/HomeManagementSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Message from the Management | BSGSS",
-  description: "Leadership addresses, vision, and core values of Bisnouli Sarvodaya Gramodyog Sewa Sansthan.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Leadership & Management Messages | BSGSS",
+  description:
+    "Read guidance and vision from BSGSS leadership, including Shri Vijay Kumar Jha (Ex-IPS) and Smt. Nandita Bakshi (Ex-IRS).",
+  path: "/management",
+});
 
 export default function ManagementPage() {
   return (

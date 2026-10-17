@@ -6,9 +6,18 @@ import { CertificateActions } from "@/components/support/CertificateActions";
 import { CertificateSeal } from "@/components/support/CertificateSeal";
 import { CertificateSignature } from "@/components/support/CertificateSignature";
 import { amountInWords } from "@/lib/utils/number-to-words";
+import type { Metadata } from "next";
 import { links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Donation Acknowledgement Certificate | BSGSS",
+  description: "Official donation acknowledgement certificate issued by Bisnouli Sarvodaya Gramodyog Sewa Sansthan.",
+  path: "/support",
+  noIndex: true,
+});
 
 type Certificate = {
   id: string;

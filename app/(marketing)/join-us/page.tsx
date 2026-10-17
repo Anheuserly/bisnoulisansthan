@@ -13,11 +13,14 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { JoinUsForm } from "@/components/join/JoinUsForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.join.metadataTitle,
-  description: content.join.lead,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Volunteer, Intern & Partner With Us | BSGSS",
+  description:
+    "Collaborate with BSGSS. Join as a grassroots volunteer, student intern, medical professional, or institutional CSR partner.",
+  path: "/join-us",
+});
 
 export default function JoinUsPage() {
   const { join } = content;

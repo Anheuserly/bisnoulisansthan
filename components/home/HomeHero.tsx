@@ -2,11 +2,18 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { content, links } from "@/config/content";
 
 const { hero } = content.home;
 const defaultSlides = hero.slides;
+
+const slideLabels = [
+  "Village community mobilisation and health camp outreach",
+  "Women vocational training in tailoring and apparel craft",
+  "Computer literacy and digital education for rural youth",
+  "Self-help group microfinance and women entrepreneurship",
+];
 
 interface HomeHeroProps {
   slides?: string[];
@@ -29,7 +36,10 @@ export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
           <img
             key={src}
             src={src}
-            alt="BSGSS Grassroots Impact and Field Activities"
+            alt={slideLabels[index] || "BSGSS Grassroots Impact and Field Activities"}
+            fetchPriority={index === 0 ? "high" : "low"}
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
             className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ${
               activeSlide === index ? "scale-105 opacity-100" : "scale-100 opacity-0 pointer-events-none"
             }`}
@@ -66,41 +76,66 @@ export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href={links.support}
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-900 shadow-lift transition-all hover:bg-slate-100 hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-900 shadow-lift transition-all hover:bg-slate-100 hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-white"
             >
               <span>{hero.supportCta}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href={links.about}
-              className="inline-flex items-center gap-2 rounded-xl border-2 border-white/70 bg-white/10 px-5 py-2.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md transition-all hover:bg-white/20 hover:border-white"
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-white/70 bg-white/10 px-5 py-2.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md transition-all hover:bg-white/20 hover:border-white focus-visible:ring-2 focus-visible:ring-white"
             >
               <span>{hero.aboutCta}</span>
             </Link>
           </div>
 
-          {/* Slide Indicator Bar & Mini-Thumbnail Navigation */}
-          <div className="mt-10 flex items-center gap-2" aria-label={`Slide ${activeSlide + 1} of ${activeSlides.length}`}>
-            {activeSlides.map((src: string, index: number) => {
-              const isCurrent = activeSlide === index;
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  aria-label={`Switch to slide ${index + 1}`}
-                  aria-current={isCurrent}
-                  onClick={() => setActiveSlide(index)}
-                  className={`group relative overflow-hidden rounded-lg transition-all duration-300 ${
-                    isCurrent
-                      ? "h-8 w-14 ring-2 ring-white shadow-md opacity-100 scale-105"
-                      : "h-5 w-8 opacity-40 hover:opacity-80"
-                  }`}
-                >
-                  <img src={src} alt="" className="h-full w-full object-cover" />
-                  <div className={`absolute inset-0 ${isCurrent ? "bg-black/0" : "bg-black/40"}`} />
-                </button>
-              );
-            })}
+          {/* Slide Indicator Bar & Mini-Thumbnail Navigation with Prev/Next Controls (WCAG 2.2 AA) */}
+          <div className="mt-10 flex flex-wrap items-center gap-3" aria-label="Hero Slideshow Controls">
+            {/* Non-drag prev/next tap buttons */}
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setActiveSlide((current) => (current - 1 + activeSlides.length) % activeSlides.length)}
+                aria-label="Previous slide"
+                className="flex h-8 w-8 min-h-[32px] min-w-[32px] items-center justify-center rounded-lg border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveSlide((current) => (current + 1) % activeSlides.length)}
+                aria-label="Next slide"
+                className="flex h-8 w-8 min-h-[32px] min-w-[32px] items-center justify-center rounded-lg border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+
+            {/* Direct Thumbnail Selection with ≥ 24x24 px tap targets and descriptive aria-labels */}
+            <div className="flex items-center gap-2" role="tablist" aria-label="Slideshow thumbnail navigation">
+              {activeSlides.map((src: string, index: number) => {
+                const isCurrent = activeSlide === index;
+                const label = slideLabels[index] || `BSGSS field photo ${index + 1}`;
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    role="tab"
+                    aria-selected={isCurrent}
+                    aria-label={`Show slide ${index + 1}: ${label}`}
+                    onClick={() => setActiveSlide(index)}
+                    className={`group relative overflow-hidden rounded-lg transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none ${
+                      isCurrent
+                        ? "h-8 w-14 min-h-[28px] min-w-[32px] ring-2 ring-white shadow-md opacity-100 scale-105"
+                        : "h-7 w-10 min-h-[28px] min-w-[32px] opacity-50 hover:opacity-90"
+                    }`}
+                  >
+                    <img src={src} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+                    <div className={`absolute inset-0 ${isCurrent ? "bg-black/0" : "bg-black/40"}`} />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

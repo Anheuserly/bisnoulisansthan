@@ -5,6 +5,10 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 export const metadata = {
   title: "BSGSS Control Centre",
   description: "Executive Management Workspace for Bisnouli Sarvodaya Gramodyog Sewa Sansthan.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Public_Sans, Source_Serif_4 } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import { site } from "@/config/site";
 import { organisationJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -16,10 +17,38 @@ const display = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: { default: site.name, template: `%s | ${site.name}` },
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Bisnouli Sarvodaya | Community Development Since 1994",
+    template: `%s | ${site.shortName}`,
+  },
   description: site.description,
   applicationName: site.name,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: SITE_URL,
+    siteName: site.name,
+    title: "Bisnouli Sarvodaya | Community Development Since 1994",
+    description: site.description,
+    images: [
+      {
+        url: `${SITE_URL}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `${site.name} - Community Development Since 1994`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bisnouli Sarvodaya | Community Development Since 1994",
+    description: site.description,
+    images: [`${SITE_URL}/og-image.jpg`],
+  },
   formatDetection: { telephone: true, address: true, email: true },
   icons: { icon: "/images/bsgss/branding/11-cropped-logo-1.jpg" },
 };

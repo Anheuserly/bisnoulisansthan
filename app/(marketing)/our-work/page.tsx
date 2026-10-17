@@ -3,11 +3,14 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, HandHeart, HeartPulse, Laptop, MapPin, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our Work | Integrated Grassroots Programmes",
-  description: "BSGSS programmes in education, healthcare, livelihoods and women’s empowerment across North India.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Our Work & Programmes | BSGSS",
+  description:
+    "Explore BSGSS integrated programmes spanning education, preventive healthcare, vocational skills, and women's self-help groups.",
+  path: "/our-work",
+});
 
 const work = [
   {

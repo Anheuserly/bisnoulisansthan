@@ -24,7 +24,7 @@
   --color-mist: #F5F9F9;
   --color-ink: #1B2326;
   --color-ink-muted: #52616A;
-  --color-ink-subtle: #7A878E;
+  --color-ink-subtle: #5B686E;
   --color-line: #B9DDE0;
 
   --radius-sm: 6px;
@@ -49,10 +49,12 @@
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-padding-top: 6rem;
+    overflow-x: hidden;
   }
   body {
     @apply bg-canvas text-ink antialiased;
     font-feature-settings: "kern", "liga";
+    overflow-x: hidden;
   }
   h1, h2, h3 {
     text-wrap: balance;
@@ -64,7 +66,11 @@
     @apply bg-brand-100 text-brand-900;
   }
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-canvas;
+    @apply outline-none ring-2 ring-brand-600 ring-offset-2 ring-offset-canvas;
+  }
+  /* WCAG 2.4.11: Ensure focused and targeted elements are never hidden behind sticky header */
+  [id], :target, a, button, input, select, textarea {
+    scroll-margin-top: 5.5rem;
   }
 }
 

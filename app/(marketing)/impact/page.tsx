@@ -4,11 +4,14 @@ import { InteractiveIndiaMap } from "@/components/impact/InteractiveIndiaMap";
 import { HomeImpactCounters } from "@/components/home/HomeImpactCounters";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.impact.metadataTitle,
-  description: "How BSGSS creates change with communities.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Verified Social Impact & Outcomes | BSGSS",
+  description:
+    "Examine verified outcomes from 30+ years of BSGSS service: 50,000+ individuals reached, 30,000+ medical patients, and 350+ villages.",
+  path: "/impact",
+});
 
 export default function ImpactPage() {
   const impact = content.impact;

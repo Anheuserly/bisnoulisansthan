@@ -5,11 +5,14 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { directionsUrl, fullAddress, mapEmbedUrl, site, telHref } from "@/config/site";
 import { content } from "@/config/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: content.contact.metadataTitle,
-  description: content.contact.lead,
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Contact BSGSS | Administrative Office | BSGSS",
+  description:
+    "Reach out to BSGSS administrative office in Noida & New Delhi. Contact us for programme inquiries, partnership discussions, or visits.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   const whatsappNumber = site.contact.whatsapp?.replace(/[^\d]/g, "");

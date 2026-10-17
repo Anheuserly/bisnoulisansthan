@@ -4,11 +4,14 @@ import { VideoGallery } from "@/components/activities/VideoGallery";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { getChannelVideos } from "@/lib/youtube";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Official Video Documentation & Archives | BSGSS",
-  description: "Watch BSGSS medical camps, women's self-help groups, vocational training, and village outreach on our official YouTube collection.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Video Archives & Field Films | BSGSS",
+  description:
+    "Watch documented field videos of BSGSS free oncology screening vans, women sewing clusters, and village development drives.",
+  path: "/activities/videos",
+});
 
 export const revalidate = 300;
 
