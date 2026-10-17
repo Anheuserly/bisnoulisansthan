@@ -28,44 +28,18 @@ const products = [
   {
     name: "Handwoven Kashmiri & Khadi Shawls",
     tag: "Signature Woolens",
-    description: "Finely woven warm shawls created through village women’s craft guilds, blending heritage techniques with sustainable household livelihoods.",
+    description:
+      "Finely woven warm shawls created through village women’s craft guilds, blending heritage techniques with sustainable household livelihoods.",
     image: "/images/bsgss/shg-products/shawl.png",
     leadTime: "Crafted on Order & Ready Stock",
   },
   {
     name: "Handcrafted Artisan Mufflers",
     tag: "Winter Warmth",
-    description: "Hand-knitted mufflers made with premium fibers by certified SHG women artisans, fostering financial independence across rural households.",
+    description:
+      "Hand-knitted mufflers made with premium fibers by certified SHG women artisans, fostering financial independence across rural households.",
     image: "/images/bsgss/shg-products/muffler.png",
     leadTime: "Available in multiple weave patterns",
-  },
-  {
-    name: "Handcrafted Eco Jute & Fabric Tote Bags",
-    tag: "Eco Livelihood",
-    description: "Sturdy, sustainable daily-use totes stitched by vocational tailoring graduates as an alternative to single-use plastics.",
-    image: "/images/bsgss/products/41-homepage-product-1.jpg",
-    leadTime: "Ideal for CSR Giftings & Bulk Events",
-  },
-  {
-    name: "Traditional Embroidered Khadi Stoles",
-    tag: "Heritage Craft",
-    description: "Intricately detailed stoles combining traditional needlework and khadi cotton, empowering rural home-based artisans.",
-    image: "/images/bsgss/products/42-homepage-product-2.jpg",
-    leadTime: "Hand-dyed authentic craft",
-  },
-  {
-    name: "Artisan Village Utility Crafts",
-    tag: "Home Living",
-    description: "Functional home goods, table mats, and cloth crafts tailored during BSGSS vocational skill development camps.",
-    image: "/images/bsgss/products/43-homepage-product-3.jpg",
-    leadTime: "Community artisan collective",
-  },
-  {
-    name: "Tailored Community Garments & Apparel",
-    tag: "Vocational Guild",
-    description: "Quality school and community garments tailored by certified women entrepreneurs operating independent micro-enterprises.",
-    image: "/images/bsgss/products/278-qq.jpeg",
-    leadTime: "Custom sizing for institutional supply",
   },
 ];
 
@@ -151,7 +125,7 @@ export default function ShgProductsPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 max-w-4xl mx-auto">
               {products.map((product, idx) => (
                 <ScrollReveal key={product.name} staggerIndex={idx} direction="up">
                   <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
