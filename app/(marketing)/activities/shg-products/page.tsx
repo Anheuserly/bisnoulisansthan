@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ProductInquiryButton } from "@/components/products/ProductInquiryButton";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -155,13 +156,7 @@ export default function ShgProductsPage() {
                           <span className="font-medium text-ink-muted">Availability: </span>
                           {product.leadTime}
                         </p>
-                        <a
-                          href={`mailto:bsgssindia@yahoo.co.in?subject=${encodeURIComponent(`BSGSS SHG Product Enquiry — ${product.name}`)}`}
-                          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline"
-                        >
-                          <Mail className="h-3.5 w-3.5" />
-                          <span>Request pricing &amp; sample</span>
-                        </a>
+                        <ProductInquiryButton productName={product.name} />
                       </div>
                     </div>
                   </article>
