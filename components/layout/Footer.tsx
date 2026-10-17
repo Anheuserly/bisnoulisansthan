@@ -91,7 +91,7 @@ export function Footer() {
             <FooterLink href="/support">Support us</FooterLink><FooterLink href="/contact">Volunteer with us</FooterLink><FooterLink href="/contact">Internships</FooterLink><FooterLink href="/contact">CSR partnerships</FooterLink><FooterLink href="/contact">Institutional partnerships</FooterLink>
           </FooterColumn>
           <FooterColumn title="Transparency">
-            <FooterLink href="/about/legal-status">Registration & compliance</FooterLink><FooterLink href="/about/legal-status">12A & 80G documents</FooterLink><FooterLink href="/about/legal-status">CSR-1 registration</FooterLink><FooterLink href="/documents/bsgss-funding-partners-2024.pdf">Funding partners list</FooterLink><FooterLink href="/about/legal-status">All public documents</FooterLink>
+            <FooterLink href="/transparency">Open Books &amp; Public Ledger</FooterLink><FooterLink href="/about/legal-status">Registration &amp; compliance</FooterLink><FooterLink href="/about/legal-status">12A &amp; 80G documents</FooterLink><FooterLink href="/about/legal-status">CSR-1 registration</FooterLink><FooterLink href="/documents/bsgss-funding-partners-2024.pdf">Funding partners list</FooterLink><FooterLink href="/about/legal-status">All public documents</FooterLink>
           </FooterColumn>
 
           <div>
