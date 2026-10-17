@@ -1,29 +1,74 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, Compass, Handshake, HeartPulse } from "lucide-react";
 import { StoryExperience } from "@/components/about/StoryExperience";
 import { StoryHero } from "@/components/about/StoryHero";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
-export const metadata: Metadata = { title: "Our Story", description: "The journey of Bisnouli Sarvodaya Gramodyog Sewa Sansthan." };
+export const metadata: Metadata = {
+  title: "Our 30-Year Story | Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
+  description: "The historical journey, grassroots milestones, and community leadership of BSGSS since 1994.",
+};
 
 export default function OurStoryPage() {
   return (
     <>
       <StoryHero />
       <StoryExperience />
-      <section className="bg-sand-50/80 py-10 sm:py-14">
+      <section className="bg-sand-50/80 py-12 sm:py-16 border-t border-brand-100">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-8">
-          <div>
-            <p className="eyebrow">Where we are going</p>
-            <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">A future built on local strength.</h2>
-            <div className="prose-content mt-4 space-y-3 text-xs leading-relaxed text-ink-muted sm:text-sm">
-              <p>BSGSS continues to build practical, sustainable responses to the challenges communities face - with access, capability and participation at the centre.</p>
-              <p>Our work brings together local people, professionals, institutions and partners to help communities create stronger futures on their own terms.</p>
+          <ScrollReveal direction="up" delay={40}>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-800">
+              <Compass className="h-3.5 w-3.5 text-brand-700" />
+              <span>Institutional Direction</span>
             </div>
-          </div>
-          <div className="rounded-2xl border border-brand-200/80 bg-white p-6 sm:p-8 shadow-2xs">
-            <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Explore next</p>
-            <a href="/our-work" className="mt-4 block font-display text-lg font-bold text-ink transition hover:text-brand-700 sm:text-xl">See our work →</a>
-            <a href="/about/partners" className="mt-3 block font-display text-lg font-bold text-ink transition hover:text-brand-700 sm:text-xl">Meet our partners →</a>
-          </div>
+            <h2 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
+              A future built on local strength and dignity.
+            </h2>
+            <div className="mt-4 space-y-3 text-sm leading-relaxed text-ink-muted">
+              <p>
+                BSGSS continues to build practical, sustainable responses to the challenges rural communities face—with access, technical capability, and women’s equal participation at the centre.
+              </p>
+              <p>
+                Our work unites local panchayats, dedicated public servants, leading CSR enterprises, and village self-help councils to help communities create stronger futures on their own terms.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="scale" delay={80}>
+            <div className="rounded-2xl border border-brand-200/80 bg-white p-6 sm:p-8 shadow-2xs">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Explore next</p>
+              <div className="mt-4 space-y-3">
+                <Link
+                  href="/our-work"
+                  className="group flex items-center justify-between rounded-xl border border-line p-4 transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                >
+                  <div className="flex items-center gap-3">
+                    <HeartPulse className="h-5 w-5 text-brand-700" />
+                    <div>
+                      <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">Explore Our Programmes</p>
+                      <p className="text-xs text-ink-muted">Healthcare, tailoring, literacy, and self-help groups</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-brand-700 transition group-hover:translate-x-1" />
+                </Link>
+
+                <Link
+                  href="/about/partners"
+                  className="group flex items-center justify-between rounded-xl border border-line p-4 transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                >
+                  <div className="flex items-center gap-3">
+                    <Handshake className="h-5 w-5 text-brand-700" />
+                    <div>
+                      <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">CSR &amp; Statutory Partners</p>
+                      <p className="text-xs text-ink-muted">30+ leading PSU collaborations and public ministries</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-brand-700 transition group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
