@@ -8,6 +8,7 @@ import {
   Handshake,
   HeartPulse,
   Landmark,
+  MapPin,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -84,63 +85,113 @@ export default async function HomePage() {
 
       case "about":
         return (
-          <section key="about" className="border-b border-brand-100 bg-sand-50/70 py-10 sm:py-14" id="about">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-              <div className="grid gap-8 md:grid-cols-2 md:items-center">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">{about.eyebrow}</p>
-                  <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
+          <section key="about" className="relative isolate overflow-hidden border-b border-brand-100 bg-gradient-to-b from-white via-sand-50/50 to-white py-14 sm:py-20" id="about">
+            {/* Ambient subtle backdrops */}
+            <div className="pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-brand-200/25 blur-3xl" />
+            <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-emerald-200/20 blur-3xl" />
+
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+              {/* Top Section: Narrative Column Left + High-Impact Documentary Photo Right */}
+              <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+                {/* Left Text & Mission Column (7 cols) */}
+                <div className="lg:col-span-7">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-brand-200/90 bg-white/95 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs backdrop-blur-sm">
+                    <span className="h-2 w-2 rounded-full bg-brand-600 animate-pulse" />
+                    <span>{about.eyebrow}</span>
+                  </div>
+                  <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-[2.35rem]">
                     {about.title}
                   </h2>
                   <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
                     {about.text}
                   </p>
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
+
+                  <div className="mt-7 flex flex-wrap items-center gap-3">
                     <Link
                       href={links.about}
-                      className="inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
+                      className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition-all hover:bg-brand-800 hover:shadow-soft sm:text-sm"
                     >
-                      Learn about BSGSS <ArrowRight className="h-4 w-4" />
+                      <span>Explore BSGSS Institutional Profile</span>
+                      <ArrowRight className="h-4 w-4" />
                     </Link>
                     <Link
                       href={links.story}
-                      className="inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-white px-4 py-2.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-50 sm:text-sm"
+                      className="inline-flex items-center gap-2 rounded-xl border border-brand-200/90 bg-white px-4 py-2.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-50 sm:text-sm"
                     >
-                      Our story since 1994
+                      <span>Our 30-Year Story</span>
                     </Link>
                   </div>
                 </div>
 
-                {/* Trust and Scope Highlights */}
-                <div className="grid gap-3.5 sm:grid-cols-2">
-                  <div className="rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                      <ShieldCheck className="h-5 w-5" />
-                    </span>
-                    <p className="mt-3.5 font-display text-lg font-bold text-ink">Since 1994</p>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-muted">Registered under Societies Registration Act XXI of 1860 with 12A & 80G tax exemptions.</p>
+                {/* Right Photographic Visual: Real Village Empowerment Photo with Authentic Washi Pin (5 cols) */}
+                <div className="relative lg:col-span-5">
+                  <div className="group relative overflow-hidden rounded-2xl border-4 border-white bg-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+                    {/* Washi-Tape / Polaroid Pin */}
+                    <div className="absolute left-1/2 -top-2.5 z-20 h-5 w-20 -translate-x-1/2 rounded-xs bg-amber-100/90 shadow-xs backdrop-blur-xs border border-amber-200/80" />
+
+                    <div className="relative aspect-[4/3] overflow-hidden bg-sand-100 sm:aspect-[16/11]">
+                      <img
+                        src="/images/bsgss/other-source-assets/233-1.jpg"
+                        alt="Village women learning vocational tailoring at BSGSS centre"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-106"
+                      />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                      {/* Top location tag */}
+                      <div className="absolute top-3 right-3 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-white backdrop-blur-md border border-white/20">
+                          <MapPin className="h-3 w-3 text-emerald-400" />
+                          <span>Bisnouli Village, Dadri</span>
+                        </span>
+                      </div>
+
+                      {/* Bottom caption */}
+                      <div className="absolute bottom-0 inset-x-0 p-4 text-white">
+                        <p className="font-display text-sm font-bold sm:text-base">
+                          Grassroots Self-Reliance in Action
+                        </p>
+                        <p className="mt-0.5 text-xs text-white/80 line-clamp-2">
+                          Vocational training and micro-finance bringing economic agency to rural households since 1994.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                      <Users className="h-5 w-5" />
-                    </span>
-                    <p className="mt-3.5 font-display text-lg font-bold text-ink">350+ Villages</p>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-muted">Community-based reach across Delhi NCR, Haryana, UP, Punjab and Rajasthan.</p>
+                </div>
+              </div>
+
+              {/* Bottom 4 Institutional Credibility Highlights */}
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="group rounded-2xl border border-brand-200/80 bg-white p-5 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition group-hover:scale-110">
+                    <ShieldCheck className="h-5 w-5" />
                   </div>
-                  <div className="rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                      <HeartPulse className="h-5 w-5" />
-                    </span>
-                    <p className="mt-3.5 font-display text-lg font-bold text-ink">Healthcare & Skills</p>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-muted">Mobile clinics, cancer check-ups and vocational pathways for rural women.</p>
+                  <p className="mt-3.5 font-display text-lg font-bold text-ink">Since 1994</p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">Registered under Societies Registration Act XXI of 1860 with 12A &amp; 80G tax exemptions.</p>
+                </div>
+
+                <div className="group rounded-2xl border border-brand-200/80 bg-white p-5 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition group-hover:scale-110">
+                    <Users className="h-5 w-5" />
                   </div>
-                  <div className="rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                      <Handshake className="h-5 w-5" />
-                    </span>
-                    <p className="mt-3.5 font-display text-lg font-bold text-ink">30+ CSR Partners</p>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-muted">Trusted collaboration with leading public sector enterprises and institutions.</p>
+                  <p className="mt-3.5 font-display text-lg font-bold text-ink">350+ Villages</p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">Community-based reach across Delhi NCR, Haryana, UP, Punjab and Rajasthan.</p>
+                </div>
+
+                <div className="group rounded-2xl border border-brand-200/80 bg-white p-5 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition group-hover:scale-110">
+                    <HeartPulse className="h-5 w-5" />
                   </div>
+                  <p className="mt-3.5 font-display text-lg font-bold text-ink">Healthcare &amp; Skills</p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">Mobile clinics, cancer check-ups and vocational pathways for rural women.</p>
+                </div>
+
+                <div className="group rounded-2xl border border-brand-200/80 bg-white p-5 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition group-hover:scale-110">
+                    <Handshake className="h-5 w-5" />
+                  </div>
+                  <p className="mt-3.5 font-display text-lg font-bold text-ink">30+ CSR Partners</p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">Trusted collaboration with leading public sector enterprises and institutions.</p>
                 </div>
               </div>
             </div>
