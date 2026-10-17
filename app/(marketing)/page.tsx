@@ -24,6 +24,8 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
+import { getConsentedVoices } from "@/lib/voices";
+import { VoiceCard } from "@/components/voice/VoiceCard";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -43,6 +45,7 @@ const programs = content.home.programmes.map((programme, index) => ({
 export default async function HomePage() {
   const customizer = await getCustomizerSettings();
   const { about, government } = content.home;
+  const voices = getConsentedVoices().slice(0, 3);
 
   const orderedSections = [...customizer.sections]
     .filter((s) => s.enabled)
@@ -412,23 +415,58 @@ export default async function HomePage() {
 
       case "support_cta":
         return (
-          <ScrollReveal key="support_cta" direction="scale" delay={50}>
-            <section className="py-10 sm:py-14">
-              <div className="mx-auto grid max-w-6xl gap-8 rounded-2xl border border-brand-200 bg-brand-50 px-7 py-8 md:grid-cols-[1fr_auto] md:items-center md:px-12 shadow-2xs">
-                <div>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-700 shadow-sm">
-                    <Landmark className="h-6 w-6" />
+          <div key="support-and-voices">
+            {voices.length > 0 && (
+              <section className="py-12 sm:py-16 bg-sand-50/60 border-t border-line">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+                  <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-line pb-4 mb-8">
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-brand-700">
+                        Community Audio Dispatches
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink mt-1">
+                        Voice of the Village
+                      </h2>
+                      <p className="mt-2 text-xs sm:text-sm text-ink-muted max-w-2xl">
+                        Listen directly to rural women artisans and community members in their own words. Audio loads only on tap.
+                      </p>
+                    </div>
+                    <Link
+                      href="/stories"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 transition underline-offset-4 hover:underline"
+                    >
+                      <span>View all stories</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
                   </div>
-                  <p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Support BSGSS</p>
-                  <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Your contribution can strengthen a community.</h2>
-                  <p className="mt-2 max-w-2xl leading-relaxed text-ink-muted">Explore secure support options, including bank transfer and UPI donation details.</p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {voices.map((voice) => (
+                      <VoiceCard key={voice.id} voice={voice} />
+                    ))}
+                  </div>
                 </div>
-                <Link href="/support" className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-6 py-3 font-semibold text-white shadow-2xs transition-all hover:bg-brand-800 hover:shadow-soft">
-                  Support us <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </div>
-            </section>
-          </ScrollReveal>
+              </section>
+            )}
+
+            <ScrollReveal direction="scale" delay={50}>
+              <section className="py-10 sm:py-14">
+                <div className="mx-auto grid max-w-6xl gap-8 rounded-2xl border border-brand-200 bg-brand-50 px-7 py-8 md:grid-cols-[1fr_auto] md:items-center md:px-12 shadow-2xs">
+                  <div>
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand-700 shadow-sm">
+                      <Landmark className="h-6 w-6" />
+                    </div>
+                    <p className="text-sm font-bold uppercase tracking-[.18em] text-brand-700">Support BSGSS</p>
+                    <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Your contribution can strengthen a community.</h2>
+                    <p className="mt-2 max-w-2xl leading-relaxed text-ink-muted">Explore secure support options, including bank transfer and UPI donation details.</p>
+                  </div>
+                  <Link href="/support" className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-6 py-3 font-semibold text-white shadow-2xs transition-all hover:bg-brand-800 hover:shadow-soft">
+                    Support us <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
+              </section>
+            </ScrollReveal>
+          </div>
         );
 
       default:

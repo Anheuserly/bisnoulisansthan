@@ -1,0 +1,54 @@
+[
+  {
+    "id": "voice-001",
+    "name": "Sunita",
+    "village": "Bisnouli",
+    "photo": "/images/bsgss/people/133-testimonials1.jpg",
+    "audio": "/audio/voices/voice-001.m4a",
+    "durationSec": 28,
+    "language": "hi",
+    "transcriptHi": "बिश्नौली में सिलाई प्रशिक्षण केंद्र शुरू होने से पहले हम घर पर ही रहते थे। तीन महीने का कोर्स पूरा करने के बाद अब हम खुद स्कूल यूनिफॉर्म और कपड़े सिलते हैं। इससे जो आमदनी होती है उससे बच्चों की पढ़ाई में मदद मिलती है।",
+    "transcriptEn": "Before the tailoring training center started in Bisnouli, we remained confined to household chores. After completing the 3-month course, we now stitch school uniforms and market apparel independently. The income directly supports our children's education.",
+    "consentOnFile": true,
+    "year": 2025
+  },
+  {
+    "id": "voice-002",
+    "name": "Meena",
+    "village": "Dadri",
+    "photo": "/images/bsgss/people/132-testimonials3.jpg",
+    "audio": "/audio/voices/voice-002.m4a",
+    "durationSec": 34,
+    "language": "hi",
+    "transcriptHi": "संस्थान के स्वयं सहायता समूह से जुड़ने के बाद हमें अपने पैरों पर खड़े होने की हिम्मत मिली। हमने कश्मीरी और खादी शॉल की बुनाई सीखी। अब हमारे बनाए शॉल प्रदर्शनियों में जाते हैं और हमें समय पर सही भुगतान मिलता है।",
+    "transcriptEn": "Joining the Sansthan's Self-Help Group gave us the confidence to stand on our own feet. We learned weaving Kashmiri and Khadi shawls. Our craft is now sold at exhibitions, and we receive fair, timely payments directly into our bank accounts.",
+    "consentOnFile": true,
+    "year": 2025
+  },
+  {
+    "id": "voice-003",
+    "name": "Rekha",
+    "village": "Chhapraula",
+    "photo": "/images/bsgss/people/131-testimonials2-150x150-1.jpg",
+    "audio": "/audio/voices/voice-003.m4a",
+    "durationSec": 25,
+    "language": "hi",
+    "transcriptHi": "गाँव में जब मुफ्त नेत्र जांच शिविर लगा, तब मुझे पहली बार पता चला कि नजर कमजोर होने के कारण सिरदर्द होता था। डॉक्टर ने चश्मा और दवा दी। अब बिना किसी परेशानी के सिलाई का काम कर पाती हूँ।",
+    "transcriptEn": "When the free eye screening camp was organized in our village, I discovered my chronic headaches were caused by weak eyesight. The doctors provided spectacles and medicines. Now I can do needlework comfortably without strain.",
+    "consentOnFile": true,
+    "year": 2024
+  },
+  {
+    "id": "voice-004-unverified",
+    "name": "Geeta",
+    "village": "Noida",
+    "photo": "/images/bsgss/people/135-team1-150x150-1.jpg",
+    "audio": "/audio/voices/voice-004.m4a",
+    "durationSec": 30,
+    "language": "hi",
+    "transcriptHi": "जाँच के लिए सुरक्षित रिकॉर्ड।",
+    "transcriptEn": "Control record without formal consent on file.",
+    "consentOnFile": false,
+    "year": 2025
+  }
+]

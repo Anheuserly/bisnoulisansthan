@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/support",
     "/sponsor",
     "/transparency",
+    "/stories",
     "/join-us",
     "/contact",
     ...partners.map((partner) => partner.href),
