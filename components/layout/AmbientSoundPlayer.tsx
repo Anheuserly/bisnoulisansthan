@@ -35,9 +35,9 @@ export function playUiClickTone(enabled = true) {
 export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
   const [audioConfig, setAudioConfig] = useState<AmbientAudioConfig>({
     enabled: initialConfig?.enabled ?? true,
-    trackId: initialConfig?.trackId || "sarvodaya-flute",
+    trackId: initialConfig?.trackId || "santoor-serenity",
     customUrl: initialConfig?.customUrl || "",
-    defaultVolume: initialConfig?.defaultVolume ?? 0.25,
+    defaultVolume: initialConfig?.defaultVolume ?? 0.22,
     clickSounds: initialConfig?.clickSounds ?? true,
   });
 
