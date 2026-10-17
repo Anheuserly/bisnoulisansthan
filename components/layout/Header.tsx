@@ -76,11 +76,12 @@ export function Header() {
     <header
       onMouseLeave={() => setMegaOpen(null)}
       className={cn(
+        "site-header",
         "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-200 print:hidden",
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-3 px-3 md:px-5">
+      <div className="site-header-shell mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-3 px-3 md:px-5">
         {/* Left: Logo */}
         <div className="flex shrink-0 items-center xl:min-w-[18rem]">
           <Logo />

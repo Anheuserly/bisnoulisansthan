@@ -132,7 +132,7 @@ export default function AboutPage() {
               <Link
                 key={href}
                 href={href}
-                className="group rounded-xl border border-line bg-white p-5 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                className="design-card group rounded-xl border border-line bg-white p-5 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                   <Icon className="h-5 w-5" />
@@ -163,7 +163,7 @@ function MissionCard({
   text: string;
 }) {
   return (
-    <article className="rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
+    <article className="design-card rounded-xl border border-brand-200/80 bg-white p-5 shadow-2xs">
       <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
         <Icon className="h-5 w-5" />
       </span>

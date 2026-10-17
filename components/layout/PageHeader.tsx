@@ -38,8 +38,8 @@ export function PageHeader({
       : [{ name: "Home", path: "/" }, ...normalized];
   const subtitle = lead ?? description;
   return (
-    <div className="border-b border-brand-100 bg-white">
-      <Container className="py-4 sm:py-5">
+    <div className="page-intro border-b border-brand-100 bg-white">
+      <Container className="page-intro-content py-4 sm:py-5">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1 text-xs text-ink-muted">
             {trail.map((c, i) => {

@@ -10,6 +10,9 @@ export type ThemePresetId =
   | "terracotta-earth"
   | "crimson-sand"
   | "modern-slate"
+  | "saffron-civic"
+  | "plum-heritage"
+  | "sunlit-khadi"
   | "custom";
 
 export type FontPairingId =
@@ -20,6 +23,11 @@ export type FontPairingId =
 
 export type RadiusPreset = "sharp" | "balanced" | "curved";
 export type ShadowPreset = "flat" | "soft" | "lifted";
+export type HeaderStyle = "standard" | "compact" | "floating";
+export type HeroStyle = "immersive" | "framed" | "editorial";
+export type PageHeaderStyle = "standard" | "centred" | "minimal";
+export type CardStyle = "standard" | "soft" | "outlined";
+export type DensityPreset = "comfortable" | "compact" | "spacious";
 
 export type ThemeConfig = {
   id: ThemePresetId;
@@ -35,6 +43,11 @@ export type ThemeConfig = {
   fontPairing: FontPairingId;
   radius: RadiusPreset;
   shadow: ShadowPreset;
+  headerStyle?: HeaderStyle;
+  heroStyle?: HeroStyle;
+  pageHeaderStyle?: PageHeaderStyle;
+  cardStyle?: CardStyle;
+  density?: DensityPreset;
   // Optional full overrides
   customPalette?: {
     brand50?: string;
@@ -69,6 +82,11 @@ export const THEME_PRESETS: Record<Exclude<ThemePresetId, "custom">, ThemeConfig
     fontPairing: "classic-editorial",
     radius: "balanced",
     shadow: "soft",
+    headerStyle: "standard",
+    heroStyle: "immersive",
+    pageHeaderStyle: "standard",
+    cardStyle: "standard",
+    density: "comfortable",
     customPalette: {
       brand50: "#F0F8F8",
       brand100: "#DDEEEF",
@@ -160,6 +178,66 @@ export const THEME_PRESETS: Record<Exclude<ThemePresetId, "custom">, ThemeConfig
     fontPairing: "clean-geometric",
     radius: "sharp",
     shadow: "flat",
+  },
+  "saffron-civic": {
+    id: "saffron-civic",
+    name: "Saffron Civic Trust",
+    description: "A confident public-service palette of deep blue, saffron and clean white for campaigns and civic work.",
+    brandPrimary: "#1E4D8F",
+    brandSecondary: "#C56A12",
+    canvas: "#FFFCF7",
+    mist: "#F5F8FC",
+    ink: "#182433",
+    inkMuted: "#526579",
+    line: "#CBD8E8",
+    fontPairing: "clean-geometric",
+    radius: "balanced",
+    shadow: "soft",
+    headerStyle: "compact",
+    heroStyle: "editorial",
+    pageHeaderStyle: "centred",
+    cardStyle: "outlined",
+    density: "comfortable",
+  },
+  "plum-heritage": {
+    id: "plum-heritage",
+    name: "Plum Heritage",
+    description: "A refined plum and rosewood treatment for storytelling, leadership and donor-facing pages.",
+    brandPrimary: "#5B255E",
+    brandSecondary: "#A35C42",
+    canvas: "#FFFBFC",
+    mist: "#FBF4F8",
+    ink: "#281C2A",
+    inkMuted: "#69586C",
+    line: "#E8CADF",
+    fontPairing: "classic-editorial",
+    radius: "curved",
+    shadow: "lifted",
+    headerStyle: "floating",
+    heroStyle: "framed",
+    pageHeaderStyle: "standard",
+    cardStyle: "soft",
+    density: "spacious",
+  },
+  "sunlit-khadi": {
+    id: "sunlit-khadi",
+    name: "Sunlit Khadi",
+    description: "A warm, approachable natural palette inspired by community workshops and handmade livelihoods.",
+    brandPrimary: "#2C6A63",
+    brandSecondary: "#B77723",
+    canvas: "#FFFDF7",
+    mist: "#F7F1E5",
+    ink: "#25231E",
+    inkMuted: "#655F52",
+    line: "#E5D7B9",
+    fontPairing: "warm-humanist",
+    radius: "curved",
+    shadow: "soft",
+    headerStyle: "standard",
+    heroStyle: "editorial",
+    pageHeaderStyle: "minimal",
+    cardStyle: "soft",
+    density: "comfortable",
   },
 };
 
@@ -306,6 +384,12 @@ export function computeThemeCssVariables(theme: ThemeConfig): Record<string, str
   const currentRadius = radiusMap[theme.radius] ?? radiusMap.balanced;
   const currentShadow = shadowMap[theme.shadow] ?? shadowMap.soft;
   const currentFonts = fontMap[theme.fontPairing] ?? fontMap["classic-editorial"];
+  const densityMap: Record<DensityPreset, { section: string; pageHeader: string; hero: string }> = {
+    compact: { section: "3.5rem", pageHeader: "1rem", hero: "26rem" },
+    comfortable: { section: "4.5rem", pageHeader: "1.35rem", hero: "30rem" },
+    spacious: { section: "5.75rem", pageHeader: "1.8rem", hero: "34rem" },
+  };
+  const currentDensity = densityMap[theme.density ?? "comfortable"];
 
   return {
     "--brand-50": brand[50],
@@ -341,6 +425,9 @@ export function computeThemeCssVariables(theme: ThemeConfig): Record<string, str
 
     "--theme-font-sans": currentFonts.sans,
     "--theme-font-display": currentFonts.display,
+    "--design-section-space": currentDensity.section,
+    "--design-page-header-space": currentDensity.pageHeader,
+    "--design-hero-height": currentDensity.hero,
   };
 }
 

@@ -80,7 +80,7 @@ export default function GovernmentActivitiesPage() {
             </h2>
             <div className="mt-6 grid gap-5 md:grid-cols-3">
               {areas.map(({ title, text, icon: Icon }) => (
-                <article key={title} className="rounded-xl border border-line bg-white p-6 shadow-2xs transition-all hover:border-brand-300 hover:shadow-soft">
+                <article key={title} className="design-card rounded-xl border border-line bg-white p-6 shadow-2xs transition-all hover:border-brand-300 hover:shadow-soft">
                   <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                     <Icon className="h-5 w-5" />
                   </span>

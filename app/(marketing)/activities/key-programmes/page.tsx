@@ -47,7 +47,7 @@ export default function KeyProgrammesPage() {
               return (
                 <article
                   key={programme.title}
-                  className="group overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft"
+                  className="design-card group overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft"
                 >
                   <div className="aspect-[4/3] overflow-hidden bg-sand-50">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -113,7 +113,7 @@ function ActivityLink({
   return (
     <Link
       href={href}
-      className="group rounded-xl border border-line bg-white p-5 sm:p-6 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+      className="design-card group rounded-xl border border-line bg-white p-5 sm:p-6 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
     >
       <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
         <Icon className="h-5 w-5" />

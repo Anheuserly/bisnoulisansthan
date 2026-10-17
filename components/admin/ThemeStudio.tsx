@@ -26,6 +26,11 @@ import {
   type FontPairingId,
   type RadiusPreset,
   type ShadowPreset,
+  type HeaderStyle,
+  type HeroStyle,
+  type PageHeaderStyle,
+  type CardStyle,
+  type DensityPreset,
 } from "@/config/themes";
 
 export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
@@ -42,7 +47,7 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
     // @ts-expect-error global helper injected by ThemeScript
     if (typeof window !== "undefined" && window.__applyThemeCss) {
       // @ts-expect-error global helper
-      window.__applyThemeCss(cssText);
+      window.__applyThemeCss(cssText, theme);
     }
     // Store in localStorage for persistence across preview pages
     if (typeof window !== "undefined") {
@@ -490,7 +495,7 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
           </h3>
         </div>
         <p className="mt-1 text-sm text-ink-muted">
-          Adjust brand colors, typography pairings, corner curvature, and shadow depth.
+          Adjust brand colors, typography, shape and the shared layout treatment used across the public site.
         </p>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -686,6 +691,46 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
               ))}
             </div>
           </div>
+
+          <DesignChoice
+            title="Header Layout"
+            description="Standard, compact or floating navigation shell"
+            value={currentTheme.headerStyle ?? "standard"}
+            choices={["standard", "compact", "floating"] as HeaderStyle[]}
+            onChange={(value) => updateThemeProperty("headerStyle", value as HeaderStyle)}
+          />
+
+          <DesignChoice
+            title="Home Hero Treatment"
+            description="Choose the presentation of the homepage story and image"
+            value={currentTheme.heroStyle ?? "immersive"}
+            choices={["immersive", "framed", "editorial"] as HeroStyle[]}
+            onChange={(value) => updateThemeProperty("heroStyle", value as HeroStyle)}
+          />
+
+          <DesignChoice
+            title="Page Title Area"
+            description="Control the introduction band across inner pages"
+            value={currentTheme.pageHeaderStyle ?? "standard"}
+            choices={["standard", "centred", "minimal"] as PageHeaderStyle[]}
+            onChange={(value) => updateThemeProperty("pageHeaderStyle", value as PageHeaderStyle)}
+          />
+
+          <DesignChoice
+            title="Programme & Activity Cards"
+            description="Refine borders and elevation on shared content cards"
+            value={currentTheme.cardStyle ?? "standard"}
+            choices={["standard", "soft", "outlined"] as CardStyle[]}
+            onChange={(value) => updateThemeProperty("cardStyle", value as CardStyle)}
+          />
+
+          <DesignChoice
+            title="Header & Hero Spacing"
+            description="Compact, balanced or more relaxed shared page rhythm"
+            value={currentTheme.density ?? "comfortable"}
+            choices={["compact", "comfortable", "spacious"] as DensityPreset[]}
+            onChange={(value) => updateThemeProperty("density", value as DensityPreset)}
+          />
         </div>
 
         {/* Bottom Save Action */}
@@ -706,6 +751,43 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function DesignChoice({
+  title,
+  description,
+  value,
+  choices,
+  onChange,
+}: {
+  title: string;
+  description: string;
+  value: string;
+  choices: readonly string[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="rounded-xl border border-line bg-sand-50/50 p-4">
+      <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">{title}</label>
+      <p className="mt-0.5 text-xs text-ink-muted">{description}</p>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        {choices.map((choice) => (
+          <button
+            key={choice}
+            type="button"
+            onClick={() => onChange(choice)}
+            className={`rounded-md border px-1 py-2 text-[0.6875rem] font-semibold capitalize transition sm:text-xs ${
+              value === choice
+                ? "border-brand-700 bg-brand-700 text-white"
+                : "border-line bg-white text-ink hover:bg-sand-50"
+            }`}
+          >
+            {choice}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

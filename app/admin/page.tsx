@@ -7,6 +7,7 @@ import {
   LayoutPanelTop,
   MessageSquare,
   Palette,
+  SlidersHorizontal,
   UsersRound,
   WalletCards,
 } from "lucide-react";
@@ -14,6 +15,13 @@ import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 
 const modules = [
+  {
+    title: "Website & Homepage Studio",
+    description: "Reorder homepage sections, manage the stylish photo collage, configure relaxing ambient audio, and customize live typing text.",
+    icon: SlidersHorizontal,
+    status: "Layout & Media Engine",
+    href: "/admin/customize",
+  },
   {
     title: "Theme & Design Studio",
     description: "Customise site-wide institutional presets, brand colors, typography pairings, corner curvature and shadow depth.",
@@ -80,8 +88,15 @@ export default async function AdminDashboard() {
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
+              href="/admin/customize"
+              className="inline-flex items-center gap-1.5 rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-sm font-semibold text-brand-800 transition hover:bg-brand-100"
+            >
+              <SlidersHorizontal className="h-4 w-4 text-brand-700" />
+              <span className="hidden sm:inline">Website Studio</span>
+            </Link>
+            <Link
               href="/admin/theme"
-              className="inline-flex items-center gap-1.5 rounded-md border border-brand-200 bg-white px-3 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
+              className="inline-flex items-center gap-1.5 rounded-md border border-line bg-white px-3 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
             >
               <Palette className="h-4 w-4" />
               <span className="hidden sm:inline">Theme Studio</span>
@@ -111,6 +126,12 @@ export default async function AdminDashboard() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
+              href="/admin/customize"
+              className="inline-flex items-center gap-2 rounded-md bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800"
+            >
+              <SlidersHorizontal className="h-4 w-4" />Customize Homepage
+            </Link>
+            <Link
               href="/admin/theme"
               className="inline-flex items-center gap-2 rounded-md border border-brand-300 bg-brand-50 px-4 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-brand-100"
             >
@@ -124,9 +145,9 @@ export default async function AdminDashboard() {
             </Link>
             <Link
               href="/admin/admins"
-              className="inline-flex items-center gap-2 rounded-md bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-800"
+              className="inline-flex items-center gap-2 rounded-md border border-line bg-white px-4 py-2.5 text-sm font-semibold text-ink hover:bg-sand-50"
             >
-              <UsersRound className="h-4 w-4" />Users &amp; Passwords
+              <UsersRound className="h-4 w-4 text-brand-700" />Users &amp; Passwords
             </Link>
           </div>
         </div>

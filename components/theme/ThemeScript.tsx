@@ -15,15 +15,28 @@ export function ThemeScript({ initialTheme }: { initialTheme: ThemeConfig }) {
         if (el && theme.cssString) {
           el.innerHTML = ':root { ' + theme.cssString + ' }';
         }
+        document.documentElement.dataset.headerStyle = theme.headerStyle || 'standard';
+        document.documentElement.dataset.heroStyle = theme.heroStyle || 'immersive';
+        document.documentElement.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
+        document.documentElement.dataset.cardStyle = theme.cardStyle || 'standard';
       }
     }
   } catch (e) {}
 
-  window.__applyThemeCss = function(cssText) {
+  function applyPresentation(theme) {
+    var root = document.documentElement;
+    root.dataset.headerStyle = theme.headerStyle || 'standard';
+    root.dataset.heroStyle = theme.heroStyle || 'immersive';
+    root.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
+    root.dataset.cardStyle = theme.cardStyle || 'standard';
+  }
+
+  window.__applyThemeCss = function(cssText, theme) {
     var el = document.getElementById('bsgss-theme-style');
     if (el) {
       el.innerHTML = ':root { ' + cssText + ' }';
     }
+    if (theme) applyPresentation(theme);
   };
 })();
 `;

@@ -49,7 +49,7 @@ export default function OurWorkPage() {
             {work.map(({ title, icon: Icon, text, image }) => (
               <article
                 key={title}
-                className="group overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition-all hover:border-brand-300 hover:shadow-soft"
+                className="design-card group overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition-all hover:border-brand-300 hover:shadow-soft"
               >
                 <div className="aspect-[16/8] overflow-hidden bg-sand-50">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

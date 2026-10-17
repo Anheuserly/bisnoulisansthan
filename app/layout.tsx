@@ -34,7 +34,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const activeTheme = await getActiveTheme();
 
   return (
-    <html lang="en-IN" className={`${sans.variable} ${display.variable}`}>
+    <html
+      lang="en-IN"
+      className={`${sans.variable} ${display.variable}`}
+      data-header-style={activeTheme.headerStyle ?? "standard"}
+      data-hero-style={activeTheme.heroStyle ?? "immersive"}
+      data-page-header-style={activeTheme.pageHeaderStyle ?? "standard"}
+      data-card-style={activeTheme.cardStyle ?? "standard"}
+    >
       <head>
         <ThemeScript initialTheme={activeTheme} />
       </head>

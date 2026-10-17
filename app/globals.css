@@ -38,6 +38,9 @@
 
   --theme-font-sans: var(--font-sans), "Public Sans", system-ui, sans-serif;
   --theme-font-display: var(--font-display), "Source Serif 4", Georgia, serif;
+  --design-section-space: 4.5rem;
+  --design-page-header-space: 1.35rem;
+  --design-hero-height: 30rem;
 }
 
 @layer base {
@@ -109,6 +112,111 @@
 
 .mega-menu-panel {
   animation: mega-menu-enter 180ms ease-out both;
+}
+
+/* Theme Studio presentation controls. These use data attributes on <html>, so a
+   published choice changes the shared shell without altering page content or routes. */
+.site-header,
+.site-header-shell,
+.home-hero,
+.home-hero-content,
+.page-intro,
+.design-card,
+.design-button {
+  transition: border-radius 180ms ease, box-shadow 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.home-hero-shell {
+  min-height: var(--design-hero-height);
+}
+
+.page-intro-content {
+  padding-top: var(--design-page-header-space);
+  padding-bottom: var(--design-page-header-space);
+}
+
+html[data-header-style="compact"] .site-header-shell {
+  height: 4rem;
+  max-width: 82rem;
+}
+
+html[data-header-style="floating"] .site-header {
+  top: 0.5rem;
+  margin: 0 auto;
+  width: min(96%, 92rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lift);
+}
+
+html[data-header-style="floating"] .site-header-shell {
+  max-width: 88rem;
+}
+
+html[data-hero-style="framed"] .home-hero {
+  margin: 1rem auto 0;
+  width: min(96%, 90rem);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lift);
+}
+
+html[data-hero-style="framed"] .home-hero-content {
+  max-width: 42rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius-xl);
+  background: rgba(12, 28, 32, 0.44);
+  backdrop-filter: blur(8px);
+}
+
+html[data-hero-style="editorial"] .home-hero-overlay {
+  background: linear-gradient(90deg, rgba(12, 28, 32, 0.97) 0%, rgba(12, 28, 32, 0.8) 50%, rgba(12, 28, 32, 0.18) 100%);
+}
+
+html[data-hero-style="editorial"] .home-hero-content {
+  border-left: 3px solid var(--brand-300);
+  padding-left: clamp(1rem, 3vw, 2rem);
+}
+
+html[data-page-header-style="centred"] .page-intro-content {
+  text-align: center;
+}
+
+html[data-page-header-style="centred"] .page-intro-content > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html[data-page-header-style="minimal"] .page-intro {
+  border-bottom-color: transparent;
+  background: var(--color-canvas);
+}
+
+html[data-card-style="soft"] .design-card {
+  border-color: transparent;
+  box-shadow: var(--shadow-lift);
+}
+
+html[data-card-style="soft"] .design-card:hover {
+  transform: translateY(-3px);
+}
+
+html[data-card-style="outlined"] .design-card {
+  border: 1px solid var(--color-line);
+  box-shadow: none;
+}
+
+html[data-card-style="outlined"] .design-card:hover {
+  border-color: var(--brand-500);
+}
+
+@media (max-width: 767px) {
+  html[data-header-style="floating"] .site-header {
+    top: 0;
+    width: 100%;
+    border-width: 0 0 1px;
+    border-radius: 0;
+  }
 }
 
 /* Print Styles: Hide website navigation, footers and widgets so only certificate prints */

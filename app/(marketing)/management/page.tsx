@@ -38,7 +38,7 @@ export default function ManagementPage() {
       />
       <div className="pt-5 pb-10 sm:pt-6 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-          <section className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:p-8 shadow-2xs">
+          <section className="design-card rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:p-8 shadow-2xs">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand-700 shadow-2xs">
               <HeartHandshake className="h-6 w-6" />
             </span>

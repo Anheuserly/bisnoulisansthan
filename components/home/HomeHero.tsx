@@ -6,20 +6,25 @@ import { ArrowRight } from "lucide-react";
 import { content, links } from "@/config/content";
 
 const { hero } = content.home;
-const slides = hero.slides;
+const defaultSlides = hero.slides;
 
-export function HomeHero() {
+interface HomeHeroProps {
+  slides?: string[];
+}
+
+export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
+  const activeSlides = customSlides && customSlides.length > 0 ? customSlides : defaultSlides;
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
-    const interval = window.setInterval(() => setActiveSlide((current) => (current + 1) % slides.length), 4000);
+    const interval = window.setInterval(() => setActiveSlide((current) => (current + 1) % activeSlides.length), 4000);
     return () => window.clearInterval(interval);
-  }, []);
+  }, [activeSlides.length]);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#182226] text-white">
+    <section className="home-hero relative isolate overflow-hidden bg-[#182226] text-white">
       <div className="absolute inset-0">
-        {slides.map((src, index) => (
+        {activeSlides.map((src: string, index: number) => (
           <img
             key={src}
             src={src}
@@ -30,9 +35,9 @@ export function HomeHero() {
           />
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-[#182226]/95 via-[#182226]/76 to-[#182226]/20" />
-      <div className="relative mx-auto grid min-h-[26rem] max-w-6xl items-center px-4 py-10 sm:px-6 md:px-8 lg:min-h-[30rem]">
-        <div className="max-w-3xl">
+      <div className="home-hero-overlay absolute inset-0 bg-gradient-to-r from-[#182226]/95 via-[#182226]/76 to-[#182226]/20" />
+      <div className="home-hero-shell relative mx-auto grid min-h-[26rem] max-w-6xl items-center px-4 py-10 sm:px-6 md:px-8 lg:min-h-[30rem]">
+        <div className="home-hero-content max-w-3xl">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
             {hero.eyebrow}
           </p>
@@ -58,9 +63,9 @@ export function HomeHero() {
           </div>
           <div
             className="mt-6 flex gap-2"
-            aria-label={`Slide ${activeSlide + 1} of ${slides.length}`}
+            aria-label={`Slide ${activeSlide + 1} of ${activeSlides.length}`}
           >
-            {slides.map((_, index) => (
+            {activeSlides.map((_: string, index: number) => (
               <button
                 key={index}
                 type="button"

@@ -3,6 +3,23 @@ import { getCurrentAdmin } from "@/lib/auth/session";
 import { db } from "@/lib/db";
 import { DEFAULT_THEME, type ThemeConfig } from "@/config/themes";
 
+const allowed = {
+  fontPairing: ["classic-editorial", "modern-grotesk", "clean-geometric", "warm-humanist"],
+  radius: ["sharp", "balanced", "curved"],
+  shadow: ["flat", "soft", "lifted"],
+  headerStyle: ["standard", "compact", "floating"],
+  heroStyle: ["immersive", "framed", "editorial"],
+  pageHeaderStyle: ["standard", "centred", "minimal"],
+  cardStyle: ["standard", "soft", "outlined"],
+  density: ["comfortable", "compact", "spacious"],
+} as const;
+
+function choice<T extends readonly string[]>(value: unknown, options: T, fallback: T[number]) {
+  return typeof value === "string" && (options as readonly string[]).includes(value)
+    ? (value as T[number])
+    : fallback;
+}
+
 export async function POST(request: Request) {
   if (!process.env.DATABASE_URL) {
     return NextResponse.json({ message: "Database is not configured." }, { status: 503 });
@@ -47,9 +64,14 @@ export async function POST(request: Request) {
     ink: theme.ink || "#1B2326",
     inkMuted: theme.inkMuted || "#52616A",
     line: theme.line || "#B9DDE0",
-    fontPairing: theme.fontPairing || "classic-editorial",
-    radius: theme.radius || "balanced",
-    shadow: theme.shadow || "soft",
+    fontPairing: choice(theme.fontPairing, allowed.fontPairing, "classic-editorial"),
+    radius: choice(theme.radius, allowed.radius, "balanced"),
+    shadow: choice(theme.shadow, allowed.shadow, "soft"),
+    headerStyle: choice(theme.headerStyle, allowed.headerStyle, "standard"),
+    heroStyle: choice(theme.heroStyle, allowed.heroStyle, "immersive"),
+    pageHeaderStyle: choice(theme.pageHeaderStyle, allowed.pageHeaderStyle, "standard"),
+    cardStyle: choice(theme.cardStyle, allowed.cardStyle, "standard"),
+    density: choice(theme.density, allowed.density, "comfortable"),
     customPalette: theme.customPalette,
   };
 

@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { QuickActions } from "@/components/layout/QuickActions";
 import { ContactModal } from "@/components/contact/ContactModal";
+import { AmbientSoundPlayer } from "@/components/layout/AmbientSoundPlayer";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,9 +14,11 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       </main>
       <Footer />
       <QuickActions />
+      <AmbientSoundPlayer />
       <Suspense fallback={null}>
         <ContactModal />
       </Suspense>
     </>
   );
 }
+
