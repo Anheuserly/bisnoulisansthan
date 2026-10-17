@@ -16,6 +16,7 @@ import { HomeHero } from "@/components/home/HomeHero";
 import { HomeLiveTyping } from "@/components/home/HomeLiveTyping";
 import { HomePhotoCollage } from "@/components/home/HomePhotoCollage";
 import { HomeMediaShowcase } from "@/components/home/HomeMediaShowcase";
+import { HomeImpactCounters } from "@/components/home/HomeImpactCounters";
 import { PartnerLogoWall } from "@/components/partners/PartnerLogoWall";
 import { site } from "@/config/site";
 import { content, links } from "@/config/content";
@@ -225,26 +226,7 @@ export default async function HomePage() {
         );
 
       case "impact_stats":
-        return (
-          <section key="impact_stats" className="border-b border-brand-100 bg-brand-50 py-10 sm:py-14" id="impact">
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">{impact.eyebrow}</p>
-                  <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">{impact.title}</h2>
-                </div>
-                <Link href={links.impact} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900">
-                  {impact.cta} <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                {impact.stats.map((stat) => (
-                  <Stat key={stat.label} {...stat} />
-                ))}
-              </div>
-            </div>
-          </section>
-        );
+        return <HomeImpactCounters key="impact_stats" />;
 
       case "india_map":
         return <InteractiveIndiaMap key="india_map" />;
@@ -329,15 +311,6 @@ export default async function HomePage() {
     <>
       {orderedSections.map((s) => renderSection(s.id))}
     </>
-  );
-}
-
-function Stat({ number, label }: { number: string; label: string }) {
-  return (
-    <div className="rounded-xl border border-brand-100 bg-white p-6 shadow-sm">
-      <p className="font-display text-4xl font-bold text-brand-800">{number}</p>
-      <p className="mt-2 max-w-48 text-sm leading-relaxed text-ink-muted">{label}</p>
-    </div>
   );
 }
 
