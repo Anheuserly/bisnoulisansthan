@@ -354,11 +354,11 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
         <button
           type="button"
           onClick={() => setShowControls((prev) => !prev)}
-          aria-label="Choose from 20 music tracks and adjust volume"
+          aria-label="Choose from 100+ music tracks and adjust volume"
           className={`flex h-8 w-8 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 transition ${
             showControls ? "bg-sand-100 text-brand-800" : ""
           }`}
-          title="Browse 20+ music soundscapes"
+          title="Browse 100+ soothing soundscapes"
         >
           <SlidersHorizontal className="h-4 w-4" />
         </button>
@@ -366,81 +366,207 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
 
       {/* Popout Soundscape Selector & Volume Controls */}
       {showControls && (
-        <div className="absolute bottom-14 left-0 mb-1 w-80 max-h-[28rem] flex flex-col rounded-2xl border border-brand-200 bg-white/95 p-4 shadow-2xl backdrop-blur-xl animate-scaleUp">
-          <div className="flex items-center justify-between text-xs font-semibold text-ink border-b border-brand-100 pb-2.5">
-            <div className="flex items-center gap-1.5">
-              <Music className="h-3.5 w-3.5 text-brand-700" />
-              <span className="font-bold">Soundscape Library</span>
-              <span className="text-[0.625rem] px-1.5 py-0.2 rounded-full bg-brand-50 text-brand-700 font-bold">
-                {AMBIENT_TRACK_PRESETS.length} tracks
-              </span>
-            </div>
-            <span className="text-brand-700 font-bold">{Math.round(volume * 100)}%</span>
-          </div>
-
-          {/* Volume Slider */}
-          <div className="py-2.5 border-b border-brand-100">
-            <div className="flex justify-between text-[0.6875rem] text-ink-muted mb-1 font-medium">
-              <span>Volume</span>
-              <span>{Math.round(volume * 100)}%</span>
-            </div>
-            <input
-              type="range"
-              min="0.05"
-              max="1.0"
-              step="0.05"
-              value={volume}
-              onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-              className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-sand-200 accent-brand-700"
-            />
-          </div>
-
-          {/* Scrollable Tracklist */}
-          <div className="mt-2.5 overflow-y-auto space-y-1.5 pr-1 flex-1 max-h-56">
-            <p className="text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted px-1 mb-1">
-              Select or change sound anytime:
-            </p>
-            {AMBIENT_TRACK_PRESETS.filter((t) => t.id !== "custom-stream").map((track, idx) => {
-              const isCurrent = audioConfig.trackId === track.id;
-              return (
-                <button
-                  key={track.id}
-                  type="button"
-                  onClick={() => handleSelectTrack(track.id)}
-                  className={`w-full text-left rounded-xl p-2 transition flex items-start gap-2.5 text-xs ${
-                    isCurrent
-                      ? "bg-brand-50 border border-brand-300 text-brand-900 font-bold"
-                      : "hover:bg-sand-50 text-ink border border-transparent"
-                  }`}
-                >
-                  <span
-                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-bold ${
-                      isCurrent ? "bg-brand-700 text-white" : "bg-sand-100 text-ink-muted"
-                    }`}
-                  >
-                    {isCurrent && isPlaying ? "▶" : idx + 1}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold leading-tight">{track.name}</p>
-                    <p className="truncate text-[0.625rem] text-brand-700 font-medium">{track.genre}</p>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-2.5 pt-2 border-t border-brand-100 flex items-center justify-between text-[0.625rem] text-ink-muted">
-            <span>Next/Prev buttons enabled</span>
-            <button
-              type="button"
-              onClick={() => setShowControls(false)}
-              className="font-bold text-brand-700 hover:underline"
-            >
-              Done
-            </button>
-          </div>
-        </div>
+        <SoundscapeDrawer
+          volume={volume}
+          currentTrackId={audioConfig.trackId}
+          isPlaying={isPlaying}
+          onVolumeChange={handleVolumeChange}
+          onSelectTrack={handleSelectTrack}
+          onClose={() => setShowControls(false)}
+        />
       )}
     </aside>
+  );
+}
+
+function SoundscapeDrawer({
+  volume,
+  currentTrackId,
+  isPlaying,
+  onVolumeChange,
+  onSelectTrack,
+  onClose,
+}: {
+  volume: number;
+  currentTrackId: string;
+  isPlaying: boolean;
+  onVolumeChange: (vol: number) => void;
+  onSelectTrack: (trackId: string) => void;
+  onClose: () => void;
+}) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const categories = [
+    { id: "all", label: "All (100+)" },
+    { id: "raga", label: "Classical Ragas" },
+    { id: "nature", label: "Nature & Rivers" },
+    { id: "solfeggio", label: "Healing 432Hz/Om" },
+    { id: "instrument", label: "Sitar & Flute Solo" },
+    { id: "ambient", label: "Ambient Pads" },
+  ];
+
+  const filteredTracks = AMBIENT_TRACK_PRESETS.filter((t) => {
+    if (t.id === "custom-stream") return false;
+    
+    // Category match
+    if (selectedCategory === "raga") {
+      if (!t.genre.toLowerCase().includes("raga") && !t.name.toLowerCase().includes("raga")) return false;
+    } else if (selectedCategory === "nature") {
+      if (!t.genre.toLowerCase().includes("nature") && !t.description.toLowerCase().includes("water") && !t.description.toLowerCase().includes("wind") && !t.description.toLowerCase().includes("rain")) return false;
+    } else if (selectedCategory === "solfeggio") {
+      if (!t.genre.toLowerCase().includes("solfeggio") && !t.id.includes("hz") && !t.id.includes("om") && !t.id.includes("drone")) return false;
+    } else if (selectedCategory === "instrument") {
+      if (!t.genre.toLowerCase().includes("acoustic") && !t.genre.toLowerCase().includes("flute") && !t.genre.toLowerCase().includes("sitar") && !t.genre.toLowerCase().includes("santoor") && !t.genre.toLowerCase().includes("sarod")) return false;
+    } else if (selectedCategory === "ambient") {
+      if (!t.genre.toLowerCase().includes("ambient") && !t.genre.toLowerCase().includes("pad") && !t.genre.toLowerCase().includes("soundscape")) return false;
+    }
+
+    // Search query match
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      return (
+        t.name.toLowerCase().includes(q) ||
+        t.genre.toLowerCase().includes(q) ||
+        t.description.toLowerCase().includes(q)
+      );
+    }
+    return true;
+  });
+
+  const activeTrackObj = AMBIENT_TRACK_PRESETS.find((t) => t.id === currentTrackId);
+
+  return (
+    <div className="absolute bottom-14 left-0 mb-1 w-84 sm:w-96 max-h-[32rem] flex flex-col rounded-2xl border border-brand-200 bg-white/98 p-4 shadow-2xl backdrop-blur-xl animate-scaleUp">
+      {/* Drawer Header */}
+      <div className="flex items-center justify-between text-xs font-semibold text-ink border-b border-brand-100 pb-2.5">
+        <div className="flex items-center gap-1.5">
+          <Music className="h-3.5 w-3.5 text-brand-700" />
+          <span className="font-bold text-sm">Grand Soundscape Library</span>
+          <span className="text-[0.625rem] px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 font-extrabold border border-brand-200">
+            {AMBIENT_TRACK_PRESETS.length - 1} Tracks
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-md p-1 text-ink-muted hover:bg-sand-100 hover:text-ink transition"
+          aria-label="Close sound library"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Currently Playing Card */}
+      {activeTrackObj && (
+        <div className="mt-2.5 rounded-xl border border-brand-200 bg-brand-50/70 p-2.5 flex items-center justify-between gap-2 shadow-xs">
+          <div className="min-w-0">
+            <span className="text-[0.5625rem] font-bold uppercase tracking-wider text-brand-700 flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+              Now Playing
+            </span>
+            <p className="text-xs font-bold text-ink truncate mt-0.5">{activeTrackObj.name}</p>
+            <p className="text-[0.625rem] text-brand-700 font-medium truncate">{activeTrackObj.genre}</p>
+          </div>
+          <span className="shrink-0 text-xs px-2 py-1 rounded-md bg-brand-700 text-white font-bold">
+            {isPlaying ? "Active" : "Paused"}
+          </span>
+        </div>
+      )}
+
+      {/* Volume Slider */}
+      <div className="py-2.5 border-b border-brand-100">
+        <div className="flex justify-between text-[0.6875rem] text-ink-muted mb-1 font-medium">
+          <span>Master Volume</span>
+          <span className="font-bold text-brand-700">{Math.round(volume * 100)}%</span>
+        </div>
+        <input
+          type="range"
+          min="0.05"
+          max="1.0"
+          step="0.05"
+          value={volume}
+          onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+          className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-sand-200 accent-brand-700"
+        />
+      </div>
+
+      {/* Search Input */}
+      <div className="pt-2">
+        <input
+          type="text"
+          placeholder="Search ragas, sitar, flute, 432Hz, rain..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full rounded-lg border border-brand-200 bg-sand-50/80 px-2.5 py-1.5 text-xs text-ink placeholder:text-ink-muted focus:border-brand-500 focus:bg-white focus:outline-none"
+        />
+      </div>
+
+      {/* Category Tabs */}
+      <div className="flex gap-1 overflow-x-auto py-2 no-scrollbar">
+        {categories.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            onClick={() => setSelectedCategory(c.id)}
+            className={`shrink-0 rounded-full px-2.5 py-0.5 text-[0.625rem] font-bold transition ${
+              selectedCategory === c.id
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "bg-sand-100 text-ink-muted hover:bg-sand-200 hover:text-ink"
+            }`}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Scrollable Tracklist */}
+      <div className="overflow-y-auto space-y-1 pr-1 flex-1 max-h-52">
+        {filteredTracks.map((track, idx) => {
+          const isCurrent = currentTrackId === track.id;
+          return (
+            <button
+              key={track.id}
+              type="button"
+              onClick={() => onSelectTrack(track.id)}
+              className={`w-full text-left rounded-xl p-2 transition flex items-start gap-2 text-xs ${
+                isCurrent
+                  ? "bg-brand-50 border border-brand-300 text-brand-900 font-bold ring-1 ring-brand-400"
+                  : "hover:bg-sand-50 text-ink border border-transparent"
+              }`}
+            >
+              <span
+                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-bold mt-0.5 ${
+                  isCurrent ? "bg-brand-700 text-white" : "bg-sand-100 text-ink-muted"
+                }`}
+              >
+                {isCurrent && isPlaying ? "▶" : idx + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-semibold leading-tight">{track.name}</p>
+                <p className="truncate text-[0.625rem] text-brand-700 font-medium">{track.genre}</p>
+                <p className="line-clamp-1 text-[0.5625rem] text-ink-muted mt-0.5 leading-snug">{track.description}</p>
+              </div>
+            </button>
+          );
+        })}
+        {filteredTracks.length === 0 && (
+          <div className="py-6 text-center text-xs text-ink-muted">
+            No soundscapes matched &ldquo;{searchQuery}&rdquo;. Try another term!
+          </div>
+        )}
+      </div>
+
+      <div className="mt-2.5 pt-2 border-t border-brand-100 flex items-center justify-between text-[0.625rem] text-ink-muted">
+        <span>Showing {filteredTracks.length} tracks</span>
+        <button
+          type="button"
+          onClick={onClose}
+          className="font-bold text-brand-700 hover:underline"
+        >
+          Done
+        </button>
+      </div>
+    </div>
   );
 }
