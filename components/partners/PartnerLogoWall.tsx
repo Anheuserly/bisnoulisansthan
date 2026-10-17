@@ -6,7 +6,12 @@ import { distributePartners, partners } from "./partners-data";
 import { PartnerLogoCard } from "./PartnerLogoCard";
 
 const columnConfig = [
-  { direction: "up" as const, duration: 28 }, { direction: "down" as const, duration: 34 }, { direction: "up" as const, duration: 25 }, { direction: "down" as const, duration: 31 }, { direction: "up" as const, duration: 37 },
+  { direction: "up" as const, duration: 24 },
+  { direction: "up" as const, duration: 32 },
+  { direction: "up" as const, duration: 22 },
+  { direction: "up" as const, duration: 28 },
+  { direction: "up" as const, duration: 35 },
+  { direction: "up" as const, duration: 26 },
 ];
 
 export function PartnerLogoWall({ pauseOnHover = true }: { pauseOnHover?: boolean }) {

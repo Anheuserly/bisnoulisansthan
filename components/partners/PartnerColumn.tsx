@@ -18,8 +18,13 @@ export function PartnerColumn({ partners, direction, duration, pauseOnHover = tr
       const animate = () => {
         tweenRef.current?.kill();
         const distance = set.offsetHeight + 12;
-        gsap.set(track, { y: direction === "down" ? -distance : 0 });
-        tweenRef.current = gsap.to(track, { y: direction === "down" ? 0 : -distance, duration, ease: "none", repeat: -1 });
+        gsap.set(track, { y: 0 });
+        tweenRef.current = gsap.to(track, {
+          y: -distance,
+          duration,
+          ease: "none",
+          repeat: -1,
+        });
       };
       animate();
       const observer = new ResizeObserver(animate);

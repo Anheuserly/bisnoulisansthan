@@ -233,32 +233,67 @@ export default async function HomePage() {
 
       case "partners":
         return (
-          <section key="partners" className="bg-brand-50 py-10 sm:py-14 border-b border-brand-100" id="partners">
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
-              <div className="grid gap-10 md:grid-cols-[1.1fr_.9fr] md:items-center">
+          <section key="partners" className="relative isolate overflow-hidden bg-gradient-to-b from-white via-sand-50/70 to-white py-14 sm:py-20 border-b border-brand-100" id="partners">
+            {/* Ambient subtle backdrops */}
+            <div className="pointer-events-none absolute -left-28 top-1/3 h-96 w-96 rounded-full bg-brand-200/20 blur-3xl" />
+            <div className="pointer-events-none absolute -right-28 bottom-1/4 h-96 w-96 rounded-full bg-amber-200/20 blur-3xl" />
+
+            {/* Header Content with Max Width */}
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+              <div className="grid gap-8 md:grid-cols-[1.1fr_.9fr] md:items-end">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand-700">Partnerships</p>
-                  <h2 className="mt-2 max-w-xl font-display text-2xl font-bold text-ink sm:text-3xl">Collaboration that turns support into local action.</h2>
-                  <p className="mt-4 max-w-2xl leading-relaxed text-ink-muted">BSGSS works alongside CSR and institutional partners to bring healthcare, women&apos;s vocational training and practical community support to places where it is needed most.</p>
-                  <Link href="/about/partners" className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand-700 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-900">Explore partner stories <ArrowRight className="h-4 w-4" /></Link>
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-100/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs">
+                    <Handshake className="h-3.5 w-3.5 text-brand-700" />
+                    <span>Institutional CSR Alliances</span>
+                  </div>
+                  <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-4xl">
+                    Collaboration that turns institutional trust into grassroots action.
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
+                    BSGSS collaborates with public sector giants and national leaders to deliver preventive oncology checkups, women&apos;s vocational tailoring guilds, and decentralized potable water plants.
+                  </p>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
-                  <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Handshake className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-3xl font-bold text-ink">30</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">CSR partner profiles with an individual BSGSS record.</p></div>
-                  <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><HeartPulse className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Healthcare</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">A central focus across many recorded partnerships.</p></div>
-                  <div className="rounded-xl border border-brand-200 bg-white p-5 shadow-sm"><Users className="h-6 w-6 text-brand-700" /><p className="mt-4 font-display text-xl font-bold text-ink">Skills for women</p><p className="mt-1 text-sm leading-relaxed text-ink-muted">Vocational pathways that support income and agency.</p></div>
+
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="rounded-xl border border-brand-200/80 bg-white/90 p-4 shadow-2xs backdrop-blur-sm">
+                    <Handshake className="h-5 w-5 text-brand-700" />
+                    <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">30+</p>
+                    <p className="mt-0.5 text-[0.6875rem] font-medium leading-snug text-ink-muted">PSU &amp; Corporate CSR Records</p>
+                  </div>
+                  <div className="rounded-xl border border-brand-200/80 bg-white/90 p-4 shadow-2xs backdrop-blur-sm">
+                    <HeartPulse className="h-5 w-5 text-rose-600" />
+                    <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">Healthcare</p>
+                    <p className="mt-0.5 text-[0.6875rem] font-medium leading-snug text-ink-muted">Oncology, Eyes &amp; General Meds</p>
+                  </div>
+                  <div className="rounded-xl border border-brand-200/80 bg-white/90 p-4 shadow-2xs backdrop-blur-sm">
+                    <Users className="h-5 w-5 text-brand-700" />
+                    <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">Khadi Skills</p>
+                    <p className="mt-0.5 text-[0.6875rem] font-medium leading-snug text-ink-muted">Self Help Groups &amp; Micro-Credit</p>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Interactive Marquee Wall */}
-              <div className="mt-10 rounded-2xl border border-brand-200/80 bg-white p-3.5 shadow-2xs sm:p-5">
+            {/* Full-Width Edge-to-Edge Logo Wall (No Borders, Free Floating, Infinite Upward Motion) */}
+            <div className="relative mt-10 w-full overflow-hidden px-2 sm:px-4 md:px-8">
+              {/* Top & Bottom seamless gradient masks for luxury floating effect */}
+              <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-16 bg-gradient-to-b from-white via-white/80 to-transparent" />
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-16 bg-gradient-to-t from-white via-white/80 to-transparent" />
+
+              <div className="mx-auto max-w-[94rem]">
                 <PartnerLogoWall />
               </div>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-muted">
-                <p>Logos reproduced from official statutory records. Hover over any column to pause scrolling, or select to view partnership details.</p>
-                <Link href="/about/partners" className="font-semibold text-brand-700 hover:text-brand-900 transition-colors">
-                  View all 30 partner profiles →
-                </Link>
-              </div>
+            </div>
+
+            {/* Bottom Citation & Link */}
+            <div className="mx-auto mt-6 flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 md:px-8 text-xs text-ink-muted">
+              <span className="flex items-center gap-1.5 font-medium text-ink-muted">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Verified corporate partnerships from statutory records. Hover over any column to pause scrolling.</span>
+              </span>
+              <Link href="/about/partners" className="font-semibold text-brand-700 hover:text-brand-900 transition-colors underline-offset-4 hover:underline">
+                View all 30 partner profiles &amp; projects →
+              </Link>
             </div>
           </section>
         );
