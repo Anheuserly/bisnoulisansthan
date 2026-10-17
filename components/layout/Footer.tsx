@@ -13,6 +13,7 @@ import {
 import { directionsUrl, fullAddress, site, telHref } from "@/config/site";
 import { content, links } from "@/config/content";
 import { Logo } from "./Logo";
+import { SoundToggle } from "./SoundToggle";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -116,7 +117,10 @@ export function Footer() {
               {content.site.developerCredit}
             </a>
           </p>
-          <a href="mailto:bsgssindia@yahoo.co.in?subject=Document%20request" className="inline-flex items-center gap-2 hover:text-white"><FileText className="h-4 w-4" />Request public documents or reports</a>
+          <div className="flex items-center gap-3">
+            <SoundToggle variant="footer" />
+            <a href="mailto:bsgssindia@yahoo.co.in?subject=Document%20request" className="inline-flex items-center gap-2 hover:text-white"><FileText className="h-4 w-4" />Request public documents or reports</a>
+          </div>
         </div>
       </div>
     </footer>

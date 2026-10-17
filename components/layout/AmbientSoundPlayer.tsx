@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Music, Volume2, VolumeX, Play, Pause, SlidersHorizontal, Sparkles } from "lucide-react";
 import { AMBIENT_TRACK_PRESETS, type AmbientAudioConfig } from "@/config/customizer";
+import { sharedAudioController } from "@/lib/audio-controller";
 
 interface AmbientSoundPlayerProps {
   initialConfig?: Partial<AmbientAudioConfig>;
@@ -45,9 +46,6 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
   const [volume, setVolume] = useState(audioConfig.defaultVolume);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
-  const [startedByGesture, setStartedByGesture] = useState(false);
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Load customizer settings from API on mount
   useEffect(() => {
@@ -56,20 +54,23 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
       .then((data) => {
         if (data?.settings?.audio) {
           setAudioConfig(data.settings.audio);
-          setVolume(data.settings.audio.defaultVolume ?? 0.25);
+          if (data.settings.audio.defaultVolume !== undefined) {
+            sharedAudioController.setVolume(data.settings.audio.defaultVolume);
+          }
         }
       })
       .catch(() => {});
   }, []);
 
-  // Restore saved visitor preference
+  // Subscribe to shared single audio controller
   useEffect(() => {
-    try {
-      const savedVolume = localStorage.getItem("bsgss_ambient_volume");
-      if (savedVolume) setVolume(Number(savedVolume));
-      const savedMuted = localStorage.getItem("bsgss_ambient_muted");
-      if (savedMuted) setIsMuted(savedMuted === "true");
-    } catch {}
+    sharedAudioController.init();
+    const unsubscribe = sharedAudioController.subscribe((state) => {
+      setIsPlaying(state.isPlaying);
+      setVolume(state.volume);
+      setIsMuted(state.isMuted);
+    });
+    return unsubscribe;
   }, []);
 
   // Determine active track audio source URL
@@ -87,6 +88,7 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
         trackId: nextTrack.id,
         customUrl: "",
       }));
+      sharedAudioController.setTrack(nextTrack.audioUrl || "/audio/gramodyog-santoor-serenity.m4a");
       try {
         localStorage.setItem("bsgss_ambient_track_id", nextTrack.id);
       } catch {}
@@ -104,6 +106,7 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
         trackId: prevTrack.id,
         customUrl: "",
       }));
+      sharedAudioController.setTrack(prevTrack.audioUrl || "/audio/gramodyog-santoor-serenity.m4a");
       try {
         localStorage.setItem("bsgss_ambient_track_id", prevTrack.id);
       } catch {}
@@ -112,142 +115,36 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
 
   // Select Specific Track
   const handleSelectTrack = (trackId: string) => {
+    const target = AMBIENT_TRACK_PRESETS.find((t) => t.id === trackId);
     setAudioConfig((prev) => ({
       ...prev,
       trackId,
       customUrl: "",
     }));
+    if (target?.audioUrl) {
+      sharedAudioController.setTrack(target.audioUrl);
+    }
     try {
       localStorage.setItem("bsgss_ambient_track_id", trackId);
     } catch {}
-    if (!isPlaying && audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    if (!isPlaying) {
+      sharedAudioController.play();
     }
   };
 
-  // Restore visitor saved track on load
-  useEffect(() => {
-    try {
-      const savedTrack = localStorage.getItem("bsgss_ambient_track_id");
-      if (savedTrack && AMBIENT_TRACK_PRESETS.some((t) => t.id === savedTrack)) {
-        setAudioConfig((prev) => ({ ...prev, trackId: savedTrack }));
-      }
-    } catch {}
-  }, []);
-
-  // Initialize Audio Element
-  useEffect(() => {
-    if (typeof window === "undefined" || !audioConfig.enabled) return;
-
-    if (!audioRef.current) {
-      const audio = new Audio(audioSrc);
-      audio.loop = true;
-      audio.preload = "auto";
-      audio.volume = isMuted ? 0 : volume;
-      audioRef.current = audio;
-    } else {
-      if (audioRef.current.src !== audioSrc && !audioRef.current.src.endsWith(audioSrc)) {
-        const wasPlaying = isPlaying;
-        audioRef.current.src = audioSrc;
-        audioRef.current.load();
-        if (wasPlaying) {
-          audioRef.current.play().catch(() => {});
-        }
-      }
-    }
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, [audioSrc, audioConfig.enabled]);
-
-  // Handle Volume & Mute sync
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume;
-    }
-  }, [volume, isMuted]);
-
-  // Auto-Start on First User Interaction (Click/Scroll/Tap) to comply with browser autoplay
-  useEffect(() => {
-    if (startedByGesture || !audioConfig.enabled) return;
-
-    const handleFirstGesture = () => {
-      setStartedByGesture(true);
-      window.removeEventListener("click", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
-      window.removeEventListener("touchstart", handleFirstGesture);
-
-      try {
-        const userExplicitlyStopped = localStorage.getItem("bsgss_ambient_stopped") === "true";
-        if (!userExplicitlyStopped && audioRef.current) {
-          audioRef.current
-            .play()
-            .then(() => setIsPlaying(true))
-            .catch(() => {});
-        }
-      } catch {}
-    };
-
-    window.addEventListener("click", handleFirstGesture, { once: true });
-    window.addEventListener("keydown", handleFirstGesture, { once: true });
-    window.addEventListener("touchstart", handleFirstGesture, { once: true });
-
-    return () => {
-      window.removeEventListener("click", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
-      window.removeEventListener("touchstart", handleFirstGesture);
-    };
-  }, [startedByGesture, audioConfig.enabled]);
-
   // Toggle Play / Pause
   const handleTogglePlay = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-      try {
-        localStorage.setItem("bsgss_ambient_stopped", "true");
-      } catch {}
-    } else {
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          try {
-            localStorage.removeItem("bsgss_ambient_stopped");
-          } catch {}
-        })
-        .catch((err) => {
-          console.warn("Audio playback error:", err);
-        });
-    }
+    sharedAudioController.toggle();
   };
 
   // Adjust volume
   const handleVolumeChange = (newVol: number) => {
-    setVolume(newVol);
-    try {
-      localStorage.setItem("bsgss_ambient_volume", String(newVol));
-    } catch {}
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : newVol;
-    }
+    sharedAudioController.setVolume(newVol);
   };
 
   // Toggle mute
   const handleToggleMute = () => {
-    const nextMuted = !isMuted;
-    setIsMuted(nextMuted);
-    try {
-      localStorage.setItem("bsgss_ambient_muted", String(nextMuted));
-    } catch {}
-    if (audioRef.current) {
-      audioRef.current.volume = nextMuted ? 0 : volume;
-    }
+    sharedAudioController.toggleMute();
   };
 
   if (!audioConfig.enabled) {

@@ -9,6 +9,7 @@ import { directionsUrl, site, telHref } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
 import { Logo } from "./Logo";
 import { LinkButton } from "@/components/ui/Button";
+import { SoundToggle } from "./SoundToggle";
 
 export function Header() {
   const pathname = usePathname();
@@ -152,6 +153,7 @@ export function Header() {
 
         {/* Right: Actions */}
         <div className="flex shrink-0 items-center justify-end gap-2 xl:min-w-[18rem]">
+          <SoundToggle />
           <button type="button" onClick={() => { setSearchOpen((value) => !value); setQuery(""); setMegaOpen(null); }} className="hidden h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-brand-50 xl:inline-flex" aria-label="Search this website" aria-expanded={searchOpen} aria-controls="site-search">
             <Search className="h-5 w-5" aria-hidden="true" />
           </button>
