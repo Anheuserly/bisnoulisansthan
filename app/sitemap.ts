@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/activities-under-state-central-government",
     "/impact",
     "/support",
+    "/sponsor",
     "/transparency",
     "/join-us",
     "/contact",

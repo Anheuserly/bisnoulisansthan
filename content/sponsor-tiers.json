@@ -1,0 +1,38 @@
+[
+  {
+    "id": "one-day-training",
+    "title": "One day of training",
+    "amount": 300,
+    "covers": "Trainer time, practice fabric, and machine upkeep for one trainee for one day.",
+    "outcome": "1 training day",
+    "image": "/images/bsgss/gallery-training/185-tal1.jpeg",
+    "active": true
+  },
+  {
+    "id": "one-week-training",
+    "title": "One week of training",
+    "amount": 1800,
+    "covers": "Five days of certified vocational instruction, pattern cutting guidance, and materials.",
+    "outcome": "1 training week",
+    "image": "/images/bsgss/gallery-training/186-tal2.jpeg",
+    "active": true
+  },
+  {
+    "id": "full-course",
+    "title": "Full 3-month course",
+    "amount": 7500,
+    "covers": "Complete 3-month certified tailoring syllabus, graduation assessment, and toolkit assistance.",
+    "outcome": "Full 3-month course",
+    "image": "/images/bsgss/gallery-training/187-tal3.jpeg",
+    "active": true
+  },
+  {
+    "id": "sewing-machine",
+    "title": "One sewing machine",
+    "amount": 8500,
+    "covers": "One durable mechanical sewing machine gifted to a certified graduate establishing household agency.",
+    "outcome": "1 livelihood sewing machine",
+    "image": "/images/bsgss/gallery-training/188-tal4-scaled.jpeg",
+    "active": true
+  }
+]

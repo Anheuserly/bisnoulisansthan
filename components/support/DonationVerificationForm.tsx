@@ -1,11 +1,13 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
   CheckCircle2,
   ExternalLink,
   FileCheck2,
+  HeartHandshake,
   LoaderCircle,
   Search,
 } from "lucide-react";
@@ -36,9 +38,24 @@ export function DonationVerificationForm() {
   const [paymentMethod, setPaymentMethod] = useState("upi");
   const [paymentDate, setPaymentDate] = useState("");
   const [paymentReference, setPaymentReference] = useState("");
+  const [selectedTier, setSelectedTier] = useState<string>("");
 
   const [state, setState] = useState<State>({ kind: "idle" });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlAmount = params.get("amount");
+      const urlTier = params.get("tier");
+      if (urlAmount) {
+        setAmount(urlAmount);
+      }
+      if (urlTier) {
+        setSelectedTier(urlTier);
+      }
+    }
+  }, []);
 
   // Status check state
   const [query, setQuery] = useState("");
@@ -314,6 +331,18 @@ export function DonationVerificationForm() {
                       <code className="rounded bg-white px-2 py-1 font-mono text-xs font-bold text-brand-800 border border-brand-200">
                         {state.reference}
                       </code>
+                    </div>
+                  ) : null}
+                  {selectedTier ? (
+                    <div className="mt-4 pt-3 border-t border-brand-200/60">
+                      <Link
+                        href={`/sponsor/receipt/${selectedTier}`}
+                        className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-brand-800 transition"
+                      >
+                        <HeartHandshake className="h-4 w-4" />
+                        <span>View &amp; Share Your Sponsor Impact Receipt</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
                     </div>
                   ) : null}
                 </div>
