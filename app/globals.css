@@ -45,6 +45,7 @@
 
 @layer base {
   html {
+    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-padding-top: 6rem;
@@ -112,6 +113,57 @@
 
 .mega-menu-panel {
   animation: mega-menu-enter 180ms ease-out both;
+}
+
+/* Scroll-triggered reveal animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 750ms cubic-bezier(0.16, 1, 0.3, 1), transform 750ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.reveal-on-scroll.reveal-left {
+  transform: translate3d(-28px, 0, 0);
+}
+.reveal-on-scroll.reveal-left.is-revealed {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-on-scroll.reveal-right {
+  transform: translate3d(28px, 0, 0);
+}
+.reveal-on-scroll.reveal-right.is-revealed {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-on-scroll.reveal-scale {
+  transform: scale(0.96) translate3d(0, 16px, 0);
+}
+.reveal-on-scroll.reveal-scale.is-revealed {
+  transform: scale(1) translate3d(0, 0, 0);
+}
+
+/* Stagger transition delays for child elements */
+.reveal-stagger-1 { transition-delay: 80ms; }
+.reveal-stagger-2 { transition-delay: 160ms; }
+.reveal-stagger-3 { transition-delay: 240ms; }
+.reveal-stagger-4 { transition-delay: 320ms; }
+.reveal-stagger-5 { transition-delay: 400ms; }
+.reveal-stagger-6 { transition-delay: 480ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Theme Studio presentation controls. These use data attributes on <html>, so a
