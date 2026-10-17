@@ -1,0 +1,83 @@
+# ==============================================================================
+# BISNOULI SARVODAYA GRAMODYOG SEWA SANSTHAN (BSGSS)
+# 30-YEAR SENIOR PRINCIPAL UI/UX & MASTER WEB ARCHITECT DIRECTIVE
+# ==============================================================================
+# Target Level: Tier-1 International Institutional NGO (Award-winning / Luxury Swiss-Nordic & Indic Dignity)
+# Philosophy: Human-crafted, deeply grounded, micro-interaction rich, ultra-clean contrast, zero visual overlap.
+
+metadata:
+  version: "2.4.0-master-architect"
+  organization: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS)"
+  established: 1994
+  status: "National Grassroots NGO (Registered under Societies Registration Act XXI of 1860)"
+  standards:
+    - WCAG_2_2_AAA: "Strict adherence to high contrast, tap targets, focus states, and aria labeling"
+    - Responsive_Grid: "Fluid typography with clamp(), defensive overflow prevention, non-overlapping elevation"
+    - Luxury_Atmosphere: "Apple/Stripe/Aesop-grade spatial rhythm, precision padding, refined typography and motion"
+
+design_system:
+  typography:
+    display_heading: "Source Serif 4, Georgia, serif (dignified, editorial, heritage)"
+    body_sans: "Public Sans, system-ui, -apple-system, sans-serif (crisp, authoritative, legible)"
+    mono_accents: "JetBrains Mono, Menlo, monospace (for technical metrics, dates, and tenures)"
+    contrast_ratio: "Minimum 7:1 against card backgrounds; pure black or slate-900 on white"
+  
+  color_palette:
+    brand_primary: "#123F48"   # Deep Indian Spruce / Evergreen
+    brand_accent: "#236873"    # Regal Peacock Teal
+    brand_gold: "#B4833E"      # Khadi & Brass Gold Accent
+    emerald_live: "#059669"    # Active Grassroots Pulse Green
+    surface_canvas: "#FCFBF8"  # Warm Unbleached Parchment
+    surface_card: "#FFFFFF"    # Pristine Opaque Surface
+    border_subtle: "#E2E8F0"   # Refined 1px slate divider
+    shadow_elevated: "0 24px 50px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(15, 23, 42, 0.08)"
+
+components:
+  soundscape_player:
+    architecture:
+      type: "Floating Persistent Master Console"
+      placement: "Fixed bottom-left (bottom-4 left-4 sm:bottom-6 sm:left-6)"
+      layering: "z-50 with defensive backdrop-filter and solid opaque inner surfaces"
+    
+    drawer_modal:
+      structure:
+        header:
+          title: "BSGSS Acoustic Heritage Sanctuary"
+          subtitle: "112 Live Classical Ragas & Bio-Acoustic Streams"
+          controls: "Direct volume dial, tactile play/pause, next/previous skips, quick-close"
+        
+        now_playing_dock:
+          appearance: "Solid sage/emerald luxury card with pulsing audio wave spectrum"
+          metadata: "Track index, title, micro-genre, harmonic key/frequency, playback state"
+        
+        filter_bar:
+          appearance: "Segmented pills with instant responsive scrolling and active glow indicators"
+          categories:
+            - "All (112)"
+            - "Classical Ragas"
+            - "Nature & Rivers"
+            - "Healing 432Hz/Om"
+            - "Sitar & Flute Solo"
+            - "Ambient Pads"
+        
+        track_list_viewport:
+          height: "Defensive clamped height (h-[240px] to h-[320px]) with native smooth touch-scrolling"
+          card_spacing: "Isolated cards with 8px margin, preventing text collision or clipping"
+          interaction: "Micro-hover scale (+1%), immediate tactile tap response, persistent local memory"
+        
+        defensive_ui:
+          no_overlap_rule: "Explicit flex-col hierarchy with fixed headers, flex-1 scroll container, and sticky footer"
+          no_overflow_rule: "overflow-y-auto on scroll viewport only; zero overflow on container"
+
+  leadership_spotlight:
+    interaction: "Tactile hover elevation, glassmorphism inspection modal, character-by-character typewriter address"
+    authenticity: "Original photography, verified tenure badges (Ex-IPS / Ex-IRS), CSR partner credentials"
+
+  photo_gallery_magazine:
+    layout: "Asymmetric luxury collage with interactive zoom lens, modal deep-dive, and live filters"
+
+quality_checklist:
+  - "Zero text-clipping under all responsive viewports (320px to 4K)"
+  - "No translucent gray text over dark elements; always explicit high-contrast slate/white"
+  - "Clean TypeScript compilation on all routes"
+  - "Hardware-accelerated transforms for 60fps silky smooth interaction"

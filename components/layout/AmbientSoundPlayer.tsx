@@ -255,116 +255,119 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
   }
 
   return (
-    <aside
-      aria-label="Relaxing ambient audio player"
-      className="fixed bottom-4 left-4 z-40 select-none animate-fadeIn"
-    >
-      <div className="relative flex items-center gap-1.5 sm:gap-2.5 rounded-full border border-brand-200/90 bg-white/95 px-2.5 sm:px-3.5 py-2 shadow-2xl backdrop-blur-xl transition-all hover:border-brand-300 hover:shadow-soft">
-        {/* Play / Pause Toggle Button */}
-        <button
-          type="button"
-          onClick={handleTogglePlay}
-          aria-label={isPlaying ? "Pause ambient sound" : "Play ambient relaxation sound"}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-700 text-white shadow-2xs transition hover:bg-brand-800 hover:scale-105 active:scale-95"
-          title={isPlaying ? "Pause relaxing music" : "Play relaxing soundscape"}
-        >
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
-        </button>
+    <>
+      {/* Floating Ambient Sound Controller Pill */}
+      <aside
+        aria-label="Relaxing ambient audio player"
+        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 select-none animate-fadeIn"
+      >
+        <div className="relative flex items-center gap-1.5 sm:gap-2.5 rounded-full border border-slate-200/90 bg-white/95 px-3 py-2 shadow-2xl backdrop-blur-xl transition-all hover:border-brand-300 hover:shadow-soft ring-1 ring-black/5">
+          {/* Play / Pause Toggle Button */}
+          <button
+            type="button"
+            onClick={handleTogglePlay}
+            aria-label={isPlaying ? "Pause ambient sound" : "Play ambient relaxation sound"}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-700 text-white shadow-2xs transition hover:bg-brand-800 hover:scale-105 active:scale-95"
+            title={isPlaying ? "Pause relaxing music" : "Play relaxing soundscape"}
+          >
+            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
+          </button>
 
-        {/* Previous Track Button */}
-        <button
-          type="button"
-          onClick={handlePrevTrack}
-          aria-label="Previous music soundscape track"
-          className="flex h-7 w-7 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 hover:text-brand-800 transition active:scale-95"
-          title="Previous track"
-        >
-          <span className="text-xs font-bold">⏮</span>
-        </button>
+          {/* Previous Track Button */}
+          <button
+            type="button"
+            onClick={handlePrevTrack}
+            aria-label="Previous music soundscape track"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-800 transition active:scale-95"
+            title="Previous track"
+          >
+            <span className="text-xs font-bold">⏮</span>
+          </button>
 
-        {/* Next Track Button */}
-        <button
-          type="button"
-          onClick={handleNextTrack}
-          aria-label="Next music soundscape track"
-          className="flex h-7 w-7 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 hover:text-brand-800 transition active:scale-95"
-          title="Next track"
-        >
-          <span className="text-xs font-bold">⏭</span>
-        </button>
+          {/* Next Track Button */}
+          <button
+            type="button"
+            onClick={handleNextTrack}
+            aria-label="Next music soundscape track"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-800 transition active:scale-95"
+            title="Next track"
+          >
+            <span className="text-xs font-bold">⏭</span>
+          </button>
 
-        {/* Animated Sound Wave Equalizer Bars */}
-        <div
-          onClick={handleTogglePlay}
-          className="flex cursor-pointer items-center gap-2 pr-1"
-        >
-          <div className="flex h-5 items-end gap-1">
-            <span
-              className={`w-1 rounded-full bg-brand-700 transition-all ${
-                isPlaying ? "h-5 animate-[pulse_0.7s_ease-in-out_infinite]" : "h-1.5 opacity-40"
-              }`}
-            />
-            <span
-              className={`w-1 rounded-full bg-brand-600 transition-all ${
-                isPlaying ? "h-3.5 animate-[pulse_1.0s_ease-in-out_infinite_0.2s]" : "h-2.5 opacity-40"
-              }`}
-            />
-            <span
-              className={`w-1 rounded-full bg-brand-800 transition-all ${
-                isPlaying ? "h-5 animate-[pulse_0.8s_ease-in-out_infinite_0.4s]" : "h-1 opacity-40"
-              }`}
-            />
-            <span
-              className={`w-1 rounded-full bg-brand-700 transition-all ${
-                isPlaying ? "h-3 animate-[pulse_1.2s_ease-in-out_infinite_0.1s]" : "h-2 opacity-40"
-              }`}
-            />
+          {/* Animated Sound Wave Equalizer Bars */}
+          <div
+            onClick={handleTogglePlay}
+            className="flex cursor-pointer items-center gap-2 pr-1"
+          >
+            <div className="flex h-5 items-end gap-1">
+              <span
+                className={`w-1 rounded-full bg-brand-700 transition-all ${
+                  isPlaying ? "h-5 animate-[pulse_0.7s_ease-in-out_infinite]" : "h-1.5 opacity-40"
+                }`}
+              />
+              <span
+                className={`w-1 rounded-full bg-brand-600 transition-all ${
+                  isPlaying ? "h-3.5 animate-[pulse_1.0s_ease-in-out_infinite_0.2s]" : "h-2.5 opacity-40"
+                }`}
+              />
+              <span
+                className={`w-1 rounded-full bg-brand-800 transition-all ${
+                  isPlaying ? "h-5 animate-[pulse_0.8s_ease-in-out_infinite_0.4s]" : "h-1 opacity-40"
+                }`}
+              />
+              <span
+                className={`w-1 rounded-full bg-brand-700 transition-all ${
+                  isPlaying ? "h-3 animate-[pulse_1.2s_ease-in-out_infinite_0.1s]" : "h-2 opacity-40"
+                }`}
+              />
+            </div>
+
+            {/* Track Name & Status */}
+            <div className="hidden sm:block text-left">
+              <div className="text-[0.6875rem] font-bold text-slate-900 truncate max-w-[155px]">
+                {selectedPreset?.name || "Gramodyog Santoor Serenity"}
+              </div>
+              <div className="text-[0.625rem] text-brand-700 font-semibold flex items-center gap-1">
+                {isPlaying ? (
+                  <>
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="truncate max-w-[120px]">{selectedPreset?.genre || "Playing"}</span>
+                  </>
+                ) : (
+                  <span>Tap to Play Sound</span>
+                )}
+              </div>
+            </div>
           </div>
 
-          {/* Track Name & Status */}
-          <div className="hidden sm:block text-left">
-            <div className="text-[0.6875rem] font-bold text-ink truncate max-w-[155px]">
-              {selectedPreset?.name || "Gramodyog Santoor Serenity"}
-            </div>
-            <div className="text-[0.625rem] text-brand-700 font-semibold flex items-center gap-1">
-              {isPlaying ? (
-                <>
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span className="truncate max-w-[120px]">{selectedPreset?.genre || "Playing"}</span>
-                </>
-              ) : (
-                <span>Tap to Play Sound</span>
-              )}
-            </div>
-          </div>
+          {/* Mute Button */}
+          <button
+            type="button"
+            onClick={handleToggleMute}
+            aria-label={isMuted ? "Unmute" : "Mute"}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-800 transition"
+            title={isMuted ? "Unmute" : "Mute sound"}
+          >
+            {isMuted ? <VolumeX className="h-4 w-4 text-amber-700" /> : <Volume2 className="h-4 w-4" />}
+          </button>
+
+          {/* Track List & Settings Popout Toggle */}
+          <button
+            type="button"
+            onClick={() => setShowControls((prev) => !prev)}
+            aria-label="Choose from 112 music tracks and adjust volume"
+            className={`flex h-8 w-8 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 transition ${
+              showControls ? "bg-slate-200 text-brand-900 font-bold" : ""
+            }`}
+            title="Browse 112+ soothing soundscapes"
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+          </button>
         </div>
+      </aside>
 
-        {/* Mute Button */}
-        <button
-          type="button"
-          onClick={handleToggleMute}
-          aria-label={isMuted ? "Unmute" : "Mute"}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 hover:text-brand-800 transition"
-          title={isMuted ? "Unmute" : "Mute sound"}
-        >
-          {isMuted ? <VolumeX className="h-4 w-4 text-amber-700" /> : <Volume2 className="h-4 w-4" />}
-        </button>
-
-        {/* Track List & Settings Popout Toggle */}
-        <button
-          type="button"
-          onClick={() => setShowControls((prev) => !prev)}
-          aria-label="Choose from 100+ music tracks and adjust volume"
-          className={`flex h-8 w-8 items-center justify-center rounded-full text-ink-muted hover:bg-sand-100 transition ${
-            showControls ? "bg-sand-100 text-brand-800" : ""
-          }`}
-          title="Browse 100+ soothing soundscapes"
-        >
-          <SlidersHorizontal className="h-4 w-4" />
-        </button>
-      </div>
-
-      {/* Popout Soundscape Selector & Volume Controls */}
+      {/* Popout Soundscape Selector & Volume Controls - Elevated Isolated Layer */}
       {showControls && (
         <SoundscapeDrawer
           volume={volume}
@@ -375,7 +378,7 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
           onClose={() => setShowControls(false)}
         />
       )}
-    </aside>
+    </>
   );
 }
 
@@ -398,7 +401,7 @@ function SoundscapeDrawer({
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
-    { id: "all", label: "All (112)" },
+    { id: "all", label: "All Tracks (112)" },
     { id: "raga", label: "Classical Ragas" },
     { id: "nature", label: "Nature & Rivers" },
     { id: "solfeggio", label: "Healing 432Hz/Om" },
@@ -452,192 +455,203 @@ function SoundscapeDrawer({
   const activeTrackObj = AMBIENT_TRACK_PRESETS.find((t) => t.id === currentTrackId);
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Grand Soundscape Library"
-      className="absolute bottom-16 left-0 mb-1 w-[22rem] sm:w-[26rem] max-h-[34rem] flex flex-col rounded-2xl border-2 border-brand-300 bg-white p-4 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] ring-1 ring-black/10 z-50 animate-scaleUp text-slate-900"
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-700 text-white shadow-xs">
-            <Music className="h-4 w-4" />
-          </span>
-          <div>
-            <h3 className="font-display text-sm font-bold text-slate-900 leading-tight">
-              Grand Soundscape Library
-            </h3>
-            <p className="text-[0.625rem] font-semibold text-brand-700">
-              {AMBIENT_TRACK_PRESETS.length - 1} Indian classical &amp; natural tracks
-            </p>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 font-bold text-sm transition"
-          aria-label="Close sound library"
-        >
-          ✕
-        </button>
-      </div>
+    <>
+      {/* Light Backdrop Scrim for Focus & Dismissal */}
+      <div
+        onClick={onClose}
+        aria-hidden="true"
+        className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-[2px] transition-opacity"
+      />
 
-      {/* Now Playing Banner */}
-      {activeTrackObj && (
-        <div className="mt-3 rounded-xl border border-emerald-300 bg-emerald-50/90 p-3 flex items-center justify-between gap-3 shadow-xs">
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
-              <span className="text-[0.6875rem] font-extrabold uppercase tracking-wider text-emerald-800">
-                Now Playing
-              </span>
+      {/* Floating Dialog Drawer */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Grand Soundscape Library"
+        className="fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-[28rem] h-[34rem] max-h-[85vh] flex flex-col rounded-3xl border-2 border-slate-200 bg-white p-5 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.35)] ring-1 ring-black/5 animate-scaleUp text-slate-900"
+      >
+        {/* Header - Fixed Height */}
+        <div className="shrink-0 flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm">
+              <Music className="h-5 w-5" />
+            </span>
+            <div>
+              <h3 className="font-display text-base font-bold text-slate-900 leading-tight">
+                Grand Soundscape Library
+              </h3>
+              <p className="text-[0.6875rem] font-semibold text-brand-700">
+                {AMBIENT_TRACK_PRESETS.length - 1} Master Heritage &amp; Ambient Tracks
+              </p>
             </div>
-            <p className="mt-0.5 text-xs font-bold text-slate-900 truncate">
-              {activeTrackObj.name}
-            </p>
-            <p className="text-[0.6875rem] font-semibold text-emerald-700 truncate">
-              {activeTrackObj.genre}
-            </p>
           </div>
-          <span
-            className={`shrink-0 text-xs px-2.5 py-1 rounded-full font-bold shadow-xs ${
-              isPlaying ? "bg-emerald-700 text-white" : "bg-slate-300 text-slate-800"
-            }`}
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 font-bold transition"
+            aria-label="Close sound library"
           >
-            {isPlaying ? "Playing" : "Paused"}
-          </span>
+            ✕
+          </button>
         </div>
-      )}
 
-      {/* Volume Control */}
-      <div className="py-2.5 border-b border-slate-200">
-        <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1.5">
-          <span>Master Volume</span>
-          <span className="font-extrabold text-brand-800 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200">
-            {Math.round(volume * 100)}%
-          </span>
-        </div>
-        <input
-          type="range"
-          min="0.05"
-          max="1.0"
-          step="0.05"
-          value={volume}
-          onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
-          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-brand-700"
-          aria-label="Volume slider"
-        />
-      </div>
-
-      {/* Search Input */}
-      <div className="pt-2.5">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search ragas, sitar, flute, 432Hz, rain..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border-2 border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-900 placeholder:text-slate-500 focus:border-brand-600 focus:outline-none shadow-xs"
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-2 text-xs font-bold text-slate-400 hover:text-slate-700"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Category Filter Chips */}
-      <div className="flex gap-1.5 overflow-x-auto py-2.5 no-scrollbar">
-        {categories.map((c) => {
-          const isActive = selectedCategory === c.id;
-          return (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => setSelectedCategory(c.id)}
-              className={`shrink-0 rounded-lg px-2.5 py-1 text-[0.6875rem] font-bold transition border ${
-                isActive
-                  ? "bg-brand-700 text-white border-brand-700 shadow-xs"
-                  : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 hover:text-slate-900"
-              }`}
-            >
-              {c.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Track List */}
-      <div className="overflow-y-auto space-y-1.5 pr-1 flex-1 max-h-56 divide-y divide-slate-100">
-        {filteredTracks.map((track, idx) => {
-          const isCurrent = currentTrackId === track.id;
-          return (
-            <button
-              key={track.id}
-              type="button"
-              onClick={() => onSelectTrack(track.id)}
-              className={`w-full text-left rounded-xl p-2.5 transition flex items-start gap-2.5 ${
-                isCurrent
-                  ? "bg-brand-50/90 border-2 border-brand-500 text-slate-900 shadow-xs"
-                  : "bg-white hover:bg-slate-50 text-slate-900 border border-slate-100"
-              }`}
-            >
-              <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold mt-0.5 ${
-                  isCurrent
-                    ? "bg-brand-700 text-white shadow-2xs"
-                    : "bg-slate-100 text-slate-600"
-                }`}
-              >
-                {isCurrent && isPlaying ? "▶" : idx + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between gap-1">
-                  <p className="truncate text-xs font-bold text-slate-900 leading-tight">
-                    {track.name}
-                  </p>
-                  {isCurrent && (
-                    <span className="shrink-0 text-[0.5625rem] font-extrabold text-brand-700 uppercase tracking-wider bg-brand-100 px-1.5 py-0.5 rounded">
-                      Current
-                    </span>
-                  )}
+        {/* Top Controls Container - Fixed Height */}
+        <div className="shrink-0 pt-3 pb-2 space-y-2.5 border-b border-slate-100">
+          {/* Now Playing Banner */}
+          {activeTrackObj && (
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50/90 p-3 flex items-center justify-between gap-3 shadow-xs">
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                  <span className="text-[0.6875rem] font-extrabold uppercase tracking-wider text-emerald-800">
+                    Now Playing
+                  </span>
                 </div>
-                <p className="truncate text-[0.6875rem] font-semibold text-brand-700 mt-0.5">
-                  {track.genre}
+                <p className="mt-0.5 text-xs font-bold text-slate-900 truncate">
+                  {activeTrackObj.name}
                 </p>
-                <p className="line-clamp-2 text-[0.625rem] text-slate-600 mt-1 leading-snug">
-                  {track.description}
+                <p className="text-[0.6875rem] font-semibold text-emerald-700 truncate">
+                  {activeTrackObj.genre}
                 </p>
               </div>
-            </button>
-          );
-        })}
-        {filteredTracks.length === 0 && (
-          <div className="py-8 text-center text-xs font-medium text-slate-500">
-            No soundscapes matched &ldquo;{searchQuery}&rdquo;. Try another term!
-          </div>
-        )}
-      </div>
+              <span
+                className={`shrink-0 text-xs px-3 py-1 rounded-full font-bold shadow-xs ${
+                  isPlaying ? "bg-emerald-700 text-white" : "bg-slate-300 text-slate-800"
+                }`}
+              >
+                {isPlaying ? "Playing" : "Paused"}
+              </span>
+            </div>
+          )}
 
-      {/* Footer */}
-      <div className="mt-2.5 pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-slate-700">
-        <span>
-          Showing <strong className="text-slate-900">{filteredTracks.length}</strong> soundscapes
-        </span>
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded-lg bg-brand-700 px-3 py-1 font-bold text-white hover:bg-brand-800 transition shadow-2xs"
-        >
-          Done
-        </button>
+          {/* Volume Control */}
+          <div>
+            <div className="flex items-center justify-between text-xs font-bold text-slate-800 mb-1">
+              <span>Master Sound Volume</span>
+              <span className="font-extrabold text-brand-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                {Math.round(volume * 100)}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0.05"
+              max="1.0"
+              step="0.05"
+              value={volume}
+              onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-brand-700"
+              aria-label="Master volume slider"
+            />
+          </div>
+
+          {/* Live Search Input */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search by instrument, raga, frequency, or river..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-xl border-2 border-slate-200 bg-slate-50/80 px-3 py-2 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-brand-600 focus:bg-white focus:outline-none transition shadow-2xs"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-2.5 text-xs font-bold text-slate-400 hover:text-slate-700"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Category Filter Chips */}
+          <div className="flex gap-1.5 overflow-x-auto pt-1 pb-0.5 no-scrollbar">
+            {categories.map((c) => {
+              const isActive = selectedCategory === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(c.id)}
+                  className={`shrink-0 rounded-lg px-2.5 py-1 text-[0.6875rem] font-bold transition border ${
+                    isActive
+                      ? "bg-brand-700 text-white border-brand-700 shadow-xs"
+                      : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200 hover:text-slate-900"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Track List - Dedicated Scrollable Viewport (Zero Overlap Guaranteed) */}
+        <div className="flex-1 overflow-y-auto pt-2.5 pb-2 pr-1 space-y-2">
+          {filteredTracks.map((track, idx) => {
+            const isCurrent = currentTrackId === track.id;
+            return (
+              <button
+                key={track.id}
+                type="button"
+                onClick={() => onSelectTrack(track.id)}
+                className={`w-full text-left rounded-2xl p-3 transition flex items-start gap-3 ${
+                  isCurrent
+                    ? "bg-brand-50 border-2 border-brand-600 text-slate-900 shadow-sm"
+                    : "bg-slate-50/60 hover:bg-slate-100/90 text-slate-900 border border-slate-200/80"
+                }`}
+              >
+                <span
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-extrabold mt-0.5 ${
+                    isCurrent
+                      ? "bg-brand-700 text-white shadow-xs"
+                      : "bg-white text-slate-700 border border-slate-200"
+                  }`}
+                >
+                  {isCurrent && isPlaying ? "▶" : idx + 1}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <p className="truncate text-xs font-bold text-slate-900 leading-tight">
+                      {track.name}
+                    </p>
+                    {isCurrent && (
+                      <span className="shrink-0 text-[0.5625rem] font-extrabold text-brand-800 uppercase tracking-wider bg-brand-100 px-2 py-0.5 rounded-full border border-brand-300">
+                        Active
+                      </span>
+                    )}
+                  </div>
+                  <p className="truncate text-[0.6875rem] font-semibold text-brand-700 mt-0.5">
+                    {track.genre}
+                  </p>
+                  <p className="line-clamp-2 text-[0.625rem] text-slate-600 mt-1 leading-snug">
+                    {track.description}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+          {filteredTracks.length === 0 && (
+            <div className="py-12 text-center text-xs font-semibold text-slate-500">
+              No soundscapes matched &ldquo;{searchQuery}&rdquo;. Try another term!
+            </div>
+          )}
+        </div>
+
+        {/* Footer - Fixed Height */}
+        <div className="shrink-0 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-600">
+          <span>
+            Displaying <strong className="text-slate-900 font-bold">{filteredTracks.length}</strong> of {AMBIENT_TRACK_PRESETS.length - 1} soundscapes
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-xl bg-brand-700 px-4 py-1.5 font-bold text-white hover:bg-brand-800 transition shadow-xs active:scale-95"
+          >
+            Done
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
