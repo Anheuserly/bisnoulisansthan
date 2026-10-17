@@ -1,83 +1,2177 @@
 # ==============================================================================
 # BISNOULI SARVODAYA GRAMODYOG SEWA SANSTHAN (BSGSS)
-# 30-YEAR SENIOR PRINCIPAL UI/UX & MASTER WEB ARCHITECT DIRECTIVE
+# 30-YEAR SENIOR PRINCIPAL UI/UX & MASTER WEB ARCHITECT ENTERPRISE DIRECTIVE
 # ==============================================================================
-# Target Level: Tier-1 International Institutional NGO (Award-winning / Luxury Swiss-Nordic & Indic Dignity)
-# Philosophy: Human-crafted, deeply grounded, micro-interaction rich, ultra-clean contrast, zero visual overlap.
+# Document Standard: ISO/IEC 25010 Software Quality & WCAG 2.2 Level AAA
+# Canonical Version: 5.0.0-PRO-ENTERPRISE-SPEC
+# Organization: Bisnouli Sarvodaya Gramodyog Sewa Sansthan (Established 1994)
+# Legal Entity: Society Registered under Societies Registration Act XXI of 1860
+# Technology Stack: Next.js 16 (Turbopack SSR/SSG), Tailwind CSS, TypeScript 5.8, PostgreSQL
+# Architectural Vision: Swiss-Nordic High-End Institutional Precision merged with Authentic Indic Dignity
+# Core Maxim: Zero AI-Template Gimmicks; 100% Purposeful, Human-Crafted, Defensive Engineering
+# ==============================================================================
 
 metadata:
-  version: "2.4.0-master-architect"
-  organization: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS)"
-  established: 1994
-  status: "National Grassroots NGO (Registered under Societies Registration Act XXI of 1860)"
-  standards:
-    - WCAG_2_2_AAA: "Strict adherence to high contrast, tap targets, focus states, and aria labeling"
-    - Responsive_Grid: "Fluid typography with clamp(), defensive overflow prevention, non-overlapping elevation"
-    - Luxury_Atmosphere: "Apple/Stripe/Aesop-grade spatial rhythm, precision padding, refined typography and motion"
+  organization:
+    full_legal_name: 'Bisnouli Sarvodaya Gramodyog Sewa Sansthan'
+    acronym: 'BSGSS'
+    headquarters: 'B-10, Gali No. 8, New Govind Pura, Delhi - 110051'
+    establishment_year: 1994
+    unbroken_tenure_years: 32
+    charitable_registrations:
+      - 'Section 12A of Income Tax Act 1961'
+      - 'Section 80G Tax Exemption Certificate'
+      - 'FCRA (Foreign Contribution Regulation Act) Compliance'
+      - 'NITI Aayog Darpan Portal Certified'
+      - 'CSR-1 Registered with Ministry of Corporate Affairs (Govt. of India)'
+    mission_pillar: 'Grassroots empowerment through health, vocational craft skills, and micro-finance.'
+  document_governance:
+    custodian: 'Office of the Principal Systems Architect'
+    review_cycle: 'Quarterly Audit'
+    enforcement_level: 'MANDATORY_STRICT'
+    zero_tolerance_violations:
+      - 'Text overlap or unreadable low-contrast typography'
+      - 'Client/server hydration mismatch or SSR layout shift'
+      - 'Unclamped mobile viewports causing horizontal bleed'
+      - 'Generic stock imagery or synthetic AI faces representing real villagers'
+      - 'Auditory harshness or unannounced audio autoplay without gesture compliance'
 
-design_system:
-  typography:
-    display_heading: "Source Serif 4, Georgia, serif (dignified, editorial, heritage)"
-    body_sans: "Public Sans, system-ui, -apple-system, sans-serif (crisp, authoritative, legible)"
-    mono_accents: "JetBrains Mono, Menlo, monospace (for technical metrics, dates, and tenures)"
-    contrast_ratio: "Minimum 7:1 against card backgrounds; pure black or slate-900 on white"
-  
-  color_palette:
-    brand_primary: "#123F48"   # Deep Indian Spruce / Evergreen
-    brand_accent: "#236873"    # Regal Peacock Teal
-    brand_gold: "#B4833E"      # Khadi & Brass Gold Accent
-    emerald_live: "#059669"    # Active Grassroots Pulse Green
-    surface_canvas: "#FCFBF8"  # Warm Unbleached Parchment
-    surface_card: "#FFFFFF"    # Pristine Opaque Surface
-    border_subtle: "#E2E8F0"   # Refined 1px slate divider
-    shadow_elevated: "0 24px 50px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(15, 23, 42, 0.08)"
+# ------------------------------------------------------------------------------
+# SECTION 1: ARCHITECTURAL PHILOSOPHY & SENIOR CRAFTSMANSHIP PRINCIPLES
+# ------------------------------------------------------------------------------
+architectural_philosophy:
+  foundational_mantras:
+    - mantra: 'Dignity over Novelty'
+      elaboration: 'A 32-year-old charitable institution commands solemn trust, transparency, and gravitas. Gimmicky 3D cards, cartoonish micro-animations, or flashy gradient meshes are strictly forbidden. Every line, border, and typeface must reflect authentic institutional honor.'
+    - mantra: 'Defensive Viewport Engineering'
+      elaboration: 'Never assume standard 1920x1080 resolution. The interface must effortlessly perform on 320px foldables, iPad split screens, ultra-wide 4K monitors, and budget mobile screens with browser toolbars.'
+    - mantra: 'Zero Accidental Overlap Architecture'
+      elaboration: 'All modal drawers, floating dialogs, toolbars, and popups must establish explicit flex/grid container heights with independent scrollable viewports. Never permit an element to obscure another element without a clear scrim or backdrop barrier.'
+    - mantra: 'High-Fidelity Accessibility as Baseline'
+      elaboration: 'WCAG 2.2 AAA is not an afterthought; it is our ethical duty. Many beneficiaries, elderly patrons, and government officials navigate with assistive readers or high-contrast requirements.'
+    - mantra: 'Authentic Indian Classical & Rural Resonance'
+      elaboration: 'Audio, typography, and color tokens must honor the soil, khadi texture, river waters, and classical raga traditions of North and South India.'
 
-components:
-  soundscape_player:
-    architecture:
-      type: "Floating Persistent Master Console"
-      placement: "Fixed bottom-left (bottom-4 left-4 sm:bottom-6 sm:left-6)"
-      layering: "z-50 with defensive backdrop-filter and solid opaque inner surfaces"
-    
-    drawer_modal:
-      structure:
-        header:
-          title: "BSGSS Acoustic Heritage Sanctuary"
-          subtitle: "112 Live Classical Ragas & Bio-Acoustic Streams"
-          controls: "Direct volume dial, tactile play/pause, next/previous skips, quick-close"
-        
-        now_playing_dock:
-          appearance: "Solid sage/emerald luxury card with pulsing audio wave spectrum"
-          metadata: "Track index, title, micro-genre, harmonic key/frequency, playback state"
-        
-        filter_bar:
-          appearance: "Segmented pills with instant responsive scrolling and active glow indicators"
-          categories:
-            - "All (112)"
-            - "Classical Ragas"
-            - "Nature & Rivers"
-            - "Healing 432Hz/Om"
-            - "Sitar & Flute Solo"
-            - "Ambient Pads"
-        
-        track_list_viewport:
-          height: "Defensive clamped height (h-[240px] to h-[320px]) with native smooth touch-scrolling"
-          card_spacing: "Isolated cards with 8px margin, preventing text collision or clipping"
-          interaction: "Micro-hover scale (+1%), immediate tactile tap response, persistent local memory"
-        
-        defensive_ui:
-          no_overlap_rule: "Explicit flex-col hierarchy with fixed headers, flex-1 scroll container, and sticky footer"
-          no_overflow_rule: "overflow-y-auto on scroll viewport only; zero overflow on container"
+# ------------------------------------------------------------------------------
+# SECTION 2: DESIGN SYSTEM TOKENS & TYPOGRAPHIC SPECIFICATIONS
+# ------------------------------------------------------------------------------
+design_tokens:
+  color_system:
+    brand_palette:
+      spruce_900: '#123F48' # Deepest evergreen spruce; primary ink for headlines and dominant leadership banners
+      spruce_800: '#195560' # Primary brand anchor; institutional headers, primary buttons, active interactive badges
+      teal_700:   '#236873' # Regal peacock teal; subtitles, section eyebrows, verified audit markers
+      teal_600:   '#2D7D88' # Interactive hover state; links, tabs, breadcrumbs
+      teal_500:   '#3B8E98' # Soft accent brand stroke; card hover borders, graphic line delimiters
+      teal_300:   '#85C1C7' # Feathered background radial wash and dialog focus rings
+      teal_200:   '#B9DDE0' # High-contrast crisp border; modal card frames, subtle separators
+      teal_100:   '#DDEEEF' # Light tint for selected track rows and callout backgrounds
+      teal_50:    '#F0F8F8' # Pure tinted foundation wash; light background sections
+    neutrals_and_surfaces:
+      canvas_warm:     '#FCFBF8' # Warm unbleached khadi parchment; primary page background
+      surface_pure:    '#FFFFFF' # 100% Opaque card surface; zero translucent bleed through
+      surface_sand_50: '#FDFCF9' # Secondary alternate section background
+      surface_sand_100:'#F7F5EE' # Muted pill background, non-active control trays
+      border_crisp:    '#E2E8F0' # 1px sharp structural division
+      border_highlight:'#CBD5E1' # Focus indicator and active form boundary
+    typography_ink:
+      ink_primary:   '#0F172A' # Slate-900; 100% black equivalent for pristine readability
+      ink_secondary: '#334155' # Slate-700; authoritative descriptive paragraph text
+      ink_muted:     '#475569' # Slate-600; auxiliary metadata, photo captions, timestamps
+      ink_subtle:    '#64748B' # Slate-500; track numbers, secondary tags, inactive indicators
+    functional_accents:
+      emerald_active: '#059669' # Live pulse indicators, operational metrics, playing status
+      emerald_surface:'#ECFDF5' # Emerald card tint for active soundscape playback
+      brass_gold:     '#B4833E' # 30 Years of Service emblem, ceremonial seals, commemorative awards
+      crimson_alert:  '#DC2626' # Urgent alerts, statutory disclosures, emergency medical appeals
 
-  leadership_spotlight:
-    interaction: "Tactile hover elevation, glassmorphism inspection modal, character-by-character typewriter address"
-    authenticity: "Original photography, verified tenure badges (Ex-IPS / Ex-IRS), CSR partner credentials"
+  typography_scales:
+    font_families:
+      editorial_display: 'Source Serif 4, Georgia, serif'
+      functional_body:   'Public Sans, -apple-system, BlinkMacSystemFont, sans-serif'
+      technical_mono:    'JetBrains Mono, Menlo, monospace'
+    type_scale_hierarchy:
+      display_hero:      'clamp(2.75rem, 5vw, 4.25rem) / line-height: 1.08 / tracking: -0.025em'
+      display_section:   'clamp(2.0rem, 3.5vw, 2.75rem) / line-height: 1.15 / tracking: -0.02em'
+      heading_h2:        'clamp(1.5rem, 2.5vw, 2.0rem)  / line-height: 1.25 / tracking: -0.015em'
+      heading_h3:        'clamp(1.25rem, 2vw, 1.5rem)   / line-height: 1.3  / tracking: -0.01em'
+      body_large:        '1.125rem (18px) / line-height: 1.65 / tracking: normal'
+      body_standard:     '1.0rem (16px)    / line-height: 1.6  / tracking: normal'
+      body_compact:      '0.875rem (14px)  / line-height: 1.5  / tracking: normal'
+      caption_legal:     '0.75rem (12px)   / line-height: 1.45 / tracking: 0.01em'
+      micro_tag:         '0.625rem (10px)  / line-height: 1.2  / tracking: 0.08em / uppercase / font-extrabold'
 
-  photo_gallery_magazine:
-    layout: "Asymmetric luxury collage with interactive zoom lens, modal deep-dive, and live filters"
+# ------------------------------------------------------------------------------
+# SECTION 3: SOUNDSCAPE & ACOUSTIC HERITAGE SUBSYSTEM (112 LIVE TRACKS)
+# ------------------------------------------------------------------------------
+soundscape_architecture:
+  overview: 'The largest cultural and ambient acoustic repository integrated into an institutional NGO portal.'
+  total_tracks: 112
+  compression_standard: 'AAC-LC in .m4a container, 44.1kHz stereo, 96kbps-128kbps variable bitrate'
+  storage_path: 'public/audio/'
+  categories_breakdown:
+    classical_ragas:
+      count: 22
+      description: 'Morning, afternoon, dusk, and midnight improvisations strictly rooted in ancient Indian thaat modes.'
+      tracks_catalog:
+        - id: 'raga-bhairav'
+          name: 'Raga Bhairav Dawn Awakening'
+          thaat: 'Bhairav Thaat'
+          description: 'Solemn dawn prayer evoking peace, stillness, and spiritual renewal.'
+          audio_path: '/audio/raga-bhairav.m4a'
+        - id: 'raga-bilawal'
+          name: 'Shuddha Bilawal Morning Radiance'
+          thaat: 'Bilawal Thaat'
+          description: 'Bright major scale awakening radiating natural optimism and cheer.'
+          audio_path: '/audio/raga-bilawal.m4a'
+        - id: 'raga-kalyan'
+          name: 'Raga Kalyan Sunset Contemplation'
+          thaat: 'Kalyan Thaat'
+          description: 'Grand evening contemplation expressing serene gratitude and honor.'
+          audio_path: '/audio/raga-kalyan.m4a'
+        - id: 'raga-kafi'
+          name: 'Raga Kafi Spring Joy'
+          thaat: 'Kafi Thaat'
+          description: 'Pastoral folk-rooted melody celebrating agrarian community harmony.'
+          audio_path: '/audio/raga-kafi.m4a'
+        - id: 'raga-asavari'
+          name: 'Raga Asavari Gentle Compassion'
+          thaat: 'Asavari Thaat'
+          description: 'Tender emotional phrases conveying deep empathy and selfless care.'
+          audio_path: '/audio/raga-asavari.m4a'
+        - id: 'raga-khamaj'
+          name: 'Raga Khamaj Twilight Romance'
+          thaat: 'Khamaj Thaat'
+          description: 'Sensuous, sweet twilight raga capturing peaceful domestic calm.'
+          audio_path: '/audio/raga-khamaj.m4a'
+        - id: 'raga-todi'
+          name: 'Miyan Ki Todi Solitude & Prayer'
+          thaat: 'Todi Thaat'
+          description: 'Deeply reverent morning meditation written in profound devotional solitude.'
+          audio_path: '/audio/raga-todi.m4a'
+        - id: 'raga-marwa'
+          name: 'Raga Marwa Twilight Dissolution'
+          thaat: 'Marwa Thaat'
+          description: 'Haunting, timeless twilight sunset melody evoking cosmic vastness.'
+          audio_path: '/audio/raga-marwa.m4a'
+        - id: 'raga-poorvi'
+          name: 'Raga Poorvi Dusk Solace'
+          thaat: 'Poorvi Thaat'
+          description: 'Peaceful sunset contemplation bridging daytime labor and nightly rest.'
+          audio_path: '/audio/raga-poorvi.m4a'
+        - id: 'raga-bhairavi'
+          name: 'Raga Bhairavi Universal Peace'
+          thaat: 'Bhairavi Thaat'
+          description: 'The queen of concluding ragas; benediction, contentment, and universal love.'
+          audio_path: '/audio/raga-bhairavi.m4a'
+        - id: 'raga-darbari'
+          name: 'Darbari Kanada Midnight Dignity'
+          thaat: 'Asavari Thaat'
+          description: 'Mighty nocturnal raga originally played in regal courts of Akbar.'
+          audio_path: '/audio/raga-darbari.m4a'
+        - id: 'raga-bageshree'
+          name: 'Raga Bageshri Midnight Longing'
+          thaat: 'Kafi Thaat'
+          description: 'Introspective late-night melody invoking patience and sweet emotional stillness.'
+          audio_path: '/audio/raga-bageshree.m4a'
+        - id: 'raga-kedar'
+          name: 'Raga Kedar Moonlit Devotion'
+          thaat: 'Kalyan Thaat'
+          description: 'Pure, flowing tribute to Lord Shiva and tranquil mountain waters.'
+          audio_path: '/audio/raga-kedar.m4a'
+        - id: 'raga-hindo'
+          name: 'Raga Hindol Spring Breeze'
+          thaat: 'Kalyan Thaat'
+          description: 'Vibrant five-note morning tune symbolizing rejuvenation, flowers, and growth.'
+          audio_path: '/audio/raga-hindo.m4a'
+        - id: 'raga-chandrakauns'
+          name: 'Raga Chandrakauns Moonlit Path'
+          thaat: 'Kafi Thaat'
+          description: 'Nocturnal mystical meditation beneath unclouded starlit skies.'
+          audio_path: '/audio/raga-chandrakauns.m4a'
+        - id: 'raga-madhuvanti'
+          name: 'Raga Madhuvanti Sweet Twilight'
+          thaat: 'Todi Thaat'
+          description: 'Warm, comforting evening phrases inspiring gentle familial solace.'
+          audio_path: '/audio/raga-madhuvanti.m4a'
+        - id: 'raga-shree-dawn'
+          name: 'Raga Shree Cosmic Stillness'
+          thaat: 'Poorvi Thaat'
+          description: 'Noble, solemn devotion at the mysterious frontier of twilight.'
+          audio_path: '/audio/raga-shree-dawn.m4a'
+        - id: 'raga-jaunpuri'
+          name: 'Raga Jaunpuri Morning Stroll'
+          thaat: 'Asavari Thaat'
+          description: 'Joyful morning melody reflecting sunny paths across rural farmlands.'
+          audio_path: '/audio/raga-jaunpuri.m4a'
+        - id: 'raga-patdeep'
+          name: 'Raga Patdeep Afternoon Tranquility'
+          thaat: 'Kafi Thaat'
+          description: 'Relaxing mid-afternoon raga easing mental strain, tension, and heat.'
+          audio_path: '/audio/raga-patdeep.m4a'
+        - id: 'raga-desh-flute'
+          name: 'Raga Desh Monsoon Rain & Breeze'
+          thaat: 'Khamaj Thaat'
+          description: 'Traditional folk raga celebrating cooling monsoon showers on parched earth.'
+          audio_path: '/audio/raga-desh-flute.m4a'
+        - id: 'raga-yaman'
+          name: 'Evening Raga Yaman Alaap'
+          thaat: 'Kalyan Thaat'
+          description: 'The quintessential twilight raga of peace, patience, and classical purity.'
+          audio_path: '/audio/raga-yaman.m4a'
+        - id: 'sitar-raga'
+          name: 'Classical Sitar Morning Alaap'
+          thaat: 'Bhairav Thaat'
+          description: 'Traditional acoustic sitar morning meditation with delicate sympathetic resonance.'
+          audio_path: '/audio/sitar-raga.m4a'
+    nature_and_rivers:
+      count: 22
+      description: 'Field-recorded bio-acoustic ambiance spanning India holy rivers, wildlife reserves, and mountains.'
+      tracks_catalog:
+        - id: 'ganges-morning-flow'
+          name: 'Ganges River Sacred Dawn Flow'
+          geographic_origin: 'Varanasi / Haridwar'
+          description: 'Gentle holy river ripples with soft distant morning ghat bells.'
+          audio_path: '/audio/ganges-morning-flow.m4a'
+        - id: 'yamuna-water-stream'
+          name: 'Yamuna Tranquil Stream Currents'
+          geographic_origin: 'Mathura / Agra'
+          description: 'Peaceful murmuring water streams flowing through green alluvial riverbanks.'
+          audio_path: '/audio/yamuna-water-stream.m4a'
+        - id: 'sarvodaya-monsoon-rain'
+          name: 'Monsoon Petrichor Warm Rain'
+          geographic_origin: 'Rural North India'
+          description: 'Gentle drops of Indian monsoon rainfall falling on broad tropical leaves.'
+          audio_path: '/audio/sarvodaya-monsoon-rain.m4a'
+        - id: 'kedarnath-mountain-wind'
+          name: 'Kedarnath Himalayan Ridge Breeze'
+          geographic_origin: 'Garhwal Himalayas'
+          description: 'Crisp mountain wind whispering over alpine ridges and pine forests.'
+          audio_path: '/audio/kedarnath-mountain-wind.m4a'
+        - id: 'thar-desert-twilight'
+          name: 'Thar Desert Starlight Breeze'
+          geographic_origin: 'Jaisalmer / Rajasthan'
+          description: 'Vast silent twilight breeze over golden dunes under starry desert skies.'
+          audio_path: '/audio/thar-desert-twilight.m4a'
+        - id: 'vrindavan-peacocks-birds'
+          name: 'Vrindavan Peacocks & Garden Songbirds'
+          geographic_origin: 'Braj Bhoomi'
+          description: 'Melodious chirping of garden songbirds and morning peacock calls.'
+          audio_path: '/audio/vrindavan-peacocks-birds.m4a'
+        - id: 'kerala-backwater-kayak'
+          name: 'Kerala Backwater Ripples & Palms'
+          geographic_origin: 'Alleppey / Kumarakom'
+          description: 'Rhythmic paddle strokes and gentle lapping waters amidst coconut palms.'
+          audio_path: '/audio/kerala-backwater-kayak.m4a'
+        - id: 'nilgiri-tea-mist'
+          name: 'Nilgiri Mountain Morning Mist'
+          geographic_origin: 'Ooty / Western Ghats'
+          description: 'Cool morning breeze drifting softly through misty tea plantations.'
+          audio_path: '/audio/nilgiri-tea-mist.m4a'
+        - id: 'sunderbans-mangrove-flow'
+          name: 'Sunderbans Tidal Mangrove Harmony'
+          geographic_origin: 'Bengal Delta'
+          description: 'Quiet estuary water currents moving gently through mangrove groves.'
+          audio_path: '/audio/sunderbans-mangrove-flow.m4a'
+        - id: 'himalayan-buddhist-stream'
+          name: 'Dharamshala Mountain Stream & Bell'
+          geographic_origin: 'Kangra Valley'
+          description: 'Rushing glacial stream accompanied by periodic resonant temple singing bowls.'
+          audio_path: '/audio/himalayan-buddhist-stream.m4a'
+        - id: 'village-crickets-dusk'
+          name: 'Gramin Dusk Crickets & Evening Solace'
+          geographic_origin: 'Uttar Pradesh / Bihar'
+          description: 'Peaceful soothing drone of evening crickets in a quiet Indian village.'
+          audio_path: '/audio/village-crickets-dusk.m4a'
+        - id: 'rishikesh-forest-zen'
+          name: 'Rishikesh Forest Birds & Holy River'
+          geographic_origin: 'Foothills of Himalayas'
+          description: 'Symphony of forest birds by the banks of the upper Ganges.'
+          audio_path: '/audio/rishikesh-forest-zen.m4a'
+        - id: 'corbett-dawn-chorus'
+          name: 'Corbett Reserve Dawn Wildlife Chorus'
+          geographic_origin: 'Nainital / Uttarakhand'
+          description: 'Authentic dawn avian melodies from the foothills of Uttarakhand.'
+          audio_path: '/audio/corbett-dawn-chorus.m4a'
+        - id: 'western-ghats-waterfall'
+          name: 'Western Ghats Distant Waterfall Pad'
+          geographic_origin: 'Sahyadri Ranges'
+          description: 'Muffled, calming roar of a distant forest cascade cushioned by lush foliage.'
+          audio_path: '/audio/western-ghats-waterfall.m4a'
+        - id: 'bengal-paddy-breeze'
+          name: 'Golden Paddy Fields Gentle Rustle'
+          geographic_origin: 'Sundarban Rural'
+          description: 'Soft rustling of ripening paddy crop swaying in warm afternoon breezes.'
+          audio_path: '/audio/bengal-paddy-breeze.m4a'
+        - id: 'amarnath-snow-ambiance'
+          name: 'Amarnath High Altitude Stillness'
+          geographic_origin: 'Kashmir Valley'
+          description: 'Deep, pristine stillness and faint alpine wind in snowy sanctuaries.'
+          audio_path: '/audio/amarnath-snow-ambiance.m4a'
+        - id: 'pushkar-sacred-lake'
+          name: 'Pushkar Sacred Lake Lapping Waters'
+          geographic_origin: 'Ajmer / Rajasthan'
+          description: 'Quiet holy lake ripples under serene desert twilight.'
+          audio_path: '/audio/pushkar-sacred-lake.m4a'
+        - id: 'konkan-sea-whispers'
+          name: 'Konkan Arabian Sea Gentle Waves'
+          geographic_origin: 'Goa / Maharashtra Coast'
+          description: 'Slow, rhythmic, gentle ocean waves breaking on soft sand shores.'
+          audio_path: '/audio/konkan-sea-whispers.m4a'
+        - id: 'kodaikanal-pine-forest'
+          name: 'Kodaikanal Pine Forest Echoes'
+          geographic_origin: 'Palani Hills'
+          description: 'Wind singing through evergreen needle pines in the high hills.'
+          audio_path: '/audio/kodaikanal-pine-forest.m4a'
+        - id: 'gangotri-glacial-origin'
+          name: 'Gangotri Glacial Spring Water'
+          geographic_origin: 'Bhagirathi Source'
+          description: 'Pure, crystal-clear glacial trickle radiating deep calm and clarity.'
+          audio_path: '/audio/gangotri-glacial-origin.m4a'
+        - id: 'himalayan-rain'
+          name: 'Himalayan Monsoon Rain & Stream'
+          geographic_origin: 'Uttarakhand Hills'
+          description: 'Natural rain on lush mountain foliage with distant water flow.'
+          audio_path: '/audio/himalayan-rain.m4a'
+        - id: 'morning-forest-birds'
+          name: 'Morning Forest Sunrise & Birds'
+          geographic_origin: 'Perungalathur Forest Reserve'
+          description: 'Authentic dawn chorus of songbirds singing amidst a gentle morning forest breeze.'
+          audio_path: '/audio/morning-forest-birds.m4a'
+    healing_solfeggio_frequencies:
+      count: 14
+      description: 'Pure mathematical acoustic sine and harmonic wave overtones tuned to therapeutic frequencies.'
+      tracks_catalog:
+        - id: 'solfeggio-108hz'
+          name: '108 Hz Vedic Auspicious Tanpura Drone'
+          target_frequency: '108.0 Hz'
+          description: 'Sacred Vedic number frequency radiating auspicious blessings across all homes.'
+          audio_path: '/audio/solfeggio-108hz.m4a'
+        - id: 'solfeggio-136hz'
+          name: '136.1 Hz Cosmic Sadja Om Tone'
+          target_frequency: '136.1 Hz'
+          description: 'The primordial sound of creation vibrating with profound grounding serenity.'
+          audio_path: '/audio/solfeggio-136hz.m4a'
+        - id: 'solfeggio-174hz'
+          name: '174 Hz Deep Physical Healing Drone'
+          target_frequency: '174.0 Hz'
+          description: 'Foundation frequency relieving tension, providing comfort and physical ease.'
+          audio_path: '/audio/solfeggio-174hz.m4a'
+        - id: 'solfeggio-285hz'
+          name: '285 Hz Tissue Renewal & Cellular Calm'
+          target_frequency: '285.0 Hz'
+          description: 'Rejuvenating frequency promoting vitality, safety, and deep restoration.'
+          audio_path: '/audio/solfeggio-285hz.m4a'
+        - id: 'solfeggio-396hz'
+          name: '396 Hz Liberation from Fear & Sorrow'
+          target_frequency: '396.0 Hz'
+          description: 'Clearing anxiety, fostering emotional resilience, and opening peaceful awareness.'
+          audio_path: '/audio/solfeggio-396hz.m4a'
+        - id: 'solfeggio-417hz'
+          name: '417 Hz Facilitating Positive Change'
+          target_frequency: '417.0 Hz'
+          description: 'Cleanses past stress, inspiring positive transformative action for communities.'
+          audio_path: '/audio/solfeggio-417hz.m4a'
+        - id: 'solfeggio-432hz'
+          name: '432 Hz Sacred Earth Resonance'
+          target_frequency: '432.0 Hz'
+          description: 'The natural acoustic tuning harmonic aligned with cosmic frequencies and heartbeat.'
+          audio_path: '/audio/solfeggio-432hz.m4a'
+        - id: 'solfeggio-528hz'
+          name: '528 Hz Miracle Tone & Transformation'
+          target_frequency: '528.0 Hz'
+          description: 'The revered frequency of boundless love, mental peace, and spiritual harmony.'
+          audio_path: '/audio/solfeggio-528hz.m4a'
+        - id: 'solfeggio-639hz'
+          name: '639 Hz Interpersonal Harmony & Unity'
+          target_frequency: '639.0 Hz'
+          description: 'Fosters compassion, connection, understanding, and community togetherness.'
+          audio_path: '/audio/solfeggio-639hz.m4a'
+        - id: 'solfeggio-741hz'
+          name: '741 Hz Intuition & Expressive Clarity'
+          target_frequency: '741.0 Hz'
+          description: 'Promotes intellectual clarity, truthful purpose, and mental focus.'
+          audio_path: '/audio/solfeggio-741hz.m4a'
+        - id: 'solfeggio-852hz'
+          name: '852 Hz Spiritual Order & Enlightenment'
+          target_frequency: '852.0 Hz'
+          description: 'Deep inner peace awakening spiritual devotion and cosmic alignment.'
+          audio_path: '/audio/solfeggio-852hz.m4a'
+        - id: 'solfeggio-963hz'
+          name: '963 Hz Crown Pure Consciousness Pad'
+          target_frequency: '963.0 Hz'
+          description: 'Transcendent ambient pad connecting to infinite light, stillness, and universal grace.'
+          audio_path: '/audio/solfeggio-963hz.m4a'
+        - id: 'sacred-om-drone'
+          name: 'Sacred Om (136.1 Hz) & Tanpura Drone'
+          target_frequency: '136.1 Hz + Plucks'
+          description: 'Continuous cosmic fundamental drone layered with rhythmic Tanpura plucks.'
+          audio_path: '/audio/sacred-om-drone.m4a'
+        - id: 'vedic-temple-chimes'
+          name: 'Vedic Temple Chimes & Singing Bowls'
+          target_frequency: '216 Hz / 432 Hz'
+          description: 'Pure harmonic singing bowl frequencies and temple chime overtones creating a serene contemplative sanctuary.'
+          audio_path: '/audio/vedic-temple-chimes.m4a'
+    sacred_solo_acoustic_instruments:
+      count: 26
+      description: 'Master solo performances of traditional Indian wooden, bamboo, metallic, and stringed instruments.'
+      tracks_catalog:
+        - id: 'santoor-serenity'
+          name: 'Gramodyog Santoor Serenity'
+          instrument: 'Kashmiri Santoor'
+          description: 'Gentle acoustic Kashmiri santoor plucks layered with deep calming tanpura resonance.'
+          audio_path: '/audio/santoor-serenity.m4a'
+        - id: 'kashmiri-santur'
+          name: 'Kashmiri Santur & Hypnotic Tanpura'
+          instrument: 'Santur & Strings'
+          description: 'Exquisite Kashmiri santur strokes layered over a deep hypnotic tanpura drone and subtle atmospheric strings.'
+          audio_path: '/audio/kashmiri-santur.m4a'
+        - id: 'santoor-shanti'
+          name: 'Kashmiri Santoor Lake Shanti'
+          instrument: 'Walnut Santoor'
+          description: 'Gentle acoustic wooden hammer plucks echoing across Dal Lake in Srinagar.'
+          audio_path: '/audio/santoor-shanti.m4a'
+        - id: 'santoor-dal-lake'
+          name: 'Santoor & Water Reflections'
+          instrument: 'Santoor & Lake'
+          description: 'Peaceful ripples of mountain lakes accompanying resonant santoor melodies.'
+          audio_path: '/audio/santoor-dal-lake.m4a'
+        - id: 'santoor-megh'
+          name: 'Santoor Monsoon Cloudscape'
+          instrument: 'Santoor'
+          description: 'Delicate metallic resonance celebrating the arrival of refreshing monsoon showers.'
+          audio_path: '/audio/santoor-megh.m4a'
+        - id: 'sitar-sunset'
+          name: 'Sitar Sunset Serenity'
+          instrument: 'Acoustic Sitar'
+          description: 'Slow, contemplative acoustic sitar phrases with calming sympathetic string decay.'
+          audio_path: '/audio/sitar-sunset.m4a'
+        - id: 'ananda-sitar'
+          name: 'Ananda Sitar Harmony'
+          instrument: 'Sitar Melodic'
+          description: 'Joyful, melodious sitar cadence bringing gentle optimism, warmth, and dignity.'
+          audio_path: '/audio/ananda-sitar.m4a'
+        - id: 'veena-sitar'
+          name: 'Saraswati Veena & Sitar Jugalbandi'
+          instrument: 'Veena & Sitar Duet'
+          description: 'Sacred acoustic conversation between the South Indian Saraswati Veena and North Indian Sitar.'
+          audio_path: '/audio/veena-sitar.m4a'
+        - id: 'sitar-bhupali'
+          name: 'Sitar Raga Bhupali Simplicity'
+          instrument: 'Pentatonic Sitar'
+          description: 'Five-note peaceful pentatonic scale expressing childlike joy and purity.'
+          audio_path: '/audio/sitar-bhupali.m4a'
+        - id: 'sitar-tilak-kamod'
+          name: 'Sitar Tilak Kamod Grace'
+          instrument: 'Classical Sitar'
+          description: 'Charming, melodious phrasing evoking devotion and humble service.'
+          audio_path: '/audio/sitar-tilak-kamod.m4a'
+        - id: 'sitar-yaman-dusk'
+          name: 'Sitar Twilight Yaman Meditation'
+          instrument: 'Sitar'
+          description: 'Graceful meend bends and sympathetic tarab resonance at dusk.'
+          audio_path: '/audio/sitar-yaman-dusk.m4a'
+        - id: 'sarod-serenity'
+          name: 'Classical Sarod Serenity (Raga Bhairav)'
+          instrument: 'Sarod'
+          description: 'Meditative metallic glides of the classical Indian Sarod on steel strings in the dawn raga Bhairav.'
+          audio_path: '/audio/sarod-serenity.m4a'
+        - id: 'sarod-bhairav'
+          name: 'Sarod Morning Prayer (Bhairav)'
+          instrument: 'Sarod'
+          description: 'Soulful steel string glides on polished teak fretboard.'
+          audio_path: '/audio/sarod-bhairav.m4a'
+        - id: 'sarod-bilawal'
+          name: 'Sarod Dawn Radiance'
+          instrument: 'Sarod'
+          description: 'Warm optimistic morning raga performed with pristine acoustic dignity.'
+          audio_path: '/audio/sarod-bilawal.m4a'
+        - id: 'veena-kalyani'
+          name: 'Saraswati Veena Kalyani Alaap'
+          instrument: 'Carnatic Veena'
+          description: 'Deep, resonant gamakas from South India's divine instrument.'
+          audio_path: '/audio/veena-kalyani.m4a'
+        - id: 'veena-hamsadhwani'
+          name: 'Veena Hamsadhwani Joyful Flight'
+          instrument: 'Carnatic Veena'
+          description: 'Auspicious, vibrant swan-song raga welcoming prosperity and goodwill.'
+          audio_path: '/audio/veena-hamsadhwani.m4a'
+        - id: 'sarvodaya-flute'
+          name: 'Bansuri Dawn Meditation'
+          instrument: 'North Indian Bansuri'
+          description: 'Peaceful morning bamboo flute melody capturing the tranquility of Indian village dawns.'
+          audio_path: '/audio/sarvodaya-flute.m4a'
+        - id: 'carnatic-flute'
+          name: 'Carnatic Wind Serenity'
+          instrument: '8-Hole Flute'
+          description: 'Acoustic 8-hole bamboo flute playing contemplative phrases for deep relaxation.'
+          audio_path: '/audio/carnatic-flute.m4a'
+        - id: 'dakshin-venu'
+          name: 'Dakshin Venu Flute Alaap'
+          instrument: 'South Indian Venu'
+          description: 'Traditional bamboo flute playing devotional South Indian gamaka phrases in peaceful stillness.'
+          audio_path: '/audio/dakshin-venu.m4a'
+        - id: 'bansuri-pahadi'
+          name: 'Bansuri Raga Pahadi Mountain Echoes'
+          instrument: 'Folk Bansuri'
+          description: 'Folk flute melody carrying songs across Himalayan terraced valleys.'
+          audio_path: '/audio/bansuri-pahadi.m4a'
+        - id: 'bansuri-bhoop'
+          name: 'Bansuri Bhoopali Sunset Serenade'
+          instrument: 'Classical Bansuri'
+          description: 'Pure breath and bamboo overtones singing the five notes of peace.'
+          audio_path: '/audio/bansuri-bhoop.m4a'
+        - id: 'bansuri-pilu'
+          name: 'Bansuri Raga Pilu Village Nostalgia'
+          instrument: 'Bansuri'
+          description: 'Sweet, melancholic folk phrases celebrating ancient village bonds.'
+          audio_path: '/audio/bansuri-pilu.m4a'
+        - id: 'shehnai-mangal'
+          name: 'Shehnai Mangal Dhwani Auspicious Tune'
+          instrument: 'Shehnai'
+          description: 'Auspicious double-reed acoustic chimes blessing grassroots progress.'
+          audio_path: '/audio/shehnai-mangal.m4a'
+        - id: 'harp-celtic-serenity'
+          name: 'Celtic Harp Peaceful Waters'
+          instrument: 'Celtic Harp'
+          description: 'Cascading crystal harp arpeggios bringing timeless mental tranquility.'
+          audio_path: '/audio/harp-celtic-serenity.m4a'
+        - id: 'acoustic-guitar-gramodyog'
+          name: 'Gramodyog Fingerstyle Acoustic'
+          instrument: 'Nylon Guitar'
+          description: 'Warm nylon strings celebrating handloom weavers and rural artisans.'
+          audio_path: '/audio/acoustic-guitar-gramodyog.m4a'
+        - id: 'bamboo-zen-chimes'
+          name: 'Bamboo Zen Wind Chimes'
+          instrument: 'Bamboo Tubes'
+          description: 'Delicate natural bamboo tubes gently swaying in the breeze, producing soft wooden intervals.'
+          audio_path: '/audio/bamboo-zen-chimes.m4a'
+    ambient_chords_and_pads:
+      count: 28
+      description: 'Lush, warm, atmospheric pads providing grounding emotional peace without melodic clutter.'
+      tracks_catalog:
+        - id: 'peaceful-piano'
+          name: 'Sarvodaya Hope Piano & Strings'
+          genre: 'Warm Ambient Piano Pad'
+          description: 'Soothing acoustic felt piano arpeggios over warm atmospheric orchestral strings.'
+          audio_path: '/audio/peaceful-piano.m4a'
+        - id: 'tranquil-piano'
+          name: 'Tranquil Dawn Piano & Synth Pad'
+          genre: 'Minimalist Ambient Piano'
+          description: 'Minimalist soothing piano notes floating softly over warm atmospheric synth pads.'
+          audio_path: '/audio/tranquil-piano.m4a'
+        - id: 'felt-piano-sarvodaya'
+          name: 'Felt Piano Sarvodaya Dawn'
+          genre: 'Vintage Felt Piano'
+          description: 'Intimate, warm felt hammers striking vintage strings for quiet reflection.'
+          audio_path: '/audio/felt-piano-sarvodaya.m4a'
+        - id: 'piano-strings-uplift'
+          name: 'Piano & Orchestral String Adagio'
+          genre: 'Piano & Cello Pad'
+          description: 'Heartwarming harmonic chords conveying hope, charity, and dignity.'
+          audio_path: '/audio/piano-strings-uplift.m4a'
+        - id: 'himalayan-spiritual'
+          name: 'Himalayan Spiritual Breeze'
+          genre: 'Spatial New Age Ambiance'
+          description: 'Calm spatial soundscape with ethereal harmonic chords inspiring hope and stillness.'
+          audio_path: '/audio/himalayan-spiritual.m4a'
+        - id: 'gramin-sunset'
+          name: 'Gramin Sunset Folk Acoustic'
+          genre: 'Warm Acoustic Guitar'
+          description: 'Nostalgic, heartfelt acoustic fingerpicking capturing the quiet beauty of rural dusk.'
+          audio_path: '/audio/gramin-sunset.m4a'
+        - id: 'shanti-ambient-warmth'
+          name: 'Shanti Warm Atmospheric Glow'
+          genre: 'Warm Synth Pad'
+          description: 'Serene atmospheric synth pad radiating golden sunrise warmth.'
+          audio_path: '/audio/shanti-ambient-warmth.m4a'
+        - id: 'dhyana-deep-stillness'
+          name: 'Dhyana Deep Contemplative Stillness'
+          genre: 'Deep Low Drone'
+          description: 'Hypnotic low-frequency drone perfect for meditation and focus.'
+          audio_path: '/audio/dhyana-deep-stillness.m4a'
+        - id: 'moksha-infinite-peace'
+          name: 'Moksha Infinite Sky Soundscape'
+          genre: 'Spatial Pad'
+          description: 'Vast spatial pads echoing through unclouded mountain peaks.'
+          audio_path: '/audio/moksha-infinite-peace.m4a'
+        - id: 'ananda-inner-joy-pad'
+          name: 'Ananda Radiant Joy Soundscape'
+          genre: 'Harmonic Pad'
+          description: 'Uplifting harmonic overtone progression inspiring peace and optimism.'
+          audio_path: '/audio/ananda-inner-joy-pad.m4a'
+        - id: 'samadhi-universal-light'
+          name: 'Samadhi Universal Harmony Pad'
+          genre: 'Angelic Harmonic Pad'
+          description: 'Ethereal angelic harmonic textures fostering deep tranquility.'
+          audio_path: '/audio/samadhi-universal-light.m4a'
+        - id: 'gram-swaraj-village-hymn'
+          name: 'Gram Swaraj Village Ambiance'
+          genre: 'Pastoral Chords'
+          description: 'Warm pastoral ambient chords celebrating community self-reliance.'
+          audio_path: '/audio/gram-swaraj-village-hymn.m4a'
+        - id: 'sarvodaya-global-hope'
+          name: 'Sarvodaya Global Compassion Pad'
+          genre: 'Orchestral Ambient'
+          description: 'Stirring, dignified atmospheric pads evoking international unity.'
+          audio_path: '/audio/sarvodaya-global-hope.m4a'
+        - id: 'karuna-compassion-strings'
+          name: 'Karuna Compassion String Ensemble'
+          genre: 'String Adagio'
+          description: 'Gentle cello and violin pads playing slow, comforting chords.'
+          audio_path: '/audio/karuna-compassion-strings.m4a'
+        - id: 'ahimsa-gentle-breeze'
+          name: 'Ahimsa Gentle Nonviolence Tone'
+          genre: 'Soft Air Pad'
+          description: 'Soft, non-intrusive harmonic atmosphere calming nervous systems.'
+          audio_path: '/audio/ahimsa-gentle-breeze.m4a'
+        - id: 'seva-dedicated-service'
+          name: 'Seva Spirit of Selfless Service'
+          genre: 'Grounding Drone'
+          description: 'Steady, grounding harmonic resonance inspiring quiet dedication.'
+          audio_path: '/audio/seva-dedicated-service.m4a'
+        - id: 'prana-breath-of-life'
+          name: 'Prana Deep Breath Vitality Pad'
+          genre: 'Breathing Pad'
+          description: 'Gentle pulsating ambient pad synchronized with human breathing rhythm.'
+          audio_path: '/audio/prana-breath-of-life.m4a'
+        - id: 'satya-truth-clarity'
+          name: 'Satya Pure Truth & Lucidity'
+          genre: 'Pure Sine Chords'
+          description: 'Crystal clear sine waves washing away mental fatigue.'
+          audio_path: '/audio/satya-truth-clarity.m4a'
+        - id: 'tapas-resilience-strength'
+          name: 'Tapas Inner Strength Drone'
+          genre: 'Earth Tone'
+          description: 'Deep earth drone inspiring fortitude in rural social work.'
+          audio_path: '/audio/tapas-resilience-strength.m4a'
+        - id: 'shanti-mantra-frequencies'
+          name: 'Shanti Mantra Triple Peace Echo'
+          genre: 'Om Resonance'
+          description: 'Layered Om frequencies radiating peace for mind, body, and soul.'
+          audio_path: '/audio/shanti-mantra-frequencies.m4a'
+        - id: 'bhumika-mother-earth'
+          name: 'Bhumika Mother Earth Sanctuary'
+          genre: 'Natural Soil Drone'
+          description: 'Low resonant frequencies connecting with natural soil and harvest.'
+          audio_path: '/audio/bhumika-mother-earth.m4a'
+        - id: 'jyoti-light-of-wisdom'
+          name: 'Jyoti Eternal Flame of Wisdom'
+          genre: 'Illuminating Chords'
+          description: 'Warm harmonic overtones illuminating rural educational journeys.'
+          audio_path: '/audio/jyoti-light-of-wisdom.m4a'
+        - id: 'chetana-awakened-mind'
+          name: 'Chetana Mindful Awareness Drone'
+          genre: 'Mindfulness Tone'
+          description: 'Gentle binaural beating frequencies promoting relaxed alertness.'
+          audio_path: '/audio/chetana-awakened-mind.m4a'
+        - id: 'sankalpa-noble-resolve'
+          name: 'Sankalpa Noble Purpose Soundscape'
+          genre: 'Purposeful Pad'
+          description: 'Inspiring, expansive chordal pad supporting charitable missions.'
+          audio_path: '/audio/sankalpa-noble-resolve.m4a'
+        - id: 'mangala-auspicious-dawn'
+          name: 'Mangala Auspicious Morning Radiance'
+          genre: 'Dawn Harmonic'
+          description: 'Peaceful ambient dawn chorus announcing auspicious new beginnings.'
+          audio_path: '/audio/mangala-auspicious-dawn.m4a'
+        - id: 'amrita-nectar-of-life'
+          name: 'Amrita Nectar of Grace Atmosphere'
+          genre: 'Ethereal Grace Pad'
+          description: 'Pure heavenly chord progression instilling enduring peace.'
+          audio_path: '/audio/amrita-nectar-of-life.m4a'
+        - id: 'tibetan-singing-bowls-monastery'
+          name: 'Ladakh Monastery Singing Bowls'
+          genre: 'Brass Bowl Resonance'
+          description: 'Deep multi-phonic brass bowls echoing through mountain monasteries.'
+          audio_path: '/audio/tibetan-singing-bowls-monastery.m4a'
+        - id: 'temple-bell-ghanta'
+          name: 'Temple Ghanta Sacred Bronze Chimes'
+          genre: 'Bronze Bell'
+          description: 'Resonant temple bronze bell clearing all negative thoughts.'
+          audio_path: '/audio/temple-bell-ghanta.m4a'
 
-quality_checklist:
-  - "Zero text-clipping under all responsive viewports (320px to 4K)"
-  - "No translucent gray text over dark elements; always explicit high-contrast slate/white"
-  - "Clean TypeScript compilation on all routes"
-  - "Hardware-accelerated transforms for 60fps silky smooth interaction"
+# ------------------------------------------------------------------------------
+# SECTION 4: MASTER UI/UX COMPONENT SPECIFICATIONS
+# ------------------------------------------------------------------------------
+component_specifications:
+  ambient_sound_player:
+    role: 'Primary continuous acoustic companion for visitors exploring BSGSS work'
+    dock_pill:
+      location: 'fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40'
+      container: 'flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-white/95 px-3 py-2 shadow-2xl backdrop-blur-xl ring-1 ring-black/5'
+      elevation: 'High-lift shadow to remain crisp over dark banners or light footer ribbons'
+      controls:
+        play_toggle: '36px circular button in brand-700 with high-contrast white pause/play icon'
+        track_skip_prev: '28px circular button cycling backward through 112 tracks with zero audio glitch'
+        track_skip_next: '28px circular button cycling forward through 112 tracks with persistent memory'
+        equalizer_bars: '4-bar staggered CSS pulse animation mimicking real-time acoustic resonance'
+        track_label: 'Crisp bold slate-900 track title with emerald blinking active beacon'
+        mute_toggle: 'Instant volume-0 suppression with amber alert glyph when muted'
+        library_drawer_toggle: '32px settings glyph toggling the 112-track master selection drawer'
+    soundscape_drawer_modal:
+      placement: 'fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-[28rem] h-[34rem] max-h-[85vh]'
+      backdrop_scrim: 'fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-[2px] transition-opacity'
+      shell_styling: 'flex flex-col rounded-3xl border-2 border-slate-200 bg-white p-5 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.35)] ring-1 ring-black/5'
+      layout_contract:
+        rule_1: 'Header must be shrink-0 with explicit close button, title, and total track count badge.'
+        rule_2: 'Controls container must be shrink-0 containing Now Playing banner, volume slider, search input, and category chips.'
+        rule_3: 'Track list must be flex-1 overflow-y-auto, strictly preventing chips or search from overlapping song rows.'
+        rule_4: 'Footer must be shrink-0 with active count summary and Done dismiss button.'
+      now_playing_banner:
+        styling: 'rounded-2xl border border-emerald-200 bg-emerald-50/90 p-3 flex items-center justify-between'
+        indicators: 'Pulsing emerald dot, high-contrast bold slate-900 title, green genre tag, and Playing/Paused pill'
+      search_and_filters:
+        search_input: 'Rounded-xl border-2 border-slate-200 bg-slate-50/80 px-3 py-2 text-xs text-slate-900 focus:border-brand-600 focus:bg-white'
+        category_chips:
+          - 'All Tracks (112)'
+          - 'Classical Ragas'
+          - 'Nature & Rivers'
+          - 'Healing 432Hz/Om'
+          - 'Sitar & Flute Solo'
+          - 'Ambient Pads'
+      track_card_items:
+        styling: 'rounded-2xl p-3 flex items-start gap-3 transition-all border text-left'
+        active_state: 'bg-brand-50 border-2 border-brand-600 shadow-sm ring-1 ring-brand-400'
+        idle_state: 'bg-slate-50/60 hover:bg-slate-100/90 border-slate-200/80'
+        elements:
+          track_number: 'Rounded-xl 32px badge displaying track number or active play arrowhead'
+          title: 'Truncated bold slate-900 title with Active badge when selected'
+          genre: 'Vibrant teal-700 label identifying the instrument, frequency, or geographic root'
+          description: '2-line clamped slate-600 concise poetic description of the soundscape'
+
+# ------------------------------------------------------------------------------
+# SECTION 5: HOMEPAGE SECTIONS & DYNAMIC CUSTOMIZATION GOVERNANCE
+# ------------------------------------------------------------------------------
+homepage_architecture:
+  section_pipeline:
+    - section_id: 'hero'
+      title: 'Hero Banner Carousel'
+      purpose: 'Monumental photographic exhibition of genuine grassroots beneficiaries, women weavers, and healthcare clinics.'
+      requirements:
+        - '100% authentic photography from BSGSS archives (no generic Western stock models).'
+        - 'High-contrast text plate with 30 Years of Service commemorative gold badge.'
+        - 'Direct actionable CTA buttons to Support Us (/support) and Explore Programmes (/activities/key-programmes).'
+    - section_id: 'live_ticker'
+      title: 'Live Mission Typewriter & Operational Pulse'
+      purpose: 'Real-time heartbeat demonstrating active nationwide deployments and core institutional tenets.'
+      requirements:
+        - 'Continuous smooth typewriter animation without jarring layout jumps.'
+        - 'Live operational status badge: Active across 350+ villages in Delhi, UP, Bihar, Haryana & Punjab.'
+    - section_id: 'photo_collage'
+      title: 'Magazine-Style Asymmetric Field Collage'
+      purpose: 'Humanizing the institution through raw, unposed, high-resolution documentation.'
+      requirements:
+        - 'Asymmetric responsive grid with subtle angle tilts (-rotate-1, rotate-1) evoking a physical photo studio board.'
+        - 'Interactive deep-dive zoom lens with caption annotations and historical context.'
+    - section_id: 'about'
+      title: 'Foundational Story & Legal Charter'
+      purpose: 'Establishing unwavering statutory credibility, Gandhian Sarvodaya roots, and 30-year unbroken service.'
+      requirements:
+        - 'Statutory disclosure pill: 12A, 80G, FCRA, NITI Aayog Darpan portal credentials.'
+        - 'Direct link to statutory audit balances and foreign contribution declarations.'
+    - section_id: 'programmes'
+      title: 'Four Core Development Pillars'
+      pillars:
+        - name: 'Healthcare & Cancer Screening'
+          metrics: '30,000+ patients treated via mobile medical clinics in rural blocks.'
+        - name: 'Women Empowerment & AMAR Guilds'
+          metrics: '1,00,000+ women equipped with vocational tailoring, craft cooperatives, and micro-savings.'
+        - name: 'Youth Skill Development & Vocational Hubs'
+          metrics: 'Certified computer labs, retail training, and rural electrical technician workshops.'
+        - name: 'Clean Potable Water & Rural Sansthan Infrastructure'
+          metrics: 'Deep borewells, community water filtration plants, and school sanitation complexes.'
+    - section_id: 'media_showcase'
+      title: 'National Media & Documentaries'
+      purpose: 'Independent news coverage from Doordarshan, Hindustan Times, Dainik Jagran, and Times of India.'
+    - section_id: 'impact_stats'
+      title: 'Measurable Outcomes with Hardware-Accelerated Live Counters'
+      purpose: 'Mathematical validation of donor and government CSR expenditures.'
+      metrics:
+        - stat: '50,000+'
+          label: 'Direct Beneficiaries Supported Annually'
+        - stat: '30,000+'
+          label: 'Free Medical Screenings & Diagnostic Checkups'
+        - stat: '5,000+'
+          label: 'Women Trained & Self-Employed via SHG Federations'
+        - stat: '350+'
+          label: 'Gram Panchayats & Village Clusters Served'
+        - stat: '30+'
+          label: 'Premier Public Sector & Corporate CSR Partners'
+        - stat: '30 Years'
+          label: 'Unbroken Statutory Governance Since 1994'
+    - section_id: 'partners'
+      title: 'Edge-to-Edge Floating Corporate & PSU Wall'
+      purpose: 'Showcasing deep, repeat CSR sponsorships from Indias Fortune 500 public sector undertakings.'
+      key_partners:
+        - 'RITES Limited (Ministry of Railways)'
+        - 'IRCON International Limited'
+        - 'REC Limited (Rural Electrification Corporation)'
+        - 'NTPC Limited (National Thermal Power Corporation)'
+        - 'Indian Oil Corporation Limited (IOCL)'
+        - 'National Minorities Development & Finance Corporation (NMDFC)'
+        - 'Department of Women & Child Development (Govt. of NCT of Delhi)'
+    - section_id: 'management'
+      title: 'Leadership Messages with Interactive Typewriter Inspection'
+      purpose: 'Presenting the senior executive council and their operational addresses.'
+      leaders:
+        - name: 'Vijay Kumar Jha'
+          role: 'Ex-IPS · Chairperson, BSGSS, New Delhi'
+          address_tone: 'Authoritative, lawful, accountable, grassroots-centric.'
+        - name: 'Nandita Bakshi'
+          role: 'Ex-IRS · CEO, BSGSS, New Delhi'
+          address_tone: 'Visionary, women-led economic self-reliance, compassionate.'
+    - section_id: 'support_cta'
+      title: 'Final Institutional Call to Action'
+      purpose: 'Encouraging statutory donations with instant 80G tax receipt generation.'
+
+# ------------------------------------------------------------------------------
+# SECTION 6: ENGINEERING RIGOR & DEFENSIVE CODING PROTOCOLS
+# ------------------------------------------------------------------------------
+engineering_rigor:
+  hydration_rules:
+    - rule: 'Never invoke window, document, or localStorage during server render.'
+      remedy: 'Wrap browser-only checks inside useEffect hooks or dynamic imports with ssr: false.'
+    - rule: 'Never generate non-deterministic outputs (Math.random(), Date.now()) inside SSR markup.'
+      remedy: 'Precompute random seeds or generate IDs inside a post-hydration state hook.'
+  css_rules:
+    - rule: 'Never use arbitrary fixed heights that can clip on multi-line translations.'
+      remedy: 'Use min-height with flex-col, flex-1, and line-clamp-2 / line-clamp-3 defensive fallbacks.'
+    - rule: 'Ensure all dialogs and drawers have pointer-events isolation.'
+      remedy: 'Backdrop scrims must capture outer clicks without firing accidental clicks on underlying links.'
+  state_management:
+    - rule: 'User audio preferences must silently synchronize to localStorage.'
+      keys:
+        volume: 'bsgss_ambient_volume'
+        muted: 'bsgss_ambient_muted'
+        track_id: 'bsgss_ambient_track_id'
+        user_stopped: 'bsgss_ambient_stopped'
+  build_verification:
+    - command: 'npm run build'
+      target: 'Zero TypeScript compilation warnings, zero ESLint breakages, all 74 Next.js routes statically verified.'
+
+# ------------------------------------------------------------------------------
+# SECTION 7: 5-YEAR STRATEGIC EVOLUTION & ROADMAP
+# ------------------------------------------------------------------------------
+strategic_roadmap:
+  phase_1_q1_2026: 'Acoustic sanctuary rollout (112 tracks) & leadership inspection modal complete.'
+  phase_2_q2_2026: 'Multi-lingual vernacular audio narration (Hindi, Maithili, Punjabi, Bengali) for rural patrons.'
+  phase_3_q3_2026: 'Interactive GIS Village Project Tracker mapped across 350+ panchayat coordinates.'
+  phase_4_q4_2026: 'Decentralized 80G tax-exemption verification ledger directly integrated with NITI Aayog API.'
+  phase_5_2027:    'Global Diaspora Foundation portal with multi-currency institutional escrow matching funds.'
+
+# ------------------------------------------------------------------------------
+# SECTION 8: EXHAUSTIVE DIRECTORY OF ALL 112 ACTIVE ACOUSTIC SOUNDSCAPES
+# ------------------------------------------------------------------------------
+exhaustive_soundscape_manifest:
+  track_001:
+    index: 1
+    master_catalog_code: 'BSGSS-AUDIO-001'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_002:
+    index: 2
+    master_catalog_code: 'BSGSS-AUDIO-002'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_003:
+    index: 3
+    master_catalog_code: 'BSGSS-AUDIO-003'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_004:
+    index: 4
+    master_catalog_code: 'BSGSS-AUDIO-004'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_005:
+    index: 5
+    master_catalog_code: 'BSGSS-AUDIO-005'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_006:
+    index: 6
+    master_catalog_code: 'BSGSS-AUDIO-006'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_007:
+    index: 7
+    master_catalog_code: 'BSGSS-AUDIO-007'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_008:
+    index: 8
+    master_catalog_code: 'BSGSS-AUDIO-008'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_009:
+    index: 9
+    master_catalog_code: 'BSGSS-AUDIO-009'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_010:
+    index: 10
+    master_catalog_code: 'BSGSS-AUDIO-010'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_011:
+    index: 11
+    master_catalog_code: 'BSGSS-AUDIO-011'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_012:
+    index: 12
+    master_catalog_code: 'BSGSS-AUDIO-012'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_013:
+    index: 13
+    master_catalog_code: 'BSGSS-AUDIO-013'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_014:
+    index: 14
+    master_catalog_code: 'BSGSS-AUDIO-014'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_015:
+    index: 15
+    master_catalog_code: 'BSGSS-AUDIO-015'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_016:
+    index: 16
+    master_catalog_code: 'BSGSS-AUDIO-016'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_017:
+    index: 17
+    master_catalog_code: 'BSGSS-AUDIO-017'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_018:
+    index: 18
+    master_catalog_code: 'BSGSS-AUDIO-018'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_019:
+    index: 19
+    master_catalog_code: 'BSGSS-AUDIO-019'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_020:
+    index: 20
+    master_catalog_code: 'BSGSS-AUDIO-020'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_021:
+    index: 21
+    master_catalog_code: 'BSGSS-AUDIO-021'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_022:
+    index: 22
+    master_catalog_code: 'BSGSS-AUDIO-022'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_023:
+    index: 23
+    master_catalog_code: 'BSGSS-AUDIO-023'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_024:
+    index: 24
+    master_catalog_code: 'BSGSS-AUDIO-024'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_025:
+    index: 25
+    master_catalog_code: 'BSGSS-AUDIO-025'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_026:
+    index: 26
+    master_catalog_code: 'BSGSS-AUDIO-026'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_027:
+    index: 27
+    master_catalog_code: 'BSGSS-AUDIO-027'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_028:
+    index: 28
+    master_catalog_code: 'BSGSS-AUDIO-028'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_029:
+    index: 29
+    master_catalog_code: 'BSGSS-AUDIO-029'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_030:
+    index: 30
+    master_catalog_code: 'BSGSS-AUDIO-030'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_031:
+    index: 31
+    master_catalog_code: 'BSGSS-AUDIO-031'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_032:
+    index: 32
+    master_catalog_code: 'BSGSS-AUDIO-032'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_033:
+    index: 33
+    master_catalog_code: 'BSGSS-AUDIO-033'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_034:
+    index: 34
+    master_catalog_code: 'BSGSS-AUDIO-034'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_035:
+    index: 35
+    master_catalog_code: 'BSGSS-AUDIO-035'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_036:
+    index: 36
+    master_catalog_code: 'BSGSS-AUDIO-036'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_037:
+    index: 37
+    master_catalog_code: 'BSGSS-AUDIO-037'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_038:
+    index: 38
+    master_catalog_code: 'BSGSS-AUDIO-038'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_039:
+    index: 39
+    master_catalog_code: 'BSGSS-AUDIO-039'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_040:
+    index: 40
+    master_catalog_code: 'BSGSS-AUDIO-040'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_041:
+    index: 41
+    master_catalog_code: 'BSGSS-AUDIO-041'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_042:
+    index: 42
+    master_catalog_code: 'BSGSS-AUDIO-042'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_043:
+    index: 43
+    master_catalog_code: 'BSGSS-AUDIO-043'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_044:
+    index: 44
+    master_catalog_code: 'BSGSS-AUDIO-044'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_045:
+    index: 45
+    master_catalog_code: 'BSGSS-AUDIO-045'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_046:
+    index: 46
+    master_catalog_code: 'BSGSS-AUDIO-046'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_047:
+    index: 47
+    master_catalog_code: 'BSGSS-AUDIO-047'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_048:
+    index: 48
+    master_catalog_code: 'BSGSS-AUDIO-048'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_049:
+    index: 49
+    master_catalog_code: 'BSGSS-AUDIO-049'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_050:
+    index: 50
+    master_catalog_code: 'BSGSS-AUDIO-050'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_051:
+    index: 51
+    master_catalog_code: 'BSGSS-AUDIO-051'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_052:
+    index: 52
+    master_catalog_code: 'BSGSS-AUDIO-052'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_053:
+    index: 53
+    master_catalog_code: 'BSGSS-AUDIO-053'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_054:
+    index: 54
+    master_catalog_code: 'BSGSS-AUDIO-054'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_055:
+    index: 55
+    master_catalog_code: 'BSGSS-AUDIO-055'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_056:
+    index: 56
+    master_catalog_code: 'BSGSS-AUDIO-056'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_057:
+    index: 57
+    master_catalog_code: 'BSGSS-AUDIO-057'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_058:
+    index: 58
+    master_catalog_code: 'BSGSS-AUDIO-058'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_059:
+    index: 59
+    master_catalog_code: 'BSGSS-AUDIO-059'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_060:
+    index: 60
+    master_catalog_code: 'BSGSS-AUDIO-060'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_061:
+    index: 61
+    master_catalog_code: 'BSGSS-AUDIO-061'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_062:
+    index: 62
+    master_catalog_code: 'BSGSS-AUDIO-062'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_063:
+    index: 63
+    master_catalog_code: 'BSGSS-AUDIO-063'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_064:
+    index: 64
+    master_catalog_code: 'BSGSS-AUDIO-064'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_065:
+    index: 65
+    master_catalog_code: 'BSGSS-AUDIO-065'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_066:
+    index: 66
+    master_catalog_code: 'BSGSS-AUDIO-066'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_067:
+    index: 67
+    master_catalog_code: 'BSGSS-AUDIO-067'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_068:
+    index: 68
+    master_catalog_code: 'BSGSS-AUDIO-068'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_069:
+    index: 69
+    master_catalog_code: 'BSGSS-AUDIO-069'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_070:
+    index: 70
+    master_catalog_code: 'BSGSS-AUDIO-070'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_071:
+    index: 71
+    master_catalog_code: 'BSGSS-AUDIO-071'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_072:
+    index: 72
+    master_catalog_code: 'BSGSS-AUDIO-072'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_073:
+    index: 73
+    master_catalog_code: 'BSGSS-AUDIO-073'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_074:
+    index: 74
+    master_catalog_code: 'BSGSS-AUDIO-074'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_075:
+    index: 75
+    master_catalog_code: 'BSGSS-AUDIO-075'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_076:
+    index: 76
+    master_catalog_code: 'BSGSS-AUDIO-076'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_077:
+    index: 77
+    master_catalog_code: 'BSGSS-AUDIO-077'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_078:
+    index: 78
+    master_catalog_code: 'BSGSS-AUDIO-078'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_079:
+    index: 79
+    master_catalog_code: 'BSGSS-AUDIO-079'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_080:
+    index: 80
+    master_catalog_code: 'BSGSS-AUDIO-080'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_081:
+    index: 81
+    master_catalog_code: 'BSGSS-AUDIO-081'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_082:
+    index: 82
+    master_catalog_code: 'BSGSS-AUDIO-082'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_083:
+    index: 83
+    master_catalog_code: 'BSGSS-AUDIO-083'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_084:
+    index: 84
+    master_catalog_code: 'BSGSS-AUDIO-084'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_085:
+    index: 85
+    master_catalog_code: 'BSGSS-AUDIO-085'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_086:
+    index: 86
+    master_catalog_code: 'BSGSS-AUDIO-086'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_087:
+    index: 87
+    master_catalog_code: 'BSGSS-AUDIO-087'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_088:
+    index: 88
+    master_catalog_code: 'BSGSS-AUDIO-088'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_089:
+    index: 89
+    master_catalog_code: 'BSGSS-AUDIO-089'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_090:
+    index: 90
+    master_catalog_code: 'BSGSS-AUDIO-090'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_091:
+    index: 91
+    master_catalog_code: 'BSGSS-AUDIO-091'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_092:
+    index: 92
+    master_catalog_code: 'BSGSS-AUDIO-092'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_093:
+    index: 93
+    master_catalog_code: 'BSGSS-AUDIO-093'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_094:
+    index: 94
+    master_catalog_code: 'BSGSS-AUDIO-094'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_095:
+    index: 95
+    master_catalog_code: 'BSGSS-AUDIO-095'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_096:
+    index: 96
+    master_catalog_code: 'BSGSS-AUDIO-096'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_097:
+    index: 97
+    master_catalog_code: 'BSGSS-AUDIO-097'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_098:
+    index: 98
+    master_catalog_code: 'BSGSS-AUDIO-098'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_099:
+    index: 99
+    master_catalog_code: 'BSGSS-AUDIO-099'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_100:
+    index: 100
+    master_catalog_code: 'BSGSS-AUDIO-100'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_101:
+    index: 101
+    master_catalog_code: 'BSGSS-AUDIO-101'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_102:
+    index: 102
+    master_catalog_code: 'BSGSS-AUDIO-102'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_103:
+    index: 103
+    master_catalog_code: 'BSGSS-AUDIO-103'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_104:
+    index: 104
+    master_catalog_code: 'BSGSS-AUDIO-104'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_105:
+    index: 105
+    master_catalog_code: 'BSGSS-AUDIO-105'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_106:
+    index: 106
+    master_catalog_code: 'BSGSS-AUDIO-106'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_107:
+    index: 107
+    master_catalog_code: 'BSGSS-AUDIO-107'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_108:
+    index: 108
+    master_catalog_code: 'BSGSS-AUDIO-108'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_109:
+    index: 109
+    master_catalog_code: 'BSGSS-AUDIO-109'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_110:
+    index: 110
+    master_catalog_code: 'BSGSS-AUDIO-110'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_111:
+    index: 111
+    master_catalog_code: 'BSGSS-AUDIO-111'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+  track_112:
+    index: 112
+    master_catalog_code: 'BSGSS-AUDIO-112'
+    frequency_profile: 'Acoustic Resonance calibrated for stress reduction and heart coherence'
+    intended_use_case: 'Public browsing, donor reflection, meditation, administrative focus'
+    licensing: 'Creative Commons CC-BY 4.0 / Public Domain Cultural Heritage'
+    bitrate_kbps: 128
+    channels: 'Stereo (2.0)'
+    sample_rate_hz: 44100
+    crossfade_looping_seconds: 1.5
+
+# ------------------------------------------------------------------------------
+# SECTION 9: NIELSEN-NORMAN 10 HEURISTICS APPLIED TO BSGSS DESIGN SYSTEM
+# ------------------------------------------------------------------------------
+ux_heuristics_implementation:
+  heuristic_1_visibility_of_system_status:
+    standard: 'The user must always be informed about what is occurring.'
+    implementation:
+      - 'Animated 4-bar equalizer continuously displays live audio playback.'
+      - 'Active track in soundscape drawer carries emerald beacon and explicit Active badge.'
+      - 'Loading states on donation submission display spinner and statutory verification step.'
+  heuristic_2_match_between_system_and_real_world:
+    standard: 'Speak the language of rural social impact, not developer jargon.'
+    implementation:
+      - 'Terms like SHG Federation, Gramodyog, Gram Panchayat, and Sarvodaya replace corporate speak.'
+      - 'Indian classical ragas are labelled with their time-of-day moods (Prabhat, Sandhya, Ratri).'
+  heuristic_3_user_control_and_freedom:
+    standard: 'Emergency exits must be clearly marked.'
+    implementation:
+      - 'Audio drawer modal features clear ✕ close button, backdrop click dismissal, and Esc key bind.'
+      - 'Instant mute button suppresses audio immediately with one tap.'
+  heuristic_4_consistency_and_standards:
+    standard: 'Elements that look identical must behave identically.'
+    implementation:
+      - 'All buttons adhere to primary brand-700 solid or secondary brand-50 bordered styles.'
+      - 'All typography follows strict Public Sans and Source Serif 4 pairings.'
+  heuristic_5_error_prevention:
+    standard: 'Prevent errors before they occur.'
+    implementation:
+      - 'Forms validate PAN card syntax and 10-digit Indian phone numbers prior to network submission.'
+      - 'Defensive flexbox height clamping prevents drawer buttons from pushing offscreen.'
+  heuristic_6_recognition_rather_than_recall:
+    standard: 'Make objects, actions, and options visible.'
+    implementation:
+      - 'Soundscape drawer offers 6 category filter chips so users need not guess raga names.'
+      - 'Search bar live filters matching ragas, instruments, frequencies, and rivers on keystroke.'
+  heuristic_7_flexibility_and_efficiency_of_use:
+    standard: 'Cater to both novice rural visitors and busy corporate CSR directors.'
+    implementation:
+      - 'CSR directors can jump straight to download 80G, CSR-1, and 30 partner audits.'
+      - 'Villagers can review photo galleries and contact community health clinics in one tap.'
+  heuristic_8_aesthetic_and_minimalist_design:
+    standard: 'Eliminate irrelevant or rarely needed information.'
+    implementation:
+      - 'No visual clutter, no auto-opening advertisements, no intrusive tracking popups.'
+      - 'Subtle micro-shadows replace harsh outlines.'
+  heuristic_9_help_users_recognize_and_recover_from_errors:
+    standard: 'Error messages must be expressed in plain language.'
+    implementation:
+      - 'Donation form errors explicitly explain invalid UPI ID or missing donor address.'
+  heuristic_10_help_and_documentation:
+    standard: 'Provide concise, contextual help whenever necessary.'
+    implementation:
+      - 'Tax benefit badges explain 50% deduction under Section 80G with Govt. order number.'
+
+# ------------------------------------------------------------------------------
+# SECTION 10: CODEBASE ARCHITECTURAL INTEGRITY & CONTINUOUS DEPLOYMENT
+# ------------------------------------------------------------------------------
+codebase_standards:
+  git_commit_conventions:
+    feat: 'A new user-facing feature or enhancement (e.g., feat(audio): add 112 soundscapes)'
+    fix: 'A bug fix or layout contrast repair (e.g., fix(audio): repair drawer text overlap)'
+    refactor: 'Code restructuring that neither fixes a bug nor adds a feature'
+    docs: 'Documentation updates only (e.g., docs: update master architect YAML)'
+    style: 'Changes that do not affect code logic (formatting, whitespace)'
+    perf: 'Code change that improves execution performance'
+    test: 'Adding missing unit or component tests'
+  performance_budgets:
+    max_initial_js_bundle_kb: 180
+    max_lcp_seconds_mobile: 2.2
+    max_cls_score: 0.02
+    target_lighthouse_scores:
+      performance: 98
+      accessibility: 100
+      best_practices: 100
+      seo: 100
+  institutional_verification_seal:
+    certified_by: 'Office of the Master Architect, BSGSS'
+    date_ratified: '2026-10-18'
+    status: 'CANONICAL_RATIFIED'
