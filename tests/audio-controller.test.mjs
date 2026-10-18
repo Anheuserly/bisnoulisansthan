@@ -86,3 +86,23 @@ test("Phase 1 - AudioController toggles on explicit user action and persists to 
 
   unsubscribe();
 });
+
+test("AudioController - duckForSpeech pauses ambient music and unduckAfterSpeech restores it", async () => {
+  const { sharedAudioController, SOUND_STORAGE_KEY } = await import("../lib/audio-controller.ts");
+
+  // Ensure ambient is playing
+  sharedAudioController.play();
+  assert.equal(sharedAudioController.getState().isPlaying, true);
+
+  // When speech starts, duck pauses music
+  sharedAudioController.duckForSpeech(true);
+  assert.equal(sharedAudioController.getState().isPlaying, false);
+
+  // When speech ends, unduck restores music
+  sharedAudioController.unduckAfterSpeech();
+  assert.equal(sharedAudioController.getState().isPlaying, true);
+
+  // Clean up
+  sharedAudioController.pause();
+});
+

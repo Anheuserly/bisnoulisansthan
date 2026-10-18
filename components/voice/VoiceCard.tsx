@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AlertCircle, MapPin, Pause, Play, Volume2 } from "lucide-react";
 import type { VoiceEntry } from "@/lib/voices";
+import { sharedAudioController } from "@/lib/audio-controller";
 import { cn } from "@/lib/utils/cn";
 
 interface VoiceCardProps {
@@ -14,16 +15,33 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [audioError, setAudioError] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(voice.durationSec || 0);
   const [lang, setLang] = useState<"hi" | "en">(voice.language || "hi");
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    // Stop this voice if another voice starts playing
+    const handleOtherVoicePlay = (e: Event) => {
+      const customEvent = e as CustomEvent<{ voiceId: string }>;
+      if (customEvent.detail?.voiceId !== voice.id && audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    window.addEventListener("bsgss-voice-play", handleOtherVoicePlay);
+
     return () => {
+      window.removeEventListener("bsgss-voice-play", handleOtherVoicePlay);
       if (audioRef.current) {
         audioRef.current.pause();
       }
+      if (isPlaying) {
+        sharedAudioController.unduckAfterSpeech();
+      }
     };
-  }, []);
+  }, [voice.id, isPlaying]);
 
   const handleToggle = () => {
     if (!hasInteracted) {
@@ -35,8 +53,18 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
+      sharedAudioController.unduckAfterSpeech();
     } else {
       setAudioError(false);
+      // Notify other voices to stop
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("bsgss-voice-play", { detail: { voiceId: voice.id } })
+        );
+      }
+      // Duck or pause ambient music during spoken narrative
+      sharedAudioController.duckForSpeech(true);
+
       audioRef.current
         .play()
         .then(() => setIsPlaying(true))
@@ -44,17 +72,38 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
           console.warn("Audio playback failed for", voice.id, err);
           setAudioError(true);
           setIsPlaying(false);
+          sharedAudioController.unduckAfterSpeech();
         });
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+      if (audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+        setDuration(Math.round(audioRef.current.duration));
+      }
     }
   };
 
   const handleEnded = () => {
     setIsPlaying(false);
+    setCurrentTime(0);
+    sharedAudioController.unduckAfterSpeech();
   };
 
   const handleError = () => {
     setAudioError(true);
     setIsPlaying(false);
+    sharedAudioController.unduckAfterSpeech();
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetTime = parseFloat(e.target.value);
+    setCurrentTime(targetTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = targetTime;
+    }
   };
 
   const formatDuration = (secs: number) => {
@@ -115,16 +164,48 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
             )}
           </button>
           <span className="text-[0.6875rem] font-semibold text-ink-muted">
-            {formatDuration(voice.durationSec)}
+            {isPlaying ? `${formatDuration(Math.floor(currentTime))} / ${formatDuration(duration)}` : formatDuration(voice.durationSec)}
           </span>
         </div>
       </div>
+
+      {/* Interactive Playback Scrubber & Wave Bar (Appears when active/playing) */}
+      {(hasInteracted || isPlaying) && (
+        <div className="bg-sand-50/90 px-5 sm:px-6 py-2.5 border-b border-line/60 flex items-center gap-3 animate-in fade-in duration-200">
+          <span className="text-[0.6875rem] font-mono font-medium text-brand-800 shrink-0 w-8 text-right">
+            {formatDuration(Math.floor(currentTime))}
+          </span>
+          <div className="relative flex-1 flex items-center">
+            <input
+              type="range"
+              min={0}
+              max={duration || voice.durationSec || 1}
+              step={0.1}
+              value={currentTime}
+              onChange={handleSeek}
+              aria-label={`Scrub audio playback for ${voice.name}`}
+              className="w-full h-1.5 bg-sand-200 rounded-lg appearance-none cursor-pointer accent-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+            />
+          </div>
+          <span className="text-[0.6875rem] font-mono text-ink-muted shrink-0 w-8">
+            {formatDuration(duration || voice.durationSec)}
+          </span>
+          {isPlaying && (
+            <div className="hidden sm:flex items-center gap-0.5 ml-1" title="Voice active (ambient music paused)">
+              <span className="w-1 h-3 rounded-full bg-brand-600 animate-[pulse_0.6s_ease-in-out_infinite]" />
+              <span className="w-1 h-4 rounded-full bg-brand-700 animate-[pulse_0.8s_ease-in-out_infinite_0.1s]" />
+              <span className="w-1 h-2 rounded-full bg-brand-600 animate-[pulse_0.7s_ease-in-out_infinite_0.2s]" />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Hidden Audio Tag (Strictly preload="none") */}
       <audio
         ref={audioRef}
         preload="none"
         src={hasInteracted ? voice.audio : undefined}
+        onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnded}
         onError={handleError}
       />

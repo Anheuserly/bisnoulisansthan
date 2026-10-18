@@ -365,7 +365,7 @@ function SoundscapeDrawer({
         role="dialog"
         aria-modal="true"
         aria-label="Grand Soundscape Library"
-        className="fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-[28rem] h-[34rem] max-h-[85vh] flex flex-col rounded-3xl border-2 border-slate-200 bg-white p-5 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.35)] ring-1 ring-black/5 animate-scaleUp text-slate-900"
+        className="fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 w-[calc(100vw-2rem)] sm:w-[28rem] h-[34rem] max-h-[85vh] flex flex-col rounded-3xl border border-line bg-white p-5 shadow-2xl ring-1 ring-black/5 animate-scaleUp text-slate-900"
       >
         {/* Header - Fixed Height */}
         <div className="shrink-0 flex items-center justify-between border-b border-slate-100 pb-3">
@@ -494,8 +494,8 @@ function SoundscapeDrawer({
                 onClick={() => onSelectTrack(track.id)}
                 className={`w-full text-left rounded-2xl p-3 transition flex items-start gap-3 ${
                   isCurrent
-                    ? "bg-brand-50 border-2 border-brand-600 text-slate-900 shadow-sm"
-                    : "bg-slate-50/60 hover:bg-slate-100/90 text-slate-900 border border-slate-200/80"
+                    ? "bg-brand-50/90 border border-brand-500 text-slate-900 shadow-xs"
+                    : "bg-sand-50/60 hover:bg-sand-100/80 text-slate-900 border border-transparent hover:border-line/70"
                 }`}
               >
                 <span

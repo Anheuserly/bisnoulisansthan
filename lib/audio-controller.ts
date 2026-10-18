@@ -191,6 +191,46 @@ class AudioController {
     }
     this.notify();
   }
+
+  /**
+   * Ducks or pauses ambient music when spoken voice dispatches play
+   * so speech is crisp, clear, and unhindered by background tracks.
+   */
+  private preDuckPlaying: boolean = false;
+  private preDuckVolume: number = 0.25;
+
+  public duckForSpeech(pauseCompletely: boolean = true) {
+    const audio = this.getAudio();
+    if (!audio) return;
+
+    if (this.isPlaying) {
+      this.preDuckPlaying = true;
+      this.preDuckVolume = this.volume;
+
+      if (pauseCompletely) {
+        audio.pause();
+      } else {
+        // Soft duck to 5% volume
+        audio.volume = Math.min(0.05, this.volume);
+      }
+    }
+  }
+
+  public unduckAfterSpeech() {
+    const audio = this.getAudio();
+    if (!audio) return;
+
+    if (this.preDuckPlaying) {
+      this.preDuckPlaying = false;
+      audio.volume = this.isMuted ? 0 : this.preDuckVolume;
+      // Resume only if user still has opt-in active
+      try {
+        if (localStorage.getItem(SOUND_STORAGE_KEY) === "true") {
+          audio.play().catch(() => {});
+        }
+      } catch {}
+    }
+  }
 }
 
 export const sharedAudioController = new AudioController();
