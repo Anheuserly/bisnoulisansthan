@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { QuickActions } from "@/components/layout/QuickActions";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { AmbientSoundPlayer } from "@/components/layout/AmbientSoundPlayer";
+import { SitePopupNotification } from "@/components/layout/SitePopupNotification";
 import { GlobalScrollObserver } from "@/components/ui/GlobalScrollObserver";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -17,6 +18,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <Footer />
       <QuickActions />
       <AmbientSoundPlayer />
+      <SitePopupNotification />
       <Suspense fallback={null}>
         <ContactModal />
       </Suspense>

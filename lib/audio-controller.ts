@@ -98,6 +98,60 @@ class AudioController {
     this.notify();
   }
 
+  /**
+   * Automatically starts playing ambient music whenever the website is opened.
+   * If browser autoplay restrictions prevent immediate execution, registers
+   * responsive one-time interaction listeners (click, touch, pointer, scroll, keydown)
+   * so playback begins instantly upon the user's very first gesture.
+   */
+  public autoPlayOnOpen() {
+    if (typeof window === "undefined") return;
+    this.init();
+
+    // If user explicitly muted/paused in a prior interaction, respect that
+    try {
+      const saved = localStorage.getItem(SOUND_STORAGE_KEY);
+      if (saved === "false") {
+        return;
+      }
+    } catch {}
+
+    const audio = this.getAudio();
+    if (!audio) return;
+
+    try {
+      localStorage.setItem(SOUND_STORAGE_KEY, "true");
+    } catch {}
+
+    const startPlayback = () => {
+      audio.play().catch(() => {
+        // Autoplay blocked by browser policy without user gesture:
+        const unlockOnFirstGesture = () => {
+          try {
+            if (localStorage.getItem(SOUND_STORAGE_KEY) !== "false") {
+              audio.play().catch(() => {});
+            }
+          } catch {
+            audio.play().catch(() => {});
+          }
+          window.removeEventListener("click", unlockOnFirstGesture);
+          window.removeEventListener("touchstart", unlockOnFirstGesture);
+          window.removeEventListener("pointerdown", unlockOnFirstGesture);
+          window.removeEventListener("keydown", unlockOnFirstGesture);
+          window.removeEventListener("scroll", unlockOnFirstGesture);
+        };
+
+        window.addEventListener("click", unlockOnFirstGesture, { once: true, passive: true });
+        window.addEventListener("touchstart", unlockOnFirstGesture, { once: true, passive: true });
+        window.addEventListener("pointerdown", unlockOnFirstGesture, { once: true, passive: true });
+        window.addEventListener("keydown", unlockOnFirstGesture, { once: true, passive: true });
+        window.addEventListener("scroll", unlockOnFirstGesture, { once: true, passive: true });
+      });
+    };
+
+    startPlayback();
+  }
+
   public getState(): AudioState {
     return {
       isPlaying: this.isPlaying,

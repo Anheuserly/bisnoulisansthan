@@ -190,6 +190,22 @@ export async function POST(request: Request) {
       showInQuickActions: incoming.contactActions?.showInQuickActions !== undefined ? Boolean(incoming.contactActions.showInQuickActions) : (current.contactActions?.showInQuickActions ?? true),
       showInFooter: incoming.contactActions?.showInFooter !== undefined ? Boolean(incoming.contactActions.showInFooter) : (current.contactActions?.showInFooter ?? true),
     },
+    popup: {
+      enabled: incoming.popup?.enabled !== undefined ? Boolean(incoming.popup.enabled) : (current.popup?.enabled ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.enabled),
+      type: ["announcement", "news", "activity", "advertisement"].includes(incoming.popup?.type as string)
+        ? (incoming.popup?.type as "announcement" | "news" | "activity" | "advertisement")
+        : (current.popup?.type ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.type),
+      badge: incoming.popup?.badge?.trim() || current.popup?.badge || DEFAULT_CUSTOMIZER_SETTINGS.popup.badge,
+      title: incoming.popup?.title?.trim() || current.popup?.title || DEFAULT_CUSTOMIZER_SETTINGS.popup.title,
+      description: incoming.popup?.description?.trim() || current.popup?.description || DEFAULT_CUSTOMIZER_SETTINGS.popup.description,
+      imageUrl: incoming.popup?.imageUrl !== undefined ? incoming.popup.imageUrl : (current.popup?.imageUrl ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.imageUrl),
+      primaryButtonText: incoming.popup?.primaryButtonText !== undefined ? incoming.popup.primaryButtonText : (current.popup?.primaryButtonText ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.primaryButtonText),
+      primaryButtonUrl: incoming.popup?.primaryButtonUrl !== undefined ? incoming.popup.primaryButtonUrl : (current.popup?.primaryButtonUrl ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.primaryButtonUrl),
+      secondaryButtonText: incoming.popup?.secondaryButtonText !== undefined ? incoming.popup.secondaryButtonText : (current.popup?.secondaryButtonText ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.secondaryButtonText),
+      secondaryButtonUrl: incoming.popup?.secondaryButtonUrl !== undefined ? incoming.popup.secondaryButtonUrl : (current.popup?.secondaryButtonUrl ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.secondaryButtonUrl),
+      expiryDate: incoming.popup?.expiryDate !== undefined ? incoming.popup.expiryDate : (current.popup?.expiryDate ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.expiryDate),
+      delaySeconds: typeof incoming.popup?.delaySeconds === "number" ? Math.max(0, incoming.popup.delaySeconds) : (current.popup?.delaySeconds ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.delaySeconds),
+    },
   };
 
   await db.query(

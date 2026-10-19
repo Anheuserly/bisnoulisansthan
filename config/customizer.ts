@@ -150,6 +150,23 @@ export type CustomizerContactActionConfig = {
   showInFooter: boolean;
 };
 
+export type PopupNotificationType = "announcement" | "news" | "activity" | "advertisement";
+
+export type CustomizerPopupConfig = {
+  enabled: boolean;
+  type: PopupNotificationType;
+  badge: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+  expiryDate?: string;
+  delaySeconds: number; // 0 for immediate, 2 for 2s delay
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -160,6 +177,7 @@ export type CustomizerSettings = {
   layout: CustomizerLayoutConfig;
   offices: CustomizerOfficesConfig;
   contactActions: CustomizerContactActionConfig;
+  popup: CustomizerPopupConfig;
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1255,5 +1273,19 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     showInHeader: true,
     showInQuickActions: true,
     showInFooter: true,
+  },
+  popup: {
+    enabled: true,
+    type: "announcement",
+    badge: "Special Notice",
+    title: "New Free Health & Cancer Screening Camp Announced",
+    description: "BSGSS is organizing an upcoming multi-specialty mobile healthcare & diagnostics camp across Dadri rural blocks. Registrations are open for beneficiaries and volunteer doctors.",
+    imageUrl: "/images/bsgss/healthcare-camps/149-camp1.jpeg",
+    primaryButtonText: "Explore Healthcare Work",
+    primaryButtonUrl: "/our-work",
+    secondaryButtonText: "Contact Camp Desk",
+    secondaryButtonUrl: "/contact",
+    expiryDate: "",
+    delaySeconds: 1,
   },
 };

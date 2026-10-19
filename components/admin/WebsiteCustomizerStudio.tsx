@@ -35,6 +35,8 @@ import {
   Type,
   Volume2,
   VolumeX,
+  Bell,
+  Megaphone,
 } from "lucide-react";
 import {
   AMBIENT_TRACK_PRESETS,
@@ -42,6 +44,7 @@ import {
   type CustomizerSettings,
   type SectionConfig,
   type CollagePhotoItem,
+  type PopupNotificationType,
 } from "@/config/customizer";
 
 interface WebsiteCustomizerStudioProps {
@@ -65,7 +68,7 @@ const GALLERY_PRESET_IMAGES = [
 
 export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "texts" | "layout" | "offices" | "collage" | "audio" | "typing" | "footprint">("sections");
+  const [activeTab, setActiveTab] = useState<"sections" | "texts" | "layout" | "offices" | "popup" | "collage" | "audio" | "typing" | "footprint">("sections");
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -329,6 +332,7 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
       <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2 overflow-x-auto">
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
+          { id: "popup", label: "Pop-up & Announcements", icon: Bell },
           { id: "texts", label: "Website Texts & Copy", icon: FileText },
           { id: "layout", label: "Header, Nav & Footer Size", icon: Sliders },
           { id: "offices", label: "Offices & WhatsApp Setup", icon: Building2 },
@@ -2177,6 +2181,353 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                   }
                   className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB: Pop-up & Announcements */}
+      {activeTab === "popup" && (
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-line pb-5">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                    <Bell className="h-4 w-4" />
+                  </span>
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Website Pop-up Notification &amp; Announcement
+                  </h3>
+                </div>
+                <p className="mt-1 text-xs text-ink-muted">
+                  Publish a smart, interactive pop-up modal on the website for breaking announcements, news updates, upcoming grassroots activities, or campaigns.
+                </p>
+              </div>
+
+              {/* Enable / Disable Toggle */}
+              <label className="inline-flex items-center gap-3 cursor-pointer">
+                <span className="text-xs font-bold uppercase tracking-wider text-ink">
+                  {settings.popup?.enabled ? "Pop-up Active" : "Pop-up Disabled"}
+                </span>
+                <input
+                  type="checkbox"
+                  checked={Boolean(settings.popup?.enabled)}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, enabled: e.target.checked },
+                    }))
+                  }
+                  className="h-5 w-5 rounded border-line text-brand-700 focus:ring-brand-500 cursor-pointer"
+                />
+              </label>
+            </div>
+
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              {/* Notification Category */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Notification Type / Category
+                </label>
+                <select
+                  value={settings.popup?.type || "announcement"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, type: e.target.value as PopupNotificationType },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-medium text-ink focus:border-brand-500 focus:outline-none"
+                >
+                  <option value="announcement">📢 Announcement (Special Notice / Notice Board)</option>
+                  <option value="activity">🎉 Activity (Field Camp / Workshop / Training)</option>
+                  <option value="news">📰 News (Media Coverage / Milestone / Legal)</option>
+                  <option value="advertisement">🏷️ Advertisement / Posting (Appeal / Product Launch)</option>
+                </select>
+                <p className="mt-1 text-[11px] text-ink-muted">
+                  Sets the default visual badge icon and institutional context.
+                </p>
+              </div>
+
+              {/* Custom Badge Label */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge Chip Text (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Special Notice, Free Health Camp, Breaking News"
+                  value={settings.popup?.badge ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, badge: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Title */}
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Headline / Title <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Free Eye Check-up &amp; Medicine Distribution Camp in Dadri"
+                  value={settings.popup?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, title: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Description Body */}
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Details / Body Text <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Provide essential details, date, location, or instructions for website visitors..."
+                  value={settings.popup?.description ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, description: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs leading-relaxed text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Media Image URL */}
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Featured Image (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. /images/bsgss/healthcare-camps/149-camp1.jpeg"
+                  value={settings.popup?.imageUrl ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, imageUrl: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+                <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-ink-muted">
+                  <span className="font-semibold text-ink">Presets:</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        popup: { ...prev.popup, imageUrl: "/images/bsgss/healthcare-camps/149-camp1.jpeg" },
+                      }))
+                    }
+                    className="hover:text-brand-700 underline cursor-pointer"
+                  >
+                    Health Camp
+                  </button>
+                  <span>·</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        popup: { ...prev.popup, imageUrl: "/images/bsgss/gallery-training/185-tal1.jpeg" },
+                      }))
+                    }
+                    className="hover:text-brand-700 underline cursor-pointer"
+                  >
+                    Tailoring Workshop
+                  </button>
+                  <span>·</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        popup: { ...prev.popup, imageUrl: "/images/bsgss/banners/589-banner-1.webp" },
+                      }))
+                    }
+                    className="hover:text-brand-700 underline cursor-pointer"
+                  >
+                    Community Banner
+                  </button>
+                  <span>·</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        popup: { ...prev.popup, imageUrl: "" },
+                      }))
+                    }
+                    className="hover:text-red-700 underline cursor-pointer"
+                  >
+                    No Image (Text only)
+                  </button>
+                </div>
+              </div>
+
+              {/* Primary Action Button */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Button Text
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Read Full Notice / Register"
+                  value={settings.popup?.primaryButtonText ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, primaryButtonText: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Button Link URL
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. /our-work, /contact, or https://..."
+                  value={settings.popup?.primaryButtonUrl ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, primaryButtonUrl: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Secondary Action Button */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Secondary Button Text (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Contact Desk / View Details"
+                  value={settings.popup?.secondaryButtonText ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, secondaryButtonText: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Secondary Button Link URL
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. /contact"
+                  value={settings.popup?.secondaryButtonUrl ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, secondaryButtonUrl: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Timing & Expiry */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Appearance Delay (seconds)
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  max={10}
+                  value={settings.popup?.delaySeconds ?? 1}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, delaySeconds: parseInt(e.target.value, 10) || 0 },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+                <p className="mt-1 text-[11px] text-ink-muted">
+                  Delay after visitor opens the site before displaying modal (e.g. 1 or 2 seconds).
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Automatic Expiry Date (Optional)
+                </label>
+                <input
+                  type="date"
+                  value={settings.popup?.expiryDate ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      popup: { ...prev.popup, expiryDate: e.target.value },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+                <p className="mt-1 text-[11px] text-ink-muted">
+                  Pop-up will automatically stop displaying after this date.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Live Preview Box */}
+          <div className="rounded-2xl border border-line bg-sand-50/70 p-6">
+            <p className="text-xs font-bold uppercase tracking-wider text-ink-muted">
+              Live Preview
+            </p>
+            <div className="mt-3 max-w-md rounded-xl border border-line bg-white p-5 shadow-lg">
+              <div className="h-1 w-full bg-slate-900 rounded-full mb-3" />
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-800">
+                <Bell className="h-3.5 w-3.5 text-slate-900" />
+                <span>{settings.popup?.badge || "Notice"}</span>
+                <span className="text-ink-muted">·</span>
+                <span className="capitalize text-[11px] font-normal text-ink-muted">{settings.popup?.type || "announcement"}</span>
+              </div>
+              <p className="mt-2 font-display text-base font-bold text-ink">
+                {settings.popup?.title || "Your Headline Will Appear Here"}
+              </p>
+              <p className="mt-1.5 text-xs text-ink-muted leading-relaxed line-clamp-3">
+                {settings.popup?.description || "Your announcement body text will be displayed here for visitors to read."}
+              </p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="inline-block rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white">
+                  {settings.popup?.primaryButtonText || "Learn More"}
+                </span>
+                {settings.popup?.secondaryButtonText && (
+                  <span className="inline-block rounded-lg border border-line px-3 py-1.5 text-xs font-semibold text-slate-800">
+                    {settings.popup.secondaryButtonText}
+                  </span>
+                )}
               </div>
             </div>
           </div>

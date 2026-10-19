@@ -3,6 +3,7 @@ import { Heart, Mail, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BankDetailsCard } from "@/components/support/BankDetailsCard";
 import { DonationVerificationForm } from "@/components/support/DonationVerificationForm";
+import { RupeeAllocationBreakdown } from "@/components/transparency/RupeeAllocationBreakdown";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { buildMetadata } from "@/lib/seo";
@@ -25,7 +26,7 @@ export default function SupportPage() {
         crumbs={[{ name: "Support us", path: links.support }]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 space-y-14">
           <section className="grid gap-10 lg:grid-cols-[1fr_0.78fr]">
             <ScrollReveal direction="up" delay={40}>
               <div className="border-t-2 border-brand-850 pt-6">
@@ -40,15 +41,18 @@ export default function SupportPage() {
                   {support.text}
                 </p>
 
-                <BankDetailsCard
-                  bankTitle={support.bankTitle}
-                  bankName={support.bankName}
-                  branchName={support.branchName}
-                  accountName={support.accountName}
-                  accountNumber={support.accountNumber}
-                  accountType={support.accountType}
-                  ifsc={support.ifsc}
-                />
+
+                <div className="mt-10">
+                  <BankDetailsCard
+                    bankTitle={support.bankTitle}
+                    bankName={support.bankName}
+                    branchName={support.branchName}
+                    accountName={support.accountName}
+                    accountNumber={support.accountNumber}
+                    accountType={support.accountType}
+                    ifsc={support.ifsc}
+                  />
+                </div>
 
                 <a
                   href="mailto:bsgssindia@yahoo.co.in?subject=Support%20BSGSS"
@@ -83,6 +87,11 @@ export default function SupportPage() {
               </ScrollReveal>
             </aside>
           </section>
+
+          {/* Fund Efficiency Breakdown: Where Every ₹100 Goes */}
+          <ScrollReveal direction="up" delay={80}>
+            <RupeeAllocationBreakdown />
+          </ScrollReveal>
         </div>
       </div>
     </>

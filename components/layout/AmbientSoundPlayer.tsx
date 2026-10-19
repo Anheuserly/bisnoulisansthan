@@ -62,9 +62,10 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
       .catch(() => {});
   }, []);
 
-  // Subscribe to shared single audio controller
+  // Subscribe to shared single audio controller & initiate autoplay on open
   useEffect(() => {
     sharedAudioController.init();
+    sharedAudioController.autoPlayOnOpen();
     const unsubscribe = sharedAudioController.subscribe((state) => {
       setIsPlaying(state.isPlaying);
       setVolume(state.volume);

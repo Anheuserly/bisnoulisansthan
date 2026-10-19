@@ -84,6 +84,36 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
+
+            {/* UN Sustainable Development Goals (SDG) Alignment Bar */}
+            <div className="border-b border-line bg-sand-50/50 py-2.5">
+              <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 xl:px-12 text-xs">
+                <span className="font-bold uppercase tracking-[0.16em] text-brand-850">
+                  Global Humanitarian Alignment
+                </span>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-slate-700 font-medium">
+                  <span className="flex items-center gap-1.5">
+                    <span className="font-bold text-ink">SDG 1:</span>
+                    <span>No Poverty</span>
+                  </span>
+                  <span className="hidden sm:inline text-slate-300">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="font-bold text-ink">SDG 3:</span>
+                    <span>Good Health &amp; Well-being</span>
+                  </span>
+                  <span className="hidden sm:inline text-slate-300">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="font-bold text-ink">SDG 5:</span>
+                    <span>Gender Equality</span>
+                  </span>
+                  <span className="hidden sm:inline text-slate-300">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="font-bold text-ink">SDG 8:</span>
+                    <span>Decent Work &amp; Economic Growth</span>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         );
 

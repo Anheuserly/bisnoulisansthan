@@ -58,18 +58,18 @@ export function SoundToggle({ className, variant = "header" }: SoundToggleProps)
         "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 active:scale-95",
         variant === "footer"
           ? isPlaying
-            ? "border border-emerald-400 bg-emerald-950/80 text-emerald-200 hover:bg-emerald-900 shadow-2xs"
-            : "border border-brand-700 bg-brand-850 text-brand-200 hover:bg-brand-800 hover:text-white"
+            ? "border border-white/40 bg-white/20 text-white"
+            : "border border-white/20 bg-transparent text-white/70 hover:bg-white/10 hover:text-white"
           : isPlaying
-            ? "border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 shadow-2xs"
-            : "border border-line bg-white/90 text-ink-muted hover:bg-sand-50 hover:text-ink shadow-2xs",
+            ? "border border-slate-900 bg-slate-900 text-white shadow-2xs"
+            : "border border-line bg-white/90 text-ink hover:bg-sand-50 shadow-2xs",
         className
       )}
       title={isPlaying ? "Stop ambient sound" : "Play calming ambient sound"}
     >
       {isPlaying ? (
         <>
-          <Volume2 className="h-3.5 w-3.5 text-emerald-600 animate-pulse" aria-hidden="true" />
+          <Volume2 className="h-3.5 w-3.5" aria-hidden="true" />
           <span>{label}</span>
         </>
       ) : (

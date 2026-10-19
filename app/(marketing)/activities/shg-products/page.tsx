@@ -56,20 +56,19 @@ export default function ShgProductsPage() {
         ]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-          {/* Top Mission Banner */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          {/* Top Mission Banner (Borderless, Open Editorial) */}
           <ScrollReveal direction="up" delay={40}>
-            <section className="grid gap-8 rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 md:grid-cols-[1.1fr_0.9fr] md:items-center shadow-2xs">
+            <section className="grid gap-10 border-t-2 border-brand-850 pt-6 md:grid-cols-[1.1fr_0.9fr] md:items-start">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-700 shadow-2xs">
-                  <HandHeart className="h-3.5 w-3.5 text-brand-600" />
-                  <span>Women-Led Rural Enterprise</span>
-                </span>
-                <h2 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
+                <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">
+                  Women-Led Rural Enterprise
+                </p>
+                <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
                   Artisanal craft that builds direct household agency.
                 </h2>
-                <p className="mt-3 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
-                  BSGSS trains, organizes, and supports over 5,000 women in village Self-Help Groups (SHGs) across Uttar Pradesh and Delhi NCR. Every item purchased directly strengthens a family&apos;s dignity, children&apos;s education, and healthcare resilience.
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
+                  BSGSS trains, organizes, and supports over 5,000 women in village Self-Help Groups (SHGs) across Uttar Pradesh and Delhi NCR. Every item ordered directly strengthens a family&apos;s dignity, children&apos;s education, and healthcare resilience.
                 </p>
                 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -78,43 +77,43 @@ export default function ShgProductsPage() {
                     className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
                   >
                     <Mail className="h-4 w-4" />
-                    <span>Inquire for Institutional Bulk Orders</span>
+                    <span>Inquire for Institutional &amp; Festive Bulk Gifting</span>
                   </a>
                 </div>
               </div>
 
-              {/* Trust Indicators */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl border border-brand-100 bg-white/95 p-4 shadow-2xs">
-                  <Users className="h-5 w-5 text-brand-700" />
+              {/* Trust Indicators (Borderless, Open Editorial) */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="border-t border-line pt-4">
+                  <Users className="h-5 w-5 text-ink" />
                   <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">5,000+</p>
                   <p className="mt-0.5 text-xs text-ink-muted">Women Artisans Certified</p>
                 </div>
-                <div className="rounded-xl border border-brand-100 bg-white/95 p-4 shadow-2xs">
-                  <PackageCheck className="h-5 w-5 text-emerald-600" />
+                <div className="border-t border-line pt-4">
+                  <PackageCheck className="h-5 w-5 text-ink" />
                   <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">60+</p>
                   <p className="mt-0.5 text-xs text-ink-muted">Village Self-Help Guilds</p>
                 </div>
-                <div className="rounded-xl border border-brand-100 bg-white/95 p-4 shadow-2xs">
-                  <Sparkles className="h-5 w-5 text-amber-600" />
+                <div className="border-t border-line pt-4">
+                  <Sparkles className="h-5 w-5 text-ink" />
                   <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">100%</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Fair Community Livelihood</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">Fair Community Proceeds</p>
                 </div>
-                <div className="rounded-xl border border-brand-100 bg-white/95 p-4 shadow-2xs">
-                  <Award className="h-5 w-5 text-brand-700" />
+                <div className="border-t border-line pt-4">
+                  <Award className="h-5 w-5 text-ink" />
                   <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">Verified</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Handloom &amp; Khadi Standards</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">Handloom &amp; Khadi Standard</p>
                 </div>
               </div>
             </section>
           </ScrollReveal>
 
-          {/* Current Collection Grid */}
-          <section className="mt-12 sm:mt-16">
+          {/* Current Collection Grid (Borderless, Open Editorial) */}
+          <section className="mt-14 sm:mt-18">
             <ScrollReveal direction="up" delay={40}>
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between border-b border-line pb-3">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Artisan Catalog</p>
+                  <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">Artisan Catalog</p>
                   <h2 className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">
                     Made with care, connected to community dignity.
                   </h2>
@@ -126,36 +125,46 @@ export default function ShgProductsPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 max-w-4xl mx-auto">
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 max-w-5xl">
               {products.map((product, idx) => (
                 <ScrollReveal key={product.name} staggerIndex={idx} direction="up">
-                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-sand-50/70 p-4">
+                  <article className="group flex h-full flex-col border-t-2 border-line pt-5 transition hover:border-brand-700">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-sand-50/70 p-4 rounded-xl">
                       <img
                         src={product.image}
                         alt={product.name}
                         className="h-full w-full object-contain transition duration-500 group-hover:scale-106"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-[0.6875rem] font-bold text-brand-900 shadow-2xs">
+                        <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted bg-white/90 px-2 py-0.5 rounded-sm">
                           {product.tag}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-5 sm:p-6">
-                      <h3 className="font-display text-base font-bold text-ink group-hover:text-brand-800 sm:text-lg">
+                    <div className="flex flex-1 flex-col pt-5">
+                      <h3 className="font-display text-lg font-bold text-ink group-hover:text-brand-800">
                         {product.name}
                       </h3>
-                      <p className="mt-2 flex-1 text-xs leading-relaxed text-ink-muted sm:text-sm">
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
                         {product.description}
                       </p>
 
-                      <div className="mt-4 border-t border-line/60 pt-3">
-                        <p className="text-[0.6875rem] text-ink-subtle">
+                      {/* Meet the Artisan Guild Detail */}
+                      <div className="mt-4 border-t border-line/60 pt-3 text-xs text-ink/80 space-y-1">
+                        <p>
+                          <span className="font-semibold text-ink">Artisan Guild:</span> {idx === 0 ? "Bisnouli Craft Guild, Dadri (12 Women Artisans)" : "Hindon Basin Women's Livelihood Center"}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-ink">Technique:</span> {idx === 0 ? "Heritage Charkha hand-spun yarn & border embroidery" : "Hand-knitted pure woolen yarn with traditional rib stitch"}
+                        </p>
+                        <p className="text-[0.6875rem] text-ink-muted pt-1">
                           <span className="font-medium text-ink-muted">Availability: </span>
                           {product.leadTime}
                         </p>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-line/60">
                         <ProductInquiryButton productName={product.name} />
                       </div>
                     </div>

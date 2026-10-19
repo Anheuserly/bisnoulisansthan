@@ -18,11 +18,11 @@ export default function OurStoryPage() {
     <>
       <StoryHero />
       <StoryExperience />
-      <section className="bg-sand-50/80 py-12 sm:py-16 border-t border-brand-100">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-8">
+      <section className="bg-sand-50/80 py-16 sm:py-20 border-t border-line">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-start md:px-8">
           <ScrollReveal direction="up" delay={40}>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-800">
-              <Compass className="h-3.5 w-3.5 text-brand-700" />
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-800">
+              <Compass className="h-4 w-4 text-slate-900" />
               <span>Institutional Direction</span>
             </div>
             <h2 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
@@ -38,36 +38,40 @@ export default function OurStoryPage() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal direction="scale" delay={80}>
-            <div className="rounded-2xl border border-brand-200/80 bg-white p-6 sm:p-8 shadow-2xs">
-              <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Explore next</p>
-              <div className="mt-4 space-y-3">
+          <ScrollReveal direction="up" delay={80}>
+            <div className="border-t-2 border-brand-850 pt-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-ink-muted">Explore next</p>
+              <div className="mt-5 space-y-4">
                 <Link
                   href="/our-work"
-                  className="group flex items-center justify-between rounded-xl border border-line p-4 transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                  className="group block border-t border-line pt-4 transition hover:-translate-y-0.5"
                 >
-                  <div className="flex items-center gap-3">
-                    <HeartPulse className="h-5 w-5 text-brand-700" />
-                    <div>
-                      <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">Explore Our Programmes</p>
-                      <p className="text-xs text-ink-muted">Healthcare, tailoring, literacy, and self-help groups</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <HeartPulse className="h-5 w-5 text-slate-900" />
+                      <div>
+                        <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">Explore Our Programmes</p>
+                        <p className="text-xs text-ink-muted">Healthcare, tailoring, literacy, and self-help groups</p>
+                      </div>
                     </div>
+                    <ArrowRight className="h-4 w-4 text-slate-900 transition group-hover:translate-x-1" />
                   </div>
-                  <ArrowRight className="h-4 w-4 text-brand-700 transition group-hover:translate-x-1" />
                 </Link>
 
                 <Link
                   href="/about/partners"
-                  className="group flex items-center justify-between rounded-xl border border-line p-4 transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                  className="group block border-t border-line pt-4 transition hover:-translate-y-0.5"
                 >
-                  <div className="flex items-center gap-3">
-                    <Handshake className="h-5 w-5 text-brand-700" />
-                    <div>
-                      <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">CSR &amp; Statutory Partners</p>
-                      <p className="text-xs text-ink-muted">30+ leading PSU collaborations and public ministries</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Handshake className="h-5 w-5 text-slate-900" />
+                      <div>
+                        <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">CSR &amp; Statutory Partners</p>
+                        <p className="text-xs text-ink-muted">30+ leading PSU collaborations and public ministries</p>
+                      </div>
                     </div>
+                    <ArrowRight className="h-4 w-4 text-slate-900 transition group-hover:translate-x-1" />
                   </div>
-                  <ArrowRight className="h-4 w-4 text-brand-700 transition group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>

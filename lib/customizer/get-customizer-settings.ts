@@ -81,6 +81,10 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           ...DEFAULT_CUSTOMIZER_SETTINGS.contactActions,
           ...(val.contactActions || {}),
         },
+        popup: {
+          ...DEFAULT_CUSTOMIZER_SETTINGS.popup,
+          ...(val.popup || {}),
+        },
       };
     }
   } catch (err) {

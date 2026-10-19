@@ -21,6 +21,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { RupeeAllocationBreakdown } from "@/components/transparency/RupeeAllocationBreakdown";
 import { buildMetadata } from "@/lib/seo";
 import { getLedgerOverview } from "@/lib/ledger";
 import { cn } from "@/lib/utils/cn";
@@ -175,6 +176,9 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
             </div>
           </section>
+
+          {/* Where Every ₹100 Goes: Visual Efficiency Breakdown */}
+          <RupeeAllocationBreakdown />
 
           {/* Month Selector to View History */}
           <section aria-label="Month Selector" className="mt-8">

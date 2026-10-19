@@ -93,26 +93,31 @@ export default function LegalStatusPage() {
                   </div>
                 </div>
 
-                {/* Verified Trust Pillars */}
-                <div className="rounded-xl border border-brand-100 bg-white/90 p-5 shadow-2xs">
-                  <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
-                    Statutory Registrations
-                  </p>
+                {/* Verified Trust Pillars (Borderless, Open Editorial) */}
+                <div className="border-t border-line pt-4">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
+                      Statutory Registrations
+                    </p>
+                    <span className="text-[0.6875rem] font-semibold text-ink-muted">
+                      Full CSR Due-Diligence Ready
+                    </span>
+                  </div>
                   <ul className="mt-3 space-y-2 text-xs text-ink-muted sm:text-sm">
                     <li className="flex items-center gap-2 text-ink">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-600" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700" />
                       <span>Societies Registration Act XXI of 1860</span>
                     </li>
                     <li className="flex items-center gap-2 text-ink">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-600" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700" />
                       <span>Section 12A &amp; 80G Tax Exemption (IT Act 1961)</span>
                     </li>
                     <li className="flex items-center gap-2 text-ink">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-600" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700" />
                       <span>MCA CSR-1 Registration No. CSR00001405</span>
                     </li>
                     <li className="flex items-center gap-2 text-ink">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-600" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700" />
                       <span>NITI Aayog NGO Darpan (DL/2016/0111645)</span>
                     </li>
                   </ul>

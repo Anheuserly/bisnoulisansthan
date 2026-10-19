@@ -3,6 +3,7 @@ import { ArrowLeft, FileCheck2 } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 import { DonationManager, type DonationRow } from "@/components/admin/DonationManager";
+import { TaxCalculator80G } from "@/components/support/TaxCalculator80G";
 
 export default async function DonationsAdminPage() {
   const admin = await requireAdmin();
@@ -93,6 +94,20 @@ export default async function DonationsAdminPage() {
         </div>
         <div className="mt-8">
           <DonationManager donations={donations} canIssue={admin.role === "admin" || admin.role === "super_admin"} />
+        </div>
+
+        {/* Internal 80G Tax Exemption & Donor Impact Calculator */}
+        <div className="mt-12 border-t-2 border-brand-850 pt-8">
+          <div className="mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-700">Internal Administration Utility</span>
+            <h3 className="font-display text-xl font-bold text-ink">Section 80G Tax &amp; Impact Calculator</h3>
+            <p className="mt-1 text-xs text-ink-muted">
+              Use this internal tool to calculate 80G deductions, tax savings, and grassroot impact metrics when preparing donor acknowledgement receipts and answering donor tax queries.
+            </p>
+          </div>
+          <div className="mt-4 bg-white p-6 rounded-xl border border-line shadow-2xs">
+            <TaxCalculator80G />
+          </div>
         </div>
       </div>
     </main>
