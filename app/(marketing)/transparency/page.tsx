@@ -77,17 +77,15 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
           {hasSampleData && (
             <div
               role="alert"
-              className="flex items-start gap-3 rounded-2xl border-2 border-amber-300 bg-amber-50/90 p-4 sm:p-5 text-amber-900 shadow-2xs"
+              className="border-t-2 border-amber-600 pt-4 text-ink"
             >
-              <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
-              <div>
-                <p className="font-semibold text-sm sm:text-base">
-                  Sample Data — Not Yet Published
-                </p>
-                <p className="mt-1 text-xs sm:text-sm text-amber-800 leading-relaxed">
-                  The figures displayed below represent a prototype demonstration of our Open Books transparency system. Official verified accounts are currently under annual audit and will be published following chartered accountant certification.
-                </p>
+              <div className="flex items-center gap-2 text-amber-800">
+                <Info className="h-4 w-4 text-amber-600" aria-hidden="true" />
+                <span className="text-xs font-bold uppercase tracking-wider">Sample Data — Not Yet Published</span>
               </div>
+              <p className="mt-1.5 text-xs sm:text-sm text-ink-muted leading-relaxed">
+                The figures displayed below represent a prototype demonstration of our Open Books transparency system. Official verified accounts are currently under annual audit and will be published following chartered accountant certification.
+              </p>
             </div>
           )}
 
@@ -95,17 +93,15 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
           {isStale && (
             <div
               role="status"
-              className="flex items-start gap-3 rounded-2xl border border-rose-300 bg-rose-50/90 p-4 sm:p-5 text-rose-900 shadow-2xs"
+              className="border-t-2 border-rose-600 pt-4 text-ink"
             >
-              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" aria-hidden="true" />
-              <div>
-                <p className="font-semibold text-sm sm:text-base">
-                  Figures Pending Update
-                </p>
-                <p className="mt-1 text-xs sm:text-sm text-rose-800 leading-relaxed">
-                  The most recent published ledger ({latestMonth?.formattedMonth}) is more than 45 days old. Our accounting desk is currently compiling the latest monthly reconciliation.
-                </p>
+              <div className="flex items-center gap-2 text-rose-800">
+                <Clock className="h-4 w-4 text-rose-600" aria-hidden="true" />
+                <span className="text-xs font-bold uppercase tracking-wider">Figures Pending Update</span>
               </div>
+              <p className="mt-1.5 text-xs sm:text-sm text-ink-muted leading-relaxed">
+                The most recent published ledger ({latestMonth?.formattedMonth}) is more than 45 days old. Our accounting desk is currently compiling the latest monthly reconciliation.
+              </p>
             </div>
           )}
 
@@ -181,8 +177,8 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
           <RupeeAllocationBreakdown />
 
           {/* Month Selector to View History */}
-          <section aria-label="Month Selector" className="mt-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-2xl border border-line bg-sand-50/80 p-4">
+          <section aria-label="Month Selector" className="border-t border-line pt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
                   Select Reporting Period
@@ -203,10 +199,10 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
                       href={`/transparency?month=${m.month}`}
                       aria-current={isSelected ? "page" : undefined}
                       className={cn(
-                        "rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600",
+                        "rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600",
                         isSelected
                           ? "bg-brand-700 text-white shadow-2xs"
-                          : "border border-line bg-white text-ink-muted hover:border-brand-300 hover:text-ink"
+                          : "bg-sand-100 text-ink-muted hover:bg-sand-200 hover:text-ink"
                       )}
                     >
                       {m.formattedMonth}
@@ -218,9 +214,9 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
           </section>
 
           {/* Detailed Monthly Breakdown Table */}
-          <section aria-label={`Ledger Details for ${currentMonthData.formattedMonth}`}>
-            <div className="rounded-2xl border border-line bg-white shadow-soft overflow-hidden">
-              <div className="border-b border-line bg-sand-50/60 p-5 sm:p-6">
+          <section aria-label={`Ledger Details for ${currentMonthData.formattedMonth}`} className="border-t-2 border-brand-850 pt-6">
+            <div>
+              <div className="border-b border-line pb-5">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div>
                     <h3 className="font-display text-lg sm:text-xl font-bold text-ink">
@@ -245,7 +241,7 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
 
               {/* Accessible Dual-Column Breakdown */}
-              <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-line">
+              <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-line pt-4">
                 {/* Income Table */}
                 <div className="p-5 sm:p-6">
                   <div className="flex items-center gap-2 mb-4">
@@ -335,7 +331,7 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
 
               {/* Verification Footer */}
-              <div className="border-t border-line bg-sand-50/40 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-ink-muted">
+              <div className="border-t border-line pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-ink-muted">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                   <span>
@@ -372,9 +368,9 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Where money comes from */}
-              <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-6">
                 <div className="flex items-center gap-2.5 text-brand-800 mb-3">
                   <Building2 className="h-5 w-5 text-brand-700" aria-hidden="true" />
                   <h4 className="font-display text-base sm:text-lg font-bold">
@@ -404,7 +400,7 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
 
               {/* Where money goes */}
-              <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-6">
                 <div className="flex items-center gap-2.5 text-brand-800 mb-3">
                   <Scale className="h-5 w-5 text-brand-700" aria-hidden="true" />
                   <h4 className="font-display text-base sm:text-lg font-bold">
@@ -436,7 +432,7 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
           </section>
 
           {/* Privacy & Governance Notice */}
-          <div className="rounded-xl border border-line bg-sand-50/70 p-4 text-xs text-ink-muted leading-relaxed">
+          <div className="border-t border-line pt-4 text-xs text-ink-muted leading-relaxed">
             <p>
               <strong>Donor Privacy Policy:</strong> In strict compliance with regulatory guidelines and individual privacy rights, BSGSS publishes only aggregate financial categories and program allocation figures. Individual donor identities, PAN details, and transaction references are never published publicly. For questions regarding financial filings, email us at{" "}
               <a href="mailto:bsgssindia@yahoo.co.in" className="text-brand-700 underline font-medium">

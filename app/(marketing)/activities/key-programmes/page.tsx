@@ -29,31 +29,29 @@ export default function KeyProgrammesPage() {
         ]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <ScrollReveal direction="up" delay={40}>
-            <section className="grid gap-6 rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:grid-cols-[auto_1fr] sm:p-8 shadow-2xs">
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-white text-brand-700 shadow-2xs">
-                <HeartPulse className="h-6 w-6" />
-              </span>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{programmes.eyebrow}</p>
-                <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
-                  {programmes.heading}
-                </h2>
-                <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-muted sm:text-base">
-                  {programmes.text}
-                </p>
+            <section className="border-t-2 border-brand-850 pt-6">
+              <div className="flex items-center gap-2 text-brand-700 mb-2">
+                <HeartPulse className="h-5 w-5" />
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-800">{programmes.eyebrow}</span>
               </div>
+              <h2 className="mt-2 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl">
+                {programmes.heading}
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-muted sm:text-base">
+                {programmes.text}
+              </p>
             </section>
           </ScrollReveal>
 
-          <section className="mt-10 sm:mt-12 grid gap-6 lg:grid-cols-3">
+          <section className="mt-10 sm:mt-12 grid gap-8 lg:grid-cols-3">
             {programmes.programmes.map((programme, index) => {
               const Icon = programmeIcons[index] ?? HeartPulse;
               return (
                 <ScrollReveal key={programme.title} staggerIndex={index} direction="up">
-                  <article className="design-card group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-sand-50">
+                  <article className="group flex h-full flex-col border-t-2 border-brand-850 pt-4">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-sand-50">
                       <img
                         src={programme.image}
                         alt={programme.title}
@@ -61,12 +59,12 @@ export default function KeyProgrammesPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>
-                    <div className="flex flex-1 flex-col p-6">
+                    <div className="flex flex-1 flex-col pt-4">
                       <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-700">
                         <Icon className="h-3.5 w-3.5" />
                         {programme.focus}
                       </span>
-                      <h3 className="mt-3 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
+                      <h3 className="mt-2 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
                         {programme.title}
                       </h3>
                       <p className="mt-2.5 flex-1 text-xs leading-relaxed text-ink-muted sm:text-sm">
@@ -80,7 +78,7 @@ export default function KeyProgrammesPage() {
           </section>
 
           <ScrollReveal direction="up" delay={60}>
-            <section className="mt-10 sm:mt-12 rounded-2xl border border-brand-200/80 bg-sand-50/80 p-6 sm:p-8 text-ink shadow-2xs">
+            <section className="mt-12 border-t border-line pt-8 text-ink">
               <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
                 Explore the work in action
               </p>

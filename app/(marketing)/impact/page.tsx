@@ -25,10 +25,10 @@ export default function ImpactPage() {
       />
       <div>
         <div className="pt-8 pb-12 sm:pt-10 sm:pb-16">
-          <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:px-8">
-            {/* Executive Impact Vision Card */}
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:px-8">
+            {/* Executive Impact Vision Section */}
             <ScrollReveal direction="up" delay={40}>
-              <div className="h-full rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 text-ink shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-6 text-ink">
                 <p className="text-xs font-bold uppercase tracking-wider text-brand-700">
                   {impact.eyebrow}
                 </p>
@@ -41,11 +41,11 @@ export default function ImpactPage() {
               </div>
             </ScrollReveal>
 
-            {/* 4 Outcome Pillars with Staggered Rise */}
-            <div className="grid gap-4 sm:grid-cols-2">
+            {/* 4 Outcome Pillars with Open Dividers */}
+            <div className="grid gap-6 sm:grid-cols-2">
               {impact.outcomes.map(([title, text], index) => (
                 <ScrollReveal key={title} staggerIndex={index} direction="up">
-                  <article className="h-full rounded-xl border border-line bg-white p-5 shadow-2xs transition-all hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <article className="border-t-2 border-brand-850 pt-5">
                     <span className="font-display text-2xl font-bold text-brand-500">
                       0{index + 1}
                     </span>

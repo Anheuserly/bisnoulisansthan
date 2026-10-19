@@ -3,7 +3,7 @@ import { PartnerLogoWall } from "./PartnerLogoWall";
 export function PartnersSection() {
   return (
     <section className="overflow-hidden bg-sand-50/80 py-8 sm:py-12 md:py-14">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Together in change</p>
           <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">
@@ -13,7 +13,7 @@ export function PartnersSection() {
             Institutions whose support has strengthened BSGSS programmes over the years.
           </p>
         </div>
-        <div className="mt-8 rounded-2xl border border-brand-200/60 bg-white p-3 shadow-2xs sm:p-5">
+        <div className="mt-8 border-t border-line/80 pt-6">
           <PartnerLogoWall />
         </div>
         <p className="mt-4 text-center text-xs leading-relaxed text-ink-muted">

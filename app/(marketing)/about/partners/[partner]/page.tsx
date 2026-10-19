@@ -68,10 +68,10 @@ export default async function PartnerStoryPage({ params }: PageProps) {
           </Link>
 
           <ScrollReveal direction="up" delay={40}>
-            <section className="mt-5 grid overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-sand-50/90 via-white to-brand-50/40 shadow-2xs md:grid-cols-[minmax(0,1fr)_20rem]">
-              <div className="p-6 sm:p-8">
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700 shadow-2xs">
-                  <ShieldCheck className="h-3.5 w-3.5 text-brand-600" />
+            <section className="mt-6 grid gap-8 border-t-2 border-brand-850 pt-8 md:grid-cols-[minmax(0,1fr)_18rem] md:items-center">
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-800">
+                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
                   <span>Statutory CSR Partnership</span>
                 </div>
                 <h1 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
@@ -83,13 +83,13 @@ export default async function PartnerStoryPage({ params }: PageProps) {
                     : `${partner.name} is formally recognized in BSGSS's statutory funding-partners record.`}
                 </p>
               </div>
-              <div className="relative min-h-48 border-t border-line bg-white md:border-l md:border-t-0 flex items-center justify-center p-8">
-                <div className="relative h-28 w-full">
+              <div className="relative min-h-36 flex items-center justify-center p-4">
+                <div className="relative h-24 w-full">
                   <Image
                     src={partner.logo}
                     alt={partner.alt}
                     fill
-                    sizes="(min-width: 768px) 20rem, 100vw"
+                    sizes="(min-width: 768px) 18rem, 100vw"
                     className="object-contain"
                     priority
                   />
@@ -138,7 +138,7 @@ export default async function PartnerStoryPage({ params }: PageProps) {
             </section>
           ) : (
             <ScrollReveal direction="up" delay={60}>
-              <section className="mt-10 sm:mt-12 rounded-2xl border border-line bg-white p-6 sm:p-8 shadow-2xs">
+              <section className="mt-10 sm:mt-12 border-t border-line pt-6">
                 <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Public record</p>
                 <h2 className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">A recognised BSGSS funding partner</h2>
                 <p className="mt-3 max-w-3xl text-xs leading-relaxed text-ink-muted sm:text-sm">
@@ -148,9 +148,9 @@ export default async function PartnerStoryPage({ params }: PageProps) {
             </ScrollReveal>
           )}
 
-          {/* Source and Transparency Card */}
+          {/* Source and Transparency Section */}
           <ScrollReveal direction="up" delay={60}>
-            <section className="mt-10 sm:mt-12 grid gap-6 rounded-2xl border border-brand-200/80 bg-sand-50/80 p-6 sm:p-8 text-ink shadow-2xs md:grid-cols-[1fr_auto] md:items-center">
+            <section className="mt-10 sm:mt-12 border-t border-line pt-6 text-ink sm:flex sm:items-center sm:justify-between sm:gap-8">
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Source and transparency</p>
                 <h2 className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">
@@ -164,7 +164,7 @@ export default async function PartnerStoryPage({ params }: PageProps) {
                 href="/documents/bsgss-funding-partners-2024.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
+                className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:mt-0 sm:text-sm"
               >
                 <Download className="h-4 w-4" />
                 <span>View source PDF</span>
@@ -173,7 +173,7 @@ export default async function PartnerStoryPage({ params }: PageProps) {
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={80}>
-            <section className="mt-8 flex flex-col gap-4 rounded-2xl border border-line bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8 shadow-2xs">
+            <section className="mt-10 sm:mt-12 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="font-display text-lg font-bold text-ink sm:text-xl">
                   Interested in partnering with BSGSS?

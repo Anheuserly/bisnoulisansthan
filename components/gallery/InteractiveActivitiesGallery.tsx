@@ -203,7 +203,7 @@ export function InteractiveActivitiesGallery() {
                     </p>
                     <div className="mt-3 flex items-center justify-between border-t border-white/15 pt-2 text-[0.6875rem] font-medium text-white/70">
                       <div className="flex items-center gap-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         <span>{item.year} · Field Record</span>
                       </div>
                       <span className="inline-flex items-center gap-1 text-[0.625rem] font-mono uppercase tracking-wider text-white/70 group-hover:text-emerald-300 transition">

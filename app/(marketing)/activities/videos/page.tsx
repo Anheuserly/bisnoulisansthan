@@ -30,7 +30,7 @@ export default async function VideosPage() {
         ]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <ScrollReveal direction="up" delay={40}>
             <div className="mb-8">
               <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{videoGallery.eyebrow}</p>

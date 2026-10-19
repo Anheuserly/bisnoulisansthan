@@ -64,7 +64,7 @@ export default async function AdminDashboard() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-line bg-white p-6 shadow-2xs">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
               BSGSS Executive Control
             </span>

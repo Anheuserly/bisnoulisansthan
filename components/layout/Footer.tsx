@@ -70,16 +70,6 @@ export function Footer() {
                 >
                   <Twitter className="h-4 w-4" />
                 </a>
-                <a
-                  href={social.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-[#25D366] hover:text-white"
-                  title="WhatsApp"
-                  aria-label="Connect on WhatsApp"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                </a>
               </div>
             </div>
           </div>

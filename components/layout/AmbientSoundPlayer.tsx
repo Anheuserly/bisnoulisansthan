@@ -229,7 +229,7 @@ export function AmbientSoundPlayer({ initialConfig }: AmbientSoundPlayerProps) {
               <div className="text-[0.625rem] text-brand-700 font-semibold flex items-center gap-1">
                 {isPlaying ? (
                   <>
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                     <span className="truncate max-w-[120px]">{selectedPreset?.genre || "Playing"}</span>
                   </>
                 ) : (
@@ -400,7 +400,7 @@ function SoundscapeDrawer({
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50/90 p-3 flex items-center justify-between gap-3 shadow-xs">
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                  <span className="h-2 w-2 rounded-full bg-emerald-600" />
                   <span className="text-[0.6875rem] font-extrabold uppercase tracking-wider text-emerald-800">
                     Now Playing
                   </span>

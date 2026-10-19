@@ -4,6 +4,7 @@ import { ArrowRight, Compass, Handshake, HeartPulse } from "lucide-react";
 import { StoryExperience } from "@/components/about/StoryExperience";
 import { StoryHero } from "@/components/about/StoryHero";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -13,11 +14,14 @@ export const metadata: Metadata = buildMetadata({
   path: "/about/our-story",
 });
 
-export default function OurStoryPage() {
+export default async function OurStoryPage() {
+  const settings = await getCustomizerSettings();
+  const milestones = settings.storyMilestones || [];
+
   return (
     <>
       <StoryHero />
-      <StoryExperience />
+      <StoryExperience milestones={milestones} />
       <section className="bg-sand-50/80 py-16 sm:py-20 border-t border-line">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-start md:px-8">
           <ScrollReveal direction="up" delay={40}>

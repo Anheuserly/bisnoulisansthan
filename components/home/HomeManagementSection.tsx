@@ -219,7 +219,7 @@ export function HomeManagementSection() {
             {/* Top Modal Header */}
             <div className="flex items-center justify-between border-b border-brand-100 bg-sand-50/80 px-6 py-4">
               <div className="flex items-center gap-2">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-700">
                   {activeLeader.titleBadge} · Direct Address
                 </span>

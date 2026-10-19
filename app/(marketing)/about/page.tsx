@@ -125,14 +125,14 @@ export default function AboutPage() {
       </section>
 
       {/* How it began & Journey */}
-      <section className="py-12 sm:py-16 md:py-20">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:items-start md:px-8">
+      <section className="py-16 sm:py-20 border-t border-line">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[0.85fr_1.15fr] md:items-start md:px-8">
           <ScrollReveal direction="up" delay={50}>
-            <div className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 text-ink shadow-2xs">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 shadow-2xs">
+            <div className="border-t-2 border-brand-850 pt-6 text-ink">
+              <span className="flex h-10 w-10 items-center justify-center text-slate-900">
                 <Route className="h-6 w-6" />
               </span>
-              <p className="mt-5 text-xs font-bold uppercase tracking-wider text-brand-700">
+              <p className="mt-4 text-xs font-bold uppercase tracking-wider text-ink-muted">
                 {about.journey.eyebrow}
               </p>
               <p className="mt-2 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
@@ -142,9 +142,9 @@ export default function AboutPage() {
                 Rooted in village industries, expanding into institutional community empowerment.
               </p>
 
-              <div className="mt-6 border-t border-brand-100 pt-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
+              <div className="mt-6 border-t border-line pt-4">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-900">
+                  <ShieldCheck className="h-4 w-4 text-slate-900" />
                   <span>30 Years Uninterrupted Operation</span>
                 </span>
               </div>

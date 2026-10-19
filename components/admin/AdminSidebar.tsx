@@ -150,7 +150,7 @@ export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
                 </span>
               </div>
               <div className="flex items-center gap-1 text-[0.6875rem] font-medium text-emerald-700 mt-0.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 <span>Operational Workspace</span>
               </div>
             </div>

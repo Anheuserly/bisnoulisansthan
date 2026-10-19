@@ -24,7 +24,7 @@ export default function GalleryPage() {
         ]}
       />
       <div className="pt-6 pb-16 sm:pt-8 sm:pb-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <InteractiveActivitiesGallery />
         </div>
       </div>

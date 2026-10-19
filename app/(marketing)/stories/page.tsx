@@ -28,9 +28,9 @@ export default function StoriesPage() {
       />
 
       <div className="pt-8 pb-16 sm:pt-10 sm:pb-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 space-y-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 space-y-10">
           {/* Ethical Consent & Dignity Guarantee Banner */}
-          <section className="rounded-2xl border border-brand-200 bg-sand-50/80 p-5 sm:p-6 shadow-2xs">
+          <section className="border-t-2 border-brand-850 pt-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-start gap-3">
                 <ShieldCheck className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
@@ -44,8 +44,8 @@ export default function StoriesPage() {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-white px-3 py-1 text-xs font-semibold text-emerald-800 shrink-0">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 shrink-0">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                 <span>{voices.length} Verified Recordings</span>
               </div>
             </div>
@@ -53,14 +53,14 @@ export default function StoriesPage() {
 
           {/* Voices Grid */}
           <section aria-label="Beneficiary Stories">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {voices.map((voice) => (
                 <VoiceCard key={voice.id} voice={voice} />
               ))}
             </div>
 
             {voices.length === 0 && (
-              <div className="rounded-2xl border border-line bg-white p-12 text-center">
+              <div className="border-t border-line py-12 text-center">
                 <Mic className="mx-auto h-10 w-10 text-ink-muted" aria-hidden="true" />
                 <h3 className="mt-4 font-display text-lg font-bold text-ink">
                   No verified recordings published yet
@@ -73,7 +73,7 @@ export default function StoriesPage() {
           </section>
 
           {/* Micro-Giving Connection */}
-          <section className="rounded-2xl border border-line bg-gradient-to-br from-white via-sand-50 to-brand-50/40 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 shadow-2xs">
+          <section className="border-t border-line pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-brand-700">
                 Sponsor Future Training Batches

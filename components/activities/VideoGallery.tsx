@@ -63,8 +63,8 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-start">
       {/* Primary Video Theater */}
-      <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-soft">
-        <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+      <section className="border-t-2 border-brand-850 pt-6">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-950">
           {hasStarted ? (
             <div ref={playerTarget} className="h-full w-full" />
           ) : (
@@ -97,7 +97,7 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
         </div>
 
         {/* Player Controls & Info Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-5">
           <div className="max-w-xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
               Now Playing
@@ -119,8 +119,8 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
       </section>
 
       {/* Playlist Sidebar */}
-      <aside className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-soft lg:sticky lg:top-24">
-        <div className="flex items-center justify-between border-b border-slate-200/80 bg-sand-50/80 px-5 py-4">
+      <aside className="border-t-2 border-brand-850 pt-6 lg:sticky lg:top-24">
+        <div className="flex items-center justify-between border-b border-slate-200/80 pb-3">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
               Playlist ({videos.length})
@@ -132,7 +132,7 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
           <ListVideo className="h-5 w-5 text-brand-700" />
         </div>
 
-        <label className="flex cursor-pointer items-center justify-between border-b border-slate-200/80 px-5 py-3 text-xs sm:text-sm font-medium text-slate-700 hover:bg-sand-50/50">
+        <label className="flex cursor-pointer items-center justify-between border-b border-slate-200/80 py-3 text-xs sm:text-sm font-medium text-slate-700 hover:text-brand-850">
           <span>Continuous playback</span>
           <input
             type="checkbox"

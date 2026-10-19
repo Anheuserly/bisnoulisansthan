@@ -85,6 +85,9 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           ...DEFAULT_CUSTOMIZER_SETTINGS.popup,
           ...(val.popup || {}),
         },
+        storyMilestones: Array.isArray(val.storyMilestones) && val.storyMilestones.length > 0
+          ? val.storyMilestones
+          : DEFAULT_CUSTOMIZER_SETTINGS.storyMilestones,
       };
     }
   } catch (err) {

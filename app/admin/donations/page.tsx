@@ -68,7 +68,7 @@ export default async function DonationsAdminPage() {
   return (
     <main className="min-h-screen bg-sand-50">
       <header className="border-b border-line bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-[.18em] text-brand-700">BSGSS Control Centre</p>
             <h1 className="font-display text-xl font-bold text-ink">Donation & Payment Verification</h1>
@@ -78,7 +78,7 @@ export default async function DonationsAdminPage() {
           </Link>
         </div>
       </header>
-      <div className="mx-auto max-w-6xl px-5 py-8 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 py-8 md:px-8">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">

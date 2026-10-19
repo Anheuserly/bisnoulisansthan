@@ -41,15 +41,15 @@ export default function SponsorPage() {
       />
 
       <div className="pt-8 pb-16 sm:pt-10 sm:pb-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 space-y-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 space-y-12">
           {/* Mission & Guarantee Banner */}
-          <section className="rounded-2xl border border-brand-200 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 shadow-2xs">
-            <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-center">
+          <section className="border-t-2 border-brand-850 pt-6">
+            <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-start">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-700 shadow-2xs">
-                  <Scissors className="h-3.5 w-3.5 text-brand-600" aria-hidden="true" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand-700">
+                  <Scissors className="h-4 w-4 text-brand-600" aria-hidden="true" />
                   <span>Vocational Independence</span>
-                </span>
+                </div>
                 <h2 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-ink">
                   Every rupee creates measurable artisan agency.
                 </h2>
@@ -68,7 +68,7 @@ export default function SponsorPage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-brand-100 bg-white/95 p-5 shadow-2xs space-y-3">
+              <div className="border-t border-line pt-4 md:border-t-0 md:border-l md:border-line md:pl-6 space-y-3">
                 <div className="flex items-center gap-2 text-brand-800">
                   <ShieldCheck className="h-5 w-5 text-emerald-600" aria-hidden="true" />
                   <h3 className="font-display text-base font-bold text-ink">
@@ -99,14 +99,14 @@ export default function SponsorPage() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {tiers.map((tier) => (
                 <article
                   key={tier.id}
-                  className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-lift"
+                  className="flex flex-col border-t-2 border-brand-850 pt-4"
                 >
                   {/* Tier Image (sized & lazy-loaded) */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-sand-100">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-sand-100">
                     <img
                       src={tier.image}
                       alt={tier.title}
@@ -115,7 +115,7 @@ export default function SponsorPage() {
                       height={250}
                       className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                     />
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-2.5 left-2.5">
                       <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-[0.6875rem] font-bold text-brand-900 shadow-2xs">
                         {tier.outcome}
                       </span>
@@ -123,7 +123,7 @@ export default function SponsorPage() {
                   </div>
 
                   {/* Tier Details */}
-                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex flex-1 flex-col pt-4">
                     <div className="flex items-baseline justify-between gap-2">
                       <h4 className="font-display text-base font-bold text-ink">
                         {tier.title}
@@ -168,7 +168,7 @@ export default function SponsorPage() {
           </section>
 
           {/* CSR & Institutional Micro-Sponsorship Note */}
-          <section className="rounded-2xl border border-line bg-sand-50/70 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <section className="border-t border-line pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h4 className="font-display text-base sm:text-lg font-bold text-ink">
                 Looking to sponsor an entire village guild or batch?

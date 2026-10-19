@@ -167,6 +167,19 @@ export type CustomizerPopupConfig = {
   delaySeconds: number; // 0 for immediate, 2 for 2s delay
 };
 
+export type StoryMilestoneConfig = {
+  id: string;
+  year: string;
+  category: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  location: string;
+};
+
+export type StoryPresentation = "editorial" | "photographic";
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -178,6 +191,8 @@ export type CustomizerSettings = {
   offices: CustomizerOfficesConfig;
   contactActions: CustomizerContactActionConfig;
   popup: CustomizerPopupConfig;
+  storyPresentation: StoryPresentation;
+  storyMilestones: StoryMilestoneConfig[];
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1288,4 +1303,56 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     expiryDate: "",
     delaySeconds: 1,
   },
+  storyMilestones: [
+    {
+      id: "1994",
+      year: "1994",
+      category: "Foundation",
+      title: "A village-rooted beginning",
+      description: "BSGSS was founded in Bisnouli village, Dadri Tehsil, Uttar Pradesh, with a clear conviction: underprivileged families thrive when given access to self-reliance, village industries and practical development.",
+      image: "/images/bsgss/legacy-page-assets/44-homepage-aboutus.jpg",
+      imageAlt: "Authentic historical BSGSS village outreach and community gathering",
+      location: "Bisnouli village, Dadri Tehsil, Uttar Pradesh",
+    },
+    {
+      id: "community",
+      year: "1990s",
+      category: "Community education",
+      title: "Grassroots literacy & learning",
+      description: "The work grew around children's learning, community-based literacy classes, and awareness drives that brought non-formal education to rural households.",
+      image: "/images/bsgss/education/146-class1.jpeg",
+      imageAlt: "BSGSS community classroom education session in progress",
+      location: "Rural learning centres in Uttar Pradesh & Delhi NCR",
+    },
+    {
+      id: "skills",
+      year: "2000s",
+      category: "Skills and livelihoods",
+      title: "Vocational empowerment for women",
+      description: "Practical vocational training centres in tailoring, cutting, embroidery, and computer literacy gave thousands of women pathways towards income generation and micro-enterprise.",
+      image: "/images/bsgss/gallery-training/185-tal1.jpeg",
+      imageAlt: "Women operating sewing machines at BSGSS tailoring training centre",
+      location: "Community vocational training centres",
+    },
+    {
+      id: "health",
+      year: "2010s",
+      category: "Health access",
+      title: "Preventive healthcare closer to home",
+      description: "Free medical check-up camps, cancer screenings, eye examinations and medicine distribution brought specialized medical consultation directly to rural and underserved populations.",
+      image: "/images/bsgss/healthcare-camps/150-camp3.jpeg",
+      imageAlt: "Medical team and doctors providing free health checkups at BSGSS camp",
+      location: "Rural camps in Bastar, Khora Colony and Western UP",
+    },
+    {
+      id: "today",
+      year: "Today",
+      category: "Institutional CSR & Scale",
+      title: "Sustainable partnerships & progress",
+      description: "Today, BSGSS connects education, healthcare, skills, women’s empowerment and institutional CSR partnerships with RITES, IRCON, and REC—sustaining community self-reliance across North India.",
+      image: "/images/bsgss/gallery-events/355-1-1.jpg",
+      imageAlt: "BSGSS leadership and community partners at formal event",
+      location: "Uttar Pradesh, Delhi, Haryana and Punjab",
+    },
+  ],
 };

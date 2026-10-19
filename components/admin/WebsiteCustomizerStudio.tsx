@@ -37,6 +37,7 @@ import {
   VolumeX,
   Bell,
   Megaphone,
+  Route,
 } from "lucide-react";
 import {
   AMBIENT_TRACK_PRESETS,
@@ -45,6 +46,7 @@ import {
   type SectionConfig,
   type CollagePhotoItem,
   type PopupNotificationType,
+  type StoryMilestoneConfig,
 } from "@/config/customizer";
 
 interface WebsiteCustomizerStudioProps {
@@ -68,7 +70,7 @@ const GALLERY_PRESET_IMAGES = [
 
 export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "texts" | "layout" | "offices" | "popup" | "collage" | "audio" | "typing" | "footprint">("sections");
+  const [activeTab, setActiveTab] = useState<"sections" | "story" | "texts" | "layout" | "offices" | "popup" | "collage" | "audio" | "typing" | "footprint">("sections");
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -332,6 +334,7 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
       <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2 overflow-x-auto">
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
+          { id: "story", label: "Our Story & Milestones", icon: Route },
           { id: "popup", label: "Pop-up & Announcements", icon: Bell },
           { id: "texts", label: "Website Texts & Copy", icon: FileText },
           { id: "layout", label: "Header, Nav & Footer Size", icon: Sliders },
@@ -2530,6 +2533,335 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB: Our Story & Milestones */}
+      {activeTab === "story" && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                  <Route className="h-4 w-4" />
+                </span>
+                <h3 className="font-display text-lg font-bold text-ink">
+                  Our 30-Year Grassroots Story &amp; Milestone Timeline
+                </h3>
+              </div>
+              <p className="mt-1 text-xs text-ink-muted">
+                Manage the historical milestones, community dates, descriptions, locations, and authentic photographs shown on the interactive <code>/about/our-story</code> timeline.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                const newMilestone: StoryMilestoneConfig = {
+                  id: `milestone-${Date.now()}`,
+                  year: "2026",
+                  category: "New Chapter",
+                  title: "New Grassroots Milestone",
+                  description: "Describe the community impact, field program, or partnership milestone here.",
+                  image: "/images/bsgss/banners/589-banner-1.webp",
+                  imageAlt: "BSGSS community achievement",
+                  location: "Uttar Pradesh & Delhi NCR",
+                };
+                setSettings((prev) => ({
+                  ...prev,
+                  storyMilestones: [...(prev.storyMilestones || []), newMilestone],
+                }));
+              }}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-slate-800 transition cursor-pointer"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Add New Milestone</span>
+            </button>
+          </div>
+
+          {/* Milestones List */}
+          <div className="space-y-4">
+            {(settings.storyMilestones || []).map((milestone, idx) => (
+              <div
+                key={milestone.id || idx}
+                className="rounded-2xl border border-line bg-white p-5 sm:p-6 shadow-2xs"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                      {idx + 1}
+                    </span>
+                    <div>
+                      <span className="font-display text-base font-bold text-ink">
+                        {milestone.year} · {milestone.title}
+                      </span>
+                      <span className="ml-2 text-xs text-ink-muted">({milestone.category})</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {/* Move Up */}
+                    <button
+                      type="button"
+                      disabled={idx === 0}
+                      onClick={() => {
+                        if (idx === 0) return;
+                        const updated = [...(settings.storyMilestones || [])];
+                        const curr = updated[idx];
+                        const prevM = updated[idx - 1];
+                        if (!curr || !prevM) return;
+                        updated[idx - 1] = curr;
+                        updated[idx] = prevM;
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="p-1.5 text-slate-600 hover:text-slate-900 disabled:opacity-30 cursor-pointer"
+                      title="Move up"
+                    >
+                      <ArrowUp className="h-4 w-4" />
+                    </button>
+
+                    {/* Move Down */}
+                    <button
+                      type="button"
+                      disabled={idx === (settings.storyMilestones || []).length - 1}
+                      onClick={() => {
+                        if (idx >= (settings.storyMilestones || []).length - 1) return;
+                        const updated = [...(settings.storyMilestones || [])];
+                        const curr = updated[idx];
+                        const nextM = updated[idx + 1];
+                        if (!curr || !nextM) return;
+                        updated[idx + 1] = curr;
+                        updated[idx] = nextM;
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="p-1.5 text-slate-600 hover:text-slate-900 disabled:opacity-30 cursor-pointer"
+                      title="Move down"
+                    >
+                      <ArrowDown className="h-4 w-4" />
+                    </button>
+
+                    {/* Remove */}
+                    <button
+                      type="button"
+                      disabled={(settings.storyMilestones || []).length <= 2}
+                      onClick={() => {
+                        if (!window.confirm(`Delete milestone "${milestone.title}"?`)) return;
+                        setSettings((prev) => ({
+                          ...prev,
+                          storyMilestones: (prev.storyMilestones || []).filter((_, i) => i !== idx),
+                        }));
+                      }}
+                      className="p-1.5 text-red-600 hover:text-red-800 disabled:opacity-30 cursor-pointer"
+                      title="Delete milestone"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-4 sm:grid-cols-3">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Year / Period
+                    </label>
+                    <input
+                      type="text"
+                      value={milestone.year}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, year: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      value={milestone.category}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, category: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Field Location / Territory
+                    </label>
+                    <input
+                      type="text"
+                      value={milestone.location}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, location: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-3">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Milestone Title
+                    </label>
+                    <input
+                      type="text"
+                      value={milestone.title}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, title: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-3">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Detailed Narrative
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={milestone.description}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, description: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs leading-relaxed text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Photograph URL (Authentic Community Activities &amp; Events)
+                    </label>
+                    <input
+                      type="text"
+                      value={milestone.image}
+                      onChange={(e) => {
+                        const updated = [...(settings.storyMilestones || [])];
+                        const target = updated[idx];
+                        if (!target) return;
+                        updated[idx] = { ...target, image: e.target.value };
+                        setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                      }}
+                      className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                    />
+                    <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-ink-muted">
+                      <span className="font-semibold text-ink">Authentic Field Presets:</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...(settings.storyMilestones || [])];
+                          const target = updated[idx];
+                          if (!target) return;
+                          updated[idx] = { ...target, image: "/images/bsgss/legacy-page-assets/44-homepage-aboutus.jpg" };
+                          setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                        }}
+                        className="hover:text-brand-700 underline cursor-pointer"
+                      >
+                        1994 Founding
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...(settings.storyMilestones || [])];
+                          const target = updated[idx];
+                          if (!target) return;
+                          updated[idx] = { ...target, image: "/images/bsgss/education/146-class1.jpeg" };
+                          setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                        }}
+                        className="hover:text-brand-700 underline cursor-pointer"
+                      >
+                        Village Literacy
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...(settings.storyMilestones || [])];
+                          const target = updated[idx];
+                          if (!target) return;
+                          updated[idx] = { ...target, image: "/images/bsgss/gallery-training/185-tal1.jpeg" };
+                          setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                        }}
+                        className="hover:text-brand-700 underline cursor-pointer"
+                      >
+                        Tailoring Center
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...(settings.storyMilestones || [])];
+                          const target = updated[idx];
+                          if (!target) return;
+                          updated[idx] = { ...target, image: "/images/bsgss/healthcare-camps/150-camp3.jpeg" };
+                          setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                        }}
+                        className="hover:text-brand-700 underline cursor-pointer"
+                      >
+                        Medical Camp
+                      </button>
+                      <span>·</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = [...(settings.storyMilestones || [])];
+                          const target = updated[idx];
+                          if (!target) return;
+                          updated[idx] = { ...target, image: "/images/bsgss/gallery-events/355-1-1.jpg" };
+                          setSettings((prev) => ({ ...prev, storyMilestones: updated }));
+                        }}
+                        className="hover:text-brand-700 underline cursor-pointer"
+                      >
+                        CSR Partnerships
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                      Image Preview
+                    </label>
+                    <div className="mt-1 relative h-20 w-32 rounded-lg border border-line overflow-hidden bg-sand-100">
+                      {milestone.image ? (
+                        <img
+                          src={milestone.image}
+                          alt={milestone.imageAlt || milestone.title}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-[10px] text-ink-muted">
+                          No image
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

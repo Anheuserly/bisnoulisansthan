@@ -117,13 +117,13 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
   return (
     <article
       className={cn(
-        "flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-soft transition-all duration-200 hover:border-brand-300",
+        "flex flex-col border-t-2 border-brand-850 pt-5",
         className
       )}
     >
       {/* Top Header: Photo, Name, Village */}
-      <div className="flex items-center gap-4 p-5 sm:p-6 border-b border-line/60 bg-sand-50/50">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-white bg-sand-200 shadow-2xs">
+      <div className="flex items-center gap-4 pb-4 border-b border-line/60">
+        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-line bg-sand-200">
           <img
             src={voice.photo}
             alt={`${voice.name} from ${voice.village}`}
@@ -222,7 +222,7 @@ export function VoiceCard({ voice, className }: VoiceCardProps) {
       )}
 
       {/* Transcript Section (Visible by Default) */}
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col pt-4">
         <div className="flex items-center justify-between gap-2 border-b border-line/50 pb-2 mb-3">
           <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-700">
             Recorded Dispatch Transcript

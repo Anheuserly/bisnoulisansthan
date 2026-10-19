@@ -42,14 +42,15 @@ export default function PartnersPage() {
       />
       <PartnersSection />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <ScrollReveal direction="up" delay={40}>
-            <section className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 to-brand-50/60 p-6 sm:p-8 text-ink sm:flex sm:items-center sm:justify-between sm:gap-8 shadow-2xs">
+            <section className="border-t-2 border-brand-850 pt-6 text-ink sm:flex sm:items-center sm:justify-between sm:gap-8">
               <div>
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand-700 shadow-2xs">
-                  <Handshake className="h-6 w-6" />
-                </span>
-                <h2 className="mt-4 font-display text-xl font-bold text-ink sm:text-2xl">
+                <div className="flex items-center gap-2 text-brand-700">
+                  <Handshake className="h-5 w-5" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-brand-800">CSR & Statutory Alliances</span>
+                </div>
+                <h2 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">
                   Partners in social development
                 </h2>
                 <p className="mt-2 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
@@ -83,20 +84,20 @@ function PartnerDirectory() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between border-b border-line pb-3">
           <div>
             <h2 className="font-display text-xl font-bold text-ink sm:text-2xl">CSR partners</h2>
-            <p className="mt-1 text-xs text-ink-muted sm:text-sm">Every card opens its dedicated statutory partnership profile.</p>
+            <p className="mt-1 text-xs text-ink-muted sm:text-sm">Every partner link opens its dedicated statutory partnership profile.</p>
           </div>
-          <p className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+          <p className="text-xs font-semibold text-ink-muted">
             {partners.length} verified partner profiles
           </p>
         </div>
       </ScrollReveal>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
         {partners.map((partner, idx) => (
           <ScrollReveal key={partner.id} staggerIndex={idx % 6} direction="up">
             <Link
               href={partner.href}
-              className="group flex min-h-16 items-center justify-between gap-4 rounded-xl border border-line bg-white px-5 py-3.5 text-xs sm:text-sm font-semibold text-ink shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft"
+              className="group flex min-h-12 items-center justify-between gap-4 border-t border-line/70 py-3 text-xs sm:text-sm font-semibold text-ink transition-colors hover:text-brand-800"
             >
               <div className="flex items-center gap-2.5 min-w-0">
                 <Building2 className="h-4 w-4 shrink-0 text-brand-600 transition group-hover:scale-110" />
@@ -121,11 +122,11 @@ function PartnerList({ title, items }: { title: string; items: string[] }) {
         </div>
       </ScrollReveal>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((partner, idx) => (
           <ScrollReveal key={partner} staggerIndex={idx % 6} direction="up">
             <div
-              className="flex min-h-16 items-center gap-2.5 rounded-xl border border-line bg-white px-4 py-3 text-xs sm:text-sm font-medium text-ink shadow-2xs"
+              className="flex min-h-12 items-center gap-2.5 border-t border-line/70 py-3 text-xs sm:text-sm font-medium text-ink"
             >
               <Landmark className="h-4 w-4 shrink-0 text-brand-600" />
               <span>{partner}</span>

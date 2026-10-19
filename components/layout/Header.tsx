@@ -184,7 +184,7 @@ export function Header() {
 
       {searchOpen && (
         <div id="site-search" className="absolute inset-x-0 top-full border-b border-line bg-white shadow-lift">
-          <div className="mx-auto max-w-6xl px-5 py-4 md:px-8">
+          <div className="mx-auto max-w-7xl px-5 py-4 md:px-8">
             <div className="flex items-center gap-3">
               <Search className="h-5 w-5 shrink-0 text-brand-700" aria-hidden="true" />
               <input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => { if (event.key === "Escape") setSearchOpen(false); }} placeholder="Search programmes, impact, gallery, ways to help…" className="h-11 min-w-0 flex-1 rounded-md border border-line bg-sand-50 px-3 text-sm text-ink outline-none placeholder:text-ink-muted focus:border-brand-600 focus:ring-2 focus:ring-brand-100" />

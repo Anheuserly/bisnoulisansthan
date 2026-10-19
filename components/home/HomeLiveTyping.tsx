@@ -60,33 +60,30 @@ export function HomeLiveTyping({ data }: HomeLiveTypingProps) {
   }, [displayText, phase, phraseIndex, phrases]);
 
   return (
-    <section className="relative isolate overflow-hidden border-y border-brand-200/80 bg-gradient-to-r from-sand-50 via-white to-brand-50/50 py-5 sm:py-6 shadow-2xs">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+    <section className="relative isolate overflow-hidden border-y border-line bg-sand-50/80 py-5 sm:py-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          {/* Left Column: Live Pulse Beacon & Dynamic Typewriter */}
+          {/* Left Column: Clean Beacon & Dynamic Typewriter */}
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800 ring-1 ring-emerald-300">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
-                </span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-800">
+                <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
                 Live Movement
               </span>
-              <p className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-brand-700">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-ink-muted">
                 {eyebrow}
               </p>
             </div>
 
-            {/* Typewriter Display Area with Luxury Editorial Polish */}
+            {/* Typewriter Display Area with Editorial Polish */}
             <div className="mt-2.5 flex min-h-[3.75rem] items-start sm:items-center">
               <div className="flex items-baseline gap-2">
-                <span className="font-mono text-xs font-bold text-brand-700 bg-brand-100/70 px-2 py-0.5 rounded-md border border-brand-200/80">
+                <span className="font-mono text-xs font-bold text-slate-700 bg-sand-100 px-2 py-0.5 rounded-md border border-line">
                   {String(phraseIndex + 1).padStart(2, "0")} / {String(phrases.length).padStart(2, "0")}
                 </span>
                 <p className="font-display text-base font-bold text-ink sm:text-xl md:text-[1.35rem] leading-snug tracking-tight">
-                  <span className="text-brand-950">{displayText}</span>
-                  <span className="ml-1 inline-block h-5 w-[3px] animate-pulse rounded-full bg-brand-700 align-middle shadow-[0_0_8px_rgba(35,104,115,0.6)]" />
+                  <span className="text-ink">{displayText}</span>
+                  <span className="ml-1 inline-block h-5 w-[2px] bg-slate-900 align-middle" />
                 </p>
               </div>
             </div>

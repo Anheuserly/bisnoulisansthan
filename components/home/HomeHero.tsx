@@ -52,11 +52,11 @@ export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
       {/* Hero Shell */}
-      <div className="relative mx-auto grid min-h-[30rem] max-w-6xl items-center px-4 py-14 sm:px-6 md:px-8 lg:min-h-[36rem]">
+      <div className="relative mx-auto grid min-h-[30rem] max-w-7xl items-center px-4 py-14 sm:px-6 md:px-8 lg:min-h-[36rem]">
         <div className="max-w-3xl">
           {/* Institutional Credibility Badge */}
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/15 px-4 py-1.5 text-xs font-bold tracking-widest text-amber-200 uppercase backdrop-blur-md shadow-xs">
-            <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
             <span>EST. 1994 · REG. NO. S/26477 · 30 YEARS OF GRASSROOTS SARVODAYA</span>
           </div>
 

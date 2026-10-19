@@ -126,7 +126,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
       <div className="pointer-events-none absolute -left-28 top-1/4 h-96 w-96 rounded-full bg-brand-200/15 blur-3xl" />
       <div className="pointer-events-none absolute -right-28 bottom-1/4 h-96 w-96 rounded-full bg-emerald-200/15 blur-3xl" />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         {/* Main Cockpit Grid: Left Context & Telemetry (5 cols) + Right Map Canvas (7 cols) */}
         <div className="grid gap-8 lg:grid-cols-12 lg:items-stretch">
           
@@ -134,7 +134,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
           <div className="flex flex-col justify-between rounded-3xl bg-white p-6 sm:p-8 shadow-soft lg:col-span-5">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-sand-100/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800">
-                <Globe2 className="h-4 w-4 text-brand-600 animate-pulse" />
+                <Globe2 className="h-4 w-4 text-brand-600" />
                 <span>{customizerConfig?.eyebrow || "Global Alliances & Verified Grassroots Footprint"}</span>
               </div>
 
@@ -295,7 +295,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
               {/* Header inside Map Canvas */}
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line/60 pb-3.5">
                 <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                   <span className="text-xs font-bold uppercase tracking-wider text-ink">
                     {viewMode === "world"
                       ? "Global Outreach Horizon & Alliances Map"
@@ -310,7 +310,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                         <span>India (Field Base HQ)</span>
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
                         <span>Target Global Hubs</span>
                       </span>
                       <span className="flex items-center gap-1.5">
@@ -464,7 +464,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                             cy={y}
                             r={isHQ ? 14 : 10}
                             fill="url(#hubGlow)"
-                            className="animate-ping opacity-60"
+                            className="opacity-30"
                           />
                           <circle
                             cx={x}
