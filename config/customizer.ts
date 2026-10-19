@@ -1303,6 +1303,9 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     expiryDate: "",
     delaySeconds: 1,
   },
+  // The editorial mode avoids a single large photograph and keeps the journey
+  // focused on the record, location and milestone narrative.
+  storyPresentation: "editorial",
   storyMilestones: [
     {
       id: "1994",

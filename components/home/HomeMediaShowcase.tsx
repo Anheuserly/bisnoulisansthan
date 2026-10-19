@@ -16,7 +16,7 @@ export function HomeMediaShowcase() {
   const clippings = content.activities.clippings.slice(0, 3);
 
   return (
-    <section className="bg-white py-16 sm:py-24 border-b border-brand-100" id="media-showcase">
+    <section className="bg-white py-12 sm:py-16 border-b border-brand-100" id="media-showcase">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">

@@ -206,6 +206,7 @@ export async function POST(request: Request) {
       expiryDate: incoming.popup?.expiryDate !== undefined ? incoming.popup.expiryDate : (current.popup?.expiryDate ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.expiryDate),
       delaySeconds: typeof incoming.popup?.delaySeconds === "number" ? Math.max(0, incoming.popup.delaySeconds) : (current.popup?.delaySeconds ?? DEFAULT_CUSTOMIZER_SETTINGS.popup.delaySeconds),
     },
+    storyPresentation: incoming.storyPresentation === "photographic" ? "photographic" : "editorial",
     storyMilestones: Array.isArray(incoming.storyMilestones) && incoming.storyMilestones.length > 0
       ? incoming.storyMilestones.map((m, idx) => ({
           id: m.id || `milestone-${idx + 1}`,

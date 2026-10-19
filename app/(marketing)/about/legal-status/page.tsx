@@ -12,6 +12,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { DocumentArchive } from "@/components/legal/DocumentArchive";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { buildMetadata } from "@/lib/seo";
@@ -193,7 +194,7 @@ export default function LegalStatusPage() {
                     Public Compliance Certificates &amp; Statutory Files
                   </h2>
                   <p className="mt-1 text-xs text-ink-muted sm:text-sm">
-                    Click to open any certificate in a new tab or save a local PDF copy.
+                    Browse a visual record of every public certificate. Each preview is the first page of the official attachment.
                   </p>
                 </div>
                 <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-800">
@@ -202,56 +203,9 @@ export default function LegalStatusPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-8 grid gap-8 md:grid-cols-2">
-              {legalStatus.documents.map((doc, idx) => (
-                <ScrollReveal key={doc.href} staggerIndex={idx % 4} direction="up">
-                  <article className="group flex h-full flex-col justify-between border-t-2 border-line pt-5 transition hover:border-brand-700">
-                    <div>
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
-                            {doc.fileType}
-                          </span>
-                          <span className="text-xs font-medium text-ink-muted">
-                            {doc.fileSize}
-                          </span>
-                        </div>
-                        <span className="text-[0.6875rem] font-semibold text-ink-muted">
-                          {doc.tag}
-                        </span>
-                      </div>
-
-                      <h3 className="mt-3 font-display text-base font-bold text-ink group-hover:text-brand-800 sm:text-lg">
-                        {doc.title}
-                      </h3>
-                      <p className="mt-2 text-xs leading-relaxed text-ink-muted sm:text-sm">
-                        {doc.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-5 flex items-center justify-between border-t border-line/60 pt-3">
-                      <a
-                        href={doc.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                        <span>View document</span>
-                      </a>
-                      <a
-                        href={doc.href}
-                        download
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-ink hover:text-brand-800 transition"
-                      >
-                        <Download className="h-3.5 w-3.5 text-brand-600" />
-                        <span>Download</span>
-                      </a>
-                    </div>
-                  </article>
-                </ScrollReveal>
-              ))}
-            </div>
+            <ScrollReveal direction="up" delay={80}>
+              <DocumentArchive documents={legalStatus.documents} />
+            </ScrollReveal>
           </section>
 
           {/* Institutional Governance Highlights (Borderless, Open Editorial) */}

@@ -2580,6 +2580,47 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
             </button>
           </div>
 
+          <section className="rounded-2xl border border-line bg-sand-50/70 p-5 sm:p-6">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Timeline visual treatment</p>
+              <h4 className="mt-1 font-display text-lg font-bold text-ink">Choose how the story milestones are presented</h4>
+              <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+                Editorial removes the large photograph panel and uses a refined location-and-record layout. Photographic displays the image selected for each milestone.
+              </p>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {[
+                {
+                  value: "editorial",
+                  title: "Editorial record",
+                  description: "Recommended: a focused, timeless milestone panel without a large image.",
+                },
+                {
+                  value: "photographic",
+                  title: "Documentary photography",
+                  description: "Show the individual milestone photograph managed below.",
+                },
+              ].map((option) => {
+                const selected = (settings.storyPresentation ?? "editorial") === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setSettings((prev) => ({ ...prev, storyPresentation: option.value as "editorial" | "photographic" }))}
+                    className={`rounded-xl border p-4 text-left transition ${
+                      selected
+                        ? "border-brand-700 bg-white shadow-xs"
+                        : "border-line bg-white/70 hover:border-brand-300"
+                    }`}
+                  >
+                    <span className={`block text-sm font-bold ${selected ? "text-brand-800" : "text-ink"}`}>{option.title}</span>
+                    <span className="mt-1 block text-xs leading-relaxed text-ink-muted">{option.description}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
           {/* Milestones List */}
           <div className="space-y-4">
             {(settings.storyMilestones || []).map((milestone, idx) => (

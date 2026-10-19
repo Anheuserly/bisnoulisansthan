@@ -133,7 +133,7 @@ export default async function HomePage() {
 
       case "about":
         return (
-          <section key="about" className="relative isolate overflow-hidden border-b border-brand-100 bg-gradient-to-b from-white via-sand-50/50 to-white py-16 sm:py-24" id="about">
+          <section key="about" className="relative isolate overflow-hidden border-b border-brand-100 bg-gradient-to-b from-white via-sand-50/50 to-white py-12 sm:py-16" id="about">
             {/* Ambient subtle backdrops */}
             <div className="pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-brand-200/25 blur-3xl" />
             <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-emerald-200/20 blur-3xl" />
@@ -208,7 +208,7 @@ export default async function HomePage() {
               </div>
 
               {/* Bottom 4 Institutional Credibility Highlights - NO VISIBLE CARD, NO SIDE BORDERS, NO COLOR ICONS */}
-              <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 {(about.highlights || []).map((item, idx) => (
                   <ScrollReveal key={item.title} staggerIndex={idx} direction="up">
                     <div className="group h-full border-t border-slate-200/80 pt-6 transition-all duration-200">
@@ -231,7 +231,7 @@ export default async function HomePage() {
 
       case "programmes":
         return (
-          <section key="programmes" className="py-16 sm:py-24" id="programs">
+          <section key="programmes" className="py-12 sm:py-16" id="programs">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
               <ScrollReveal direction="up" delay={40}>
                 <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-brand-700">
@@ -301,7 +301,7 @@ export default async function HomePage() {
 
       case "government":
         return (
-          <section key="government" className="border-b border-brand-100 bg-sand-50/70 py-16 sm:py-20" id="government">
+          <section key="government" className="border-b border-brand-100 bg-sand-50/70 py-12 sm:py-16" id="government">
             <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:px-8 xl:px-12 md:grid-cols-[1fr_1.1fr] md:items-center">
               <ScrollReveal direction="up" delay={50}>
                 {/* Left Column: Seamless & Borderless (NO BOXED CARD) */}
@@ -356,7 +356,7 @@ export default async function HomePage() {
 
       case "partners":
         return (
-          <section key="partners" className="relative isolate overflow-hidden bg-gradient-to-b from-white via-sand-50/70 to-white py-16 sm:py-24 border-b border-brand-100" id="partners">
+          <section key="partners" className="relative isolate overflow-hidden bg-gradient-to-b from-white via-sand-50/70 to-white py-12 sm:py-16 border-b border-brand-100" id="partners">
             {/* Ambient subtle backdrops */}
             <div className="pointer-events-none absolute -left-28 top-1/3 h-96 w-96 rounded-full bg-brand-200/20 blur-3xl" />
             <div className="pointer-events-none absolute -right-28 bottom-1/4 h-96 w-96 rounded-full bg-amber-200/20 blur-3xl" />
@@ -394,7 +394,7 @@ export default async function HomePage() {
             </div>
 
             {/* Full-Width Edge-to-Edge Logo Wall (No Borders, Free Floating, Infinite Upward Motion) */}
-            <ScrollReveal direction="up" delay={100} className="relative mt-12 w-full overflow-hidden px-2 sm:px-4 md:px-8">
+            <ScrollReveal direction="up" delay={100} className="relative mt-9 w-full overflow-hidden px-2 sm:px-4 md:px-8">
               {/* Top & Bottom seamless gradient masks for luxury floating effect */}
               <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-16 bg-gradient-to-b from-white via-white/80 to-transparent" />
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-16 bg-gradient-to-t from-white via-white/80 to-transparent" />
@@ -428,7 +428,7 @@ export default async function HomePage() {
         return (
           <div key="support-and-voices">
             {voices.length > 0 && (
-              <section className="py-16 sm:py-20 bg-sand-50/60 border-t border-line">
+              <section className="py-12 sm:py-16 bg-sand-50/60 border-t border-line">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
                   <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-line pb-4 mb-8">
                     <div>
@@ -461,10 +461,10 @@ export default async function HomePage() {
             )}
 
             <ScrollReveal direction="scale" delay={50}>
-              <section className="py-16 sm:py-20">
+              <section className="py-12 sm:py-16">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
                   {/* Clean Expansive Band - NO BOXED CARD CONTAINER WITH SIDE BORDERS */}
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 border-t border-b border-brand-200/80 py-12">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 border-t border-b border-brand-200/80 py-9">
                     <div className="max-w-3xl">
                       <p className="font-mono text-xs font-bold uppercase tracking-widest text-brand-700">
                         {supportTexts.eyebrow}

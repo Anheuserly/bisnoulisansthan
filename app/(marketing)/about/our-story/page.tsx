@@ -21,7 +21,7 @@ export default async function OurStoryPage() {
   return (
     <>
       <StoryHero />
-      <StoryExperience milestones={milestones} />
+      <StoryExperience milestones={milestones} presentation={settings.storyPresentation} />
       <section className="bg-sand-50/80 py-16 sm:py-20 border-t border-line">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-start md:px-8">
           <ScrollReveal direction="up" delay={40}>

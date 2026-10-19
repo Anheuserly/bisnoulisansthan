@@ -217,7 +217,7 @@ export function HomeImpactCounters() {
   return (
     <section
       ref={containerRef}
-      className="relative isolate overflow-hidden border-b border-brand-100 bg-gradient-to-b from-brand-50/70 via-sand-50/50 to-white py-16 sm:py-24"
+      className="relative isolate overflow-hidden border-b border-brand-100 bg-gradient-to-b from-brand-50/70 via-sand-50/50 to-white py-12 sm:py-16"
       id="impact"
     >
       {/* Ambient background blur elements */}
@@ -251,7 +251,7 @@ export function HomeImpactCounters() {
         </div>
 
         {/* 6 Grid Metrics - BORDERLESS / NO BOXED CARDS */}
-        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {IMPACT_METRICS.map((stat) => (
             <StatCard key={stat.id} stat={stat} inView={inView} />
           ))}

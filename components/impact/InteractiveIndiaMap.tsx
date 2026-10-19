@@ -119,7 +119,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-sand-50/40 py-16 sm:py-24"
+      className="relative isolate overflow-hidden bg-sand-50/40 py-12 sm:py-16"
       id="interactive-map"
     >
       {/* Decorative ambient radial blurs */}

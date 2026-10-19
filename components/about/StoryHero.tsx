@@ -1,19 +1,37 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 
 export function StoryHero() {
   const explore = () => document.getElementById("story-experience")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  return <section className="relative isolate flex min-h-[calc(100svh-4.5rem)] items-end overflow-hidden bg-brand-900 text-white md:min-h-[calc(100vh-4.5rem)]">
-    <Image src="/images/bsgss/banners/589-banner-1.webp" alt="BSGSS community members and field activities" fill priority sizes="100vw" className="z-0 object-cover object-center" />
-    <div className="absolute inset-0 z-0 bg-gradient-to-t from-brand-950 via-brand-950/75 to-brand-950/30" />
-    <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-12 pt-32 md:px-8 md:pb-16">
-      <p className="motion-safe:animate-rise text-sm font-bold uppercase tracking-[.22em] text-brand-100">Our story</p>
-      <h1 className="mt-5 max-w-4xl font-display text-5xl font-bold leading-[.96] tracking-[-.03em] !text-white sm:text-6xl lg:text-8xl">A journey of practical change, shaped with communities.</h1>
-      <p className="motion-safe:animate-rise mt-7 max-w-2xl text-lg leading-relaxed text-brand-100 [animation-delay:150ms]">Since 1994, BSGSS has worked alongside people across North India to turn access to learning, health and livelihoods into lasting opportunity.</p>
-      <button type="button" onClick={explore} className="motion-safe:animate-rise mt-10 inline-flex items-center gap-3 text-sm font-semibold text-white [animation-delay:300ms] hover:text-brand-100 cursor-pointer"><span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/50"><ArrowDown className="h-4 w-4" /></span>Scroll to explore</button>
-    </div>
-  </section>;
+  return (
+    <section className="relative isolate overflow-hidden border-b border-brand-800 bg-brand-900 text-white">
+      <div className="pointer-events-none absolute -right-24 -top-28 h-96 w-96 rounded-full border border-brand-200/15" />
+      <div className="pointer-events-none absolute -right-2 top-10 h-64 w-64 rounded-full border border-brand-200/15" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-brand-200/0 via-brand-200/40 to-brand-200/0" />
+      <div className="relative mx-auto max-w-7xl px-5 py-16 sm:py-20 md:px-8 md:py-24">
+        <p className="motion-safe:animate-rise text-xs font-bold uppercase tracking-[.22em] text-brand-200 sm:text-sm">Our story · Since 1994</p>
+        <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
+          <div>
+            <h1 className="max-w-4xl font-display text-4xl font-bold leading-[1.02] tracking-[-.025em] !text-white sm:text-5xl lg:text-6xl">
+              A journey of practical change, shaped with communities.
+            </h1>
+            <p className="motion-safe:animate-rise mt-5 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg [animation-delay:150ms]">
+              Since 1994, BSGSS has worked alongside people across North India to turn access to learning, health and livelihoods into lasting opportunity.
+            </p>
+          </div>
+          <div className="border-l border-brand-200/40 pl-5 lg:pb-1">
+            <p className="text-[0.6875rem] font-bold uppercase tracking-[.16em] text-brand-200">Grassroots record</p>
+            <p className="mt-2 font-display text-3xl font-bold text-white">30+ years</p>
+            <p className="mt-1 text-sm leading-relaxed text-brand-100">Village-rooted work across education, healthcare, livelihoods and women’s agency.</p>
+          </div>
+        </div>
+        <button type="button" onClick={explore} className="motion-safe:animate-rise mt-8 inline-flex items-center gap-3 text-sm font-semibold text-white [animation-delay:300ms] hover:text-brand-100 cursor-pointer">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200/60"><ArrowDown className="h-4 w-4" /></span>
+          Explore the journey
+        </button>
+      </div>
+    </section>
+  );
 }
