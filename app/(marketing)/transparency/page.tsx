@@ -71,7 +71,7 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
       />
 
       <div className="pt-8 pb-16 sm:pt-10 sm:pb-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 space-y-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 space-y-8">
           {/* Sample Data Banner */}
           {hasSampleData && (
             <div
@@ -125,16 +125,14 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {/* Total Received */}
-              <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-white p-5 sm:p-6 shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                  <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
                     Total Received
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                    <ArrowDownRight className="h-4 w-4" aria-hidden="true" />
-                  </div>
+                  <ArrowDownRight className="h-5 w-5 text-ink" aria-hidden="true" />
                 </div>
                 <p className="mt-3 font-display text-2xl sm:text-3xl font-bold text-ink">
                   {formatInr(latestMonth ? latestMonth.totalIncome : 0)}
@@ -145,14 +143,12 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
 
               {/* Total Spent */}
-              <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50/60 to-white p-5 sm:p-6 shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-blue-800">
+                  <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
                     Total Spent
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </div>
+                  <ArrowUpRight className="h-5 w-5 text-ink" aria-hidden="true" />
                 </div>
                 <p className="mt-3 font-display text-2xl sm:text-3xl font-bold text-ink">
                   {formatInr(latestMonth ? latestMonth.totalExpenses : 0)}
@@ -163,14 +159,12 @@ export default async function TransparencyPage({ searchParams }: TransparencyPag
               </div>
 
               {/* Admin Ratio */}
-              <div className="rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/60 to-white p-5 sm:p-6 shadow-2xs">
+              <div className="border-t-2 border-brand-850 pt-5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
                     Admin Ratio
                   </span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                    <Percent className="h-4 w-4" aria-hidden="true" />
-                  </div>
+                  <Percent className="h-5 w-5 text-ink" aria-hidden="true" />
                 </div>
                 <p className="mt-3 font-display text-2xl sm:text-3xl font-bold text-brand-900">
                   {latestMonth ? latestMonth.adminRatio : 0}%

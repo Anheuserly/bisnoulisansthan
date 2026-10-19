@@ -75,12 +75,91 @@ export type MapFootprintConfig = {
   globalVisionGoal: string;
 };
 
+export type CustomizerTextsConfig = {
+  about: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    highlights: {
+      title: string;
+      desc: string;
+    }[];
+  };
+  programmes: {
+    eyebrow: string;
+    title: string;
+  };
+  government: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    cta: string;
+    overviewEyebrow: string;
+    overviewTitle: string;
+    overviewText: string;
+    overviewCta: string;
+  };
+  partners: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    stats: {
+      stat: string;
+      desc: string;
+    }[];
+  };
+  support: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    buttonText: string;
+  };
+};
+
+export type CustomizerLayoutConfig = {
+  headerLogoSize: "default" | "large" | "xlarge";
+  footerLogoSize: "default" | "large" | "xlarge";
+  headerHeight: "default" | "compact" | "tall";
+  containerWidth: "standard" | "wide" | "expanded";
+  eyebrowStyle: "plain_bold" | "modern_track";
+};
+
+export type OfficeAddressItem = {
+  title: string;
+  tag: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  pincode: string;
+  phone: string;
+  email: string;
+  mapsUrl: string;
+};
+
+export type CustomizerOfficesConfig = {
+  registeredOffice: OfficeAddressItem;
+  adminOffice: OfficeAddressItem;
+};
+
+export type CustomizerContactActionConfig = {
+  whatsappNumber: string;
+  whatsappMessage: string;
+  showInHeader: boolean;
+  showInQuickActions: boolean;
+  showInFooter: boolean;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
   typing: LiveTypingConfig;
   images: CustomizerImagesConfig;
   footprint: MapFootprintConfig;
+  texts: CustomizerTextsConfig;
+  layout: CustomizerLayoutConfig;
+  offices: CustomizerOfficesConfig;
+  contactActions: CustomizerContactActionConfig;
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1072,5 +1151,109 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     worldNote: "Uncolored international territories represent our strategic global outreach roadmap and diaspora engagement horizon.",
     indiaNote: "Grassroots presence verified through official statutory filings across Uttar Pradesh, Delhi NCR, Haryana, Punjab, and Rajasthan.",
     globalVisionGoal: "Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances.",
+  },
+  texts: {
+    about: {
+      eyebrow: "About us",
+      title: "A practical commitment to dignity and self-reliance.",
+      text: "Founded in Bisnouli village, Dadri Tehsil, BSGSS is a registered voluntary organisation. Its community-led work brings together education, healthcare, vocational training, micro-finance and support for women so that families can create sustainable futures.",
+      highlights: [
+        {
+          title: "Since 1994",
+          desc: "Registered under Societies Registration Act XXI of 1860 with 12A & 80G tax exemptions.",
+        },
+        {
+          title: "350+ Villages",
+          desc: "Community-based reach across Delhi NCR, Haryana, UP, Punjab and Rajasthan.",
+        },
+        {
+          title: "Healthcare & Skills",
+          desc: "Mobile clinics, cancer check-ups and vocational pathways for rural women.",
+        },
+        {
+          title: "30+ CSR Partners",
+          desc: "Trusted collaboration with leading public sector enterprises and institutions.",
+        },
+      ],
+    },
+    programmes: {
+      eyebrow: "Our key programmes",
+      title: "Development that meets people where they are.",
+    },
+    government: {
+      eyebrow: "Government-supported initiatives",
+      title: "Community development through public programmes",
+      text: "BSGSS implements government-aligned welfare, skill development, and health initiatives with rigorous statutory compliance, bringing national programs directly to marginalized rural families.",
+      cta: "Explore Government Initiatives",
+      overviewEyebrow: "Statutory & Institutional Accountability",
+      overviewTitle: "Partnering with State & Central Government to deepen community welfare.",
+      overviewText: "Our team implements targeted public welfare initiatives designed to support village families with healthcare camps, craft entrepreneurship, and skill development programs.",
+      overviewCta: "View statutory documentation & reporting",
+    },
+    partners: {
+      eyebrow: "Institutional CSR Alliances",
+      title: "Collaboration that turns institutional trust into grassroots action.",
+      description: "BSGSS collaborates with public sector giants and national leaders to deliver preventive oncology checkups, women's vocational tailoring guilds, and decentralized potable water plants.",
+      stats: [
+        {
+          stat: "30+",
+          desc: "PSU & Corporate CSR Records",
+        },
+        {
+          stat: "Healthcare",
+          desc: "Oncology, Eyes & General Meds",
+        },
+        {
+          stat: "Khadi Skills",
+          desc: "Self Help Groups & Micro-Credit",
+        },
+      ],
+    },
+    support: {
+      eyebrow: "Support BSGSS",
+      title: "Your contribution can strengthen a community.",
+      description: "Explore secure support options, including bank transfer and UPI donation details.",
+      buttonText: "Support us",
+    },
+  },
+  layout: {
+    headerLogoSize: "large",
+    footerLogoSize: "xlarge",
+    headerHeight: "default",
+    containerWidth: "wide",
+    eyebrowStyle: "modern_track",
+  },
+  offices: {
+    registeredOffice: {
+      title: "Registered Office · Bisnouli Village",
+      tag: "Statutory Seat Since 1994",
+      line1: "Village & Post Bisnouli",
+      line2: "Tehsil Dadri",
+      city: "Gautam Buddha Nagar",
+      state: "Uttar Pradesh",
+      pincode: "203207",
+      phone: "011-46548002",
+      email: "bsgssindia@yahoo.co.in",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Bisnouli+Village+Dadri+Uttar+Pradesh",
+    },
+    adminOffice: {
+      title: "Head & Administrative Office · Noida",
+      tag: "Executive & CSR Coordination",
+      line1: "B-180, Sector–31",
+      line2: "Near Community Centre",
+      city: "Noida",
+      state: "Uttar Pradesh",
+      pincode: "201301",
+      phone: "011-46548002/03",
+      email: "bsgssindia@yahoo.co.in",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=B-180+Sector+31+Noida+201301",
+    },
+  },
+  contactActions: {
+    whatsappNumber: "919910243454",
+    whatsappMessage: "Namaste BSGSS Team, I am reaching out through the official website regarding community programmes.",
+    showInHeader: true,
+    showInQuickActions: true,
+    showInFooter: true,
   },
 };

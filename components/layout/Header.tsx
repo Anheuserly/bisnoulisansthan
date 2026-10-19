@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, Image as ImageIcon, MapPin, Menu, Phone, Route, Search, ShoppingBag, Users, Video, X } from "lucide-react";
+import { Activity, ArrowRight, BookOpen, ChevronDown, FileCheck2, HandHeart, Handshake, Heart, HeartPulse, Image as ImageIcon, MapPin, Menu, MessageCircle, Phone, Route, Search, ShoppingBag, Users, Video, X } from "lucide-react";
 import { aboutNav, mainNav } from "@/config/navigation";
 import { directionsUrl, site, telHref } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -82,10 +82,10 @@ export function Header() {
         scrolled ? "border-b border-line bg-white/95 shadow-soft backdrop-blur" : "border-b border-transparent bg-canvas",
       )}
     >
-      <div className="site-header-shell mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-3 px-3 md:px-5">
-        {/* Left: Logo */}
-        <div className="flex shrink-0 items-center xl:min-w-[18rem]">
-          <Logo />
+      <div className="site-header-shell mx-auto flex h-[5.25rem] max-w-[94rem] items-center justify-between gap-3 px-3 md:px-6">
+        {/* Left: Logo (Enlarged) */}
+        <div className="flex shrink-0 items-center xl:min-w-[21rem]">
+          <Logo size="large" />
         </div>
 
         {/* Center: Main Navigation (Centralized) */}
@@ -383,16 +383,7 @@ function MegaMenu({
                         : "hover:bg-brand-50/80 hover:shadow-2xs",
                     )}
                   >
-                    <span
-                      className={cn(
-                        "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-all duration-150",
-                        isSelected
-                          ? "bg-brand-700 text-white shadow-xs"
-                          : "bg-brand-50 text-brand-700 group-hover:bg-brand-700 group-hover:text-white group-hover:shadow-xs",
-                      )}
-                    >
-                      <Icon className="h-3.5 w-3.5" />
-                    </span>
+                    <Icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-500 transition-colors group-hover:text-brand-700" />
                     <span className="min-w-0">
                       <span
                         className={cn(

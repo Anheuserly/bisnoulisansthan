@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, MessageSquare, Phone, Send } from "lucide-react";
+import { Building2, Clock, Mail, MapPin, MessageSquare, Phone, Send } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { directionsUrl, fullAddress, mapEmbedUrl, site, telHref } from "@/config/site";
 import { content } from "@/config/content";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -14,8 +15,10 @@ export const metadata: Metadata = buildMetadata({
   path: "/contact",
 });
 
-export default function ContactPage() {
-  const whatsappNumber = site.contact.whatsapp?.replace(/[^\d]/g, "");
+export default async function ContactPage() {
+  const customizer = await getCustomizerSettings();
+  const offices = customizer.offices;
+  const whatsappNumber = customizer.contactActions?.whatsappNumber || "919910243454";
 
   return (
     <>
@@ -26,16 +29,15 @@ export default function ContactPage() {
       />
 
       <div className="bg-sand-50/40 pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-            {/* Left: Contact Form Card */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+            {/* Left: Contact Form Section (Borderless, Open Editorial) */}
             <ScrollReveal direction="up" delay={40} className="lg:col-span-7">
-              <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-2xs">
-                <div className="h-2 w-full bg-brand-700" />
-                <div className="p-6 sm:p-9">
-                  <div className="flex items-center gap-2.5 text-brand-700">
-                    <MessageSquare className="h-5 w-5" />
-                    <span className="text-xs font-bold uppercase tracking-[0.16em]">
+              <div className="border-t-2 border-brand-850 pt-6">
+                <div>
+                  <div className="flex items-center gap-2 text-brand-800">
+                    <MessageSquare className="h-4 w-4" />
+                    <span className="text-xs font-bold uppercase tracking-[0.18em]">
                       {content.contact.eyebrow}
                     </span>
                   </div>
@@ -46,45 +48,41 @@ export default function ContactPage() {
                     {content.contact.subheading}
                   </p>
 
-                  <div className="mt-7">
+                  <div className="mt-8">
                     <ContactForm />
                   </div>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Right: Contact Information & Direct Channels */}
-            <div className="space-y-6 lg:col-span-5">
-              {/* Direct Reach Cards */}
+            {/* Right: Contact Information & Direct Channels (Borderless, Zero Colored Icon Boxes) */}
+            <div className="space-y-8 lg:col-span-5">
+              {/* Direct Reach Channels */}
               <ScrollReveal direction="up" delay={80}>
-                <div className="rounded-2xl border border-line bg-white p-6 sm:p-7 shadow-2xs">
-                  <h3 className="font-display text-lg font-bold text-ink">
+                <div className="border-t-2 border-brand-850 pt-6">
+                  <h3 className="font-display text-xl font-bold text-ink">
                     Direct channels
                   </h3>
-                  <div className="mt-5 space-y-3.5">
+                  <div className="mt-4 divide-y divide-line/70">
                     <a
                       href={telHref(site.contact.phone)}
-                      className="flex items-start gap-3.5 rounded-xl border border-line p-3.5 transition hover:border-brand-500 hover:bg-brand-50/40"
+                      className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
                     >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700">
-                        <Phone className="h-5 w-5" />
-                      </span>
+                      <Phone className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
                       <div>
                         <p className="text-xs font-semibold text-ink-muted">Call our office</p>
-                        <p className="text-sm font-bold text-ink">{site.contact.phone}</p>
+                        <p className="text-sm font-bold text-ink group-hover:text-brand-800">{site.contact.phone}</p>
                       </div>
                     </a>
 
                     <a
                       href={`mailto:${site.contact.email}`}
-                      className="flex items-start gap-3.5 rounded-xl border border-line p-3.5 transition hover:border-brand-500 hover:bg-brand-50/40"
+                      className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
                     >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700">
-                        <Mail className="h-5 w-5" />
-                      </span>
+                      <Mail className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
                       <div className="min-w-0">
                         <p className="text-xs font-semibold text-ink-muted">Email us</p>
-                        <p className="text-sm font-bold text-ink truncate">{site.contact.email}</p>
+                        <p className="text-sm font-bold text-ink truncate group-hover:text-brand-800">{site.contact.email}</p>
                       </div>
                     </a>
 
@@ -93,14 +91,12 @@ export default function ContactPage() {
                         href={`https://wa.me/${whatsappNumber}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-start gap-3.5 rounded-xl border border-line p-3.5 transition hover:border-brand-500 hover:bg-brand-50/40"
+                        className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
                       >
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-700">
-                          <Send className="h-5 w-5" />
-                        </span>
+                        <Send className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
                         <div>
                           <p className="text-xs font-semibold text-ink-muted">WhatsApp assistance</p>
-                          <p className="text-sm font-bold text-ink">{site.contact.whatsapp}</p>
+                          <p className="text-sm font-bold text-ink group-hover:text-brand-800">{site.contact.whatsapp}</p>
                         </div>
                       </a>
                     )}
@@ -108,36 +104,80 @@ export default function ContactPage() {
                 </div>
               </ScrollReveal>
 
-              {/* Office Location & Address */}
+              {/* Both Offices: Registered Office & Administrative Office */}
               <ScrollReveal direction="up" delay={120}>
-                <div className="rounded-2xl border border-line bg-white p-6 sm:p-7 shadow-2xs">
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700">
-                      <MapPin className="h-5 w-5" />
-                    </span>
-                    <div>
-                      <h3 className="font-display text-base font-bold text-ink">
-                        {content.contact.officeNoida.title}
-                      </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-                        {fullAddress}
-                      </p>
-                      <a
-                        href={directionsUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-3 inline-flex text-xs font-bold text-brand-700 hover:underline"
-                      >
-                        Get directions on Google Maps →
-                      </a>
+                <div className="space-y-6">
+                  {/* Registered Office */}
+                  <div className="border-t border-line pt-5">
+                    <div className="flex items-start gap-3">
+                      <Building2 className="h-5 w-5 text-ink shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <h3 className="font-display text-base font-bold text-ink">
+                            {offices.registeredOffice.title}
+                          </h3>
+                          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                            {offices.registeredOffice.tag}
+                          </span>
+                        </div>
+                        <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                          {offices.registeredOffice.line1}, {offices.registeredOffice.line2}, {offices.registeredOffice.city}, {offices.registeredOffice.state} – {offices.registeredOffice.pincode}
+                        </p>
+                        <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs font-semibold text-brand-800">
+                          <a
+                            href={offices.registeredOffice.mapsUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:underline flex items-center gap-1"
+                          >
+                            <MapPin className="h-3.5 w-3.5" />
+                            <span>View on Google Maps</span>
+                          </a>
+                          <span>·</span>
+                          <span>Tel: {offices.registeredOffice.phone}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-5 pt-5 border-t border-line flex items-start gap-3 text-sm text-ink-muted">
-                    <Clock className="h-4 w-4 text-brand-700 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-ink">{content.contact.timingLabel}</p>
-                      <p className="text-xs text-ink-muted">{content.contact.hours}</p>
+                  {/* Administrative Office */}
+                  <div className="border-t border-line pt-5">
+                    <div className="flex items-start gap-3">
+                      <MapPin className="h-5 w-5 text-ink shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <h3 className="font-display text-base font-bold text-ink">
+                            {offices.adminOffice.title}
+                          </h3>
+                          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                            {offices.adminOffice.tag}
+                          </span>
+                        </div>
+                        <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                          {offices.adminOffice.line1}, {offices.adminOffice.line2}, {offices.adminOffice.city}, {offices.adminOffice.state} – {offices.adminOffice.pincode}
+                        </p>
+                        <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs font-semibold text-brand-800">
+                          <a
+                            href={offices.adminOffice.mapsUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:underline flex items-center gap-1"
+                          >
+                            <MapPin className="h-3.5 w-3.5" />
+                            <span>Get Directions</span>
+                          </a>
+                          <span>·</span>
+                          <span>Tel: {offices.adminOffice.phone}</span>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-line/60 flex items-start gap-2.5 text-xs text-ink-muted">
+                          <Clock className="h-3.5 w-3.5 text-ink-muted shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-semibold text-ink">{content.contact.timingLabel}:</span>{" "}
+                            <span>{content.contact.hours}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -145,7 +185,7 @@ export default function ContactPage() {
 
               {/* Map Embed */}
               <ScrollReveal direction="scale" delay={150}>
-                <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-2xs aspect-[16/10]">
+                <div className="overflow-hidden border-t border-b border-line aspect-[16/10]">
                   <iframe
                     title="BSGSS Location Map"
                     src={mapEmbedUrl}

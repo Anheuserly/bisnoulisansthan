@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AdminManager } from "@/components/admin/AdminManager";
 import { ChangePasswordForm } from "@/components/admin/ChangePasswordForm";
+import { UserAccessList } from "@/components/admin/UserAccessList";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 
@@ -54,42 +55,28 @@ export default async function AdminsPage() {
           </p>
         )}
 
-        {/* Current Access List */}
-        <section className="mt-10 overflow-hidden rounded-xl border border-line bg-white">
-          <div className="border-b border-line px-5 py-4">
-            <h2 className="font-semibold text-ink">Current administrative access</h2>
+        {/* Current Access List with Role Permission Control */}
+        <section className="mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-display text-xl font-bold text-ink">Administrative Team &amp; Role Permissions</h2>
+              <p className="mt-0.5 text-xs text-ink-muted">
+                {actor.role === "super_admin"
+                  ? "As a Super Admin, you can assign roles (Super Admin, Admin, Editor), toggle active status, and remove members."
+                  : "List of authorized staff and team members with administrative portal access."}
+              </p>
+            </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-sand-50 text-xs uppercase tracking-wide text-ink-muted">
-                <tr>
-                  <th className="px-5 py-3">User</th>
-                  <th className="px-5 py-3">Role</th>
-                  <th className="px-5 py-3">Last sign in</th>
-                  <th className="px-5 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((admin) => (
-                  <tr key={admin.id} className="border-t border-line">
-                    <td className="px-5 py-4">
-                      <strong className="block text-ink">{admin.displayName || "No name set"}</strong>
-                      <span className="text-ink-muted">{admin.email}</span>
-                    </td>
-                    <td className="px-5 py-4 capitalize text-ink">{admin.role.replace("_", " ")}</td>
-                    <td className="px-5 py-4 text-ink-muted">
-                      {admin.lastLoginAt ? admin.lastLoginAt.toLocaleDateString("en-IN") : "Never"}
-                    </td>
-                    <td className="px-5 py-4">
-                      <span className={admin.isActive ? "text-success font-medium" : "text-danger font-medium"}>
-                        {admin.isActive ? "Active" : "Inactive"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+
+          <UserAccessList
+            users={rows.map((r) => ({
+              ...r,
+              lastLoginAt: r.lastLoginAt ? r.lastLoginAt.toISOString() : null,
+              createdAt: r.createdAt.toISOString(),
+            }))}
+            currentUserId={actor.id}
+            isSuperAdmin={actor.role === "super_admin"}
+          />
         </section>
       </div>
     </main>

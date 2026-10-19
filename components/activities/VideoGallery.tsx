@@ -61,15 +61,148 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
   const selectVideo = (index: number) => { setActiveIndex(index); setHasStarted(true); };
 
   return (
-    <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-start">
-      <section className="overflow-hidden rounded-2xl border border-line bg-white shadow-lift">
-        <div className="relative aspect-video overflow-hidden bg-brand-950">
-          {hasStarted ? <div ref={playerTarget} className="h-full w-full" /> : <button type="button" onClick={() => setHasStarted(true)} className="group relative h-full w-full text-left"><img src={activeVideo.thumbnail} alt="" className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100" /><span className="absolute inset-0 bg-gradient-to-t from-brand-950/75 via-brand-950/10 to-transparent" /><span className="absolute inset-0 grid place-items-center"><span className="grid h-16 w-16 place-items-center rounded-full bg-white text-brand-800 shadow-lift transition group-hover:scale-110"><Play className="ml-1 h-7 w-7 fill-current" /></span></span><span className="absolute bottom-6 left-6 right-6 text-white"><span className="text-xs font-bold uppercase tracking-[.16em] text-brand-100">Play featured video</span><span className="mt-2 block font-display text-2xl font-bold leading-tight">{activeVideo.title}</span></span></button>}
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-start">
+      {/* Primary Video Theater */}
+      <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-soft">
+        <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+          {hasStarted ? (
+            <div ref={playerTarget} className="h-full w-full" />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setHasStarted(true)}
+              className="group relative h-full w-full text-left focus:outline-none"
+            >
+              <img
+                src={activeVideo.thumbnail}
+                alt=""
+                className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+              <span className="absolute inset-0 grid place-items-center">
+                <span className="grid h-16 w-16 place-items-center rounded-full bg-red-600 text-white shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-red-700">
+                  <Play className="ml-1 h-7 w-7 fill-current" />
+                </span>
+              </span>
+              <span className="absolute bottom-6 left-6 right-6 text-white">
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-sand-200">
+                  Featured Documentary Video
+                </span>
+                <span className="mt-2 block font-display text-2xl sm:text-3xl font-black leading-tight">
+                  {activeVideo.title}
+                </span>
+              </span>
+            </button>
+          )}
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-brand-700">Now playing</p><h2 className="mt-2 font-display text-2xl font-bold text-ink">{activeVideo.title}</h2></div><a href={`https://www.youtube.com/watch?v=${activeVideo.id}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900"><Youtube className="h-5 w-5" />Watch on YouTube</a></div>
+
+        {/* Player Controls & Info Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
+          <div className="max-w-xl">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
+              Now Playing
+            </p>
+            <h2 className="mt-1 font-display text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
+              {activeVideo.title}
+            </h2>
+          </div>
+          <a
+            href={`https://www.youtube.com/watch?v=${activeVideo.id}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl bg-sand-100 px-4 py-2 text-xs sm:text-sm font-semibold text-brand-800 transition hover:bg-brand-50 hover:text-brand-900"
+          >
+            <Youtube className="h-4 w-4 text-red-600" />
+            <span>Watch on YouTube</span>
+          </a>
+        </div>
       </section>
 
-      <aside className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm lg:sticky lg:top-5"><div className="flex items-center justify-between border-b border-line bg-sand-50 px-5 py-4"><div><p className="text-sm font-bold uppercase tracking-[.16em] text-brand-700">Up next ({videos.length})</p><p className="mt-1 text-xs text-ink-muted">All {videos.length} videos from the official channel</p></div><ListVideo className="h-5 w-5 text-brand-700" /></div><label className="flex cursor-pointer items-center justify-between border-b border-line px-5 py-3 text-sm font-semibold text-ink"><span>Play next automatically</span><input type="checkbox" checked={autoNext} onChange={(event) => setAutoNext(event.target.checked)} className="h-4 w-4 accent-brand-700" /></label><div className="max-h-[42rem] overflow-y-auto p-2">{videos.map((video, index) => { const isActive = index === activeIndex; return <button key={video.id} type="button" onClick={() => selectVideo(index)} aria-pressed={isActive} className={`flex w-full items-center gap-3 rounded-xl p-3 text-left transition ${isActive ? "bg-brand-50 ring-1 ring-brand-200" : "hover:bg-sand-50"}`}><span className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-lg bg-brand-900"><img src={video.thumbnail} alt="" className="h-full w-full object-cover" loading="lazy" /><span className="absolute inset-0 grid place-items-center bg-brand-950/35 text-white"><Play className="h-5 w-5 fill-current" /></span></span><span className="min-w-0"><span className={`block text-xs font-bold uppercase tracking-[.12em] ${isActive ? "text-brand-700" : "text-ink-muted"}`}>Video {String(index + 1).padStart(2, "0")}</span><span className="mt-1 block line-clamp-2 font-display text-base font-bold leading-snug text-ink">{video.title}</span></span></button>; })}</div><a href={youtubeUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 border-t border-line px-5 py-4 text-sm font-semibold text-brand-700 hover:bg-brand-50"><Youtube className="h-5 w-5" />View all channel videos on YouTube</a></aside>
+      {/* Playlist Sidebar */}
+      <aside className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-soft lg:sticky lg:top-24">
+        <div className="flex items-center justify-between border-b border-slate-200/80 bg-sand-50/80 px-5 py-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
+              Playlist ({videos.length})
+            </p>
+            <p className="mt-0.5 text-xs text-slate-600">
+              Official BSGSS video channel archive
+            </p>
+          </div>
+          <ListVideo className="h-5 w-5 text-brand-700" />
+        </div>
+
+        <label className="flex cursor-pointer items-center justify-between border-b border-slate-200/80 px-5 py-3 text-xs sm:text-sm font-medium text-slate-700 hover:bg-sand-50/50">
+          <span>Continuous playback</span>
+          <input
+            type="checkbox"
+            checked={autoNext}
+            onChange={(event) => setAutoNext(event.target.checked)}
+            className="h-4 w-4 rounded-sm accent-brand-700"
+          />
+        </label>
+
+        <div className="max-h-[38rem] space-y-1.5 overflow-y-auto p-2">
+          {videos.map((video, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={video.id}
+                type="button"
+                onClick={() => selectVideo(index)}
+                aria-pressed={isActive}
+                className={`flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-all duration-200 ${
+                  isActive
+                    ? "bg-brand-50/90 ring-1.5 ring-brand-600/30 shadow-2xs"
+                    : "hover:bg-sand-50/80"
+                }`}
+              >
+                <span className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-lg bg-slate-900 shadow-2xs">
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                  <span
+                    className={`absolute inset-0 grid place-items-center transition-opacity ${
+                      isActive ? "bg-brand-900/40 text-white" : "bg-black/25 text-white/90"
+                    }`}
+                  >
+                    <Play className="h-4 w-4 fill-current" />
+                  </span>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span
+                    className={`block text-[11px] font-bold uppercase tracking-wider ${
+                      isActive ? "text-brand-700" : "text-slate-600"
+                    }`}
+                  >
+                    Video {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    className={`mt-1 block line-clamp-2 text-xs sm:text-sm font-semibold leading-snug ${
+                      isActive ? "text-brand-950 font-bold" : "text-slate-800"
+                    }`}
+                  >
+                    {video.title}
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <a
+          href={youtubeUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-center gap-2 border-t border-slate-200/80 bg-white px-5 py-4 text-xs sm:text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
+        >
+          <Youtube className="h-4 w-4 text-red-600" />
+          <span>Explore All Channel Videos</span>
+        </a>
+      </aside>
     </div>
   );
 }

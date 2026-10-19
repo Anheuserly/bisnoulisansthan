@@ -6,17 +6,21 @@ import {
   ArrowDown,
   ArrowUp,
   ArrowUpRight,
+  Building2,
   Camera,
   Check,
   CheckCircle2,
   Clock,
   Eye,
   EyeOff,
+  FileText,
   GripVertical,
   Globe,
   HelpCircle,
   Image as ImageIcon,
   Layers,
+  MapPin,
+  MessageCircle,
   Music,
   Palette,
   Pause,
@@ -61,7 +65,7 @@ const GALLERY_PRESET_IMAGES = [
 
 export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "collage" | "audio" | "typing" | "footprint">("sections");
+  const [activeTab, setActiveTab] = useState<"sections" | "texts" | "layout" | "offices" | "collage" | "audio" | "typing" | "footprint">("sections");
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -322,9 +326,12 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
       )}
 
       {/* Tab Navigation */}
-      <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2">
+      <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2 overflow-x-auto">
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
+          { id: "texts", label: "Website Texts & Copy", icon: FileText },
+          { id: "layout", label: "Header, Nav & Footer Size", icon: Sliders },
+          { id: "offices", label: "Offices & WhatsApp Setup", icon: Building2 },
           { id: "footprint", label: "Footprint & Global Reach", icon: Globe },
           { id: "collage", label: "Stylish Photo Collage & Imagery", icon: Camera },
           { id: "audio", label: "Relaxing Ambient Music & Sounds", icon: Music },
@@ -431,6 +438,586 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tab Content: Website Texts & Editorial Copy */}
+      {activeTab === "texts" && (
+        <div className="rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm space-y-8">
+          <div>
+            <h2 className="font-display text-lg font-bold text-ink">
+              Website Texts, Headlines &amp; Editorial Copy
+            </h2>
+            <p className="mt-1 text-xs sm:text-sm text-ink-muted">
+              Centrally manage and customize all headlines, narrative paragraphs, and highlight copy across the website. Changes update live upon saving.
+            </p>
+          </div>
+
+          {/* 1. About Us Section Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                1. About Us Section (Homepage)
+              </span>
+              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                Live on Homepage
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge / Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.about?.eyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        about: { ...prev.texts.about, eyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="About us"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.about?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        about: { ...prev.texts.about, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                  placeholder="A practical commitment to dignity and self-reliance."
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Narrative Paragraph (High-Visibility Lead Text)
+              </label>
+              <textarea
+                rows={3}
+                value={settings.texts?.about?.text ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    texts: {
+                      ...prev.texts,
+                      about: { ...prev.texts.about, text: e.target.value },
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs sm:text-sm text-ink leading-relaxed focus:border-brand-500 focus:outline-none"
+                placeholder="Founded in Bisnouli village..."
+              />
+            </div>
+
+            {/* 4 About Highlights */}
+            <div className="pt-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted mb-2">
+                4 Institutional Highlights (Displayed Borderless Under About Narrative)
+              </label>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {(settings.texts?.about?.highlights || []).map((h, hIdx) => (
+                  <div key={hIdx} className="rounded-lg border border-line bg-white p-3 space-y-2">
+                    <span className="text-[10px] font-mono font-bold text-brand-700">
+                      HIGHLIGHT 0{hIdx + 1}
+                    </span>
+                    <input
+                      type="text"
+                      value={h.title}
+                      onChange={(e) => {
+                        const updated = [...(settings.texts?.about?.highlights || [])];
+                        const currentItem = updated[hIdx];
+                        updated[hIdx] = {
+                          title: e.target.value,
+                          desc: currentItem?.desc || "",
+                        };
+                        setSettings((prev) => ({
+                          ...prev,
+                          texts: {
+                            ...prev.texts,
+                            about: { ...prev.texts.about, highlights: updated },
+                          },
+                        }));
+                      }}
+                      className="w-full rounded border border-line px-2 py-1 text-xs font-bold text-ink focus:border-brand-500 focus:outline-none"
+                      placeholder="Title"
+                    />
+                    <textarea
+                      rows={2}
+                      value={h.desc}
+                      onChange={(e) => {
+                        const updated = [...(settings.texts?.about?.highlights || [])];
+                        const currentItem = updated[hIdx];
+                        updated[hIdx] = {
+                          title: currentItem?.title || "",
+                          desc: e.target.value,
+                        };
+                        setSettings((prev) => ({
+                          ...prev,
+                          texts: {
+                            ...prev.texts,
+                            about: { ...prev.texts.about, highlights: updated },
+                          },
+                        }));
+                      }}
+                      className="w-full rounded border border-line px-2 py-1 text-[11px] text-ink-muted focus:border-brand-500 focus:outline-none"
+                      placeholder="Description"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Key Programmes Section Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                2. Key Development Programmes
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge / Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.programmes?.eyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        programmes: { ...prev.texts.programmes, eyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Our key programmes"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.programmes?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        programmes: { ...prev.texts.programmes, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                  placeholder="Development that meets people where they are."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Government Programmes Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                3. State &amp; Central Government Initiatives
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Left Column Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.government?.eyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, eyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Left Column Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.government?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Left Column Narrative
+                </label>
+                <textarea
+                  rows={2}
+                  value={settings.texts?.government?.text ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, text: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Left Column CTA Button Text
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.government?.cta ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, cta: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="border-t border-brand-200/60 pt-3 grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Right Column Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.government?.overviewEyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, overviewEyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Right Column Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.government?.overviewTitle ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        government: { ...prev.texts.government, overviewTitle: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Right Column Overview Text
+              </label>
+              <textarea
+                rows={2}
+                value={settings.texts?.government?.overviewText ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    texts: {
+                      ...prev.texts,
+                      government: { ...prev.texts.government, overviewText: e.target.value },
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* 4. CSR Alliances Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                4. CSR Partnerships &amp; Alliances
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge / Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.partners?.eyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        partners: { ...prev.texts.partners, eyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Institutional CSR Alliances"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.partners?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        partners: { ...prev.texts.partners, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Narrative Description
+              </label>
+              <textarea
+                rows={2}
+                value={settings.texts?.partners?.description ?? ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    texts: {
+                      ...prev.texts,
+                      partners: { ...prev.texts.partners, description: e.target.value },
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+              />
+            </div>
+
+            {/* 3 Partner Stats */}
+            <div className="pt-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted mb-2">
+                3 Stats Highlights
+              </label>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {(settings.texts?.partners?.stats || []).map((st, sIdx) => (
+                  <div key={sIdx} className="rounded-lg border border-line bg-white p-3 space-y-2">
+                    <span className="text-[10px] font-mono font-bold text-brand-700">
+                      STAT 0{sIdx + 1}
+                    </span>
+                    <input
+                      type="text"
+                      value={st.stat}
+                      onChange={(e) => {
+                        const updated = [...(settings.texts?.partners?.stats || [])];
+                        const currentItem = updated[sIdx];
+                        updated[sIdx] = {
+                          stat: e.target.value,
+                          desc: currentItem?.desc || "",
+                        };
+                        setSettings((prev) => ({
+                          ...prev,
+                          texts: {
+                            ...prev.texts,
+                            partners: { ...prev.texts.partners, stats: updated },
+                          },
+                        }));
+                      }}
+                      className="w-full rounded border border-line px-2 py-1 text-xs font-bold text-ink focus:border-brand-500 focus:outline-none"
+                      placeholder="e.g. 30+"
+                    />
+                    <input
+                      type="text"
+                      value={st.desc}
+                      onChange={(e) => {
+                        const updated = [...(settings.texts?.partners?.stats || [])];
+                        const currentItem = updated[sIdx];
+                        updated[sIdx] = {
+                          stat: currentItem?.stat || "",
+                          desc: e.target.value,
+                        };
+                        setSettings((prev) => ({
+                          ...prev,
+                          texts: {
+                            ...prev.texts,
+                            partners: { ...prev.texts.partners, stats: updated },
+                          },
+                        }));
+                      }}
+                      className="w-full rounded border border-line px-2 py-1 text-[11px] text-ink-muted focus:border-brand-500 focus:outline-none"
+                      placeholder="Description"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 5. Support Call to Action Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                5. Support BSGSS Contribution Call-to-Action
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge / Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.support?.eyebrow ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        support: { ...prev.texts.support, eyebrow: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Headline
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.support?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        support: { ...prev.texts.support, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Description Text
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.support?.description ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        support: { ...prev.texts.support, description: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Button Label
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.support?.buttonText ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        support: { ...prev.texts.support, buttonText: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-bold text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -992,6 +1579,606 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
               className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
               placeholder="Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances."
             />
+          </div>
+        </div>
+      )}
+
+      {/* TAB 7: Header, Navigation & Footer Layout Settings */}
+      {activeTab === "layout" && (
+        <div className="space-y-6 rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm animate-fadeIn">
+          <div>
+            <h2 className="font-display text-lg font-bold text-ink">Header, Navigation &amp; Footer Sizing</h2>
+            <p className="mt-1 text-xs text-ink-muted">
+              Control logo dimensions, navigation proportions, maximum content width, and section header styling across the entire website.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Header Logo Size */}
+            <div className="rounded-xl border border-line p-4 bg-sand-50/50">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Header Logo Display Size
+              </label>
+              <p className="mt-1 text-xs text-slate-500">
+                Adjusts the official BSGSS horizontal crest in the top navigation bar.
+              </p>
+              <select
+                value={settings.layout?.headerLogoSize ?? "large"}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    layout: {
+                      ...prev.layout,
+                      headerLogoSize: e.target.value as "default" | "large" | "xlarge",
+                    },
+                  }))
+                }
+                className="mt-3 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+              >
+                <option value="default">Standard (11rem - 20rem)</option>
+                <option value="large">Enlarged / Prominent (15rem - 24rem) [Recommended]</option>
+                <option value="xlarge">Maximum Prominence (17rem - 28rem)</option>
+              </select>
+            </div>
+
+            {/* Footer Logo Size */}
+            <div className="rounded-xl border border-line p-4 bg-sand-50/50">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Footer Logo Card Size
+              </label>
+              <p className="mt-1 text-xs text-slate-500">
+                Controls the inverted white emblem container at the bottom of every page.
+              </p>
+              <select
+                value={settings.layout?.footerLogoSize ?? "xlarge"}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    layout: {
+                      ...prev.layout,
+                      footerLogoSize: e.target.value as "default" | "large" | "xlarge",
+                    },
+                  }))
+                }
+                className="mt-3 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+              >
+                <option value="default">Standard Size (22rem - 30rem)</option>
+                <option value="large">Large Size (24rem - 32rem)</option>
+                <option value="xlarge">Extra Large High-Visibility (26rem - 38rem) [Recommended]</option>
+              </select>
+            </div>
+
+            {/* Content Width Standard */}
+            <div className="rounded-xl border border-line p-4 bg-sand-50/50">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Global Container Width
+              </label>
+              <p className="mt-1 text-xs text-slate-500">
+                Prevents awkward side margins and expands content across modern displays.
+              </p>
+              <select
+                value={settings.layout?.containerWidth ?? "wide"}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    layout: {
+                      ...prev.layout,
+                      containerWidth: e.target.value as "standard" | "wide" | "expanded",
+                    },
+                  }))
+                }
+                className="mt-3 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+              >
+                <option value="standard">Standard Boxed (max-w-6xl)</option>
+                <option value="wide">Modern Full Reach (max-w-7xl) [Standard]</option>
+                <option value="expanded">Edge Showcase (max-w-[94rem])</option>
+              </select>
+            </div>
+
+            {/* Section Eyebrow Appearance */}
+            <div className="rounded-xl border border-line p-4 bg-sand-50/50">
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Section Eyebrow Typography Standard
+              </label>
+              <p className="mt-1 text-xs text-slate-500">
+                Eliminates blue dots and rounded chip pill borders in favor of bold clean editorial headings.
+              </p>
+              <select
+                value={settings.layout?.eyebrowStyle ?? "modern_track"}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    layout: {
+                      ...prev.layout,
+                      eyebrowStyle: e.target.value as "plain_bold" | "modern_track",
+                    },
+                  }))
+                }
+                className="mt-3 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand-500 focus:outline-none"
+              >
+                <option value="modern_track">Modern Bold Tracking (No Dots, No Pills) [Active Standard]</option>
+                <option value="plain_bold">Clean Monospace Tag (No Dots)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 8: Offices (Registered & Admin) & WhatsApp Action Configuration */}
+      {activeTab === "offices" && (
+        <div className="space-y-8 rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm animate-fadeIn">
+          <div>
+            <h2 className="font-display text-lg font-bold text-ink">Two Official Addresses &amp; WhatsApp Integration</h2>
+            <p className="mt-1 text-xs text-ink-muted">
+              Centrally manage the Registered Office (statutory village seat) and Admin Office (executive coordination hub), plus the WhatsApp direct action button.
+            </p>
+          </div>
+
+          {/* Section 1: WhatsApp Action Button Settings */}
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-5">
+            <div className="flex items-center gap-2 text-emerald-800">
+              <MessageCircle className="h-5 w-5 text-emerald-600" />
+              <h3 className="font-display text-base font-bold">WhatsApp Action Button Settings</h3>
+            </div>
+            <p className="mt-1 text-xs text-emerald-900/80">
+              Directly controls the WhatsApp action button shown in the top header, floating quick actions, and footer.
+            </p>
+
+            <div className="mt-4 grid gap-5 md:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  WhatsApp Contact Number (with Country Code)
+                </label>
+                <input
+                  type="text"
+                  value={settings.contactActions?.whatsappNumber ?? "919910243454"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      contactActions: {
+                        ...prev.contactActions,
+                        whatsappNumber: e.target.value,
+                      },
+                    }))
+                  }
+                  placeholder="e.g. 919910243454"
+                  className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                />
+                <span className="mt-1 block text-[11px] text-slate-500">
+                  Enter numeric format with country code (e.g., 919910243454 for India +91 99102 43454).
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Default Pre-filled WhatsApp Message
+                </label>
+                <input
+                  type="text"
+                  value={settings.contactActions?.whatsappMessage ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      contactActions: {
+                        ...prev.contactActions,
+                        whatsappMessage: e.target.value,
+                      },
+                    }))
+                  }
+                  placeholder="Namaste BSGSS Team, I am reaching out through the official website..."
+                  className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-6 pt-3 border-t border-emerald-200/80 text-xs font-semibold text-slate-700">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.contactActions?.showInHeader ?? true}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      contactActions: {
+                        ...prev.contactActions,
+                        showInHeader: e.target.checked,
+                      },
+                    }))
+                  }
+                  className="h-4 w-4 rounded-sm accent-emerald-600"
+                />
+                <span>Display in Top Navigation Header</span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.contactActions?.showInQuickActions ?? true}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      contactActions: {
+                        ...prev.contactActions,
+                        showInQuickActions: e.target.checked,
+                      },
+                    }))
+                  }
+                  className="h-4 w-4 rounded-sm accent-emerald-600"
+                />
+                <span>Display in Floating Quick Actions</span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.contactActions?.showInFooter ?? true}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      contactActions: {
+                        ...prev.contactActions,
+                        showInFooter: e.target.checked,
+                      },
+                    }))
+                  }
+                  className="h-4 w-4 rounded-sm accent-emerald-600"
+                />
+                <span>Display in Footer Contact Strip</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Section 2: Two Addresses (Registered & Admin) */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Registered Office */}
+            <div className="rounded-xl border border-line bg-sand-50/40 p-5 space-y-4">
+              <div className="flex items-center gap-2 text-emerald-800">
+                <Building2 className="h-5 w-5 text-emerald-600" />
+                <div>
+                  <h3 className="font-display text-base font-bold">1. Registered Office (Statutory)</h3>
+                  <p className="text-[11px] text-slate-500">Official registered seat in Bisnouli Village, Dadri Tehsil</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Display Title</label>
+                <input
+                  type="text"
+                  value={settings.offices?.registeredOffice?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      offices: {
+                        ...prev.offices,
+                        registeredOffice: { ...prev.offices.registeredOffice, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Address Line 1</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.line1 ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, line1: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Address Line 2</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.line2 ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, line2: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">City / District</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.city ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, city: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">State</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.state ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, state: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">PIN Code</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.pincode ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, pincode: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Office Phone</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.registeredOffice?.phone ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, phone: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Email</label>
+                  <input
+                    type="email"
+                    value={settings.offices?.registeredOffice?.email ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          registeredOffice: { ...prev.offices.registeredOffice, email: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Google Maps Destination URL</label>
+                <input
+                  type="text"
+                  value={settings.offices?.registeredOffice?.mapsUrl ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      offices: {
+                        ...prev.offices,
+                        registeredOffice: { ...prev.offices.registeredOffice, mapsUrl: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Admin Office */}
+            <div className="rounded-xl border border-line bg-sand-50/40 p-5 space-y-4">
+              <div className="flex items-center gap-2 text-brand-800">
+                <MapPin className="h-5 w-5 text-brand-700" />
+                <div>
+                  <h3 className="font-display text-base font-bold">2. Head &amp; Administrative Office</h3>
+                  <p className="text-[11px] text-slate-500">Executive centre in Noida Sector 31</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Display Title</label>
+                <input
+                  type="text"
+                  value={settings.offices?.adminOffice?.title ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      offices: {
+                        ...prev.offices,
+                        adminOffice: { ...prev.offices.adminOffice, title: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Address Line 1</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.line1 ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, line1: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Address Line 2</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.line2 ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, line2: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">City / District</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.city ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, city: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">State</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.state ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, state: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">PIN Code</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.pincode ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, pincode: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Office Phone</label>
+                  <input
+                    type="text"
+                    value={settings.offices?.adminOffice?.phone ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, phone: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Email</label>
+                  <input
+                    type="email"
+                    value={settings.offices?.adminOffice?.email ?? ""}
+                    onChange={(e) =>
+                      setSettings((prev) => ({
+                        ...prev,
+                        offices: {
+                          ...prev.offices,
+                          adminOffice: { ...prev.offices.adminOffice, email: e.target.value },
+                        },
+                      }))
+                    }
+                    className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">Google Maps Destination URL</label>
+                <input
+                  type="text"
+                  value={settings.offices?.adminOffice?.mapsUrl ?? ""}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      offices: {
+                        ...prev.offices,
+                        adminOffice: { ...prev.offices.adminOffice, mapsUrl: e.target.value },
+                      },
+                    }))
+                  }
+                  className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}

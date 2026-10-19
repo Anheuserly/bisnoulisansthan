@@ -69,14 +69,13 @@ export default function GovernmentActivitiesPage() {
         ]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <ScrollReveal direction="up" delay={40}>
-              <div className="inline-flex items-center gap-2 rounded-full border border-brand-200/90 bg-white/95 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs backdrop-blur-sm">
-                <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                <span>Statutory Implementation Body</span>
-              </div>
-              <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-ink sm:text-3xl lg:text-4xl">
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">
+                Statutory Implementation Body
+              </p>
+              <h2 className="mt-2 font-display text-2xl font-bold leading-snug text-ink sm:text-3xl lg:text-4xl">
                 Working with communities to make public support directly accessible.
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
@@ -88,17 +87,15 @@ export default function GovernmentActivitiesPage() {
             </ScrollReveal>
 
             <ScrollReveal direction="scale" delay={80}>
-              <div className="rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 text-ink shadow-2xs">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 shadow-2xs">
-                  <Building2 className="h-6 w-6" />
-                </span>
-                <p className="mt-5 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
+              <div className="border-t-2 border-brand-850 pt-6 text-ink">
+                <Building2 className="h-6 w-6 text-ink" />
+                <p className="mt-4 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
                   A bridge between community needs and public opportunities.
                 </p>
-                <p className="mt-3 text-xs leading-relaxed text-ink-muted sm:text-sm">
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                   Activities span awareness of welfare schemes, consumer rights, capacity-building for self-help groups and links to health and social-welfare services.
                 </p>
-                <div className="mt-5 border-t border-brand-100 pt-4 flex items-center gap-2 text-xs font-semibold text-emerald-800">
+                <div className="mt-5 border-t border-line/60 pt-4 flex items-center gap-2 text-xs font-semibold text-brand-800">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                   <span>NITI Aayog Darpan &amp; MCA CSR-1 Registered</span>
                 </div>
@@ -106,29 +103,27 @@ export default function GovernmentActivitiesPage() {
             </ScrollReveal>
           </section>
 
-          {/* Key Community Pillars with Staggered Rise */}
+          {/* Key Community Pillars (Borderless, Open Editorial) */}
           <section className="mt-12 sm:mt-16">
             <ScrollReveal direction="up" delay={40}>
-              <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Focus areas</p>
-              <h2 className="mt-1 font-display text-2xl font-bold text-ink sm:text-3xl">
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">Focus areas</p>
+              <h2 className="mt-1 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
                 Key Community Pillars
               </h2>
             </ScrollReveal>
 
-            <div className="mt-6 grid gap-5 md:grid-cols-3">
+            <div className="mt-8 grid gap-8 md:grid-cols-3">
               {areas.map(({ title, text, icon: Icon, badge }, idx) => (
                 <ScrollReveal key={title} staggerIndex={idx} direction="up">
-                  <article className="design-card group flex h-full flex-col rounded-xl border border-line bg-white p-6 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <article className="group flex h-full flex-col border-t-2 border-line pt-6 transition hover:border-brand-700">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700 transition group-hover:bg-brand-700 group-hover:text-white">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span className="rounded-full bg-sand-100 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-brand-800">
+                      <Icon className="h-6 w-6 text-ink transition group-hover:text-brand-800" />
+                      <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
                         {badge}
                       </span>
                     </div>
                     <h3 className="mt-4 font-display text-lg font-bold text-ink group-hover:text-brand-800">{title}</h3>
-                    <p className="mt-2 flex-1 text-xs leading-relaxed text-ink-muted sm:text-sm">{text}</p>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{text}</p>
                   </article>
                 </ScrollReveal>
               ))}

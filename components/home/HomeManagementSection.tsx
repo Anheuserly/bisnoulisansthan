@@ -112,18 +112,17 @@ export function HomeManagementSection() {
       <div className="pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-brand-200/25 blur-3xl" />
       <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-amber-200/20 blur-3xl" />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header Block */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-100/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-800 shadow-2xs">
-              <Quote className="h-3.5 w-3.5 text-brand-700" />
-              <span>Leadership &amp; Governance</span>
-            </div>
-            <h2 className="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
+          <div className="max-w-3xl">
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">
+              Leadership &amp; Governance
+            </p>
+            <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
               Dignity, justice and equal opportunity guide our work.
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted sm:text-base">
+            <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-700">
               BSGSS leadership brings together decades of distinguished public administration, policy expertise, and grassroots empathy.
             </p>
           </div>
@@ -131,7 +130,7 @@ export function HomeManagementSection() {
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/management"
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition-all hover:bg-brand-800 hover:shadow-soft sm:text-sm"
+              className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white shadow-2xs transition-all hover:bg-brand-800 hover:shadow-soft"
             >
               <span>Full Leadership Messages</span>
               <ArrowRight className="h-4 w-4" />
@@ -139,37 +138,37 @@ export function HomeManagementSection() {
           </div>
         </div>
 
-        {/* 2 Smart Interactive Management Cards */}
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
+        {/* 2 Seamless Leadership Profiles - NO BOXED CARDS / NO SIDE BORDERS */}
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
           {LEADERS.map((leader) => (
             <div
               key={leader.id}
               onClick={() => setActiveLeader(leader)}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl border-2 border-white bg-white p-2 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-200 hover:shadow-2xl sm:p-3"
+              className="group relative cursor-pointer border-t border-slate-200/80 pt-6 pb-2 transition-all duration-300 hover:-translate-y-1"
             >
-              {/* Card Container Layout */}
-              <div className="grid gap-4 sm:grid-cols-[9.5rem_1fr] sm:items-center">
+              {/* Profile Layout */}
+              <div className="grid gap-6 sm:grid-cols-[10rem_1fr] sm:items-center">
                 {/* Portrait Plate */}
-                <div className="relative aspect-square overflow-hidden rounded-xl bg-sand-100 shadow-inner sm:aspect-[4/5]">
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-sand-100 shadow-sm sm:aspect-[4/5]">
                   <img
                     src={leader.image}
                     alt={leader.name}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
                   />
                   {/* Subtle vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 sm:opacity-40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 sm:opacity-30" />
 
                   {/* Corner Expand Indicator */}
-                  <div className="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-brand-900 shadow-2xs backdrop-blur-md transition-transform group-hover:scale-110 group-hover:bg-brand-700 group-hover:text-white">
+                  <div className="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-slate-900 shadow-2xs backdrop-blur-md transition-transform group-hover:scale-110 group-hover:bg-brand-700 group-hover:text-white">
                     <Maximize2 className="h-3.5 w-3.5" />
                   </div>
                 </div>
 
                 {/* Narrative Details */}
-                <div className="flex flex-col justify-between p-2 sm:pr-4">
+                <div className="flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[0.6875rem] font-bold text-brand-800 ring-1 ring-brand-200">
+                      <span className="font-mono text-xs font-bold text-brand-800 uppercase tracking-wider">
                         {leader.titleBadge}
                       </span>
                       <span className="text-[0.625rem] font-mono font-medium text-emerald-700 flex items-center gap-1">
@@ -178,25 +177,25 @@ export function HomeManagementSection() {
                       </span>
                     </div>
 
-                    <h3 className="mt-2 font-display text-xl font-bold text-ink group-hover:text-brand-800 transition-colors">
+                    <h3 className="mt-2 font-display text-2xl font-bold text-slate-900 group-hover:text-brand-800 transition-colors">
                       {leader.name}
                     </h3>
-                    <p className="text-xs font-semibold text-brand-700">
+                    <p className="mt-0.5 text-xs font-semibold text-brand-700">
                       {leader.role}
                     </p>
 
-                    <blockquote className="mt-3 text-xs leading-relaxed text-ink-muted sm:text-[13px] italic border-l-2 border-brand-300 pl-2.5">
+                    <blockquote className="mt-3.5 text-sm leading-relaxed text-slate-700 italic border-l-2 border-brand-400 pl-3">
                       &ldquo;{leader.shortQuote}&rdquo;
                     </blockquote>
                   </div>
 
                   {/* Interactive CTA Cue */}
-                  <div className="mt-4 flex items-center justify-between border-t border-brand-100/70 pt-2.5 text-xs font-semibold text-brand-700 group-hover:text-brand-900">
-                    <span className="flex items-center gap-1 text-[0.6875rem] text-brand-700 font-bold tracking-wide">
+                  <div className="mt-5 flex items-center justify-between border-t border-slate-200/70 pt-3 text-xs font-semibold text-brand-700 group-hover:text-brand-900">
+                    <span className="flex items-center gap-1 text-xs text-brand-700 font-bold tracking-wide">
                       <Sparkles className="h-3 w-3" />
                       <span>Click to view speech &amp; live address</span>
                     </span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </div>

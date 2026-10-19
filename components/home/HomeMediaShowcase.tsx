@@ -16,18 +16,18 @@ export function HomeMediaShowcase() {
   const clippings = content.activities.clippings.slice(0, 3);
 
   return (
-    <section className="bg-white py-10 sm:py-14 border-b border-brand-100" id="media-showcase">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+    <section className="bg-white py-16 sm:py-24 border-b border-brand-100" id="media-showcase">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
-              Community Action & Public Record
+              Community Action &amp; Public Record
             </p>
-            <h2 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
               Moments, stories and media from the field.
             </h2>
-            <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
+            <p className="mt-3 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-700">
               Authentic glimpses of BSGSS programmes, YouTube video documentation, and public newspaper coverage.
             </p>
           </div>

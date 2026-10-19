@@ -49,13 +49,12 @@ export default function LegalStatusPage() {
       />
 
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-          {/* Executive Transparency Overview Card */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          {/* Executive Transparency Overview */}
           <ScrollReveal direction="up" delay={40}>
-            <section className="relative overflow-hidden rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 md:p-10 shadow-2xs">
+            <section className="relative overflow-hidden border-t-2 border-brand-850 pt-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-700 shadow-2xs">
-                  <ShieldCheck className="h-3.5 w-3.5 text-brand-600" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
                   {legalStatus.eyebrow}
                 </span>
                 <span className="text-xs font-medium text-ink-muted">
@@ -140,18 +139,16 @@ export default function LegalStatusPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {legalStatus.credentials.map((cred, idx) => {
                 const Icon = credentialIcons[idx] ?? FileCheck2;
                 return (
                   <ScrollReveal key={cred.title} staggerIndex={idx} direction="up">
-                    <article className="flex h-full flex-col justify-between rounded-xl border border-line bg-white p-5 shadow-2xs transition-all hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                    <article className="flex h-full flex-col justify-between border-t-2 border-line pt-5">
                       <div>
                         <div className="flex items-center justify-between gap-2">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                            <Icon className="h-4 w-4" />
-                          </span>
-                          <span className="rounded-full bg-sand-100 px-2 py-0.5 text-[0.6875rem] font-semibold text-brand-800">
+                          <Icon className="h-5 w-5 text-ink shrink-0" />
+                          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
                             {cred.tag}
                           </span>
                         </div>
@@ -200,21 +197,21 @@ export default function LegalStatusPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="mt-8 grid gap-8 md:grid-cols-2">
               {legalStatus.documents.map((doc, idx) => (
                 <ScrollReveal key={doc.href} staggerIndex={idx % 4} direction="up">
-                  <article className="group flex h-full flex-col justify-between rounded-xl border border-line bg-white p-5 shadow-2xs transition-all hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
+                  <article className="group flex h-full flex-col justify-between border-t-2 border-line pt-5 transition hover:border-brand-700">
                     <div>
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-[0.6875rem] font-bold text-red-700">
+                          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
                             {doc.fileType}
                           </span>
                           <span className="text-xs font-medium text-ink-muted">
                             {doc.fileSize}
                           </span>
                         </div>
-                        <span className="rounded-full bg-sand-100 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-ink-muted">
+                        <span className="text-[0.6875rem] font-semibold text-ink-muted">
                           {doc.tag}
                         </span>
                       </div>
@@ -240,7 +237,7 @@ export default function LegalStatusPage() {
                       <a
                         href={doc.href}
                         download
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-sand-50 px-2.5 py-1 text-xs font-medium text-ink hover:bg-brand-50 hover:text-brand-800 transition"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-ink hover:text-brand-800 transition"
                       >
                         <Download className="h-3.5 w-3.5 text-brand-600" />
                         <span>Download</span>
@@ -252,15 +249,15 @@ export default function LegalStatusPage() {
             </div>
           </section>
 
-          {/* Institutional Governance Highlights */}
+          {/* Institutional Governance Highlights (Borderless, Open Editorial) */}
           <ScrollReveal direction="up" delay={60}>
-            <section className="mt-12 sm:mt-14 rounded-2xl border border-brand-200/60 bg-sand-50/70 p-6 sm:p-8">
+            <section className="mt-14 border-t-2 border-brand-850 pt-6">
               <h2 className="font-display text-lg font-bold text-ink sm:text-xl">
                 Governance &amp; Institutional Transparency Standards
               </h2>
-              <div className="mt-5 grid gap-5 md:grid-cols-3">
+              <div className="mt-6 grid gap-6 md:grid-cols-3">
                 {legalStatus.governanceHighlights.map((highlight) => (
-                  <div key={highlight.title} className="rounded-xl border border-line bg-white p-5 shadow-2xs">
+                  <div key={highlight.title} className="border-t border-line pt-4">
                     <h3 className="text-sm font-semibold text-ink">{highlight.title}</h3>
                     <p className="mt-2 text-xs leading-relaxed text-ink-muted">
                       {highlight.description}

@@ -56,12 +56,12 @@ export default function OurWorkPage() {
         crumbs={[{ name: "Our work", path: "/our-work" }]}
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-          <div className="grid gap-6 md:grid-cols-2">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div className="grid gap-10 md:grid-cols-2">
             {work.map(({ title, icon: Icon, tag, location, text, image }, index) => (
               <ScrollReveal key={title} staggerIndex={index} direction="up">
-                <article className="design-card group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-soft">
-                  <div className="relative aspect-[16/9] overflow-hidden bg-sand-50">
+                <article className="group flex h-full flex-col border-t-2 border-line pt-6 transition hover:border-brand-700">
+                  <div className="relative aspect-[16/9] overflow-hidden bg-sand-50 rounded-xl">
                     <img
                       src={`/images/bsgss/${image}`}
                       alt={title}
@@ -81,17 +81,15 @@ export default function OurWorkPage() {
                     </div>
 
                     <div className="absolute bottom-3 left-3 right-3">
-                      <p className="font-display text-sm font-bold text-white sm:text-base">
+                      <p className="font-display text-base font-bold text-white sm:text-lg">
                         {title}
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700 transition group-hover:bg-brand-700 group-hover:text-white">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h2 className="mt-3.5 font-display text-lg font-bold text-ink sm:text-xl">{title}</h2>
-                    <p className="mt-2 flex-1 text-xs leading-relaxed text-ink-muted sm:text-sm">{text}</p>
+                  <div className="flex flex-1 flex-col pt-5">
+                    <Icon className="h-6 w-6 text-ink transition group-hover:text-brand-800" />
+                    <h2 className="mt-3 font-display text-xl font-bold text-ink">{title}</h2>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{text}</p>
                     
                     <div className="mt-5 border-t border-line/60 pt-4">
                       <Link
@@ -109,12 +107,10 @@ export default function OurWorkPage() {
           </div>
 
           <ScrollReveal direction="up" delay={80}>
-            <section className="mt-12 rounded-2xl border border-brand-200/80 bg-gradient-to-br from-sand-50 via-white to-brand-50/50 p-6 sm:p-8 shadow-2xs">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand-700 shadow-2xs">
-                <HandHeart className="h-5 w-5" />
-              </span>
-              <h2 className="mt-4 font-display text-xl font-bold text-ink sm:text-2xl">Partner with BSGSS</h2>
-              <p className="mt-2 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
+            <section className="mt-14 border-t-2 border-brand-850 pt-6">
+              <HandHeart className="h-6 w-6 text-ink" />
+              <h2 className="mt-4 font-display text-2xl font-bold text-ink sm:text-3xl">Partner with BSGSS</h2>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">
                 Public sector enterprises, corporate CSR boards, and individual philanthropists can help scale grassroots programmes where they create lasting community self-reliance.
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-3">

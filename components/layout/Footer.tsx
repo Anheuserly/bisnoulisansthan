@@ -21,10 +21,10 @@ export function Footer() {
 
   return (
     <footer className="bg-brand-900 text-brand-100 print:hidden">
-      <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
           <div className="sm:col-span-2">
-            <Logo inverted />
+            <Logo inverted size="xlarge" />
             <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-200">{content.site.footerDescription}</p>
             <Link href={links.support} className="mt-6 inline-flex rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-brand-900 hover:bg-sand-100 transition">Support BSGSS</Link>
             <div className="mt-6">
@@ -85,23 +85,53 @@ export function Footer() {
           </div>
 
           <FooterColumn title="Explore">
-            <FooterLink href="/about">About BSGSS</FooterLink><FooterLink href="/about/our-story">Our story</FooterLink><FooterLink href="/management">Management</FooterLink><FooterLink href="/about/legal-status">Legal status</FooterLink><FooterLink href="/our-work">Our work</FooterLink><FooterLink href="/activities">Activities</FooterLink><FooterLink href="/activities/key-programmes">Our Key Programmes</FooterLink><FooterLink href="/stories">Beneficiary stories</FooterLink><FooterLink href="/activities/gallery">Photo gallery</FooterLink><FooterLink href="/activities/videos">Videos</FooterLink><FooterLink href="/activities/work-in-media">Work in media</FooterLink><FooterLink href="/activities/shg-products">SHG products</FooterLink><FooterLink href="/activities-under-state-central-government">Government programmes</FooterLink><FooterLink href="/impact">Impact</FooterLink><FooterLink href="/about/partners">Our partners</FooterLink><FooterLink href="/join-us">Join us</FooterLink>
+            <FooterLink href="/about">About BSGSS</FooterLink>
+            <FooterLink href="/about/our-story">Our Story</FooterLink>
+            <FooterLink href="/management">Management</FooterLink>
+            <FooterLink href="/impact">Audited Impact</FooterLink>
+            <FooterLink href="/about/partners">Our Partners</FooterLink>
+            <FooterLink href="/join-us">Join Our Team</FooterLink>
           </FooterColumn>
-          <FooterColumn title="Get involved">
-            <FooterLink href="/sponsor">Sponsor a skill</FooterLink><FooterLink href="/support">Support us</FooterLink><FooterLink href="/contact">Volunteer with us</FooterLink><FooterLink href="/contact">Internships</FooterLink><FooterLink href="/contact">CSR partnerships</FooterLink><FooterLink href="/contact">Institutional partnerships</FooterLink>
+          <FooterColumn title="Programmes & Media">
+            <FooterLink href="/activities/key-programmes">Key Programmes</FooterLink>
+            <FooterLink href="/activities-under-state-central-government">Govt Programmes</FooterLink>
+            <FooterLink href="/activities/gallery">Photo Moments</FooterLink>
+            <FooterLink href="/activities/videos">Video Archives</FooterLink>
+            <FooterLink href="/activities/work-in-media">Press & Media</FooterLink>
+            <FooterLink href="/activities/shg-products">SHG Khadi Products</FooterLink>
           </FooterColumn>
-          <FooterColumn title="Transparency">
-            <FooterLink href="/transparency">Open Books &amp; Public Ledger</FooterLink><FooterLink href="/about/legal-status">Registration &amp; compliance</FooterLink><FooterLink href="/about/legal-status">12A &amp; 80G documents</FooterLink><FooterLink href="/about/legal-status">CSR-1 registration</FooterLink><FooterLink href="/documents/bsgss-funding-partners-2024.pdf">Funding partners list</FooterLink><FooterLink href="/about/legal-status">All public documents</FooterLink>
+          <FooterColumn title="Get Involved">
+            <FooterLink href="/support">Support BSGSS</FooterLink>
+            <FooterLink href="/sponsor">Sponsor a Skill</FooterLink>
+            <FooterLink href="/contact">Volunteer With Us</FooterLink>
+            <FooterLink href="/contact">Student Internships</FooterLink>
+            <FooterLink href="/contact">CSR Alliances</FooterLink>
+            <FooterLink href="/transparency">Public Ledger</FooterLink>
           </FooterColumn>
 
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">Contact</h2>
-            <address className="mt-4 space-y-3 text-sm not-italic leading-relaxed text-brand-200">
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-white"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-300" /><span>{fullAddress}</span></a>
-              <a href={telHref(site.contact.phone)} className="flex items-center gap-2 hover:text-white"><Phone className="h-4 w-4 shrink-0 text-brand-300" />{site.contact.phone}</a>
-              <a href={social.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white"><MessageCircle className="h-4 w-4 shrink-0 text-brand-300" />WhatsApp Chat</a>
-              <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-white"><Mail className="h-4 w-4 shrink-0 text-brand-300" />{site.contact.email}</a>
-            </address>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">Contact &amp; Offices</h2>
+            <div className="mt-4 space-y-4 text-xs sm:text-sm text-brand-200">
+              {/* Registered Office */}
+              <div className="border-l-2 border-brand-400/80 pl-2.5">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">Registered Office</p>
+                <p className="mt-0.5 text-xs text-brand-100">Village &amp; Post Bisnouli, Tehsil Dadri, Gautam Buddha Nagar, UP – 203207</p>
+              </div>
+
+              {/* Administrative Office */}
+              <div className="border-l-2 border-brand-400/80 pl-2.5">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">Admin &amp; Head Office</p>
+                <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="mt-0.5 block text-xs text-brand-100 hover:text-white hover:underline">
+                  B-180, Sector–31, Noida, Gautam Buddha Nagar, UP – 201301
+                </a>
+              </div>
+
+              {/* Direct channels */}
+              <div className="space-y-1.5 pt-1 text-xs">
+                <a href={telHref(site.contact.phone)} className="flex items-center gap-2 hover:text-white"><Phone className="h-3.5 w-3.5 shrink-0 text-brand-300" />{site.contact.phone}</a>
+                <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-white"><Mail className="h-3.5 w-3.5 shrink-0 text-brand-300" />{site.contact.email}</a>
+              </div>
+            </div>
           </div>
         </div>
 

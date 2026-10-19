@@ -58,7 +58,7 @@ export default async function PartnerStoryPage({ params }: PageProps) {
       />
 
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <Link
             href="/about/partners"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 transition hover:text-brand-900 sm:text-sm"
@@ -99,21 +99,19 @@ export default async function PartnerStoryPage({ params }: PageProps) {
           </ScrollReveal>
 
           {hasProgrammeDetail ? (
-            <section className="mt-10 sm:mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <section className="mt-10 sm:mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
               <ScrollReveal direction="up" delay={60}>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-brand-700">What we worked on</p>
+                  <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">What we worked on</p>
                   <h2 className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">Partnership focus</h2>
-                  <div className="mt-5 grid gap-3">
+                  <div className="mt-5 divide-y divide-line/70">
                     {partner.focusAreas.map((focus) => (
                       <div
                         key={focus}
-                        className="flex items-center gap-3 rounded-xl border border-line bg-white p-4 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                        className="flex items-center gap-3 py-3.5"
                       >
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                          <Handshake className="h-4 w-4" />
-                        </span>
-                        <p className="text-xs sm:text-sm font-semibold text-ink">{focus}</p>
+                        <Handshake className="h-5 w-5 shrink-0 text-ink" />
+                        <p className="text-sm font-semibold text-ink">{focus}</p>
                       </div>
                     ))}
                   </div>
@@ -122,16 +120,16 @@ export default async function PartnerStoryPage({ params }: PageProps) {
 
               <ScrollReveal direction="up" delay={100}>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-brand-700">Where the work is recorded</p>
+                  <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">Where the work is recorded</p>
                   <h2 className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">Programme locations</h2>
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {partner.locations.map((location) => (
                       <div
                         key={location}
-                        className="flex min-h-16 items-center gap-3 rounded-xl border border-line bg-white p-4 shadow-2xs transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                        className="flex items-center gap-3 border-t border-line py-3.5"
                       >
-                        <MapPin className="h-4 w-4 shrink-0 text-brand-700" />
-                        <p className="text-xs sm:text-sm font-semibold text-ink">{location}</p>
+                        <MapPin className="h-4 w-4 shrink-0 text-ink" />
+                        <p className="text-sm font-semibold text-ink">{location}</p>
                       </div>
                     ))}
                   </div>

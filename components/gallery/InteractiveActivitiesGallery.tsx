@@ -54,9 +54,7 @@ export function InteractiveActivitiesGallery() {
       <div className="flex flex-col gap-4 rounded-2xl border border-brand-200/80 bg-white p-5 shadow-2xs sm:p-6 lg:flex-row lg:items-center lg:justify-between">
         {/* Left: Summary Metric */}
         <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 shadow-2xs">
-            <Camera className="h-5 w-5" />
-          </span>
+          <Camera className="h-6 w-6 text-slate-700 shrink-0" />
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-display text-lg font-bold text-ink sm:text-xl">
