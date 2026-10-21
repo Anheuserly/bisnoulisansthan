@@ -21,6 +21,30 @@ export async function Footer() {
   const year = new Date().getFullYear();
   const customizer = await getCustomizerSettings();
   const social = customizer.socialLinks;
+  const { registeredOffice, adminOffice } = customizer.offices;
+
+  const regAddressParts = [
+    registeredOffice.line1,
+    registeredOffice.line2,
+    registeredOffice.city,
+    registeredOffice.state && registeredOffice.pincode
+      ? `${registeredOffice.state} – ${registeredOffice.pincode}`
+      : registeredOffice.state || registeredOffice.pincode,
+  ].filter(Boolean);
+  const regAddressString = regAddressParts.join(", ");
+
+  const adminAddressParts = [
+    adminOffice.line1,
+    adminOffice.line2,
+    adminOffice.city,
+    adminOffice.state && adminOffice.pincode
+      ? `${adminOffice.state} – ${adminOffice.pincode}`
+      : adminOffice.state || adminOffice.pincode,
+  ].filter(Boolean);
+  const adminAddressString = adminAddressParts.join(", ");
+
+  const activePhone = adminOffice.phone || registeredOffice.phone || site.contact.phone;
+  const activeEmail = adminOffice.email || registeredOffice.email || site.contact.email || "bisnoulisansthan@gmail.com";
 
   return (
     <footer className="bg-brand-900 text-brand-100 print:hidden">
@@ -127,22 +151,56 @@ export async function Footer() {
             <div className="mt-4 space-y-4 text-xs sm:text-sm text-brand-200">
               {/* Registered Office */}
               <div className="border-l-2 border-brand-400/80 pl-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">Registered Office</p>
-                <p className="mt-0.5 text-xs text-brand-100">Village &amp; Post Bisnouli, Tehsil Dadri, Gautam Buddha Nagar, UP – 203207</p>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">
+                  {registeredOffice.title || "Registered Office"}
+                </p>
+                {registeredOffice.mapsUrl ? (
+                  <a
+                    href={registeredOffice.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-0.5 block text-xs text-brand-100 hover:text-white hover:underline"
+                  >
+                    {regAddressString}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 text-xs text-brand-100">{regAddressString}</p>
+                )}
               </div>
 
               {/* Administrative Office */}
               <div className="border-l-2 border-brand-400/80 pl-2.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">Admin &amp; Head Office</p>
-                <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="mt-0.5 block text-xs text-brand-100 hover:text-white hover:underline">
-                  B-180, Sector–31, Noida, Gautam Buddha Nagar, UP – 201301
-                </a>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-300">
+                  {adminOffice.title || "Administrative Office"}
+                </p>
+                {adminOffice.mapsUrl ? (
+                  <a
+                    href={adminOffice.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-0.5 block text-xs text-brand-100 hover:text-white hover:underline"
+                  >
+                    {adminAddressString}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 text-xs text-brand-100">{adminAddressString}</p>
+                )}
               </div>
 
               {/* Direct channels */}
               <div className="space-y-1.5 pt-1 text-xs">
-                <a href={telHref(site.contact.phone)} className="flex items-center gap-2 hover:text-white"><Phone className="h-3.5 w-3.5 shrink-0 text-brand-300" />{site.contact.phone}</a>
-                <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-white"><Mail className="h-3.5 w-3.5 shrink-0 text-brand-300" />{site.contact.email}</a>
+                {activePhone && (
+                  <a href={telHref(activePhone)} className="flex items-center gap-2 hover:text-white">
+                    <Phone className="h-3.5 w-3.5 shrink-0 text-brand-300" />
+                    {activePhone}
+                  </a>
+                )}
+                {activeEmail && (
+                  <a href={`mailto:${activeEmail}`} className="flex items-center gap-2 hover:text-white">
+                    <Mail className="h-3.5 w-3.5 shrink-0 text-brand-300" />
+                    {activeEmail}
+                  </a>
+                )}
               </div>
             </div>
           </div>
