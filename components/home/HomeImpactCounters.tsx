@@ -15,26 +15,15 @@ import {
   Calendar,
 } from "lucide-react";
 
-interface StatItem {
-  id: string;
-  target: number;
-  suffix: string;
-  prefix?: string;
-  label: string;
-  sublabel: string;
-  category: string;
-  iconName: "users" | "health" | "training" | "villages" | "partners" | "years";
-  badge: string;
-  color: string;
-}
+import type { CustomizerImpactMetric } from "@/config/customizer";
 
-const IMPACT_METRICS: StatItem[] = [
+export const DEFAULT_IMPACT_METRICS: CustomizerImpactMetric[] = [
   {
     id: "lives",
-    target: 5000000,
-    suffix: "+",
+    target: 50,
+    suffix: " Lac +",
     label: "Underprivileged Lives Empowered",
-    sublabel: "Across 5 Northern states through integrated grassroots programs",
+    sublabel: "Across 7 states through integrated grassroots programs",
     category: "Community Outreach",
     iconName: "users",
     badge: "Audited Grassroots Reach",
@@ -42,8 +31,8 @@ const IMPACT_METRICS: StatItem[] = [
   },
   {
     id: "patients",
-    target: 2000000,
-    suffix: "+",
+    target: 20,
+    suffix: " Lac +",
     label: "Patients Screened & Treated",
     sublabel: "Free diagnostic oncology, eye checkups & essential medicines",
     category: "Healthcare Mission",
@@ -54,7 +43,7 @@ const IMPACT_METRICS: StatItem[] = [
   {
     id: "women",
     target: 36000,
-    suffix: "+",
+    suffix: " +",
     label: "Women Certified in Livelihoods",
     sublabel: "Vocational tailoring, computer literacy & self-help banking",
     category: "Livelihood & Khadi",
@@ -67,7 +56,7 @@ const IMPACT_METRICS: StatItem[] = [
     target: 350,
     suffix: "+",
     label: "Rural Villages Reached",
-    sublabel: "Active community mobilization in Delhi NCR, UP, Haryana & Punjab",
+    sublabel: "Active community mobilization across 7 states in North India",
     category: "Field Presence",
     iconName: "villages",
     badge: "Local Panchayats",
@@ -75,7 +64,7 @@ const IMPACT_METRICS: StatItem[] = [
   },
   {
     id: "partners",
-    target: 30,
+    target: 35,
     suffix: "+",
     label: "Institutional CSR Partners",
     sublabel: "Collaborating with leading PSUs like RITES, IRCON, REC, NTPC, BHEL",
@@ -87,7 +76,7 @@ const IMPACT_METRICS: StatItem[] = [
   {
     id: "years",
     target: 30,
-    suffix: " Years",
+    suffix: "+ Years",
     label: "Unbroken Grassroots Service",
     sublabel: "Founded in Bisnouli in 1994, upholding Sarvodaya principles",
     category: "Heritage & Legacy",
@@ -101,7 +90,7 @@ function formatCount(value: number): string {
   return value.toLocaleString("en-IN");
 }
 
-function StatCard({ stat, inView }: { stat: StatItem; inView: boolean }) {
+function StatCard({ stat, inView }: { stat: CustomizerImpactMetric; inView: boolean }) {
   const [currentVal, setCurrentVal] = useState(0);
 
   useEffect(() => {
@@ -146,6 +135,8 @@ function StatCard({ stat, inView }: { stat: StatItem; inView: boolean }) {
         return <Building2 className="h-5 w-5" />;
       case "years":
         return <Calendar className="h-5 w-5" />;
+      default:
+        return <Users className="h-5 w-5" />;
     }
   };
 
@@ -191,9 +182,14 @@ function StatCard({ stat, inView }: { stat: StatItem; inView: boolean }) {
   );
 }
 
-export function HomeImpactCounters() {
+interface HomeImpactCountersProps {
+  metrics?: CustomizerImpactMetric[];
+}
+
+export function HomeImpactCounters({ metrics }: HomeImpactCountersProps = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
+  const activeMetrics = metrics && metrics.length > 0 ? metrics : DEFAULT_IMPACT_METRICS;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -252,7 +248,7 @@ export function HomeImpactCounters() {
 
         {/* 6 Grid Metrics - BORDERLESS / NO BOXED CARDS */}
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {IMPACT_METRICS.map((stat) => (
+          {activeMetrics.map((stat) => (
             <StatCard key={stat.id} stat={stat} inView={inView} />
           ))}
         </div>
