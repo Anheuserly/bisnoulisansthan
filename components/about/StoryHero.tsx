@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Download } from "lucide-react";
 
 export function StoryHero() {
   const explore = () => document.getElementById("story-experience")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -27,10 +27,27 @@ export function StoryHero() {
             <p className="mt-1 text-sm leading-relaxed text-brand-100">Village-rooted work across education, healthcare, livelihoods and women’s agency.</p>
           </div>
         </div>
-        <button type="button" onClick={explore} className="motion-safe:animate-rise mt-8 inline-flex items-center gap-3 text-sm font-semibold text-white [animation-delay:300ms] hover:text-brand-100 cursor-pointer">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200/60"><ArrowDown className="h-4 w-4" /></span>
-          Explore the journey
-        </button>
+        <div className="mt-8 flex flex-wrap items-center gap-5">
+          <button
+            type="button"
+            onClick={explore}
+            className="motion-safe:animate-rise inline-flex items-center gap-3 text-sm font-semibold text-white [animation-delay:300ms] hover:text-brand-100 cursor-pointer"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200/60">
+              <ArrowDown className="h-4 w-4" />
+            </span>
+            <span>Explore Chronology</span>
+          </button>
+          <a
+            href="/documents/bsgss-organisational-profile.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="motion-safe:animate-rise inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20 [animation-delay:350ms]"
+          >
+            <Download className="h-4 w-4 text-emerald-300" />
+            <span>Download Profile (PDF)</span>
+          </a>
+        </div>
       </div>
     </section>
   );

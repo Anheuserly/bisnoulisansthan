@@ -278,8 +278,11 @@ The profile catalogs 37 national broadcast segments and verified video reports:
      - `23 CSR PROJECTS UNDERTAKEN` (UP)
      - `50+ VILLAGES COVERED` (UP)
 
-### 3.5 Four-Era Chronology of Growth (PDF Page 7)
-- **Component**: `components/about/StoryChronology.tsx` & `config/content.ts`
+### 3.5 Four-Era Chronology of Growth & Our Story Page (PDF Page 7)
+- **Components**: `app/(marketing)/about/our-story/page.tsx`, `components/about/StoryExperience.tsx`, `components/about/StoryHero.tsx`, & `config/content.ts`
+- **Chronology Title**: Configured exact title `"Chronology of Growth & Development"` on the timeline rail and static view.
+- **Timeline Items**: Synchronized with both year and title tags (`1994 – The Beginning`, `2000s – Expanding Livelihoods and Healthcare`, `2010s – Broadening Reach and Impact`, `2020s – Scaling Impact and Outreach`).
+- **Story Page Layout**: Added a dedicated comprehensive 4-era timeline grid on `/about/our-story` along with a direct **Download Profile Dossier (PDF)** action button in the hero and section banner.
 - **Eras Configured**:
   1. **1994 – The Beginning**: A village-rooted initiative focused on rural development with focus on promotion of Village & Khadi Industries and Handicrafts.
   2. **2000s – Expanding Livelihoods and Healthcare**: Strengthened efforts in sustainable livelihood generation and community healthcare, with an expanding presence in Delhi and Punjab supported by Govt grant-in-aid schemes / programmes.
@@ -303,3 +306,5 @@ The profile catalogs 37 national broadcast segments and verified video reports:
 - **Next.js Turbopack Build**: Clean compilation across all application routes.
 - **Database Integrity**: PostgreSQL persistence in `site_settings` under key `site_customizer` verified with automatic JSON serialization and schema fallback.
 - **Dual Display Verification**: Confirmed identical address, phone, and email information across the public footer (`components/layout/Footer.tsx`) and the contact page (`app/(marketing)/contact/page.tsx`).
+- **Official Profile Public Asset**: Placed the 48-page dossier at `/documents/bsgss-organisational-profile.pdf` with cover preview `/images/documents/legal/bsgss-organisational-profile.jpg`.
+- **Public Website Download Points**: Surfaced direct PDF view/download links across the Document Library (`/about/legal-status`), the About Us hero action strip (`/about`), the Governance & Management page (`/management`), and the global site Footer (`components/layout/Footer.tsx`).

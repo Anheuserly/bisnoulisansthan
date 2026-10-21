@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, HeartHandshake, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Download, HeartHandshake, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { HomeManagementSection } from "@/components/home/HomeManagementSection";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -61,6 +61,16 @@ export default function ManagementPage() {
                   Learn more about the programmes that turn this vision into practical, daily support for communities.
                 </p>
                 <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="/documents/bsgss-organisational-profile.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-600/30 bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-900 shadow-2xs transition hover:bg-emerald-100 sm:text-sm"
+                    title="Download Official 48-Page Organisational Profile Dossier"
+                  >
+                    <Download className="h-4 w-4 text-emerald-700" />
+                    <span>Download Profile (PDF)</span>
+                  </a>
                   <Link
                     href="/about/legal-status"
                     className="inline-flex items-center gap-1.5 rounded-lg border border-brand-200 bg-white px-4 py-2.5 text-xs font-semibold text-brand-700 shadow-2xs transition hover:bg-brand-50 sm:text-sm"

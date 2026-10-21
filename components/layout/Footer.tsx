@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  Download,
   Facebook,
   FileText,
   Instagram,
@@ -218,8 +219,17 @@ export async function Footer() {
               {content.site.developerCredit}
             </a>
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
             <SoundToggle variant="footer" />
+            <a
+              href="/documents/bsgss-organisational-profile.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-white"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Organisational Profile (PDF)</span>
+            </a>
             <a href="mailto:bsgssindia@yahoo.co.in?subject=Document%20request" className="inline-flex items-center gap-2 hover:text-white"><FileText className="h-4 w-4" />Request public documents or reports</a>
           </div>
         </div>

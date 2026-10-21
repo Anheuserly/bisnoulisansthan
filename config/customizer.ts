@@ -1432,8 +1432,8 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     {
       id: "1994",
       year: "1994",
-      category: "Foundation",
-      title: "The Beginning",
+      category: "The Beginning",
+      title: "1994 – The Beginning",
       description: "A village-rooted initiative focused on rural development with focus on promotion of Village & Khadi Industries and Handicrafts.",
       image: "/images/bsgss/legacy-page-assets/44-homepage-aboutus.jpg",
       imageAlt: "Foundational village handloom and craft outreach",
@@ -1442,8 +1442,8 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     {
       id: "2000s",
       year: "2000s",
-      category: "Expanding Livelihoods and Healthcare",
-      title: "Expanding Livelihoods and Healthcare",
+      category: "Expanding Livelihoods & Healthcare",
+      title: "2000s – Expanding Livelihoods and Healthcare",
       description: "Strengthened efforts in sustainable livelihood generation and community healthcare, with an expanding presence in Delhi and Punjab supported by Govt grant-in-aid schemes / programmes.",
       image: "/images/bsgss/gallery-training/185-tal1.jpeg",
       imageAlt: "Women vocational training and healthcare initiatives",
@@ -1452,8 +1452,8 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     {
       id: "2010s",
       year: "2010s",
-      category: "Broadening Reach and Impact",
-      title: "Broadening Reach and Impact",
+      category: "Broadening Reach & Impact",
+      title: "2010s – Broadening Reach and Impact",
       description: "Expanded sustainable livelihood and healthcare initiatives, strengthening the organisation’s presence across Uttar Pradesh, Punjab, and Haryana, with a growing emphasis on Govt. grant-in-aid schemes and CSR programmes of PSUs.",
       image: "/images/bsgss/healthcare-camps/150-camp3.jpeg",
       imageAlt: "Healthcare screening camps and PSU CSR initiatives",
@@ -1462,8 +1462,8 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     {
       id: "2020s",
       year: "2020s",
-      category: "Scaling Impact and Outreach",
-      title: "Scaling Impact and Outreach",
+      category: "Scaling Impact & Outreach",
+      title: "2020s – Scaling Impact and Outreach",
       description: "Further expanded sustainable livelihood and community healthcare programmes, extending the organisation’s reach across Uttar Pradesh, Haryana, Chhattisgarh, and Uttarakhand, with an increased emphasis on CSR partnerships with PSUs.",
       image: "/images/bsgss/gallery-events/355-1-1.jpg",
       imageAlt: "Institutional scale and community self-reliance",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
+  Download,
   FileCheck2,
   Handshake,
   HeartPulse,
@@ -70,6 +71,16 @@ export default function AboutPage() {
               >
                 <span>30-Year History</span>
               </Link>
+              <a
+                href="/documents/bsgss-organisational-profile.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-emerald-600/30 bg-emerald-50/80 px-4 py-2.5 text-xs font-semibold text-emerald-900 transition hover:bg-emerald-100 sm:text-sm"
+                title="Download 48-Page Official BSGSS Organisational Profile"
+              >
+                <Download className="h-4 w-4 text-emerald-700" />
+                <span>Download Profile (PDF)</span>
+              </a>
             </div>
           </ScrollReveal>
 

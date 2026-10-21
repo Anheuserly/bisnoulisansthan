@@ -34,9 +34,11 @@ export function StoryExperience({
         className="relative hidden overflow-hidden bg-brand-900 py-16 text-white md:block md:py-20"
       >
         <div className="pointer-events-none absolute -right-24 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full border border-brand-200/10" />
-        <div className="relative mx-auto grid max-w-7xl grid-cols-[8rem_minmax(0,1fr)_minmax(22rem,.92fr)] items-center gap-8 px-6 lg:gap-10 lg:px-8">
-          <aside aria-label="Journey timeline" className="relative h-[24rem] self-center">
-            <p className="absolute -top-10 left-0 text-xs font-bold uppercase tracking-[.16em] text-brand-200">Our journey</p>
+        <div className="relative mx-auto grid max-w-7xl grid-cols-[10rem_minmax(0,1fr)_minmax(22rem,.92fr)] items-center gap-8 px-6 lg:gap-10 lg:px-8">
+          <aside aria-label="Chronology of Growth & Development" className="relative h-[24rem] self-center">
+            <p className="absolute -top-10 left-0 text-xs font-bold uppercase tracking-[.14em] text-brand-200 whitespace-nowrap">
+              Chronology of Growth &amp; Development
+            </p>
             <div className="absolute bottom-0 left-[.3rem] top-0 w-px bg-white/25" />
             <ol className="relative flex h-full flex-col justify-between">
               {milestones.map((item, index) => (
@@ -45,21 +47,27 @@ export function StoryExperience({
                     type="button"
                     onClick={() => setActiveIndex(index)}
                     aria-current={activeIndex === index ? "step" : undefined}
-                    className="group flex items-center gap-3 text-left cursor-pointer"
+                    className="group flex items-start gap-3 text-left cursor-pointer"
                   >
-                    <span className={`relative z-10 h-3 w-3 rounded-full border-2 border-brand-900 transition ${activeIndex === index ? "scale-125 bg-brand-100 shadow-[0_0_0_5px_rgba(214,234,236,.18)]" : "bg-white/60 group-hover:bg-white"}`} />
-                    <span className={`font-display text-lg transition ${activeIndex === index ? "font-bold text-white" : "text-white/55 group-hover:text-white"}`}>{item.year}</span>
+                    <span className={`relative z-10 mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-brand-900 transition ${activeIndex === index ? "scale-125 bg-brand-100 shadow-[0_0_0_5px_rgba(214,234,236,.18)]" : "bg-white/60 group-hover:bg-white"}`} />
+                    <div className="min-w-0">
+                      <span className={`font-display text-lg block transition ${activeIndex === index ? "font-bold text-white" : "text-white/55 group-hover:text-white"}`}>{item.year}</span>
+                      <span className={`text-[11px] block transition truncate max-w-[8rem] ${activeIndex === index ? "text-brand-200 font-semibold" : "text-white/40 group-hover:text-white/70"}`}>{item.title}</span>
+                    </div>
                   </button>
                 </li>
               ))}
             </ol>
           </aside>
           <div key={milestone.id} className="max-w-xl motion-safe:animate-rise">
-              <p className="text-xs font-bold uppercase tracking-[.2em] text-brand-200">{milestone.category}</p>
-              <p className="mt-7 font-display text-7xl font-bold leading-none text-white/15">{milestone.year}</p>
-              <h2 className="-mt-2 font-display text-4xl font-bold leading-tight !text-white lg:text-5xl">{milestone.title}</h2>
-              <p className="mt-6 text-lg leading-relaxed text-brand-100">{milestone.description}</p>
-              <p className="mt-8 border-l border-brand-300 pl-4 text-sm text-brand-100">{milestone.location}</p>
+              <div className="inline-flex items-center gap-2 rounded-full bg-brand-800/80 px-3 py-1 text-[11px] font-bold uppercase tracking-[.18em] text-brand-200 border border-brand-700/60">
+                <Sparkles className="h-3 w-3 text-amber-300" />
+                <span>{milestone.category}</span>
+              </div>
+              <p className="mt-5 font-display text-7xl font-bold leading-none text-white/15">{milestone.year}</p>
+              <h2 className="-mt-2 font-display text-3xl font-bold leading-tight !text-white lg:text-4xl">{milestone.title}</h2>
+              <p className="mt-5 text-base sm:text-lg leading-relaxed text-brand-100">{milestone.description}</p>
+              <p className="mt-6 border-l border-brand-300 pl-4 text-xs sm:text-sm text-brand-200">{milestone.location}</p>
           </div>
           {presentation === "photographic" ? (
             <div key={milestone.image} className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-brand-800 shadow-2xl">
@@ -95,7 +103,9 @@ function StaticStory({
       className={`bg-brand-900 py-16 text-white ${reducedMotion ? "" : "md:hidden"}`}
     >
       <div className="mx-auto max-w-7xl px-5">
-        <p className="text-sm font-bold uppercase tracking-[.18em] text-brand-200">Our journey</p>
+        <p className="text-sm font-bold uppercase tracking-[.18em] text-brand-200">
+          Chronology of Growth &amp; Development
+        </p>
         <div className="mt-8 space-y-8">
           {milestones.map((milestone) => (
             <article key={milestone.id} className="overflow-hidden rounded-xl bg-white/10">
