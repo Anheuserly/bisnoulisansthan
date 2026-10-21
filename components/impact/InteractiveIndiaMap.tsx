@@ -77,7 +77,7 @@ function useCountUp(value: number) {
 }
 
 export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapProps) {
-  const [viewMode, setViewMode] = useState<MapViewMode>(customizerConfig?.defaultMode || "world");
+  const [viewMode, setViewMode] = useState<MapViewMode>(customizerConfig?.defaultMode || "india");
   const [selectedRegionId, setSelectedRegionId] = useState<string>("india");
   const [selectedStateName, setSelectedStateName] = useState<string>("Uttar Pradesh");
   const [tooltip, setTooltip] = useState<TooltipState>(null);
