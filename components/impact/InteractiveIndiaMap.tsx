@@ -586,24 +586,26 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                 </div>
 
                 {/* Hub Quick Filter Tabs */}
-                <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-sand-50/80 p-1">
-                  {GLOBAL_REGIONS.map((r) => (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => setSelectedRegionId(r.id)}
-                      className={cn(
-                        "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-150",
-                        selectedRegionId === r.id
-                          ? "bg-brand-700 text-white shadow-2xs"
-                          : "text-ink-muted hover:text-ink hover:bg-white/60"
-                      )}
-                    >
-                      <span>{r.flag}</span>{" "}
-                      <span className="hidden sm:inline">{r.hub.city.split("&")[0]?.trim()}</span>
-                    </button>
-                  ))}
-                </div>
+                {GLOBAL_REGIONS.length > 1 && (
+                  <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-sand-50/80 p-1">
+                    {GLOBAL_REGIONS.map((r) => (
+                      <button
+                        key={r.id}
+                        type="button"
+                        onClick={() => setSelectedRegionId(r.id)}
+                        className={cn(
+                          "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-150",
+                          selectedRegionId === r.id
+                            ? "bg-brand-700 text-white shadow-2xs"
+                            : "text-ink-muted hover:text-ink hover:bg-white/60"
+                        )}
+                      >
+                        <span>{r.flag}</span>{" "}
+                        <span className="hidden sm:inline">{r.hub.city.split("&")[0]?.trim()}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* 2-Column Balanced Executive Panel */}
@@ -749,7 +751,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                             {selectedState.districts.length}
                           </p>
                           <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            Active Districts
+                            Covered Districts
                           </p>
                         </div>
                         <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
@@ -757,15 +759,15 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                             {selectedState.programs}
                           </p>
                           <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            PSU CSR Projects
+                            CSR Projects Undertaken
                           </p>
                         </div>
                         <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
                           <p className="font-display text-2xl font-bold text-emerald-800">
-                            350+
+                            {selectedState.villages || 50}+
                           </p>
                           <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            Panchayats Reached
+                            Villages Covered
                           </p>
                         </div>
                       </div>

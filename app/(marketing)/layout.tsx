@@ -7,6 +7,8 @@ import { AmbientSoundPlayer } from "@/components/layout/AmbientSoundPlayer";
 import { SitePopupNotification } from "@/components/layout/SitePopupNotification";
 import { GlobalScrollObserver } from "@/components/ui/GlobalScrollObserver";
 
+export const dynamic = "force-dynamic";
+
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

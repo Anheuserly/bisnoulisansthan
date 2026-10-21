@@ -18,6 +18,8 @@ export const metadata: Metadata = buildMetadata({
 export default async function ContactPage() {
   const customizer = await getCustomizerSettings();
   const offices = customizer.offices;
+  const activePhone = offices.adminOffice.phone || offices.registeredOffice.phone || site.contact.phone;
+  const activeEmail = offices.adminOffice.email || offices.registeredOffice.email || site.contact.email || "bisnoulisansthan@gmail.com";
   const whatsappNumber = customizer.contactActions?.whatsappNumber || "919910243454";
 
   return (
@@ -65,24 +67,24 @@ export default async function ContactPage() {
                   </h3>
                   <div className="mt-4 divide-y divide-line/70">
                     <a
-                      href={telHref(site.contact.phone)}
+                      href={telHref(activePhone)}
                       className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
                     >
                       <Phone className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
                       <div>
                         <p className="text-xs font-semibold text-ink-muted">Call our office</p>
-                        <p className="text-sm font-bold text-ink group-hover:text-brand-800">{site.contact.phone}</p>
+                        <p className="text-sm font-bold text-ink group-hover:text-brand-800">{activePhone}</p>
                       </div>
                     </a>
 
                     <a
-                      href={`mailto:${site.contact.email}`}
+                      href={`mailto:${activeEmail}`}
                       className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
                     >
                       <Mail className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
                       <div className="min-w-0">
                         <p className="text-xs font-semibold text-ink-muted">Email us</p>
-                        <p className="text-sm font-bold text-ink truncate group-hover:text-brand-800">{site.contact.email}</p>
+                        <p className="text-sm font-bold text-ink truncate group-hover:text-brand-800">{activeEmail}</p>
                       </div>
                     </a>
 

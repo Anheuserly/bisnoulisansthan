@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCurrentAdmin } from "@/lib/auth/session";
 import { db } from "@/lib/db";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
@@ -37,6 +38,16 @@ export async function POST(request: Request) {
        DO UPDATE SET value = EXCLUDED.value, updated_by = EXCLUDED.updated_by, updated_at = now();`,
       [JSON.stringify(DEFAULT_CUSTOMIZER_SETTINGS), actor.id]
     );
+
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/");
+      revalidatePath("/contact");
+      revalidatePath("/about");
+      revalidatePath("/about/our-story");
+    } catch (revalidateErr) {
+      console.warn("Revalidation warning on reset:", revalidateErr);
+    }
 
     return NextResponse.json({
       ok: true,
@@ -266,6 +277,16 @@ export async function POST(request: Request) {
      DO UPDATE SET value = EXCLUDED.value, updated_by = EXCLUDED.updated_by, updated_at = now();`,
     [JSON.stringify(sanitized), actor.id]
   );
+
+  try {
+    revalidatePath("/", "layout");
+    revalidatePath("/");
+    revalidatePath("/contact");
+    revalidatePath("/about");
+    revalidatePath("/about/our-story");
+  } catch (revalidateErr) {
+    console.warn("Revalidation warning on save:", revalidateErr);
+  }
 
   return NextResponse.json({
     ok: true,

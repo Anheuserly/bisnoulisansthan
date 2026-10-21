@@ -468,11 +468,275 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
             </p>
           </div>
 
+          {/* 0. Hero Section Copy */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                1. Homepage Hero Section &amp; Main Headline
+              </span>
+              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                Live Above Fold
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Badge / Top Rail Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.hero?.badge ?? "Established in 1994 · 30+ Years of Public Service"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        hero: {
+                          ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                          ...(prev.texts?.hero || {}),
+                          badge: e.target.value,
+                        },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Established in 1994 · 30+ Years of Public Service"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Section Subheading / Eyebrow
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.hero?.eyebrow ?? "Grassroots Community Development"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        hero: {
+                          ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                          ...(prev.texts?.hero || {}),
+                          eyebrow: e.target.value,
+                        },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Grassroots Community Development"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Primary Main Headline
+              </label>
+              <input
+                type="text"
+                value={settings.texts?.hero?.title ?? "Empowering communities through sustainable grassroots action."}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    texts: {
+                      ...prev.texts,
+                      hero: {
+                        ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                        ...(prev.texts?.hero || {}),
+                        title: e.target.value,
+                      },
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink font-semibold focus:border-brand-500 focus:outline-none"
+                placeholder="Empowering communities through sustainable grassroots action."
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                Main Hero Narrative (Lead Copy)
+              </label>
+              <textarea
+                rows={3}
+                value={settings.texts?.hero?.text ?? "Bisnouli Sarvodaya Gramodyog Sewa Sansthan works across education, healthcare, vocational training, and women's empowerment to build self-reliant communities across India."}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    texts: {
+                      ...prev.texts,
+                      hero: {
+                        ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                        ...(prev.texts?.hero || {}),
+                        text: e.target.value,
+                      },
+                    },
+                  }))
+                }
+                className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs sm:text-sm text-ink leading-relaxed focus:border-brand-500 focus:outline-none"
+                placeholder="Bisnouli Sarvodaya Gramodyog Sewa Sansthan works across..."
+              />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 pt-2 border-t border-brand-200/50">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Primary Button Text (CTA)
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.hero?.supportCta ?? "Support Our Work"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        hero: {
+                          ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                          ...(prev.texts?.hero || {}),
+                          supportCta: e.target.value,
+                        },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Support Our Work"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Secondary Button Text (CTA)
+                </label>
+                <input
+                  type="text"
+                  value={settings.texts?.hero?.aboutCta ?? "Explore Our Story"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      texts: {
+                        ...prev.texts,
+                        hero: {
+                          ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+                          ...(prev.texts?.hero || {}),
+                          aboutCta: e.target.value,
+                        },
+                      },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="Explore Our Story"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 0.1 Impact Counters & Key Numbers */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                  2. Impact Metric Counters (Homepage Hero Rail)
+                </span>
+                <p className="text-[11px] text-ink-muted mt-0.5">
+                  Live verified statistics displayed directly below the hero banner (e.g., 50 Lac +, 20 Lac +, 36,000 +).
+                </p>
+              </div>
+              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                6 Verified Cards
+              </span>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics).map((metric, idx) => (
+                <div key={idx} className="rounded-lg border border-line bg-white p-3.5 space-y-2 shadow-2xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
+                      Card #{idx + 1}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
+                        Number / Value
+                      </label>
+                      <input
+                        type="text"
+                        value={metric.target}
+                        onChange={(e) => {
+                          const updated = [...(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics)];
+                          updated[idx] = { ...updated[idx]!, target: e.target.value };
+                          setSettings((prev) => ({ ...prev, impactMetrics: updated }));
+                        }}
+                        className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5 text-xs font-bold text-ink focus:border-brand-500 focus:outline-none"
+                        placeholder="50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
+                        Unit / Suffix
+                      </label>
+                      <input
+                        type="text"
+                        value={metric.suffix}
+                        onChange={(e) => {
+                          const updated = [...(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics)];
+                          updated[idx] = { ...updated[idx]!, suffix: e.target.value };
+                          setSettings((prev) => ({ ...prev, impactMetrics: updated }));
+                        }}
+                        className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                        placeholder="Lac +"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
+                      Primary Label
+                    </label>
+                    <input
+                      type="text"
+                      value={metric.label}
+                      onChange={(e) => {
+                        const updated = [...(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics)];
+                        updated[idx] = { ...updated[idx]!, label: e.target.value };
+                        setSettings((prev) => ({ ...prev, impactMetrics: updated }));
+                      }}
+                      className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                      placeholder="Beneficiaries Empowered"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
+                      Sublabel / Description
+                    </label>
+                    <input
+                      type="text"
+                      value={metric.sublabel}
+                      onChange={(e) => {
+                        const updated = [...(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics)];
+                        updated[idx] = { ...updated[idx]!, sublabel: e.target.value };
+                        setSettings((prev) => ({ ...prev, impactMetrics: updated }));
+                      }}
+                      className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5 text-[11px] text-ink-muted focus:border-brand-500 focus:outline-none"
+                      placeholder="Across all program areas"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* 1. About Us Section Copy */}
           <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-brand-200/60 pb-3">
               <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
-                1. About Us Section (Homepage)
+                3. About Us Section (Homepage)
               </span>
               <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
                 Live on Homepage
@@ -1593,6 +1857,92 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
               className="mt-1.5 w-full rounded-md border border-line px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
               placeholder="Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances."
             />
+          </div>
+
+          {/* Grassroots Telemetry Numbers */}
+          <div className="rounded-xl border border-brand-200/80 bg-sand-50/50 p-5 space-y-4">
+            <div className="border-b border-brand-200/60 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-800">
+                Grassroots Field Telemetry Metrics (Displayed on India Map Cockpit)
+              </span>
+              <p className="text-[11px] text-ink-muted mt-0.5">
+                Controls the 4 live count badges displayed next to the interactive map (7 states, 20+ districts, 350+ villages, 35 CSR partners).
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  States Covered
+                </label>
+                <input
+                  type="text"
+                  value={settings.footprint?.statesCount ?? "7 states"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      footprint: { ...prev.footprint, statesCount: e.target.value },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="7 states"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Districts Covered
+                </label>
+                <input
+                  type="text"
+                  value={settings.footprint?.districtsCount ?? "20+ districts"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      footprint: { ...prev.footprint, districtsCount: e.target.value },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="20+ districts"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  Villages / Panchayats
+                </label>
+                <input
+                  type="text"
+                  value={settings.footprint?.villagesCount ?? "350+ villages"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      footprint: { ...prev.footprint, villagesCount: e.target.value },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="350+ villages"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                  CSR PSU Partners
+                </label>
+                <input
+                  type="text"
+                  value={settings.footprint?.csrPartnersCount ?? "35 CSR PSU Partners"}
+                  onChange={(e) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      footprint: { ...prev.footprint, csrPartnersCount: e.target.value },
+                    }))
+                  }
+                  className="mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold text-ink focus:border-brand-500 focus:outline-none"
+                  placeholder="35 CSR PSU Partners"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
