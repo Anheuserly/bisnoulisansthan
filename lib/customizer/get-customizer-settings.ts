@@ -95,7 +95,7 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
         storyPresentation: val.storyPresentation === "photographic"
           ? "photographic"
           : "editorial",
-        storyMilestones: Array.isArray(val.storyMilestones) && val.storyMilestones.length > 0
+        storyMilestones: Array.isArray(val.storyMilestones) && val.storyMilestones.length === 4 && !val.storyMilestones.some(m => m.id === "community" || m.id === "today" || m.title?.includes("village-rooted"))
           ? val.storyMilestones
           : DEFAULT_CUSTOMIZER_SETTINGS.storyMilestones,
         socialLinks: {

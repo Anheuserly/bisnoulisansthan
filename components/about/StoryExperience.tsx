@@ -52,7 +52,9 @@ export function StoryExperience({
                     <span className={`relative z-10 mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-brand-900 transition ${activeIndex === index ? "scale-125 bg-brand-100 shadow-[0_0_0_5px_rgba(214,234,236,.18)]" : "bg-white/60 group-hover:bg-white"}`} />
                     <div className="min-w-0">
                       <span className={`font-display text-lg block transition ${activeIndex === index ? "font-bold text-white" : "text-white/55 group-hover:text-white"}`}>{item.year}</span>
-                      <span className={`text-[11px] block transition truncate max-w-[8rem] ${activeIndex === index ? "text-brand-200 font-semibold" : "text-white/40 group-hover:text-white/70"}`}>{item.title}</span>
+                      <span className={`text-[11px] block transition truncate max-w-[8.5rem] ${activeIndex === index ? "text-brand-200 font-semibold" : "text-white/40 group-hover:text-white/70"}`}>
+                        {item.title.includes("–") ? item.title.split("–")[1]?.trim() : item.category}
+                      </span>
                     </div>
                   </button>
                 </li>
