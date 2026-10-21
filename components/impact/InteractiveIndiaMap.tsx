@@ -184,34 +184,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                   <>
                     <div className="border-l-2 border-brand-400 pl-2.5">
                       <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {verifiedStatesCount}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        Active States
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {indiaVillagesCount}+
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        Villages
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-emerald-500 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
-                        {globalTargetHubsCount}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
-                        Global Hubs
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {indiaStatesCount}
+                        {customizerConfig?.statesCount || "7 states"}
                       </p>
                       <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
                         States Covered
@@ -219,7 +192,7 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                     </div>
                     <div className="border-l-2 border-brand-400 pl-2.5">
                       <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {indiaDistrictsCount}
+                        {customizerConfig?.districtsCount || "20+ districts"}
                       </p>
                       <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
                         Districts
@@ -227,10 +200,37 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                     </div>
                     <div className="border-l-2 border-emerald-500 pl-2.5">
                       <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
-                        {indiaVillagesCount}+
+                        {customizerConfig?.villagesCount || "350+ villages"}
                       </p>
                       <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
-                        Panchayats
+                        Villages
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="border-l-2 border-brand-400 pl-2.5">
+                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                        {customizerConfig?.statesCount || `${indiaStatesCount} states`}
+                      </p>
+                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
+                        States Covered
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-brand-400 pl-2.5">
+                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                        {customizerConfig?.districtsCount || "20+ districts"}
+                      </p>
+                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
+                        Districts
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-emerald-500 pl-2.5">
+                      <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
+                        {customizerConfig?.villagesCount || "350+ villages"}
+                      </p>
+                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
+                        Villages
                       </p>
                     </div>
                   </>
@@ -238,53 +238,31 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
               </div>
             </div>
 
-            {/* Quick Interactive Selector Pills at the bottom of the left column */}
+            {/* Quick Interactive Selector Pills for Field States */}
             <div className="mt-6 pt-4 border-t border-line/40">
               <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
-                {viewMode === "world" ? "Quick Select Global Hub:" : "Quick Select Field State:"}
+                Quick Select Field State:
               </p>
               <div className="mt-2.5 flex flex-wrap gap-1.5">
-                {viewMode === "world" ? (
-                  GLOBAL_REGIONS.map((region) => {
-                    const isSelected = selectedRegionId === region.id;
-                    return (
-                      <button
-                        key={region.id}
-                        type="button"
-                        onClick={() => setSelectedRegionId(region.id)}
-                        className={cn(
-                          "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all duration-150",
-                          isSelected
-                            ? "bg-brand-800 text-white shadow-2xs"
-                            : "bg-sand-50 text-ink hover:bg-sand-100"
-                        )}
-                      >
-                        <span>{region.flag}</span>
-                        <span>{region.hub.city.split("&")[0]?.trim()}</span>
-                      </button>
-                    );
-                  })
-                ) : (
-                  indiaProgramData.map((item) => {
-                    const isSelected = selectedStateName === item.state;
-                    return (
-                      <button
-                        key={item.state}
-                        type="button"
-                        onClick={() => handleIndiaStateClick(item.state)}
-                        className={cn(
-                          "inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all duration-150",
-                          isSelected
-                            ? "bg-brand-800 text-white shadow-2xs"
-                            : "bg-sand-50 text-ink hover:bg-sand-100"
-                        )}
-                      >
-                        <MapPin className="h-3 w-3" />
-                        <span>{item.state}</span>
-                      </button>
-                    );
-                  })
-                )}
+                {indiaProgramData.map((item) => {
+                  const isSelected = selectedStateName === item.state;
+                  return (
+                    <button
+                      key={item.state}
+                      type="button"
+                      onClick={() => handleIndiaStateClick(item.state)}
+                      className={cn(
+                        "inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all duration-150",
+                        isSelected
+                          ? "bg-brand-800 text-white shadow-2xs"
+                          : "bg-sand-50 text-ink hover:bg-sand-100"
+                      )}
+                    >
+                      <MapPin className="h-3 w-3" />
+                      <span>{item.state}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
