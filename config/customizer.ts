@@ -70,12 +70,39 @@ export type MapFootprintConfig = {
   heading: string;
   description: string;
   defaultMode: "world" | "india";
-  worldNote: string;
-  indiaNote: string;
-  globalVisionGoal: string;
+  statesCount?: string;
+  districtsCount?: string;
+  villagesCount?: string;
+  csrPartnersCount?: string;
+  worldNote?: string;
+  indiaNote?: string;
+  globalVisionGoal?: string;
+};
+
+export type CustomizerHeroConfig = {
+  badge: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  supportCta: string;
+  aboutCta: string;
+};
+
+export type CustomizerImpactMetric = {
+  id: string;
+  target: number;
+  suffix: string;
+  prefix?: string;
+  label: string;
+  sublabel: string;
+  category: string;
+  badge: string;
+  iconName: "users" | "health" | "training" | "villages" | "partners" | "years";
+  color?: string;
 };
 
 export type CustomizerTextsConfig = {
+  hero: CustomizerHeroConfig;
   about: {
     eyebrow: string;
     title: string;
@@ -200,6 +227,7 @@ export type CustomizerSettings = {
   images: CustomizerImagesConfig;
   footprint: MapFootprintConfig;
   texts: CustomizerTextsConfig;
+  impactMetrics: CustomizerImpactMetric[];
   layout: CustomizerLayoutConfig;
   offices: CustomizerOfficesConfig;
   contactActions: CustomizerContactActionConfig;
@@ -1191,15 +1219,27 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     ],
   },
   footprint: {
-    eyebrow: "Global Alliances & Verified Grassroots Footprint",
+    eyebrow: "Grassroots Field Execution & Verified Footprint",
     heading: "Where grassroots action meets international vision.",
-    description: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in India, with our institutional target to reach, connect, and collaborate globally across diaspora networks and UN SDG frameworks.",
-    defaultMode: "world",
-    worldNote: "Uncolored international territories represent our strategic global outreach roadmap and diaspora engagement horizon.",
-    indiaNote: "Grassroots presence verified through official statutory filings across Uttar Pradesh, Delhi NCR, Haryana, Punjab, and Rajasthan.",
+    description: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in India, with our institutional target to reach, connect, and collaborate across 7 states and diaspora networks.",
+    defaultMode: "india",
+    statesCount: "7 states",
+    districtsCount: "20+ districts",
+    villagesCount: "350+ villages",
+    csrPartnersCount: "35 CSR PSU Partners",
+    worldNote: "Uncolored international territories represent our strategic diaspora engagement and global outreach horizon.",
+    indiaNote: "Grassroots presence verified through official statutory filings across Uttar Pradesh, Delhi, Punjab, Haryana, Chhattisgarh, Rajasthan, and Uttarakhand.",
     globalVisionGoal: "Target: Expanding grassroots Indian handloom, health vans & micro-credit to 10+ international diaspora alliances.",
   },
   texts: {
+    hero: {
+      badge: "Established in 1994 | Registration No. 226/1994-95, dated 15-06-1994 | 30+ Years of Service",
+      eyebrow: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
+      title: "Empowering communities. Creating opportunities.",
+      text: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS) ,a non-governmental organisation with over three decades of experience in community development, is working to improve the lives of underprivileged and vulnerable sections of the society across Uttar Pradesh, Delhi, Punjab, Haryana, Chhattisgarh, Rajasthan, and Uttarakhand. Its key focus areas include women’s empowerment, awareness generation, skill development, sustainable livelihoods, community healthcare with the overarching aim of fostering inclusive growth and bringing about lasting and meaningful positive change in people’s lives.",
+      supportCta: "Support our work",
+      aboutCta: "About BSGSS",
+    },
     about: {
       eyebrow: "About us",
       title: "A practical commitment to dignity and self-reliance.",
@@ -1218,7 +1258,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
           desc: "Mobile clinics, cancer check-ups and vocational pathways for rural women.",
         },
         {
-          title: "30+ CSR Partners",
+          title: "35+ CSR Partners",
           desc: "Trusted collaboration with leading public sector enterprises and institutions.",
         },
       ],
@@ -1243,7 +1283,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       description: "BSGSS collaborates with public sector giants and national leaders to deliver preventive oncology checkups, women's vocational tailoring guilds, and decentralized potable water plants.",
       stats: [
         {
-          stat: "30+",
+          stat: "35+",
           desc: "PSU & Corporate CSR Records",
         },
         {
@@ -1263,6 +1303,74 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       buttonText: "Support us",
     },
   },
+  impactMetrics: [
+    {
+      id: "lives",
+      target: 50,
+      suffix: " Lac +",
+      label: "Underprivileged Lives Empowered",
+      sublabel: "Across 7 states through integrated grassroots programs",
+      category: "Community Outreach",
+      iconName: "users",
+      badge: "Audited Grassroots Reach",
+      color: "from-teal-500 to-brand-700",
+    },
+    {
+      id: "patients",
+      target: 20,
+      suffix: " Lac +",
+      label: "Patients Screened & Treated",
+      sublabel: "Free diagnostic oncology, eye checkups & essential medicines",
+      category: "Healthcare Mission",
+      iconName: "health",
+      badge: "Preventive Diagnostics",
+      color: "from-rose-500 to-brand-800",
+    },
+    {
+      id: "women",
+      target: 36000,
+      suffix: " +",
+      label: "Women Certified in Livelihoods",
+      sublabel: "Vocational tailoring, computer literacy & self-help banking",
+      category: "Livelihood & Khadi",
+      iconName: "training",
+      badge: "Economic Self-Reliance",
+      color: "from-amber-500 to-amber-700",
+    },
+    {
+      id: "villages",
+      target: 350,
+      suffix: "+",
+      label: "Rural Villages Reached",
+      sublabel: "Active community mobilization across 7 states in North India",
+      category: "Field Presence",
+      iconName: "villages",
+      badge: "Local Panchayats",
+      color: "from-emerald-500 to-emerald-700",
+    },
+    {
+      id: "partners",
+      target: 35,
+      suffix: "+",
+      label: "Institutional CSR Partners",
+      sublabel: "Collaborating with leading PSUs like RITES, IRCON, REC, NTPC, BHEL",
+      category: "Institutional Trust",
+      iconName: "partners",
+      badge: "CSR-1 Registered",
+      color: "from-blue-500 to-indigo-700",
+    },
+    {
+      id: "years",
+      target: 30,
+      suffix: "+ Years",
+      label: "Unbroken Grassroots Service",
+      sublabel: "Founded in Bisnouli in 1994, upholding Sarvodaya principles",
+      category: "Heritage & Legacy",
+      iconName: "years",
+      badge: "Since 1994",
+      color: "from-stone-600 to-stone-900",
+    },
+  ],
   layout: {
     headerLogoSize: "large",
     footerLogoSize: "xlarge",
@@ -1272,28 +1380,28 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
   },
   offices: {
     registeredOffice: {
-      title: "Registered Office · Bisnouli Village",
+      title: "Registered Office · Noida",
       tag: "Statutory Seat Since 1994",
-      line1: "Village & Post Bisnouli",
-      line2: "Tehsil Dadri",
-      city: "Gautam Buddha Nagar",
-      state: "Uttar Pradesh",
-      pincode: "203207",
-      phone: "011-46548002",
-      email: "bsgssindia@yahoo.co.in",
-      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Bisnouli+Village+Dadri+Uttar+Pradesh",
-    },
-    adminOffice: {
-      title: "Head & Administrative Office · Noida",
-      tag: "Executive & CSR Coordination",
-      line1: "B-180, Sector–31",
-      line2: "Near Community Centre",
-      city: "Noida",
+      line1: "B-180, Sector-31",
+      line2: "",
+      city: "NOIDA",
       state: "Uttar Pradesh",
       pincode: "201301",
       phone: "011-46548002/03",
-      email: "bsgssindia@yahoo.co.in",
+      email: "bisnoulisansthan@gmail.com",
       mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=B-180+Sector+31+Noida+201301",
+    },
+    adminOffice: {
+      title: "Administrative Office · New Delhi",
+      tag: "Executive & Administrative Office",
+      line1: "A-171, Ground Floor",
+      line2: "Defence Colony",
+      city: "New Delhi",
+      state: "Delhi",
+      pincode: "110024",
+      phone: "011-46548002/03",
+      email: "bisnoulisansthan@gmail.com",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=A-171+Ground+Floor+Defence+Colony+New+Delhi+110024",
     },
   },
   contactActions: {
@@ -1325,51 +1433,41 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       id: "1994",
       year: "1994",
       category: "Foundation",
-      title: "A village-rooted beginning",
-      description: "BSGSS was founded in Bisnouli village, Dadri Tehsil, Uttar Pradesh, with a clear conviction: underprivileged families thrive when given access to self-reliance, village industries and practical development.",
+      title: "The Beginning",
+      description: "A village-rooted initiative focused on rural development with focus on promotion of Village & Khadi Industries and Handicrafts.",
       image: "/images/bsgss/legacy-page-assets/44-homepage-aboutus.jpg",
-      imageAlt: "Authentic historical BSGSS village outreach and community gathering",
+      imageAlt: "Foundational village handloom and craft outreach",
       location: "Bisnouli village, Dadri Tehsil, Uttar Pradesh",
     },
     {
-      id: "community",
-      year: "1990s",
-      category: "Community education",
-      title: "Grassroots literacy & learning",
-      description: "The work grew around children's learning, community-based literacy classes, and awareness drives that brought non-formal education to rural households.",
-      image: "/images/bsgss/education/146-class1.jpeg",
-      imageAlt: "BSGSS community classroom education session in progress",
-      location: "Rural learning centres in Uttar Pradesh & Delhi NCR",
-    },
-    {
-      id: "skills",
+      id: "2000s",
       year: "2000s",
-      category: "Skills and livelihoods",
-      title: "Vocational empowerment for women",
-      description: "Practical vocational training centres in tailoring, cutting, embroidery, and computer literacy gave thousands of women pathways towards income generation and micro-enterprise.",
+      category: "Expanding Livelihoods and Healthcare",
+      title: "Expanding Livelihoods and Healthcare",
+      description: "Strengthened efforts in sustainable livelihood generation and community healthcare, with an expanding presence in Delhi and Punjab supported by Govt grant-in-aid schemes / programmes.",
       image: "/images/bsgss/gallery-training/185-tal1.jpeg",
-      imageAlt: "Women operating sewing machines at BSGSS tailoring training centre",
-      location: "Community vocational training centres",
+      imageAlt: "Women vocational training and healthcare initiatives",
+      location: "Delhi, Punjab & Uttar Pradesh",
     },
     {
-      id: "health",
+      id: "2010s",
       year: "2010s",
-      category: "Health access",
-      title: "Preventive healthcare closer to home",
-      description: "Free medical check-up camps, cancer screenings, eye examinations and medicine distribution brought specialized medical consultation directly to rural and underserved populations.",
+      category: "Broadening Reach and Impact",
+      title: "Broadening Reach and Impact",
+      description: "Expanded sustainable livelihood and healthcare initiatives, strengthening the organisation’s presence across Uttar Pradesh, Punjab, and Haryana, with a growing emphasis on Govt. grant-in-aid schemes and CSR programmes of PSUs.",
       image: "/images/bsgss/healthcare-camps/150-camp3.jpeg",
-      imageAlt: "Medical team and doctors providing free health checkups at BSGSS camp",
-      location: "Rural camps in Bastar, Khora Colony and Western UP",
+      imageAlt: "Healthcare screening camps and PSU CSR initiatives",
+      location: "Uttar Pradesh, Punjab & Haryana",
     },
     {
-      id: "today",
-      year: "Today",
-      category: "Institutional CSR & Scale",
-      title: "Sustainable partnerships & progress",
-      description: "Today, BSGSS connects education, healthcare, skills, women’s empowerment and institutional CSR partnerships with RITES, IRCON, and REC—sustaining community self-reliance across North India.",
+      id: "2020s",
+      year: "2020s",
+      category: "Scaling Impact and Outreach",
+      title: "Scaling Impact and Outreach",
+      description: "Further expanded sustainable livelihood and community healthcare programmes, extending the organisation’s reach across Uttar Pradesh, Haryana, Chhattisgarh, and Uttarakhand, with an increased emphasis on CSR partnerships with PSUs.",
       image: "/images/bsgss/gallery-events/355-1-1.jpg",
-      imageAlt: "BSGSS leadership and community partners at formal event",
-      location: "Uttar Pradesh, Delhi, Haryana and Punjab",
+      imageAlt: "Institutional scale and community self-reliance",
+      location: "Uttar Pradesh, Haryana, Chhattisgarh & Uttarakhand",
     },
   ],
   socialLinks: {

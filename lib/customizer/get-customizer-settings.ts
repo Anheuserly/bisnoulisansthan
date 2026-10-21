@@ -36,6 +36,10 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
         texts: {
           ...DEFAULT_CUSTOMIZER_SETTINGS.texts,
           ...(val.texts || {}),
+          hero: {
+            ...DEFAULT_CUSTOMIZER_SETTINGS.texts.hero,
+            ...(val.texts?.hero || {}),
+          },
           about: {
             ...DEFAULT_CUSTOMIZER_SETTINGS.texts.about,
             ...(val.texts?.about || {}),
@@ -63,6 +67,9 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
             ...(val.texts?.support || {}),
           },
         },
+        impactMetrics: Array.isArray(val.impactMetrics) && val.impactMetrics.length > 0
+          ? val.impactMetrics
+          : DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics,
         layout: {
           ...DEFAULT_CUSTOMIZER_SETTINGS.layout,
           ...(val.layout || {}),

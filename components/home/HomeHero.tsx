@@ -17,11 +17,30 @@ const slideLabels = [
 
 interface HomeHeroProps {
   slides?: string[];
+  heroConfig?: {
+    badge?: string;
+    eyebrow?: string;
+    title?: string;
+    text?: string;
+    supportCta?: string;
+    aboutCta?: string;
+  };
 }
 
-export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
+export function HomeHero({ slides: customSlides, heroConfig }: HomeHeroProps = {}) {
   const activeSlides = customSlides && customSlides.length > 0 ? customSlides : defaultSlides;
   const [activeSlide, setActiveSlide] = useState(0);
+
+  const heroData = {
+    badge: heroConfig?.badge || "Established in 1994 | Registration No. 226/1994-95, dated 15-06-1994 | 30+ Years of Service",
+    eyebrow: heroConfig?.eyebrow || hero.eyebrow,
+    title: heroConfig?.title || hero.title,
+    text: heroConfig?.text || hero.text,
+    supportCta: heroConfig?.supportCta || hero.supportCta,
+    aboutCta: heroConfig?.aboutCta || hero.aboutCta,
+  };
+
+  const badgeParts = heroData.badge.split("|").map((p) => p.trim()).filter(Boolean);
 
   useEffect(() => {
     const interval = window.setInterval(() => setActiveSlide((current) => (current + 1) % activeSlides.length), 4000);
@@ -57,23 +76,26 @@ export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
         <div className="max-w-4xl">
           {/* Institution record — deliberately a typographic rail, not a promotional chip. */}
           <div className="mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-white/20 py-3 text-[0.625rem] font-bold uppercase tracking-[0.16em] text-slate-200 sm:text-[0.6875rem]">
-            <span className="text-amber-200">Established 1994</span>
-            <span className="hidden h-3 w-px bg-white/30 sm:block" aria-hidden="true" />
-            <span>Registration No. 226/1994-95, dated 15-06-1994</span>
-            <span className="hidden h-3 w-px bg-white/30 sm:block" aria-hidden="true" />
-            <span>30+ years of service</span>
+            {badgeParts.map((part, pIdx) => (
+              <span key={pIdx} className="flex items-center gap-x-4">
+                <span className={pIdx === 0 ? "text-amber-200" : ""}>{part}</span>
+                {pIdx < badgeParts.length - 1 && (
+                  <span className="hidden h-3 w-px bg-white/30 sm:block" aria-hidden="true" />
+                )}
+              </span>
+            ))}
           </div>
 
           <p className="mb-3 text-[0.6875rem] font-extrabold uppercase tracking-[0.24em] text-teal-300 sm:text-xs">
-            {hero.eyebrow}
+            {heroData.eyebrow}
           </p>
 
           <h1 className="max-w-3xl font-display text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.035em] text-white sm:text-6xl lg:text-[4.75rem] drop-shadow-md">
-            {hero.title}
+            {heroData.title}
           </h1>
 
           <p className="mt-5 max-w-2xl text-base font-medium leading-relaxed text-slate-100 sm:text-lg lg:text-xl">
-            {hero.text}
+            {heroData.text}
           </p>
 
           {/* Primary actions */}
@@ -82,14 +104,14 @@ export function HomeHero({ slides: customSlides }: HomeHeroProps = {}) {
               href={links.support}
               className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-slate-900 shadow-lift transition-all hover:bg-slate-100 hover:scale-[1.02] active:scale-95 focus-visible:ring-2 focus-visible:ring-white"
             >
-              <span>{hero.supportCta}</span>
+              <span>{heroData.supportCta}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href={links.about}
               className="inline-flex items-center gap-2 border-b border-white/70 px-1 py-3 text-sm font-bold text-white transition-all hover:border-white hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-white"
             >
-              <span>{hero.aboutCta}</span>
+              <span>{heroData.aboutCta}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

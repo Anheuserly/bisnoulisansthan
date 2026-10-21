@@ -19,7 +19,7 @@ export const site = {
   },
   contact: {
     phone: env("NEXT_PUBLIC_BSGSS_PHONE") ?? "011-46548002/03", emergencyPhone: null,
-    email: env("NEXT_PUBLIC_BSGSS_EMAIL") ?? "bsgssindia@yahoo.co.in", whatsapp: env("NEXT_PUBLIC_BSGSS_WHATSAPP") ?? "+91 99102 43454",
+    email: env("NEXT_PUBLIC_BSGSS_EMAIL") ?? "bisnoulisansthan@gmail.com", whatsapp: env("NEXT_PUBLIC_BSGSS_WHATSAPP") ?? "+91 99102 43454",
   },
   maps: { embedUrl: env("NEXT_PUBLIC_MAPS_EMBED_URL"), directionsUrl: env("NEXT_PUBLIC_MAPS_DIRECTIONS_URL") },
   hours: [] as OpeningHours[],

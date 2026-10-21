@@ -58,7 +58,7 @@ export default async function HomePage() {
       case "hero":
         return (
           <div key="hero-group">
-            <HomeHero slides={customizer.images.heroSlides} />
+            <HomeHero slides={customizer.images.heroSlides} heroConfig={texts.hero} />
             {/* International Institutional Credibility & Statutory Trust Strip */}
             <div className="border-b border-brand-200/60 bg-white py-3.5 shadow-2xs">
               <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 xl:px-12">
@@ -343,7 +343,7 @@ export default async function HomePage() {
       case "impact_stats":
         return (
           <ScrollReveal key="impact_stats" direction="up" delay={50}>
-            <HomeImpactCounters />
+            <HomeImpactCounters metrics={customizer.impactMetrics} />
           </ScrollReveal>
         );
 

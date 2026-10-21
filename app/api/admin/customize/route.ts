@@ -91,12 +91,24 @@ export async function POST(request: Request) {
       eyebrow: incoming.footprint?.eyebrow || current.footprint.eyebrow,
       heading: incoming.footprint?.heading || current.footprint.heading,
       description: incoming.footprint?.description || current.footprint.description,
-      defaultMode: incoming.footprint?.defaultMode === "india" ? "india" : "world",
+      defaultMode: incoming.footprint?.defaultMode === "world" ? "world" : "india",
+      statesCount: incoming.footprint?.statesCount || current.footprint.statesCount || DEFAULT_CUSTOMIZER_SETTINGS.footprint.statesCount,
+      districtsCount: incoming.footprint?.districtsCount || current.footprint.districtsCount || DEFAULT_CUSTOMIZER_SETTINGS.footprint.districtsCount,
+      villagesCount: incoming.footprint?.villagesCount || current.footprint.villagesCount || DEFAULT_CUSTOMIZER_SETTINGS.footprint.villagesCount,
+      csrPartnersCount: incoming.footprint?.csrPartnersCount || current.footprint.csrPartnersCount || DEFAULT_CUSTOMIZER_SETTINGS.footprint.csrPartnersCount,
       worldNote: incoming.footprint?.worldNote || current.footprint.worldNote,
       indiaNote: incoming.footprint?.indiaNote || current.footprint.indiaNote,
       globalVisionGoal: incoming.footprint?.globalVisionGoal || current.footprint.globalVisionGoal,
     },
     texts: {
+      hero: {
+        badge: incoming.texts?.hero?.badge || current.texts.hero?.badge || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.badge,
+        eyebrow: incoming.texts?.hero?.eyebrow || current.texts.hero?.eyebrow || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.eyebrow,
+        title: incoming.texts?.hero?.title || current.texts.hero?.title || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.title,
+        text: incoming.texts?.hero?.text || current.texts.hero?.text || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.text,
+        supportCta: incoming.texts?.hero?.supportCta || current.texts.hero?.supportCta || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.supportCta,
+        aboutCta: incoming.texts?.hero?.aboutCta || current.texts.hero?.aboutCta || DEFAULT_CUSTOMIZER_SETTINGS.texts.hero.aboutCta,
+      },
       about: {
         eyebrow: incoming.texts?.about?.eyebrow || current.texts.about.eyebrow,
         title: incoming.texts?.about?.title || current.texts.about.title,
@@ -140,6 +152,20 @@ export async function POST(request: Request) {
         buttonText: incoming.texts?.support?.buttonText || current.texts.support.buttonText,
       },
     },
+    impactMetrics: Array.isArray(incoming.impactMetrics) && incoming.impactMetrics.length > 0
+      ? incoming.impactMetrics.map((im, i) => ({
+          id: im?.id || current.impactMetrics?.[i]?.id || `metric-${i + 1}`,
+          target: typeof im?.target === "number" ? im.target : (current.impactMetrics?.[i]?.target ?? 50),
+          suffix: im?.suffix ?? current.impactMetrics?.[i]?.suffix ?? "+",
+          prefix: im?.prefix ?? current.impactMetrics?.[i]?.prefix ?? "",
+          label: im?.label || current.impactMetrics?.[i]?.label || "Metric Label",
+          sublabel: im?.sublabel || current.impactMetrics?.[i]?.sublabel || "",
+          category: im?.category || current.impactMetrics?.[i]?.category || "Outreach",
+          badge: im?.badge || current.impactMetrics?.[i]?.badge || "Verified",
+          iconName: im?.iconName || current.impactMetrics?.[i]?.iconName || "users",
+          color: im?.color || current.impactMetrics?.[i]?.color || "from-teal-500 to-brand-700",
+        }))
+      : (current.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics),
     layout: {
       headerLogoSize: ["default", "large", "xlarge"].includes(incoming.layout?.headerLogoSize as string)
         ? (incoming.layout?.headerLogoSize as "default" | "large" | "xlarge")
