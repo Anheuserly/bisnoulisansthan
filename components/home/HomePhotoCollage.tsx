@@ -36,14 +36,14 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
         {/* Section Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-100/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-800">
-              <Camera className="h-3.5 w-3.5 text-brand-700" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-800">
+              <Camera className="h-4 w-4 text-brand-700" />
               <span>Photographic Chronicle</span>
             </div>
-            <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-black leading-tight text-ink sm:text-4xl lg:text-5xl">
               Authentic faces, real dignity, lived change.
             </h2>
-            <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-ink-muted">
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">
               A curated photographic mosaic from BSGSS field centres, mobile clinics, and village self-help craft guilds across North India.
             </p>
           </div>

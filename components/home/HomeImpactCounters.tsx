@@ -31,7 +31,7 @@ interface StatItem {
 const IMPACT_METRICS: StatItem[] = [
   {
     id: "lives",
-    target: 50000,
+    target: 5000000,
     suffix: "+",
     label: "Underprivileged Lives Empowered",
     sublabel: "Across 5 Northern states through integrated grassroots programs",
@@ -42,7 +42,7 @@ const IMPACT_METRICS: StatItem[] = [
   },
   {
     id: "patients",
-    target: 30000,
+    target: 2000000,
     suffix: "+",
     label: "Patients Screened & Treated",
     sublabel: "Free diagnostic oncology, eye checkups & essential medicines",
@@ -53,7 +53,7 @@ const IMPACT_METRICS: StatItem[] = [
   },
   {
     id: "women",
-    target: 5000,
+    target: 36000,
     suffix: "+",
     label: "Women Certified in Livelihoods",
     sublabel: "Vocational tailoring, computer literacy & self-help banking",

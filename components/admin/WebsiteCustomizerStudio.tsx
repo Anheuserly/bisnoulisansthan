@@ -38,6 +38,12 @@ import {
   Bell,
   Megaphone,
   Route,
+  Share2,
+  Youtube,
+  Facebook,
+  Instagram,
+  Twitter,
+  Linkedin,
 } from "lucide-react";
 import {
   AMBIENT_TRACK_PRESETS,
@@ -70,7 +76,7 @@ const GALLERY_PRESET_IMAGES = [
 
 export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "story" | "texts" | "layout" | "offices" | "popup" | "collage" | "audio" | "typing" | "footprint">("sections");
+  const [activeTab, setActiveTab] = useState<"sections" | "story" | "social" | "popup" | "texts" | "layout" | "offices" | "footprint" | "collage" | "audio" | "typing">("sections");
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -335,6 +341,7 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
           { id: "story", label: "Our Story & Milestones", icon: Route },
+          { id: "social", label: "Social Media Channels", icon: Share2 },
           { id: "popup", label: "Pop-up & Announcements", icon: Bell },
           { id: "texts", label: "Website Texts & Copy", icon: FileText },
           { id: "layout", label: "Header, Nav & Footer Size", icon: Sliders },
@@ -2903,6 +2910,252 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB: Social Media Channels */}
+      {activeTab === "social" && (
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-line pb-5">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                    <Share2 className="h-4 w-4" />
+                  </span>
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Official Social Media Channels &amp; Public Links
+                  </h3>
+                </div>
+                <p className="mt-1 text-xs sm:text-sm text-ink-muted">
+                  Centrally manage official social profiles across YouTube, Facebook, Instagram, Twitter / X, and LinkedIn. Changes reflect instantly in the public website footer.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSettings((prev) => ({
+                      ...prev,
+                      socialLinks: { ...DEFAULT_CUSTOMIZER_SETTINGS.socialLinks },
+                    }));
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Reset to Defaults
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              {[
+                {
+                  id: "youtube" as const,
+                  label: "YouTube Channel",
+                  subtext: "Official video repository for documentaries, skill workshops, and field footage.",
+                  icon: Youtube,
+                  urlKey: "youtube" as const,
+                  enabledKey: "youtubeEnabled" as const,
+                  placeholder: "https://www.youtube.com/@BISNOULISANSTHAN",
+                },
+                {
+                  id: "facebook" as const,
+                  label: "Facebook Page",
+                  subtext: "Community updates, beneficiary stories, and grassroots program notices.",
+                  icon: Facebook,
+                  urlKey: "facebook" as const,
+                  enabledKey: "facebookEnabled" as const,
+                  placeholder: "https://www.facebook.com/bisnoulisansthan/",
+                },
+                {
+                  id: "instagram" as const,
+                  label: "Instagram Profile",
+                  subtext: "Visual galleries, artisan handloom spotlights, and field visit reels.",
+                  icon: Instagram,
+                  urlKey: "instagram" as const,
+                  enabledKey: "instagramEnabled" as const,
+                  placeholder: "https://www.instagram.com/bisnoulisansthan/",
+                },
+                {
+                  id: "twitter" as const,
+                  label: "Twitter / X Profile",
+                  subtext: "Policy advocacy, institutional announcements, and national partner mentions.",
+                  icon: Twitter,
+                  urlKey: "twitter" as const,
+                  enabledKey: "twitterEnabled" as const,
+                  placeholder: "https://twitter.com/bisnoulisansthan",
+                },
+                {
+                  id: "linkedin" as const,
+                  label: "LinkedIn Company Page",
+                  subtext: "CSR alliances, institutional governance, career opportunities, and reports.",
+                  icon: Linkedin,
+                  urlKey: "linkedin" as const,
+                  enabledKey: "linkedinEnabled" as const,
+                  placeholder: "https://www.linkedin.com/company/bisnouli-sarvodaya-gramodyog-sewa-sansthan/",
+                },
+              ].map((channel) => {
+                const Icon = channel.icon;
+                const isEnabled = Boolean(settings.socialLinks?.[channel.enabledKey]);
+                const currentUrl = settings.socialLinks?.[channel.urlKey] || "";
+
+                return (
+                  <div
+                    key={channel.id}
+                    className="rounded-xl border border-line bg-sand-50/40 p-4 transition-all"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white border border-line text-ink">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-ink">{channel.label}</span>
+                            <span
+                              className={`rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                                isEnabled
+                                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                                  : "bg-sand-200 text-ink-muted border border-sand-300"
+                              }`}
+                            >
+                              {isEnabled ? "Visible on Site" : "Hidden"}
+                            </span>
+                          </div>
+                          <p className="text-xs text-ink-muted">{channel.subtext}</p>
+                        </div>
+                      </div>
+
+                      <label className="flex items-center gap-2 cursor-pointer self-start sm:self-center">
+                        <input
+                          type="checkbox"
+                          checked={isEnabled}
+                          onChange={(e) => {
+                            const checked = e.target.checked;
+                            setSettings((prev) => ({
+                              ...prev,
+                              socialLinks: {
+                                ...prev.socialLinks,
+                                [channel.enabledKey]: checked,
+                              },
+                            }));
+                          }}
+                          className="h-4 w-4 rounded accent-brand-700"
+                        />
+                        <span className="text-xs font-semibold text-ink">Enable</span>
+                      </label>
+                    </div>
+
+                    <div className="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <input
+                        type="url"
+                        value={currentUrl}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setSettings((prev) => ({
+                            ...prev,
+                            socialLinks: {
+                              ...prev.socialLinks,
+                              [channel.urlKey]: val,
+                            },
+                          }));
+                        }}
+                        placeholder={channel.placeholder}
+                        className="flex-1 rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-ink-muted/60 focus:border-brand-500 focus:outline-none"
+                      />
+                      {currentUrl && (
+                        <a
+                          href={currentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-1 rounded-lg border border-line bg-white px-3 py-2 text-xs font-semibold text-ink-muted hover:text-ink hover:bg-sand-100 transition whitespace-nowrap"
+                        >
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                          Test Link
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Live Footer Preview */}
+          <div className="rounded-2xl border border-line bg-brand-900 p-6 text-brand-100">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-brand-800 pb-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-brand-300">
+                  Live Footer Preview
+                </p>
+                <p className="text-xs text-brand-200">
+                  Here is how the social icons render in the footer with current settings:
+                </p>
+              </div>
+              <span className="rounded-full bg-brand-800 px-3 py-1 text-[11px] font-semibold text-brand-200">
+                {[
+                  settings.socialLinks?.youtubeEnabled && settings.socialLinks?.youtube,
+                  settings.socialLinks?.facebookEnabled && settings.socialLinks?.facebook,
+                  settings.socialLinks?.instagramEnabled && settings.socialLinks?.instagram,
+                  settings.socialLinks?.twitterEnabled && settings.socialLinks?.twitter,
+                  settings.socialLinks?.linkedinEnabled && settings.socialLinks?.linkedin,
+                ].filter(Boolean).length}{" "}
+                Active Channels
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow &amp; Connect</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {settings.socialLinks?.youtubeEnabled && settings.socialLinks?.youtube && (
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200"
+                    title="YouTube Channel"
+                  >
+                    <Youtube className="h-4 w-4" />
+                  </span>
+                )}
+                {settings.socialLinks?.facebookEnabled && settings.socialLinks?.facebook && (
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200"
+                    title="Facebook Page"
+                  >
+                    <Facebook className="h-4 w-4" />
+                  </span>
+                )}
+                {settings.socialLinks?.instagramEnabled && settings.socialLinks?.instagram && (
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200"
+                    title="Instagram Profile"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </span>
+                )}
+                {settings.socialLinks?.twitterEnabled && settings.socialLinks?.twitter && (
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200"
+                    title="Twitter / X Profile"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </span>
+                )}
+                {settings.socialLinks?.linkedinEnabled && settings.socialLinks?.linkedin && (
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200"
+                    title="LinkedIn Profile"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-4 border-t border-brand-800 pt-3 text-[11px] text-brand-300">
+              Note: WhatsApp is intentionally excluded from the public footer social icons per organization design rules and is managed under the Offices &amp; WhatsApp tab.
+            </div>
           </div>
         </div>
       )}

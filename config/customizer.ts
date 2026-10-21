@@ -180,6 +180,19 @@ export type StoryMilestoneConfig = {
 
 export type StoryPresentation = "editorial" | "photographic";
 
+export type CustomizerSocialLinksConfig = {
+  youtube: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  linkedin: string;
+  youtubeEnabled: boolean;
+  facebookEnabled: boolean;
+  instagramEnabled: boolean;
+  twitterEnabled: boolean;
+  linkedinEnabled: boolean;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -193,6 +206,7 @@ export type CustomizerSettings = {
   popup: CustomizerPopupConfig;
   storyPresentation: StoryPresentation;
   storyMilestones: StoryMilestoneConfig[];
+  socialLinks: CustomizerSocialLinksConfig;
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1358,4 +1372,16 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       location: "Uttar Pradesh, Delhi, Haryana and Punjab",
     },
   ],
+  socialLinks: {
+    youtube: "https://www.youtube.com/@BISNOULISANSTHAN",
+    facebook: "https://www.facebook.com/bisnoulisansthan/",
+    instagram: "https://www.instagram.com/bisnoulisansthan/",
+    twitter: "https://twitter.com/bisnoulisansthan",
+    linkedin: "https://www.linkedin.com/company/bisnouli-sarvodaya-gramodyog-sewa-sansthan/",
+    youtubeEnabled: true,
+    facebookEnabled: true,
+    instagramEnabled: true,
+    twitterEnabled: true,
+    linkedinEnabled: true,
+  },
 };

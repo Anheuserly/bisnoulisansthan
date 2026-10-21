@@ -3,6 +3,7 @@ import {
   Facebook,
   FileText,
   Instagram,
+  Linkedin,
   Mail,
   MapPin,
   MessageCircle,
@@ -12,12 +13,14 @@ import {
 } from "lucide-react";
 import { directionsUrl, fullAddress, site, telHref } from "@/config/site";
 import { content, links } from "@/config/content";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { Logo } from "./Logo";
 import { SoundToggle } from "./SoundToggle";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
-  const social = content.site.social;
+  const customizer = await getCustomizerSettings();
+  const social = customizer.socialLinks;
 
   return (
     <footer className="bg-brand-900 text-brand-100 print:hidden">
@@ -30,46 +33,66 @@ export function Footer() {
             <div className="mt-6">
               <p className="text-xs font-semibold uppercase tracking-[.14em] text-brand-300">Follow & Connect</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <a
-                  href={social.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-red-600 hover:text-white"
-                  title="YouTube"
-                  aria-label="YouTube Channel"
-                >
-                  <Youtube className="h-4 w-4" />
-                </a>
-                <a
-                  href={social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-[#1877F2] hover:text-white"
-                  title="Facebook"
-                  aria-label="Facebook Page"
-                >
-                  <Facebook className="h-4 w-4" />
-                </a>
-                <a
-                  href={social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white"
-                  title="Instagram"
-                  aria-label="Instagram Profile"
-                >
-                  <Instagram className="h-4 w-4" />
-                </a>
-                <a
-                  href={social.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800/90 text-brand-200 transition hover:bg-black hover:text-white"
-                  title="Twitter / X"
-                  aria-label="Twitter Profile"
-                >
-                  <Twitter className="h-4 w-4" />
-                </a>
+                {social.youtubeEnabled && social.youtube && (
+                  <a
+                    href={social.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200 transition hover:bg-brand-700 hover:text-white"
+                    title="YouTube Channel"
+                    aria-label="YouTube Channel"
+                  >
+                    <Youtube className="h-4 w-4" />
+                  </a>
+                )}
+                {social.facebookEnabled && social.facebook && (
+                  <a
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200 transition hover:bg-brand-700 hover:text-white"
+                    title="Facebook Page"
+                    aria-label="Facebook Page"
+                  >
+                    <Facebook className="h-4 w-4" />
+                  </a>
+                )}
+                {social.instagramEnabled && social.instagram && (
+                  <a
+                    href={social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200 transition hover:bg-brand-700 hover:text-white"
+                    title="Instagram Profile"
+                    aria-label="Instagram Profile"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </a>
+                )}
+                {social.twitterEnabled && social.twitter && (
+                  <a
+                    href={social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200 transition hover:bg-brand-700 hover:text-white"
+                    title="Twitter / X Profile"
+                    aria-label="Twitter Profile"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                )}
+                {social.linkedinEnabled && social.linkedin && (
+                  <a
+                    href={social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-800 text-brand-200 transition hover:bg-brand-700 hover:text-white"
+                    title="LinkedIn Profile"
+                    aria-label="LinkedIn Profile"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

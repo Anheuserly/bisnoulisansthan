@@ -219,6 +219,18 @@ export async function POST(request: Request) {
           location: m.location?.trim() || "North India",
         }))
       : (current.storyMilestones || DEFAULT_CUSTOMIZER_SETTINGS.storyMilestones),
+    socialLinks: {
+      youtube: typeof incoming.socialLinks?.youtube === "string" ? incoming.socialLinks.youtube.trim() : (current.socialLinks?.youtube ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.youtube),
+      facebook: typeof incoming.socialLinks?.facebook === "string" ? incoming.socialLinks.facebook.trim() : (current.socialLinks?.facebook ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.facebook),
+      instagram: typeof incoming.socialLinks?.instagram === "string" ? incoming.socialLinks.instagram.trim() : (current.socialLinks?.instagram ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.instagram),
+      twitter: typeof incoming.socialLinks?.twitter === "string" ? incoming.socialLinks.twitter.trim() : (current.socialLinks?.twitter ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.twitter),
+      linkedin: typeof incoming.socialLinks?.linkedin === "string" ? incoming.socialLinks.linkedin.trim() : (current.socialLinks?.linkedin ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.linkedin),
+      youtubeEnabled: incoming.socialLinks?.youtubeEnabled !== undefined ? Boolean(incoming.socialLinks.youtubeEnabled) : (current.socialLinks?.youtubeEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.youtubeEnabled),
+      facebookEnabled: incoming.socialLinks?.facebookEnabled !== undefined ? Boolean(incoming.socialLinks.facebookEnabled) : (current.socialLinks?.facebookEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.facebookEnabled),
+      instagramEnabled: incoming.socialLinks?.instagramEnabled !== undefined ? Boolean(incoming.socialLinks.instagramEnabled) : (current.socialLinks?.instagramEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.instagramEnabled),
+      twitterEnabled: incoming.socialLinks?.twitterEnabled !== undefined ? Boolean(incoming.socialLinks.twitterEnabled) : (current.socialLinks?.twitterEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.twitterEnabled),
+      linkedinEnabled: incoming.socialLinks?.linkedinEnabled !== undefined ? Boolean(incoming.socialLinks.linkedinEnabled) : (current.socialLinks?.linkedinEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.linkedinEnabled),
+    },
   };
 
   await db.query(

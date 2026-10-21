@@ -91,6 +91,10 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
         storyMilestones: Array.isArray(val.storyMilestones) && val.storyMilestones.length > 0
           ? val.storyMilestones
           : DEFAULT_CUSTOMIZER_SETTINGS.storyMilestones,
+        socialLinks: {
+          ...DEFAULT_CUSTOMIZER_SETTINGS.socialLinks,
+          ...(val.socialLinks || {}),
+        },
       };
     }
   } catch (err) {
