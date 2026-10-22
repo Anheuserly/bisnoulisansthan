@@ -669,7 +669,8 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
                         value={metric.target}
                         onChange={(e) => {
                           const updated = [...(settings.impactMetrics || DEFAULT_CUSTOMIZER_SETTINGS.impactMetrics)];
-                          updated[idx] = { ...updated[idx]!, target: e.target.value };
+                          const numVal = parseInt(e.target.value.replace(/[^0-9]/g, ""), 10) || 0;
+                          updated[idx] = { ...updated[idx]!, target: numVal };
                           setSettings((prev) => ({ ...prev, impactMetrics: updated }));
                         }}
                         className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5 text-xs font-bold text-ink focus:border-brand-500 focus:outline-none"
