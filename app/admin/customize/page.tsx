@@ -4,8 +4,13 @@ import { requireAdmin } from "@/lib/auth/require-admin";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { WebsiteCustomizerStudio } from "@/components/admin/WebsiteCustomizerStudio";
 
-export default async function AdminCustomizePage() {
+export default async function AdminCustomizePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
   await requireAdmin();
+  const { tab } = await searchParams;
   const initialSettings = await getCustomizerSettings();
 
   return (
@@ -23,7 +28,7 @@ export default async function AdminCustomizePage() {
             Website Studio &amp; Customizer
           </h1>
           <p className="mt-1 text-xs sm:text-sm text-ink-muted">
-            Manage section ordering, live typewriter headlines, photo collage gallery, and ambient relaxation tracks.
+            Manage section ordering, video archives, live typewriter headlines, photo collage gallery, and ambient relaxation tracks.
           </p>
         </div>
 
@@ -45,7 +50,7 @@ export default async function AdminCustomizePage() {
         </div>
       </div>
 
-      <WebsiteCustomizerStudio initialSettings={initialSettings} />
+      <WebsiteCustomizerStudio initialSettings={initialSettings} initialTab={tab} />
     </div>
   );
 }

@@ -220,6 +220,16 @@ export type CustomizerSocialLinksConfig = {
   linkedinEnabled: boolean;
 };
 
+export type CustomizerVideoItem = {
+  id: string; // YouTube Video ID (e.g. "W9Eou84OxXM")
+  title: string;
+  category?: string;
+  url?: string;
+  publishedAt?: string;
+  featured?: boolean;
+  enabled?: boolean;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -235,6 +245,7 @@ export type CustomizerSettings = {
   storyPresentation: StoryPresentation;
   storyMilestones: StoryMilestoneConfig[];
   socialLinks: CustomizerSocialLinksConfig;
+  videos: CustomizerVideoItem[];
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1482,4 +1493,87 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     twitterEnabled: true,
     linkedinEnabled: true,
   },
+  videos: [
+    {
+      id: "W9Eou84OxXM",
+      title: "खोड़ा कॉलोनी के आदर्श नगर में निःशुल्क स्वास्थ्य जांच शिविर | DD News",
+      category: "Healthcare Camp & News Coverage",
+      url: "https://youtu.be/W9Eou84OxXM?si=UK2R0uwip96olM5f",
+      publishedAt: "DD News",
+      featured: true,
+      enabled: true,
+    },
+    {
+      id: "fJzsBb8MSkc",
+      title: "NMDC DAIRY LOAN DISTRIBUTION",
+      category: "Livelihood & Micro-Credit",
+      url: "https://www.youtube.com/watch?v=fJzsBb8MSkc",
+      publishedAt: "BSGSS Field Drive",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "o7HRdlULgH4",
+      title: "ONGC JA ALDUKA",
+      category: "Community Welfare",
+      url: "https://www.youtube.com/watch?v=o7HRdlULgH4",
+      publishedAt: "BSGSS Outreach",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "y4ev0vZPp7A",
+      title: "NTPC SKILL KHORA",
+      category: "Skill Development",
+      url: "https://www.youtube.com/watch?v=y4ev0vZPp7A",
+      publishedAt: "Skill Training Center",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "VE3l7vK20t8",
+      title: "BPCL SWACHHATA PAKHWADA KHORA",
+      category: "Swachhata & Sanitation",
+      url: "https://www.youtube.com/watch?v=VE3l7vK20t8",
+      publishedAt: "BPCL Alliance",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "naLTm0TLDhI",
+      title: "BPCL SWACHHATA PAKHWADA GURDASPUR",
+      category: "Swachhata & Sanitation",
+      url: "https://www.youtube.com/watch?v=naLTm0TLDhI",
+      publishedAt: "BPCL Alliance",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "IheB4x_ThC4",
+      title: "BPCL JAN AROGYAM KHORA COLONY",
+      category: "Healthcare & Oncology",
+      url: "https://www.youtube.com/watch?v=IheB4x_ThC4",
+      publishedAt: "Healthcare Mobile Van",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "C4B4k2lgheo",
+      title: "IRCON SKILL KHORA",
+      category: "Skill Development",
+      url: "https://www.youtube.com/watch?v=C4B4k2lgheo",
+      publishedAt: "IRCON Project",
+      featured: false,
+      enabled: true,
+    },
+    {
+      id: "_R8qd6Je8UI",
+      title: "RITES HILALPUR CANCER CAMP",
+      category: "Healthcare & Oncology",
+      url: "https://www.youtube.com/watch?v=_R8qd6Je8UI",
+      publishedAt: "RITES Health Mission",
+      featured: false,
+      enabled: true,
+    },
+  ],
 };

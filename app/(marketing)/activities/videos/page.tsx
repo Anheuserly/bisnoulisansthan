@@ -4,6 +4,7 @@ import { VideoGallery } from "@/components/activities/VideoGallery";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { getChannelVideos } from "@/lib/youtube";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -16,8 +17,9 @@ export const metadata: Metadata = buildMetadata({
 export const revalidate = 300;
 
 export default async function VideosPage() {
+  const [customizer] = await Promise.all([getCustomizerSettings()]);
   const { videos: fallbackVideos, videoGallery } = content.activities;
-  const videos = await getChannelVideos(fallbackVideos);
+  const videos = await getChannelVideos(fallbackVideos, customizer.videos);
 
   return (
     <>

@@ -173,12 +173,24 @@ export function VideoGallery({ videos, youtubeUrl }: { videos: readonly ChannelV
                   </span>
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span
-                    className={`block text-[11px] font-bold uppercase tracking-wider ${
-                      isActive ? "text-brand-700" : "text-slate-600"
-                    }`}
-                  >
-                    Video {String(index + 1).padStart(2, "0")}
+                  <span className="flex flex-wrap items-center gap-1.5">
+                    <span
+                      className={`text-[11px] font-bold uppercase tracking-wider ${
+                        isActive ? "text-brand-700" : "text-slate-600"
+                      }`}
+                    >
+                      Video {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {video.category && (
+                      <span className="rounded bg-sand-100 px-1.5 py-0.5 text-[10px] font-semibold text-brand-800">
+                        {video.category}
+                      </span>
+                    )}
+                    {video.featured && (
+                      <span className="rounded bg-amber-50 border border-amber-200 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">
+                        Featured
+                      </span>
+                    )}
                   </span>
                   <span
                     className={`mt-1 block line-clamp-2 text-xs sm:text-sm font-semibold leading-snug ${

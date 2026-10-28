@@ -39,6 +39,9 @@ import {
   Megaphone,
   Route,
   Share2,
+  ListVideo,
+  Star,
+  Film,
   Youtube,
   Facebook,
   Instagram,
@@ -49,14 +52,17 @@ import {
   AMBIENT_TRACK_PRESETS,
   DEFAULT_CUSTOMIZER_SETTINGS,
   type CustomizerSettings,
+  type CustomizerVideoItem,
   type SectionConfig,
   type CollagePhotoItem,
   type PopupNotificationType,
   type StoryMilestoneConfig,
 } from "@/config/customizer";
+import { extractYouTubeVideoId } from "@/lib/youtube";
 
 interface WebsiteCustomizerStudioProps {
   initialSettings: CustomizerSettings;
+  initialTab?: string;
 }
 
 const GALLERY_PRESET_IMAGES = [
@@ -74,15 +80,169 @@ const GALLERY_PRESET_IMAGES = [
   { label: "Banner 3 - Khadi Gramodyog", src: "/images/bsgss/banners/592-banner-3.webp" },
 ];
 
-export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerStudioProps) {
+type CustomizerTabId =
+  | "sections"
+  | "videos"
+  | "story"
+  | "social"
+  | "popup"
+  | "texts"
+  | "layout"
+  | "offices"
+  | "footprint"
+  | "collage"
+  | "audio"
+  | "typing";
+
+export function WebsiteCustomizerStudio({ initialSettings, initialTab }: WebsiteCustomizerStudioProps) {
   const [settings, setSettings] = useState<CustomizerSettings>(initialSettings);
-  const [activeTab, setActiveTab] = useState<"sections" | "story" | "social" | "popup" | "texts" | "layout" | "offices" | "footprint" | "collage" | "audio" | "typing">("sections");
+  const [activeTab, setActiveTab] = useState<CustomizerTabId>(
+    initialTab &&
+    [
+      "sections",
+      "videos",
+      "story",
+      "social",
+      "popup",
+      "texts",
+      "layout",
+      "offices",
+      "footprint",
+      "collage",
+      "audio",
+      "typing",
+    ].includes(initialTab as CustomizerTabId)
+      ? (initialTab as CustomizerTabId)
+      : "sections"
+  );
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  // Video Management Studio State
+  const [newVideoUrl, setNewVideoUrl] = useState("");
+  const [newVideoTitle, setNewVideoTitle] = useState("");
+  const [newVideoCategory, setNewVideoCategory] = useState("Healthcare Camp");
+  const [newVideoPublished, setNewVideoPublished] = useState("");
+  const [newVideoFeatured, setNewVideoFeatured] = useState(false);
+  const [fetchingVideoInfo, setFetchingVideoInfo] = useState(false);
+  const [videoFetchError, setVideoFetchError] = useState<string | null>(null);
+  const [previewVideoId, setPreviewVideoId] = useState<string | null>(null);
 
   // Audio preview state inside admin
   const [testAudioPlaying, setTestAudioPlaying] = useState(false);
   const testAudioCtxRef = useState<AudioContext | null>(null);
+
+  // Video Management Helpers
+  const handleFetchVideoInfo = async (urlToFetch?: string) => {
+    const target = (urlToFetch || newVideoUrl).trim();
+    if (!target) return;
+    setFetchingVideoInfo(true);
+    setVideoFetchError(null);
+
+    try {
+      const res = await fetch(`/api/admin/youtube-info?url=${encodeURIComponent(target)}`);
+      const data = await res.json();
+      if (data.ok && data.id) {
+        if (!newVideoTitle || newVideoTitle.trim() === "") {
+          setNewVideoTitle(data.title || "");
+        }
+        if (data.author && (!newVideoPublished || newVideoPublished.trim() === "")) {
+          setNewVideoPublished(data.author);
+        }
+      } else {
+        setVideoFetchError(data.message || "Could not resolve YouTube video details.");
+      }
+    } catch {
+      setVideoFetchError("Failed to connect to YouTube metadata service.");
+    } finally {
+      setFetchingVideoInfo(false);
+    }
+  };
+
+  const handleAddVideo = () => {
+    const target = newVideoUrl.trim();
+    if (!target) {
+      setVideoFetchError("Please provide a valid YouTube video URL or ID.");
+      return;
+    }
+    const id = extractYouTubeVideoId(target);
+    if (!id) {
+      setVideoFetchError("Invalid YouTube URL. Please check the link.");
+      return;
+    }
+
+    if (settings.videos?.some((v) => v.id === id)) {
+      setVideoFetchError("This video is already in your archive list.");
+      return;
+    }
+
+    const newVideo: CustomizerVideoItem = {
+      id,
+      title: newVideoTitle.trim() || "BSGSS Field Video",
+      category: newVideoCategory.trim() || "Healthcare Camp",
+      url: target.startsWith("http") ? target : `https://www.youtube.com/watch?v=${id}`,
+      publishedAt: newVideoPublished.trim() || "Field Video",
+      featured: newVideoFeatured,
+      enabled: true,
+    };
+
+    setSettings((prev) => ({
+      ...prev,
+      videos: [newVideo, ...(prev.videos || [])],
+    }));
+
+    setNewVideoUrl("");
+    setNewVideoTitle("");
+    setNewVideoPublished("");
+    setNewVideoFeatured(false);
+    setVideoFetchError(null);
+  };
+
+  const handleMoveVideo = (index: number, direction: "up" | "down") => {
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const list = [...(settings.videos || [])];
+    if (targetIndex < 0 || targetIndex >= list.length) return;
+    const current = list[index];
+    const target = list[targetIndex];
+    if (!current || !target) return;
+    list[index] = target;
+    list[targetIndex] = current;
+    setSettings((prev) => ({ ...prev, videos: list }));
+  };
+
+  const handleToggleVideo = (id: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      videos: (prev.videos || []).map((v) =>
+        v.id === id ? { ...v, enabled: v.enabled === false ? true : false } : v
+      ),
+    }));
+  };
+
+  const handleToggleVideoFeatured = (id: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      videos: (prev.videos || []).map((v) =>
+        v.id === id ? { ...v, featured: !v.featured } : v
+      ),
+    }));
+  };
+
+  const handleDeleteVideo = (id: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      videos: (prev.videos || []).filter((v) => v.id !== id),
+    }));
+  };
+
+  const handleUpdateVideo = (id: string, updates: Partial<CustomizerVideoItem>) => {
+    setSettings((prev) => ({
+      ...prev,
+      videos: (prev.videos || []).map((v) =>
+        v.id === id ? { ...v, ...updates } : v
+      ),
+    }));
+  };
 
   // Section Reordering Helpers
   const handleMoveSection = (index: number, direction: "up" | "down") => {
@@ -340,6 +500,7 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
       <div className="flex border-b border-line bg-white rounded-t-xl px-4 pt-2 overflow-x-auto">
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
+          { id: "videos", label: "Video Archives & Films", icon: ListVideo },
           { id: "story", label: "Our Story & Milestones", icon: Route },
           { id: "social", label: "Social Media Channels", icon: Share2 },
           { id: "popup", label: "Pop-up & Announcements", icon: Bell },
@@ -453,6 +614,442 @@ export function WebsiteCustomizerStudio({ initialSettings }: WebsiteCustomizerSt
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Tab Content: Video Archives & Field Documentaries */}
+      {activeTab === "videos" && (
+        <div className="space-y-6">
+          {/* Header Banner */}
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-line pb-5">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                    <ListVideo className="h-4 w-4" />
+                  </span>
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Public Video Archives &amp; Field Documentaries
+                  </h3>
+                </div>
+                <p className="mt-1 text-xs sm:text-sm text-ink-muted">
+                  Add, reorder, feature, and manage videos displayed on the public{" "}
+                  <Link href="/activities/videos" target="_blank" className="text-brand-700 underline font-semibold">
+                    /activities/videos
+                  </Link>{" "}
+                  page. Add any YouTube video URL or ID (including national news broadcasts like DD News, CSR documentaries, and field camps).
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Link
+                  href="/activities/videos"
+                  target="_blank"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                >
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                  View Public Video Page
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSettings((prev) => ({
+                      ...prev,
+                      videos: [...DEFAULT_CUSTOMIZER_SETTINGS.videos],
+                    }));
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Reset to Defaults
+                </button>
+              </div>
+            </div>
+
+            {/* Form: Add New Video */}
+            <div className="mt-6 rounded-xl border border-line bg-sand-50/50 p-5 space-y-4">
+              <div className="flex items-center justify-between border-b border-line/60 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-850">
+                  + Add New Video by YouTube Link or Video ID
+                </span>
+                <span className="text-[11px] text-ink-muted">
+                  Supports: youtu.be, youtube.com/watch?v=..., shorts, or raw 11-char ID
+                </span>
+              </div>
+
+              {videoFetchError && (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-800">
+                  {videoFetchError}
+                </div>
+              )}
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    YouTube URL or Video ID <span className="text-red-500">*</span>
+                  </label>
+                  <div className="mt-1 flex gap-2">
+                    <input
+                      type="text"
+                      value={newVideoUrl}
+                      onChange={(e) => {
+                        setNewVideoUrl(e.target.value);
+                        setVideoFetchError(null);
+                      }}
+                      onBlur={() => {
+                        if (newVideoUrl.trim() && !newVideoTitle) {
+                          handleFetchVideoInfo(newVideoUrl.trim());
+                        }
+                      }}
+                      placeholder="e.g. https://youtu.be/W9Eou84OxXM?si=UK2R0uwip96olM5f or W9Eou84OxXM"
+                      className="flex-1 rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-ink-muted/50 focus:border-brand-500 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleFetchVideoInfo()}
+                      disabled={fetchingVideoInfo || !newVideoUrl.trim()}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 text-xs font-semibold text-ink hover:bg-sand-100 disabled:opacity-50 transition"
+                    >
+                      <RefreshCw className={`h-3.5 w-3.5 ${fetchingVideoInfo ? "animate-spin" : ""}`} />
+                      <span>{fetchingVideoInfo ? "Fetching..." : "Fetch Info"}</span>
+                    </button>
+                  </div>
+                  <p className="mt-1 text-[11px] text-ink-muted">
+                    Paste any YouTube link and click &ldquo;Fetch Info&rdquo; to automatically retrieve the exact title and thumbnail.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Category Tag
+                  </label>
+                  <select
+                    value={newVideoCategory}
+                    onChange={(e) => setNewVideoCategory(e.target.value)}
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  >
+                    <option value="Healthcare Camp &amp; News Coverage">Healthcare Camp &amp; News Coverage</option>
+                    <option value="Healthcare &amp; Oncology">Healthcare &amp; Oncology</option>
+                    <option value="Swachhata &amp; Sanitation">Swachhata &amp; Sanitation</option>
+                    <option value="Livelihood &amp; Micro-Credit">Livelihood &amp; Micro-Credit</option>
+                    <option value="Women Empowerment &amp; SHG">Women Empowerment &amp; SHG</option>
+                    <option value="Skill Training &amp; Tailoring">Skill Training &amp; Tailoring</option>
+                    <option value="DD News &amp; Media Coverage">DD News &amp; Media Coverage</option>
+                    <option value="CSR Partner Alliance">CSR Partner Alliance</option>
+                    <option value="Rural Community Drive">Rural Community Drive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Video Title (Displayed on Public Page) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newVideoTitle}
+                    onChange={(e) => setNewVideoTitle(e.target.value)}
+                    placeholder="e.g. खोड़ा कॉलोनी के आदर्श नगर में निःशुल्क स्वास्थ्य जांच शिविर | DD News"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-ink-muted/50 focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Source / Producer
+                  </label>
+                  <input
+                    type="text"
+                    value={newVideoPublished}
+                    onChange={(e) => setNewVideoPublished(e.target.value)}
+                    placeholder="e.g. DD News, BPCL Jan Arogyam, RITES Van"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-ink-muted/50 focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-ink">
+                  <input
+                    type="checkbox"
+                    checked={newVideoFeatured}
+                    onChange={(e) => setNewVideoFeatured(e.target.checked)}
+                    className="h-4 w-4 rounded accent-brand-700"
+                  />
+                  <span>Pin as Featured Documentary (Highlighted at Top)</span>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleAddVideo}
+                  className="inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-brand-800 transition"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add Video to Public Archives</span>
+                </button>
+              </div>
+            </div>
+
+            {/* List of Videos */}
+            <div className="mt-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-line pb-3">
+                <div className="flex items-center gap-2">
+                  <h4 className="font-display text-sm font-bold text-ink">
+                    Active Video Catalog ({(settings.videos || []).length} videos)
+                  </h4>
+                  <span className="rounded-full bg-sand-200 px-2 py-0.5 text-[10px] font-bold text-ink">
+                    {(settings.videos || []).filter((v) => v.enabled !== false).length} Visible
+                  </span>
+                </div>
+                <p className="text-[11px] text-ink-muted">
+                  Videos at the top appear first on the public video theater &amp; playlist.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {(settings.videos || []).map((video, idx) => {
+                  const isVisible = video.enabled !== false;
+                  return (
+                    <div
+                      key={video.id + idx}
+                      className={`rounded-xl border p-4 transition-all ${
+                        isVisible
+                          ? "border-line bg-white shadow-2xs"
+                          : "border-sand-300 bg-sand-100/50 opacity-60"
+                      }`}
+                    >
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        {/* Left: Reorder + Thumbnail + Metadata */}
+                        <div className="flex items-start sm:items-center gap-3 min-w-0">
+                          {/* Order buttons */}
+                          <div className="flex flex-col gap-1 shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => handleMoveVideo(idx, "up")}
+                              disabled={idx === 0}
+                              className="rounded p-1 text-ink-muted hover:bg-sand-100 disabled:opacity-30 transition"
+                              title="Move Up"
+                            >
+                              <ArrowUp className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleMoveVideo(idx, "down")}
+                              disabled={idx === (settings.videos || []).length - 1}
+                              className="rounded p-1 text-ink-muted hover:bg-sand-100 disabled:opacity-30 transition"
+                              title="Move Down"
+                            >
+                              <ArrowDown className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+
+                          {/* Thumbnail with quick preview trigger */}
+                          <div className="relative aspect-video w-24 sm:w-28 shrink-0 overflow-hidden rounded-lg bg-slate-900 border border-line">
+                            <img
+                              src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                              alt={video.title}
+                              className="h-full w-full object-cover"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setPreviewVideoId(video.id)}
+                              className="absolute inset-0 grid place-items-center bg-black/30 hover:bg-black/50 text-white transition"
+                              title="Preview player"
+                            >
+                              <Play className="h-4 w-4 fill-current" />
+                            </button>
+                          </div>
+
+                          {/* Titles & Info */}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <span className="text-[11px] font-bold text-brand-700">
+                                #{String(idx + 1).padStart(2, "0")}
+                              </span>
+                              {video.category && (
+                                <span className="rounded bg-sand-100 px-1.5 py-0.5 text-[10px] font-semibold text-brand-800">
+                                  {video.category}
+                                </span>
+                              )}
+                              {video.featured && (
+                                <span className="rounded bg-amber-50 border border-amber-200 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">
+                                  ★ Featured
+                                </span>
+                              )}
+                              <span
+                                className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                                  isVisible
+                                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                                    : "bg-sand-200 text-ink-muted"
+                                }`}
+                              >
+                                {isVisible ? "Live on site" : "Hidden"}
+                              </span>
+                            </div>
+
+                            <input
+                              type="text"
+                              value={video.title}
+                              onChange={(e) => handleUpdateVideo(video.id, { title: e.target.value })}
+                              className="mt-1 w-full rounded border border-transparent hover:border-line focus:border-brand-500 bg-transparent px-1.5 py-0.5 text-xs font-bold text-ink focus:bg-white focus:outline-none"
+                            />
+
+                            <div className="mt-0.5 flex flex-wrap items-center gap-3 text-[11px] text-ink-muted">
+                              <span>ID: <code className="font-mono text-ink">{video.id}</code></span>
+                              {video.publishedAt && <span>Source: {video.publishedAt}</span>}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right: Actions */}
+                        <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleVideoFeatured(video.id)}
+                            className={`rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
+                              video.featured
+                                ? "border-amber-300 bg-amber-50 text-amber-900"
+                                : "border-line bg-white text-ink hover:bg-sand-50"
+                            }`}
+                            title={video.featured ? "Unpin featured" : "Pin as featured"}
+                          >
+                            <Star className={`h-3.5 w-3.5 ${video.featured ? "fill-current" : ""}`} />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => setPreviewVideoId(video.id)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                            title="Preview video"
+                          >
+                            <Play className="h-3 w-3 fill-current" />
+                            <span>Preview</span>
+                          </button>
+
+                          <a
+                            href={`https://www.youtube.com/watch?v=${video.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                            title="Watch on YouTube"
+                          >
+                            <ArrowUpRight className="h-3.5 w-3.5 text-ink-muted" />
+                            <span className="hidden sm:inline">YouTube</span>
+                          </a>
+
+                          <button
+                            type="button"
+                            onClick={() => handleToggleVideo(video.id)}
+                            className="rounded-lg border border-line bg-white p-2 text-ink hover:bg-sand-50 transition"
+                            title={isVisible ? "Hide video" : "Show video"}
+                          >
+                            {isVisible ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 text-ink-muted" />}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteVideo(video.id)}
+                            className="rounded-lg border border-line bg-white p-2 text-red-600 hover:bg-red-50 hover:border-red-200 transition"
+                            title="Delete video"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Live Preview of Playlist */}
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <div>
+                <h4 className="font-display text-sm font-bold text-ink">
+                  Live Public Playlist Preview
+                </h4>
+                <p className="text-xs text-ink-muted">
+                  How the playlist order appears to visitors on{" "}
+                  <code className="text-brand-700">/activities/videos</code>
+                </p>
+              </div>
+              <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-800">
+                {(settings.videos || []).filter((v) => v.enabled !== false).length} Videos Live
+              </span>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {(settings.videos || [])
+                .filter((v) => v.enabled !== false)
+                .slice(0, 6)
+                .map((video, idx) => (
+                  <div
+                    key={video.id}
+                    className="flex items-start gap-3 rounded-xl border border-line bg-sand-50/40 p-3"
+                  >
+                    <div className="relative aspect-video w-20 shrink-0 overflow-hidden rounded-md bg-slate-900">
+                      <img
+                        src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-brand-700">
+                        Video {String(idx + 1).padStart(2, "0")} {video.featured ? "· Featured" : ""}
+                      </span>
+                      <p className="mt-0.5 line-clamp-2 text-xs font-bold text-ink leading-snug">
+                        {video.title}
+                      </p>
+                      {video.category && (
+                        <p className="mt-1 text-[10px] text-ink-muted">{video.category}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* Video Preview Modal */}
+          {previewVideoId && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-xs"
+              onClick={() => setPreviewVideoId(null)}
+            >
+              <div
+                className="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-black shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between bg-slate-900 px-4 py-3 text-white">
+                  <div className="flex items-center gap-2">
+                    <Play className="h-4 w-4 fill-current text-red-500" />
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      YouTube Field Video Preview ({previewVideoId})
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewVideoId(null)}
+                    className="rounded-lg bg-slate-800 p-1.5 text-slate-300 hover:bg-slate-700 hover:text-white transition"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="aspect-video w-full">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0`}
+                    title="Video Preview"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full border-0"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

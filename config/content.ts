@@ -288,6 +288,7 @@ export const content = {
     },
     media: { metadataTitle: "Work in Media", title: "Work in Media", lead: "A collection of public media clippings featuring BSGSS community activities, campaigns and health outreach.", eyebrow: "Public coverage", heading: "Community work, recognised in the public record.", text: "These source clippings document public coverage of BSGSS-supported activities. They include reporting on health outreach, cleanliness campaigns and local community programmes. Open any clipping to read it at full size.", archiveEyebrow: "Media archive", archiveHeading: "Selected press clippings" },
     videos: [
+      { id: "W9Eou84OxXM", title: "खोड़ा कॉलोनी के आदर्श नगर में निःशुल्क स्वास्थ्य जांच शिविर | DD News" },
       { id: "_NJEaW31PMQ", title: "JAN AROYAM MASK" },
       { id: "vOO9N5JYFy0", title: "PETRONET JA ULETA NUH" },
       { id: "YOicrIqGGQo", title: "HPCL JA KHORBASAI" },

@@ -102,6 +102,9 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           ...DEFAULT_CUSTOMIZER_SETTINGS.socialLinks,
           ...(val.socialLinks || {}),
         },
+        videos: Array.isArray(val.videos) && val.videos.length > 0
+          ? val.videos
+          : DEFAULT_CUSTOMIZER_SETTINGS.videos,
       };
     }
   } catch (err) {

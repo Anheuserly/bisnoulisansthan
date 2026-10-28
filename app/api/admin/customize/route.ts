@@ -268,6 +268,19 @@ export async function POST(request: Request) {
       twitterEnabled: incoming.socialLinks?.twitterEnabled !== undefined ? Boolean(incoming.socialLinks.twitterEnabled) : (current.socialLinks?.twitterEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.twitterEnabled),
       linkedinEnabled: incoming.socialLinks?.linkedinEnabled !== undefined ? Boolean(incoming.socialLinks.linkedinEnabled) : (current.socialLinks?.linkedinEnabled ?? DEFAULT_CUSTOMIZER_SETTINGS.socialLinks.linkedinEnabled),
     },
+    videos: Array.isArray(incoming.videos)
+      ? incoming.videos
+          .filter((v) => typeof v === "object" && Boolean(v?.id))
+          .map((v, idx) => ({
+            id: String(v.id).trim(),
+            title: String(v.title || `Video ${idx + 1}`).trim(),
+            category: String(v.category || "Field Archive").trim(),
+            url: String(v.url || `https://www.youtube.com/watch?v=${v.id}`).trim(),
+            publishedAt: String(v.publishedAt || "").trim(),
+            featured: Boolean(v.featured),
+            enabled: v.enabled !== false,
+          }))
+      : (current.videos || DEFAULT_CUSTOMIZER_SETTINGS.videos),
   };
 
   await db.query(
@@ -284,6 +297,7 @@ export async function POST(request: Request) {
     revalidatePath("/contact");
     revalidatePath("/about");
     revalidatePath("/about/our-story");
+    revalidatePath("/activities/videos");
   } catch (revalidateErr) {
     console.warn("Revalidation warning on save:", revalidateErr);
   }

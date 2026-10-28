@@ -1,9 +1,25 @@
+import type { CustomizerVideoItem } from "@/config/customizer";
+
 export type ChannelVideo = {
   id: string;
   title: string;
   publishedAt: string;
   thumbnail: string;
+  category?: string;
+  featured?: boolean;
 };
+
+export function extractYouTubeVideoId(input: string): string | null {
+  if (!input) return null;
+  const trimmed = input.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([a-zA-Z0-9_-]{11})/
+  );
+  return match && match[1] ? match[1] : null;
+}
 
 const channelId = "UCjj3-e9Lq3KevXdjs_ebETg";
 const channelUrl = "https://www.youtube.com/@BISNOULISANSTHAN/videos";
@@ -30,11 +46,34 @@ const decodeXml = (value: string) =>
  * 4. Falls back to static video archive if network is unavailable.
  */
 export async function getChannelVideos(
-  fallback: readonly { id: string; title: string }[]
+  fallback: readonly { id: string; title: string }[],
+  customVideos?: CustomizerVideoItem[]
 ): Promise<ChannelVideo[]> {
   const videoMap = new Map<string, ChannelVideo>();
+  const disabledIds = new Set<string>();
 
-  // 1. Fetch channel videos page to get the full catalog
+  // 1. If custom videos are provided from the database / customizer settings,
+  // insert the enabled ones first so they appear at the top of the gallery!
+  if (Array.isArray(customVideos) && customVideos.length > 0) {
+    for (const cv of customVideos) {
+      if (cv.enabled === false) {
+        disabledIds.add(cv.id);
+        continue;
+      }
+      if (cv.id) {
+        videoMap.set(cv.id, {
+          id: cv.id,
+          title: cv.title || "BSGSS Field Video",
+          publishedAt: cv.publishedAt || (cv.featured ? "Featured Document" : "Field Archive"),
+          thumbnail: `https://i.ytimg.com/vi/${cv.id}/hqdefault.jpg`,
+          category: cv.category || "Field Archive",
+          featured: Boolean(cv.featured),
+        });
+      }
+    }
+  }
+
+  // 2. Fetch channel videos page to get the full catalog
   try {
     const response = await fetch(channelUrl, {
       headers: {
@@ -88,7 +127,7 @@ export async function getChannelVideos(
                 ?.metadataRows?.[1]?.metadataParts?.[1]?.text?.content || "";
             const thumbnail = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-            if (id && title && !videoMap.has(id)) {
+            if (id && title && !disabledIds.has(id) && !videoMap.has(id)) {
               videoMap.set(id, { id, title, publishedAt, thumbnail });
             }
           }
@@ -109,7 +148,7 @@ export async function getChannelVideos(
             const publishedAt = legacy.videoRenderer.publishedTimeText?.simpleText || "";
             const thumbnail = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-            if (id && title && !videoMap.has(id)) {
+            if (id && title && !disabledIds.has(id) && !videoMap.has(id)) {
               videoMap.set(id, { id, title, publishedAt, thumbnail });
             }
           }
@@ -120,7 +159,7 @@ export async function getChannelVideos(
     console.warn("Failed to scrape YouTube channel page:", error);
   }
 
-  // 2. Also check RSS feed to catch immediate new uploads
+  // 3. Also check RSS feed to catch immediate new uploads
   try {
     const rssRes = await fetch(feedUrl, { next: { revalidate: 300 } });
     if (rssRes.ok) {
@@ -134,7 +173,7 @@ export async function getChannelVideos(
           entry.match(/<media:thumbnail url="([^"]+)"/)?.[1] ??
           `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-        if (id && title && !videoMap.has(id)) {
+        if (id && title && !disabledIds.has(id) && !videoMap.has(id)) {
           videoMap.set(id, { id, title, publishedAt, thumbnail });
         }
       }
@@ -143,15 +182,16 @@ export async function getChannelVideos(
     console.warn("Failed to query YouTube RSS feed:", rssError);
   }
 
-  // 3. If any videos were collected, return them
-  if (videoMap.size > 0) {
-    return Array.from(videoMap.values());
+  // 4. Also incorporate any fallback videos that aren't disabled or already in map
+  for (const video of fallback) {
+    if (!disabledIds.has(video.id) && !videoMap.has(video.id)) {
+      videoMap.set(video.id, {
+        ...video,
+        publishedAt: "Field Archive",
+        thumbnail: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
+      });
+    }
   }
 
-  // 4. Fallback to hardcoded video catalog
-  return fallback.map((video) => ({
-    ...video,
-    publishedAt: "",
-    thumbnail: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
-  }));
+  return Array.from(videoMap.values());
 }

@@ -13,6 +13,7 @@ import {
   Layers,
   LayoutDashboard,
   LayoutPanelTop,
+  ListVideo,
   LogOut,
   Menu,
   MessageSquare,
@@ -89,6 +90,13 @@ export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
           icon: Palette,
           badge: "Presets",
           badgeColor: "bg-brand-50 text-brand-700 border-brand-200",
+        },
+        {
+          label: "Video Archives & Films",
+          href: "/admin/customize?tab=videos",
+          icon: ListVideo,
+          badge: "Videos",
+          badgeColor: "bg-red-50 text-red-700 border-red-200",
         },
         {
           label: "Content Hub",
