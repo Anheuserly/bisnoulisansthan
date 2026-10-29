@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Bell,
   Megaphone,
@@ -18,10 +19,20 @@ import type { CustomizerPopupConfig, PopupNotificationType } from "@/config/cust
 const POPUP_DISMISS_KEY = "bsgss_popup_dismissed_title";
 
 export function SitePopupNotification() {
+  const pathname = usePathname();
   const [config, setConfig] = useState<CustomizerPopupConfig | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Suppress completely on donation certificates or admin panel
+  const isCertificateOrAdminPage =
+    Boolean(pathname?.includes("/support/certificate") || pathname?.startsWith("/admin"));
+
   useEffect(() => {
+    if (isCertificateOrAdminPage) {
+      setIsOpen(false);
+      return;
+    }
+
     let timer: NodeJS.Timeout;
 
     async function loadPopup() {
@@ -62,7 +73,7 @@ export function SitePopupNotification() {
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [isCertificateOrAdminPage]);
 
   const handleDismiss = () => {
     if (config?.title) {
@@ -71,7 +82,7 @@ export function SitePopupNotification() {
     setIsOpen(false);
   };
 
-  if (!isOpen || !config) return null;
+  if (isCertificateOrAdminPage || !isOpen || !config) return null;
 
   const typeConfig: Record<
     PopupNotificationType,

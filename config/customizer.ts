@@ -230,6 +230,43 @@ export type CustomizerVideoItem = {
   enabled?: boolean;
 };
 
+export type CertificateThemeColor = "navy" | "emerald" | "gold" | "burgundy" | "slate";
+export type CertificateFontFamily = "formal" | "sans" | "serif";
+export type CertificateSerialFormat = "prefix-padded" | "prefix-number" | "number-only";
+
+export type CustomizerCertificateConfig = {
+  signatoryName: string;
+  signatoryRole: string;
+  organizationName: string;
+  signatureUrl: string;
+  showDefaultSignatureSvg: boolean;
+
+  sealTitle: string;
+  sealEstd: string;
+  sealRegNo: string;
+  sealBadges: string;
+  stampUrl: string;
+  showDefaultSealSvg: boolean;
+
+  legalRegText: string;
+  darpanId: string;
+  exemptionsText: string;
+  officeAddressText: string;
+
+  certificateTitle: string;
+  certificateSubtitle: string;
+  appreciationText: string;
+  causeText: string;
+
+  themeColor: CertificateThemeColor;
+  fontFamily: CertificateFontFamily;
+
+  serialFormat: CertificateSerialFormat;
+  serialPrefix: string;
+  serialPadding: number;
+  nextSerialNumber?: number;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -246,6 +283,7 @@ export type CustomizerSettings = {
   storyMilestones: StoryMilestoneConfig[];
   socialLinks: CustomizerSocialLinksConfig;
   videos: CustomizerVideoItem[];
+  certificate: CustomizerCertificateConfig;
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1576,4 +1614,35 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       enabled: true,
     },
   ],
+  certificate: {
+    signatoryName: "Nandita Bakshi",
+    signatoryRole: "Chief Executive Officer (CEO)",
+    organizationName: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
+    signatureUrl: "",
+    showDefaultSignatureSvg: true,
+
+    sealTitle: "BISNOULI SARVODAYA GRAMODYOG SEWA SANSTHAN",
+    sealEstd: "ESTD. 1994",
+    sealRegNo: "REGD. S-26792",
+    sealBadges: "★ 80G / 12A ★",
+    stampUrl: "",
+    showDefaultSealSvg: true,
+
+    legalRegText: "Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)",
+    darpanId: "DL/2016/0111645",
+    exemptionsText: "Tax Exemptions under 12A & 80G",
+    officeAddressText: "Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in",
+
+    certificateTitle: "DONATION ACKNOWLEDGEMENT CERTIFICATE",
+    certificateSubtitle: "Official Receipt Issued for Voluntary Support Towards Social & Community Welfare",
+    appreciationText: "This certifies with deepest appreciation and heartfelt gratitude that a voluntary contribution has been generously received from",
+    causeText: "towards advancing rural healthcare clinics, women's vocational skill training, education, and community self-reliance initiatives across underprivileged regions.",
+
+    themeColor: "navy",
+    fontFamily: "formal",
+
+    serialFormat: "prefix-number",
+    serialPrefix: "BSGSS-2026-",
+    serialPadding: 4,
+  },
 };

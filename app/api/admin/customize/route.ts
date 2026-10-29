@@ -281,6 +281,52 @@ export async function POST(request: Request) {
             enabled: v.enabled !== false,
           }))
       : (current.videos || DEFAULT_CUSTOMIZER_SETTINGS.videos),
+    certificate: {
+      signatoryName: String(incoming.certificate?.signatoryName || current.certificate.signatoryName).trim(),
+      signatoryRole: String(incoming.certificate?.signatoryRole || current.certificate.signatoryRole).trim(),
+      organizationName: String(incoming.certificate?.organizationName || current.certificate.organizationName).trim(),
+      signatureUrl: String(incoming.certificate?.signatureUrl ?? current.certificate.signatureUrl ?? "").trim(),
+      showDefaultSignatureSvg: incoming.certificate?.showDefaultSignatureSvg !== undefined
+        ? Boolean(incoming.certificate.showDefaultSignatureSvg)
+        : current.certificate.showDefaultSignatureSvg,
+
+      sealTitle: String(incoming.certificate?.sealTitle || current.certificate.sealTitle).trim(),
+      sealEstd: String(incoming.certificate?.sealEstd || current.certificate.sealEstd).trim(),
+      sealRegNo: String(incoming.certificate?.sealRegNo || current.certificate.sealRegNo).trim(),
+      sealBadges: String(incoming.certificate?.sealBadges || current.certificate.sealBadges).trim(),
+      stampUrl: String(incoming.certificate?.stampUrl ?? current.certificate.stampUrl ?? "").trim(),
+      showDefaultSealSvg: incoming.certificate?.showDefaultSealSvg !== undefined
+        ? Boolean(incoming.certificate.showDefaultSealSvg)
+        : current.certificate.showDefaultSealSvg,
+
+      legalRegText: String(incoming.certificate?.legalRegText || current.certificate.legalRegText).trim(),
+      darpanId: String(incoming.certificate?.darpanId || current.certificate.darpanId).trim(),
+      exemptionsText: String(incoming.certificate?.exemptionsText || current.certificate.exemptionsText).trim(),
+      officeAddressText: String(incoming.certificate?.officeAddressText || current.certificate.officeAddressText).trim(),
+
+      certificateTitle: String(incoming.certificate?.certificateTitle || current.certificate.certificateTitle).trim(),
+      certificateSubtitle: String(incoming.certificate?.certificateSubtitle || current.certificate.certificateSubtitle).trim(),
+      appreciationText: String(incoming.certificate?.appreciationText || current.certificate.appreciationText).trim(),
+      causeText: String(incoming.certificate?.causeText || current.certificate.causeText).trim(),
+
+      themeColor: (["navy", "emerald", "gold", "burgundy", "slate"].includes(incoming.certificate?.themeColor as string)
+        ? incoming.certificate?.themeColor
+        : current.certificate.themeColor) as any,
+      fontFamily: (["formal", "sans", "serif"].includes(incoming.certificate?.fontFamily as string)
+        ? incoming.certificate?.fontFamily
+        : current.certificate.fontFamily) as any,
+
+      serialFormat: (["prefix-padded", "prefix-number", "number-only"].includes(incoming.certificate?.serialFormat as string)
+        ? incoming.certificate?.serialFormat
+        : current.certificate.serialFormat) as any,
+      serialPrefix: String(incoming.certificate?.serialPrefix ?? current.certificate.serialPrefix ?? "BSGSS-2026-"),
+      serialPadding: typeof incoming.certificate?.serialPadding === "number"
+        ? Math.max(1, Math.min(8, incoming.certificate.serialPadding))
+        : current.certificate.serialPadding,
+      nextSerialNumber: typeof incoming.certificate?.nextSerialNumber === "number"
+        ? incoming.certificate.nextSerialNumber
+        : current.certificate.nextSerialNumber,
+    },
   };
 
   await db.query(
@@ -298,6 +344,7 @@ export async function POST(request: Request) {
     revalidatePath("/about");
     revalidatePath("/about/our-story");
     revalidatePath("/activities/videos");
+    revalidatePath("/support", "layout");
   } catch (revalidateErr) {
     console.warn("Revalidation warning on save:", revalidateErr);
   }

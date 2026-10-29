@@ -12,14 +12,21 @@ import {
   LoaderCircle,
   Mail,
   Search,
+  Award,
+  Edit3,
+  Sliders,
+  Settings,
 } from "lucide-react";
 import { SITE_URL } from "@/lib/site";
+import { EditCertificateModal } from "./EditCertificateModal";
+import { CertificateSettingsModal } from "./CertificateSettingsModal";
 
 export type DonationRow = {
   id: string;
   donorName: string;
   donorEmail: string;
   donorPhone?: string | null;
+  donorAddress?: string | null;
   amount: string;
   currency: string;
   paymentMethod: string;
@@ -43,10 +50,13 @@ export function DonationManager({
   const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "issued">("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [editingDonation, setEditingDonation] = useState<DonationRow | null>(null);
+
   async function issue(id: string, donorName: string) {
     if (
       !confirm(
-        `Confirm that payment from "${donorName}" has been verified in BSGSS bank/UPI records?\n\nThis will generate an official numbered certificate.`
+        `Confirm that payment from "${donorName}" has been verified in BSGSS bank/UPI records?\n\nThis will generate the next sequential official certificate.`
       )
     ) {
       return;
@@ -131,9 +141,9 @@ export function DonationManager({
         </div>
       </div>
 
-      {/* Filter & Search Bar */}
+      {/* Filter & Search Bar with Certificate Settings Action */}
       <div className="flex flex-col gap-3 rounded-xl border border-line bg-white p-4 sm:flex-row sm:items-center sm:justify-between shadow-2xs">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setStatusFilter("all")}
             className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
@@ -164,15 +174,25 @@ export function DonationManager({
           </button>
         </div>
 
-        <div className="relative min-w-[260px]">
-          <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-muted" />
-          <input
-            type="text"
-            placeholder="Search donor, email, reference..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-line bg-sand-50/50 py-1.5 pl-9 pr-3 text-xs text-ink outline-none transition focus:border-brand-600 focus:bg-white"
-          />
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => setIsSettingsModalOpen(true)}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-brand-50/80 px-3 py-1.5 text-xs font-bold text-brand-900 hover:bg-brand-100 transition shadow-2xs"
+          >
+            <Award className="h-3.5 w-3.5 text-brand-700" />
+            Certificate Design &amp; Template
+          </button>
+
+          <div className="relative min-w-[240px]">
+            <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-muted" />
+            <input
+              type="text"
+              placeholder="Search donor, email, reference..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg border border-line bg-sand-50/50 py-1.5 pl-9 pr-3 text-xs text-ink outline-none transition focus:border-brand-600 focus:bg-white"
+            />
+          </div>
         </div>
       </div>
 
@@ -269,45 +289,57 @@ export function DonationManager({
                     </td>
 
                     <td className="px-4 py-4 text-right">
-                      {isIssued ? (
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => copyCertificateLink(donation.id)}
-                            title="Copy certificate link"
-                            className="inline-flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1 text-[11px] font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-700 transition"
-                          >
-                            <Copy className="h-3 w-3" />
-                            {copiedId === donation.id ? "Copied!" : "Copy Link"}
-                          </button>
-                          <a
-                            href={`mailto:${donation.donorEmail}?subject=${mailSubject}&body=${mailBody}`}
-                            title="Email certificate to donor"
-                            className="inline-flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1 text-[11px] font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-700 transition"
-                          >
-                            <Mail className="h-3 w-3" />
-                            Email
-                          </a>
-                          <a
-                            href={`/support/certificate/${donation.id}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-800 hover:bg-brand-100 transition"
-                          >
-                            View <ExternalLink className="h-3 w-3" />
-                          </a>
-                        </div>
-                      ) : canIssue ? (
+                      <div className="flex items-center justify-end gap-1.5 flex-wrap">
+                        {/* Always available Edit Certificate button */}
                         <button
-                          onClick={() => issue(donation.id, donation.donorName)}
-                          disabled={busy === donation.id}
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-800 transition disabled:opacity-60"
+                          onClick={() => setEditingDonation(donation)}
+                          title="Edit certificate details, receipt number, donor or amount"
+                          className="inline-flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1 text-[11px] font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-800 transition"
                         >
-                          {busy === donation.id ? <LoaderCircle className="h-3.5 w-3.5 animate-spin" /> : <FileCheck2 className="h-3.5 w-3.5" />}
-                          Verify & Issue
+                          <Edit3 className="h-3 w-3 text-brand-700" />
+                          Edit
                         </button>
-                      ) : (
-                        <span className="text-[11px] text-ink-muted">Admin required</span>
-                      )}
+
+                        {isIssued ? (
+                          <>
+                            <button
+                              onClick={() => copyCertificateLink(donation.id)}
+                              title="Copy certificate link"
+                              className="inline-flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1 text-[11px] font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-700 transition"
+                            >
+                              <Copy className="h-3 w-3" />
+                              {copiedId === donation.id ? "Copied!" : "Copy Link"}
+                            </button>
+                            <a
+                              href={`mailto:${donation.donorEmail}?subject=${mailSubject}&body=${mailBody}`}
+                              title="Email certificate to donor"
+                              className="inline-flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1 text-[11px] font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-700 transition"
+                            >
+                              <Mail className="h-3 w-3" />
+                              Email
+                            </a>
+                            <a
+                              href={`/support/certificate/${donation.id}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-800 hover:bg-brand-100 transition"
+                            >
+                              View <ExternalLink className="h-3 w-3" />
+                            </a>
+                          </>
+                        ) : canIssue ? (
+                          <button
+                            onClick={() => issue(donation.id, donation.donorName)}
+                            disabled={busy === donation.id}
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-800 transition disabled:opacity-60"
+                          >
+                            {busy === donation.id ? <LoaderCircle className="h-3.5 w-3.5 animate-spin" /> : <FileCheck2 className="h-3.5 w-3.5" />}
+                            Verify &amp; Issue
+                          </button>
+                        ) : (
+                          <span className="text-[11px] text-ink-muted">Admin required</span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );
@@ -316,6 +348,21 @@ export function DonationManager({
           </table>
         </div>
       )}
+
+      {/* Edit Single Certificate Modal */}
+      <EditCertificateModal
+        isOpen={Boolean(editingDonation)}
+        onClose={() => setEditingDonation(null)}
+        donation={editingDonation}
+        onSaveSuccess={() => router.refresh()}
+      />
+
+      {/* Certificate Settings & Design Template Modal */}
+      <CertificateSettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
+        onSaveSuccess={() => router.refresh()}
+      />
     </div>
   );
 }

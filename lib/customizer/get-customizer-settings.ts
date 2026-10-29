@@ -105,6 +105,10 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
         videos: Array.isArray(val.videos) && val.videos.length > 0
           ? val.videos
           : DEFAULT_CUSTOMIZER_SETTINGS.videos,
+        certificate: {
+          ...DEFAULT_CUSTOMIZER_SETTINGS.certificate,
+          ...(val.certificate || {}),
+        },
       };
     }
   } catch (err) {

@@ -6,6 +6,7 @@ import {
   ArrowDown,
   ArrowUp,
   ArrowUpRight,
+  Award,
   Building2,
   Camera,
   Check,
@@ -83,6 +84,7 @@ const GALLERY_PRESET_IMAGES = [
 type CustomizerTabId =
   | "sections"
   | "videos"
+  | "certificate"
   | "story"
   | "social"
   | "popup"
@@ -101,6 +103,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab }: Website
     [
       "sections",
       "videos",
+      "certificate",
       "story",
       "social",
       "popup",
@@ -501,6 +504,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab }: Website
         {[
           { id: "sections", label: "Homepage Sections & Order", icon: Layers },
           { id: "videos", label: "Video Archives & Films", icon: ListVideo },
+          { id: "certificate", label: "Donation Certificate Design", icon: Award },
           { id: "story", label: "Our Story & Milestones", icon: Route },
           { id: "social", label: "Social Media Channels", icon: Share2 },
           { id: "popup", label: "Pop-up & Announcements", icon: Bell },
@@ -1050,6 +1054,549 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab }: Website
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Tab Content: Donation Acknowledgement Certificate Studio */}
+      {activeTab === "certificate" && (
+        <div className="rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-line">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-850 text-white">
+                  <Award className="h-4 w-4" />
+                </span>
+                <h2 className="font-display text-lg font-bold text-ink">
+                  Donation Certificate Design &amp; Template
+                </h2>
+              </div>
+              <p className="mt-1 text-xs text-ink-muted">
+                Configure colors, fonts, authorized signature, statutory stamp, sequential receipt numbering, and citation wording for official donation acknowledgement certificates.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/admin/donations"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-sand-50 px-3 py-1.5 text-xs font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-800 transition"
+              >
+                Manage Donors &amp; Verify
+              </Link>
+              <Link
+                href="/support"
+                target="_blank"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-800 transition"
+              >
+                Public Support Page <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* 1. Theme Color Palette */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1">
+              Certificate Frame &amp; Accent Color Palette
+            </label>
+            <p className="text-xs text-ink-muted mb-3">
+              Determines border frame, corner filigree accents, badge fills, and highlight tones.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+              {[
+                { id: "navy", name: "Classic Navy & Teal", badge: "bg-cyan-900", desc: "Original BSGSS institutional blue-green brand tone" },
+                { id: "emerald", name: "Forest Emerald", badge: "bg-emerald-800", desc: "Organic green symbolizing rural growth and health" },
+                { id: "gold", name: "Royal Amber Gold", badge: "bg-amber-700", desc: "Prestigious gold and warm amber honorary tone" },
+                { id: "burgundy", name: "Regal Maroon", badge: "bg-rose-900", desc: "Formal sovereign maroon styling for patrons" },
+                { id: "slate", name: "Executive Slate", badge: "bg-slate-800", desc: "Minimalist corporate and academic charcoal tone" },
+              ].map((pal) => (
+                <div
+                  key={pal.id}
+                  onClick={() =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        themeColor: pal.id as any,
+                      },
+                    })
+                  }
+                  className={`cursor-pointer rounded-xl border p-3 transition ${
+                    settings.certificate?.themeColor === pal.id
+                      ? "border-brand-700 bg-brand-50/50 ring-2 ring-brand-700/20"
+                      : "border-line bg-white hover:border-sand-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className={`h-4 w-4 rounded-full ${pal.badge} shadow-xs border border-white`} />
+                    <p className="font-semibold text-xs text-ink">{pal.name}</p>
+                  </div>
+                  <p className="mt-1 text-[11px] text-ink-muted leading-tight">{pal.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 2. Certificate Typography Style */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1">
+              Certificate Typography Style
+            </label>
+            <p className="text-xs text-ink-muted mb-3">
+              Select font style for certificate titles, donor names, and formal citations.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                { id: "formal", name: "Formal Letterpress Serif", desc: "High-elegance formal serif for honorary certificates", cls: "font-serif" },
+                { id: "sans", name: "Modern Clean Sans", desc: "Crisp, contemporary digital clarity", cls: "font-sans" },
+                { id: "serif", name: "Heritage Traditional", desc: "Timeless traditional book typeface", cls: "font-serif" },
+              ].map((fnt) => (
+                <div
+                  key={fnt.id}
+                  onClick={() =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        fontFamily: fnt.id as any,
+                      },
+                    })
+                  }
+                  className={`cursor-pointer rounded-xl border p-3.5 transition ${
+                    settings.certificate?.fontFamily === fnt.id
+                      ? "border-brand-700 bg-brand-50/50 ring-2 ring-brand-700/20"
+                      : "border-line bg-white hover:border-sand-300"
+                  }`}
+                >
+                  <p className={`text-base font-bold text-ink ${fnt.cls}`}>{fnt.name}</p>
+                  <p className="mt-1 text-[11px] text-ink-muted leading-tight">{fnt.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 3. Sequential Receipt Numbering Scheme */}
+          <div className="rounded-xl border border-line bg-sand-50/40 p-5 space-y-4">
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink">
+              Sequential Receipt Numbering Scheme
+            </label>
+            <p className="text-xs text-ink-muted">
+              Choose how serial receipt numbers are automatically formatted when donations are verified.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                {
+                  id: "number-only",
+                  title: "Sequential Number Only",
+                  example: "1, 2, 3, 4, 5...",
+                  desc: "Direct sequential counting number without prefix (e.g. 1 for first, 2 for second)",
+                },
+                {
+                  id: "prefix-number",
+                  title: "Prefix with Direct Number",
+                  example: "BSGSS-2026-1, BSGSS-2026-2...",
+                  desc: "Organization prefix with natural sequential number",
+                },
+                {
+                  id: "prefix-padded",
+                  title: "Prefix with Zero-Padding",
+                  example: "BSGSS-2026-0001, BSGSS-2026-0002...",
+                  desc: "Official institutional padded serial numbers",
+                },
+              ].map((fmt) => (
+                <div
+                  key={fmt.id}
+                  onClick={() =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        serialFormat: fmt.id as any,
+                      },
+                    })
+                  }
+                  className={`cursor-pointer rounded-xl border p-3.5 transition ${
+                    settings.certificate?.serialFormat === fmt.id
+                      ? "border-brand-700 bg-brand-50/50 ring-2 ring-brand-700/20"
+                      : "border-line bg-white hover:border-sand-300"
+                  }`}
+                >
+                  <p className="font-semibold text-xs text-ink">{fmt.title}</p>
+                  <p className="mt-1 font-mono text-xs font-bold text-brand-850">{fmt.example}</p>
+                  <p className="mt-1 text-[11px] text-ink-muted leading-tight">{fmt.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {settings.certificate?.serialFormat !== "number-only" && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div>
+                  <label className="block text-xs font-semibold text-ink">Receipt Prefix String</label>
+                  <input
+                    type="text"
+                    value={settings.certificate?.serialPrefix || ""}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        certificate: {
+                          ...settings.certificate,
+                          serialPrefix: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder="e.g. BSGSS-2026-"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                  />
+                </div>
+
+                {settings.certificate?.serialFormat === "prefix-padded" && (
+                  <div>
+                    <label className="block text-xs font-semibold text-ink">Zero-Padding Digits</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={8}
+                      value={settings.certificate?.serialPadding || 4}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            serialPadding: Number(e.target.value) || 4,
+                          },
+                        })
+                      }
+                      className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* 4. Authorized Signatory Configuration */}
+          <div className="rounded-xl border border-line bg-white p-5 space-y-4 shadow-2xs">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+              <Award className="h-4 w-4 text-brand-700" />
+              Authorized Signatory Details &amp; Signature
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-ink">Signatory Full Name</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.signatoryName || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        signatoryName: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink">Designation / Role Title</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.signatoryRole || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        signatoryRole: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Custom Signature Image URL (Optional)</label>
+              <input
+                type="text"
+                value={settings.certificate?.signatureUrl || ""}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      signatureUrl: e.target.value,
+                    },
+                  })
+                }
+                placeholder="e.g. /images/signatures/nandita-bakshi.png or https://..."
+                className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="showDefaultSignatureSvg_studio"
+                checked={settings.certificate?.showDefaultSignatureSvg !== false}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      showDefaultSignatureSvg: e.target.checked,
+                    },
+                  })
+                }
+                className="h-4 w-4 rounded border-line text-brand-700"
+              />
+              <label htmlFor="showDefaultSignatureSvg_studio" className="text-xs font-medium text-ink cursor-pointer">
+                Render authentic cursive ink SVG signature if no custom signature image is provided
+              </label>
+            </div>
+          </div>
+
+          {/* 5. Statutory Seal / Rubber Stamp Configuration */}
+          <div className="rounded-xl border border-line bg-white p-5 space-y-4 shadow-2xs">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-1.5">
+              <Award className="h-4 w-4 text-brand-700" />
+              Statutory Circular Seal &amp; Rubber Stamp
+            </h3>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Seal Circular Rim Text</label>
+              <input
+                type="text"
+                value={settings.certificate?.sealTitle || ""}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      sealTitle: e.target.value,
+                    },
+                  })
+                }
+                className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs uppercase font-medium text-ink outline-none transition focus:border-brand-600"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-ink">Seal Established Text</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.sealEstd || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        sealEstd: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink">Registration Badge Label</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.sealRegNo || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        sealRegNo: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink">Tax Exemption Badges</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.sealBadges || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        sealBadges: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Custom Physical Rubber Stamp Image URL (Optional)</label>
+              <input
+                type="text"
+                value={settings.certificate?.stampUrl || ""}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      stampUrl: e.target.value,
+                    },
+                  })
+                }
+                placeholder="e.g. /images/stamps/bsgss-seal.png or https://..."
+                className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="showDefaultSealSvg_studio"
+                checked={settings.certificate?.showDefaultSealSvg !== false}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      showDefaultSealSvg: e.target.checked,
+                    },
+                  })
+                }
+                className="h-4 w-4 rounded border-line text-brand-700"
+              />
+              <label htmlFor="showDefaultSealSvg_studio" className="text-xs font-medium text-ink cursor-pointer">
+                Render authentic rosette circular seal SVG if no custom rubber stamp image is provided
+              </label>
+            </div>
+          </div>
+
+          {/* 6. Certificate Citation & Wording */}
+          <div className="rounded-xl border border-line bg-white p-5 space-y-4 shadow-2xs">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
+              Official Headings &amp; Citation Copy
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-ink">Certificate Primary Title</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.certificateTitle || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        certificateTitle: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs uppercase font-bold text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink">Certificate Subtitle</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.certificateSubtitle || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        certificateSubtitle: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs italic text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Appreciation Intro Line</label>
+              <textarea
+                rows={2}
+                value={settings.certificate?.appreciationText || ""}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      appreciationText: e.target.value,
+                    },
+                  })
+                }
+                className="mt-1 w-full rounded-lg border border-line bg-white p-2.5 text-xs text-ink outline-none transition focus:border-brand-600"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-ink">Default Social Welfare Cause Text</label>
+              <textarea
+                rows={2}
+                value={settings.certificate?.causeText || ""}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    certificate: {
+                      ...settings.certificate,
+                      causeText: e.target.value,
+                    },
+                  })
+                }
+                className="mt-1 w-full rounded-lg border border-line bg-white p-2.5 text-xs text-ink outline-none transition focus:border-brand-600"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-ink">Societies Registration Credential</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.legalRegText || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        legalRegText: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-ink">NITI Aayog NGO Darpan ID</label>
+                <input
+                  type="text"
+                  value={settings.certificate?.darpanId || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      certificate: {
+                        ...settings.certificate,
+                        darpanId: e.target.value,
+                      },
+                    })
+                  }
+                  className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

@@ -9,6 +9,7 @@ import { amountInWords } from "@/lib/utils/number-to-words";
 import type { Metadata } from "next";
 import { links } from "@/config/content";
 import { buildMetadata } from "@/lib/seo";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,100 @@ type Certificate = {
   certificateNumber: string | null;
   issuedAt: string | null;
   status: string;
+  notes?: string | null;
+};
+
+const THEME_PALETTES = {
+  navy: {
+    border: "border-brand-850",
+    printBorder: "print:border-brand-900",
+    filigree: "border-brand-700",
+    innerBorder: "border-brand-300",
+    headerBorder: "border-brand-200",
+    headingAccent: "text-brand-900",
+    subAccent: "text-brand-700",
+    donor: "text-brand-950",
+    boxBg: "bg-brand-50/40",
+    boxBorder: "border-brand-200/90",
+    boxDivider: "sm:border-brand-200",
+    boxAmount: "text-brand-900",
+    sealText: "text-brand-800",
+    sealBadge: "text-brand-850",
+    metaBadgeBorder: "border-brand-200",
+    metaNumber: "text-brand-950",
+  },
+  emerald: {
+    border: "border-emerald-800",
+    printBorder: "print:border-emerald-900",
+    filigree: "border-emerald-700",
+    innerBorder: "border-emerald-200",
+    headerBorder: "border-emerald-200",
+    headingAccent: "text-emerald-950",
+    subAccent: "text-emerald-700",
+    donor: "text-emerald-950",
+    boxBg: "bg-emerald-50/40",
+    boxBorder: "border-emerald-200/90",
+    boxDivider: "sm:border-emerald-200",
+    boxAmount: "text-emerald-900",
+    sealText: "text-emerald-800",
+    sealBadge: "text-emerald-850",
+    metaBadgeBorder: "border-emerald-200",
+    metaNumber: "text-emerald-950",
+  },
+  gold: {
+    border: "border-amber-700",
+    printBorder: "print:border-amber-900",
+    filigree: "border-amber-600",
+    innerBorder: "border-amber-200",
+    headerBorder: "border-amber-200",
+    headingAccent: "text-amber-950",
+    subAccent: "text-amber-700",
+    donor: "text-amber-950",
+    boxBg: "bg-amber-50/40",
+    boxBorder: "border-amber-200/90",
+    boxDivider: "sm:border-amber-200",
+    boxAmount: "text-amber-900",
+    sealText: "text-amber-800",
+    sealBadge: "text-amber-850",
+    metaBadgeBorder: "border-amber-200",
+    metaNumber: "text-amber-950",
+  },
+  burgundy: {
+    border: "border-rose-900",
+    printBorder: "print:border-rose-950",
+    filigree: "border-rose-700",
+    innerBorder: "border-rose-200",
+    headerBorder: "border-rose-200",
+    headingAccent: "text-rose-950",
+    subAccent: "text-rose-800",
+    donor: "text-rose-950",
+    boxBg: "bg-rose-50/40",
+    boxBorder: "border-rose-200/90",
+    boxDivider: "sm:border-rose-200",
+    boxAmount: "text-rose-900",
+    sealText: "text-rose-800",
+    sealBadge: "text-rose-850",
+    metaBadgeBorder: "border-rose-200",
+    metaNumber: "text-rose-950",
+  },
+  slate: {
+    border: "border-slate-850",
+    printBorder: "print:border-slate-900",
+    filigree: "border-slate-600",
+    innerBorder: "border-slate-300",
+    headerBorder: "border-slate-200",
+    headingAccent: "text-slate-900",
+    subAccent: "text-slate-700",
+    donor: "text-slate-950",
+    boxBg: "bg-slate-50",
+    boxBorder: "border-slate-200",
+    boxDivider: "sm:border-slate-200",
+    boxAmount: "text-slate-900",
+    sealText: "text-slate-800",
+    sealBadge: "text-slate-850",
+    metaBadgeBorder: "border-slate-300",
+    metaNumber: "text-slate-950",
+  },
 };
 
 export default async function DonationCertificate({
@@ -41,25 +136,29 @@ export default async function DonationCertificate({
 
   const lookup = id.trim();
 
-  const { rows } = await db.query<Certificate>(
-    `SELECT
-      id,
-      donor_name AS "donorName",
-      amount::text,
-      currency,
-      payment_method AS "paymentMethod",
-      payment_reference AS "paymentReference",
-      certificate_number AS "certificateNumber",
-      certificate_issued_at::text AS "issuedAt",
-      status
-    FROM donation_requests
-    WHERE
-      id::text = $1
-      OR certificate_number = $1
-      OR replace(id::text, '-', '') = replace($1, '-', '')
-    LIMIT 1`,
-    [lookup]
-  );
+  const [{ rows }, customizerSettings] = await Promise.all([
+    db.query<Certificate>(
+      `SELECT
+        id,
+        donor_name AS "donorName",
+        amount::text,
+        currency,
+        payment_method AS "paymentMethod",
+        payment_reference AS "paymentReference",
+        certificate_number AS "certificateNumber",
+        certificate_issued_at::text AS "issuedAt",
+        status,
+        notes
+      FROM donation_requests
+      WHERE
+        id::text = $1
+        OR certificate_number = $1
+        OR replace(id::text, '-', '') = replace($1, '-', '')
+      LIMIT 1`,
+      [lookup]
+    ),
+    getCustomizerSettings(),
+  ]);
 
   const donation = rows[0];
   if (!donation) notFound();
@@ -101,6 +200,19 @@ export default async function DonationCertificate({
       </main>
     );
   }
+
+  const certConfig = customizerSettings.certificate;
+  const palette = THEME_PALETTES[certConfig.themeColor] || THEME_PALETTES.navy;
+
+  const fontTitleClass =
+    certConfig.fontFamily === "sans"
+      ? "font-sans font-bold"
+      : "font-serif font-bold";
+
+  const fontDonorClass =
+    certConfig.fontFamily === "sans"
+      ? "font-sans font-extrabold"
+      : "font-serif font-bold";
 
   const issued = donation.issuedAt
     ? new Intl.DateTimeFormat("en-IN", {
@@ -165,7 +277,7 @@ export default async function DonationCertificate({
             Back to Support BSGSS
           </Link>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-block rounded-md bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-850 border border-brand-200">
+            <span className="hidden sm:inline-block rounded-md bg-sand-100 px-2.5 py-1 text-[11px] font-semibold text-ink-muted border border-line">
               Format: A4 Landscape (Horizontal)
             </span>
             <CertificateActions
@@ -179,18 +291,18 @@ export default async function DonationCertificate({
         {/* Official Certificate Card - HORIZONTAL / LANDSCAPE DESIGN */}
         <article
           id="donation-certificate"
-          className="certificate-card relative overflow-hidden rounded-2xl border-[3.5px] border-brand-850 bg-white p-5 sm:p-8 shadow-xl print:rounded-none print:border-[2.5px] print:border-brand-900 print:p-6 print:shadow-none"
+          className={`certificate-card relative overflow-hidden rounded-2xl border-[3.5px] ${palette.border} bg-white p-5 sm:p-8 shadow-xl print:rounded-none print:border-[2.5px] ${palette.printBorder} print:p-6 print:shadow-none`}
         >
           {/* Ornamental Corner Filigree Accents */}
-          <div className="absolute top-2 left-2 h-6 w-6 border-t-2 border-l-2 border-brand-700" />
-          <div className="absolute top-2 right-2 h-6 w-6 border-t-2 border-r-2 border-brand-700" />
-          <div className="absolute bottom-2 left-2 h-6 w-6 border-b-2 border-l-2 border-brand-700" />
-          <div className="absolute bottom-2 right-2 h-6 w-6 border-b-2 border-r-2 border-brand-700" />
+          <div className={`absolute top-2 left-2 h-6 w-6 border-t-2 border-l-2 ${palette.filigree}`} />
+          <div className={`absolute top-2 right-2 h-6 w-6 border-t-2 border-r-2 ${palette.filigree}`} />
+          <div className={`absolute bottom-2 left-2 h-6 w-6 border-b-2 border-l-2 ${palette.filigree}`} />
+          <div className={`absolute bottom-2 right-2 h-6 w-6 border-b-2 border-r-2 ${palette.filigree}`} />
 
           {/* Inner Double Pinstripe Frame */}
-          <div className="relative rounded-lg border border-brand-300 p-4 sm:p-6 print:p-4">
+          <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6 print:p-4`}>
             {/* 1. Header Row (Horizontal 3-Section Balance) */}
-            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b border-brand-200 pb-4">
+            <div className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b ${palette.headerBorder} pb-4`}>
               {/* Left: Official BSGSS Logo */}
               <div className="shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -203,27 +315,27 @@ export default async function DonationCertificate({
 
               {/* Center: Legal & Statutory Identity */}
               <div className="text-center px-2">
-                <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] text-brand-900 leading-tight">
-                  Bisnouli Sarvodaya Gramodyog Sewa Sansthan
+                <p className={`text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
+                  {certConfig.organizationName}
                 </p>
                 <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
-                  Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)
+                  {certConfig.legalRegText}
                 </p>
                 <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
-                  NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">DL/2016/0111645</strong> • Tax Exemptions under 12A &amp; 80G
+                  NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong> • {certConfig.exemptionsText}
                 </p>
                 <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
-                  Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in
+                  {certConfig.officeAddressText}
                 </p>
               </div>
 
               {/* Right: Certificate Meta Badge */}
               <div className="shrink-0 text-right">
-                <div className="inline-block rounded-lg border border-brand-200 bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs">
-                  <span className="block text-[9px] uppercase font-bold tracking-wider text-brand-700">
+                <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
+                  <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                     Receipt Number
                   </span>
-                  <span className="font-mono text-xs sm:text-sm font-bold text-brand-950">
+                  <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
                     {donation.certificateNumber}
                   </span>
                   <span className="block text-[9px] text-ink-muted mt-0.5">
@@ -235,87 +347,86 @@ export default async function DonationCertificate({
 
             {/* 2. Certificate Title Ribbon */}
             <div className="mt-4 text-center">
-              <h1 className="font-display text-xl sm:text-2xl lg:text-[1.65rem] font-bold uppercase tracking-wider text-ink leading-tight">
-                Donation Acknowledgement Certificate
+              <h1 className={`${fontTitleClass} text-xl sm:text-2xl lg:text-[1.65rem] uppercase tracking-wider text-ink leading-tight`}>
+                {certConfig.certificateTitle}
               </h1>
-              <p className="mt-0.5 text-[11px] font-medium italic text-brand-700">
-                Official Receipt Issued for Voluntary Support Towards Social &amp; Community Welfare
+              <p className={`mt-0.5 text-[11px] font-medium italic ${palette.subAccent}`}>
+                {certConfig.certificateSubtitle}
               </p>
             </div>
 
             {/* 3. Citation & Donor Highlight */}
             <div className="mt-3 text-center">
               <p className="text-xs sm:text-[0.82rem] text-ink-muted leading-relaxed">
-                This certifies with deepest appreciation and heartfelt gratitude that a voluntary contribution has been generously received from
+                {certConfig.appreciationText}
               </p>
 
-              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-extrabold text-brand-950 tracking-tight">
+              <h2 className={`mt-1.5 ${fontDonorClass} text-2xl sm:text-3.5xl ${palette.donor} tracking-tight`}>
                 {donation.donorName}
               </h2>
 
               <p className="mx-auto mt-1 max-w-2xl text-[11px] sm:text-xs text-ink-muted leading-relaxed">
-                towards advancing rural healthcare clinics, women&apos;s vocational skill training, education, and community self-reliance initiatives across underprivileged regions.
+                {donation.notes?.trim() ? donation.notes : certConfig.causeText}
               </p>
             </div>
 
-            {/* 4. Contribution Details Box (Horizontal Split) */}
-            <div className="mt-3.5 rounded-xl border border-brand-200/90 bg-brand-50/40 p-3 sm:p-4">
+            {/* 4. Contribution Details Box (Horizontal Split - Clean & Dignified without UPI/Ref clutter) */}
+            <div className={`mt-3.5 rounded-xl border ${palette.boxBorder} ${palette.boxBg} p-3.5 sm:p-4`}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 {/* Left: Amount Highlight */}
-                <div className="text-center sm:text-left sm:border-r sm:border-brand-200 sm:pr-4">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-brand-700">
+                <div className={`text-center sm:text-left sm:border-r ${palette.boxDivider} sm:pr-4`}>
+                  <span className={`text-[10px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                     Contribution Received
                   </span>
                   <div className="mt-0.5 flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
-                    <span className="font-display text-2xl sm:text-3xl font-black text-brand-900 tracking-tight">
+                    <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
                       {formattedAmount}
                     </span>
                     {inWords && (
-                      <span className="text-xs font-semibold italic text-brand-800">
+                      <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
                         ({inWords})
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Right: Payment Metadata */}
-                <div className="text-center sm:text-left text-[11px] space-y-1">
-                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-ink-muted">
-                    <div>
-                      <span>Payment Mode: </span>
-                      <strong className="text-ink font-semibold uppercase">{donation.paymentMethod.replace("_", " ")}</strong>
-                    </div>
-                    <div>
-                      <span>Transaction Ref: </span>
-                      <code className="font-mono text-ink font-semibold bg-white/80 px-1 py-0.5 rounded border border-brand-200/60">
-                        {donation.paymentReference}
-                      </code>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-emerald-800 font-medium">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
+                <div className="flex flex-col items-center sm:items-end justify-center text-center sm:text-right space-y-1">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
                     <span>Statutory Banking Reconciled &amp; Approved</span>
                   </div>
+                  <p className="text-[10px] text-ink-muted">
+                    Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}
-            <div className="mt-4 grid grid-cols-[auto_1fr_auto] items-end gap-4 border-t border-brand-200/80 pt-3">
+            <div className={`mt-4 grid grid-cols-[auto_1fr_auto] items-end gap-4 border-t ${palette.headerBorder} pt-3`}>
               {/* Left: Official Circular Rosette Seal */}
               <div className="shrink-0 flex items-center gap-2">
-                <CertificateSeal />
+                <CertificateSeal
+                  sealTitle={certConfig.sealTitle}
+                  sealEstd={certConfig.sealEstd}
+                  sealRegNo={certConfig.sealRegNo}
+                  sealBadges={certConfig.sealBadges}
+                  stampUrl={certConfig.stampUrl}
+                  showDefaultSealSvg={certConfig.showDefaultSealSvg}
+                  colorClass={palette.sealText}
+                />
                 <div className="hidden lg:block text-[9.5px] text-ink-muted leading-tight">
-                  <p className="font-bold text-brand-850 uppercase">Statutory Seal</p>
+                  <p className={`font-bold uppercase ${palette.sealBadge}`}>Statutory Seal</p>
                   <p>Registered Voluntary Body</p>
-                  <p>Estd. 1994, New Delhi</p>
+                  <p>{certConfig.sealEstd}, New Delhi</p>
                 </div>
               </div>
 
               {/* Center: Legal Record Digital Authenticity */}
               <div className="text-center px-3">
-                <div className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-brand-850">
-                  <ShieldCheck className="h-4 w-4 text-brand-700 shrink-0" />
+                <div className={`inline-flex items-center gap-1.5 text-[10.5px] font-semibold ${palette.sealBadge}`}>
+                  <ShieldCheck className="h-4 w-4 shrink-0 text-current opacity-90" />
                   <span>Official Digital Acknowledgement Record</span>
                 </div>
                 <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight max-w-sm mx-auto">
@@ -325,7 +436,14 @@ export default async function DonationCertificate({
 
               {/* Right: Authorized Handwritten Signature */}
               <div className="shrink-0 text-right">
-                <CertificateSignature />
+                <CertificateSignature
+                  name={certConfig.signatoryName}
+                  role={certConfig.signatoryRole}
+                  organization={certConfig.organizationName}
+                  signatureUrl={certConfig.signatureUrl}
+                  showDefaultSignatureSvg={certConfig.showDefaultSignatureSvg}
+                  accentColorClass={palette.sealBadge}
+                />
               </div>
             </div>
           </div>
