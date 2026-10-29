@@ -42,7 +42,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-sand-50">
+    <div className="flex h-screen overflow-hidden bg-sand-50" suppressHydrationWarning>
       {/* Frozen Non-Scrolling Left Sidenav */}
       <AdminSidebar admin={admin} counts={counts} />
 

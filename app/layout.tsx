@@ -65,6 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang="en-IN"
+      suppressHydrationWarning
       className={`${sans.variable} ${display.variable}`}
       data-header-style={activeTheme.headerStyle ?? "standard"}
       data-hero-style={activeTheme.heroStyle ?? "immersive"}
@@ -74,7 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <ThemeScript initialTheme={activeTheme} />
       </head>
-      <body className="min-h-screen font-sans">
+      <body className="min-h-screen font-sans" suppressHydrationWarning>
         <a
           href="#main"
           className="sr-only z-[100] rounded-md bg-brand-800 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
