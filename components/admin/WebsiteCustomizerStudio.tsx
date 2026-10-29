@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -184,6 +184,33 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
   const [sampleDonor, setSampleDonor] = useState("Shubham Kumar");
   const [sampleAmount, setSampleAmount] = useState(20000);
   const [activeCertSection, setActiveCertSection] = useState<"header" | "appearance" | "signatory" | "seal" | "wording" | "numbering">("header");
+
+  // Certificate A4 Landscape Zoom & Scaling Controls
+  const [certZoom, setCertZoom] = useState<"fit" | "75" | "100" | "125">("fit");
+  const [certViewMode, setCertViewMode] = useState<"split" | "stacked">("split");
+  const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+  const previewWrapperRef = useRef<HTMLDivElement>(null);
+  const [previewScale, setPreviewScale] = useState(0.58);
+
+  useEffect(() => {
+    const updatePreviewScale = () => {
+      if (previewWrapperRef.current) {
+        const availableWidth = previewWrapperRef.current.clientWidth - 16;
+        if (certZoom === "fit") {
+          const autoScale = Math.min(1.0, Math.max(0.3, availableWidth / 960));
+          setPreviewScale(autoScale);
+        } else {
+          setPreviewScale(parseInt(certZoom, 10) / 100);
+        }
+      }
+    };
+    updatePreviewScale();
+    const ro = new ResizeObserver(updatePreviewScale);
+    if (previewWrapperRef.current) {
+      ro.observe(previewWrapperRef.current);
+    }
+    return () => ro.disconnect();
+  }, [certZoom, certViewMode]);
 
   // Video Management Studio State
   const [newVideoUrl, setNewVideoUrl] = useState("");
@@ -1127,7 +1154,35 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                 Live interactive designer for certificate header, statutory seal, authorized handwritten signature, and sequential numbering.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {/* View Mode Toggle: Split vs Full-Width Stacked */}
+              <div className="flex items-center rounded-lg border border-line bg-sand-50 p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setCertViewMode("split")}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded-md transition ${
+                    certViewMode === "split"
+                      ? "bg-white text-brand-850 shadow-2xs"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                  title="Side-by-side editing and live preview"
+                >
+                  Split View
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCertViewMode("stacked")}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded-md transition ${
+                    certViewMode === "stacked"
+                      ? "bg-white text-brand-850 shadow-2xs"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                  title="Full width landscape preview view"
+                >
+                  Full Width View
+                </button>
+              </div>
+
               <Link
                 href="/admin/donations"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-sand-50 px-3 py-1.5 text-xs font-semibold text-ink-muted hover:border-brand-500 hover:text-brand-800 transition"
@@ -1144,10 +1199,10 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
             </div>
           </div>
 
-          {/* Side-by-Side Split Studio: Left = Editing Controls, Right = Live Rendered Certificate */}
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          {/* Certificate Studio: Split Mode or Stacked Mode */}
+          <div className={certViewMode === "split" ? "grid grid-cols-1 xl:grid-cols-12 gap-6 items-start" : "space-y-6"}>
             {/* Left Column (Inputs & Controls) */}
-            <div className="xl:col-span-6 space-y-5">
+            <div className={certViewMode === "split" ? "xl:col-span-6 space-y-5" : "w-full space-y-5"}>
               {/* SECTION 1: HEADER & LEGAL CREDENTIALS (Addresses user's uploaded image directly) */}
               <div
                 onFocus={() => setActiveCertSection("header")}
@@ -1756,71 +1811,172 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
               </div>
             </div>
 
-            {/* Right Column: Sticky Live Rendered Certificate Preview */}
-            <div className="xl:col-span-6 xl:sticky xl:top-4 space-y-3">
-              {/* Preview Controller Bar */}
-              <div className="rounded-xl border border-brand-200 bg-sand-50/90 p-3 shadow-2xs">
-                <div className="flex items-center justify-between mb-2">
+            {/* Right / Preview Column: Sticky Live Rendered Certificate Preview with Authentic Landscape Scaling */}
+            <div className={`${certViewMode === "split" ? "xl:col-span-6 xl:sticky xl:top-4" : "w-full"} space-y-3`}>
+              {/* Preview Controller Bar with Zoom & View Options */}
+              <div className="rounded-xl border border-brand-200 bg-sand-50/90 p-3 shadow-2xs space-y-2.5">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
                     <Eye className="h-4 w-4 text-brand-700" />
                     <span className="text-xs font-bold uppercase tracking-wider text-brand-900">
-                      Live Rendered Certificate Preview
+                      Live A4 Landscape Preview
                     </span>
                   </div>
-                  <span className="rounded-md bg-brand-100 text-brand-900 font-bold px-2 py-0.5 text-[10px]">
-                    A4 Landscape Live
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    {/* Zoom / Scaling Presets */}
+                    <div className="flex items-center rounded-md border border-line bg-white p-0.5 text-[11px] font-semibold text-ink-muted">
+                      {(["fit", "75", "100", "125"] as const).map((z) => (
+                        <button
+                          key={z}
+                          type="button"
+                          onClick={() => setCertZoom(z)}
+                          className={`px-1.5 py-0.5 rounded transition ${
+                            certZoom === z ? "bg-brand-700 text-white font-bold" : "hover:text-ink"
+                          }`}
+                        >
+                          {z === "fit" ? "Fit" : `${z}%`}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Enlarge / Full Screen Modal Trigger */}
+                    <button
+                      type="button"
+                      onClick={() => setIsCertModalOpen(true)}
+                      className="inline-flex items-center gap-1 rounded-md border border-brand-300 bg-brand-50 px-2 py-1 text-[11px] font-bold text-brand-850 hover:bg-brand-100 transition shadow-2xs"
+                      title="Open Certificate in Large Full-Screen View"
+                    >
+                      <Maximize2 className="h-3.5 w-3.5 text-brand-700" />
+                      <span>Enlarge View</span>
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-brand-200/60">
-                  <span className="text-[11px] font-semibold text-ink-muted">Test Recipient:</span>
-                  <input
-                    type="text"
-                    value={sampleDonor}
-                    onChange={(e) => setSampleDonor(e.target.value)}
-                    className="rounded border border-line bg-white px-2 py-1 text-xs font-medium text-ink w-36 outline-none focus:border-brand-600"
-                  />
-                  <span className="text-[11px] font-semibold text-ink-muted">Amount:</span>
-                  <div className="flex items-center gap-1">
-                    <button
-                      type="button"
-                      onClick={() => setSampleAmount(1000)}
-                      className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 1000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
-                    >
-                      ₹1k
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSampleAmount(10000)}
-                      className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 10000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
-                    >
-                      ₹10k
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSampleAmount(20000)}
-                      className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 20000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
-                    >
-                      ₹20k
-                    </button>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-brand-200/60">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-semibold text-ink-muted">Recipient:</span>
+                    <input
+                      type="text"
+                      value={sampleDonor}
+                      onChange={(e) => setSampleDonor(e.target.value)}
+                      className="rounded border border-line bg-white px-2 py-1 text-xs font-medium text-ink w-32 outline-none focus:border-brand-600"
+                    />
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-ink-muted">Amount:</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setSampleAmount(1000)}
+                        className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 1000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
+                      >
+                        ₹1k
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSampleAmount(10000)}
+                        className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 10000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
+                      >
+                        ₹10k
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSampleAmount(20000)}
+                        className={`px-1.5 py-0.5 text-[10px] font-bold rounded border ${sampleAmount === 20000 ? "bg-brand-700 text-white border-brand-700" : "bg-white text-ink-muted border-line"}`}
+                      >
+                        ₹20k
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* The Live Rendered Certificate */}
-              <div className="rounded-xl border border-line p-1.5 bg-sand-100/40 shadow-inner">
-                <RenderedCertificatePreview
-                  config={settings.certificate}
-                  sampleDonorName={sampleDonor}
-                  sampleAmount={sampleAmount}
-                  activeFocusSection={activeCertSection}
-                />
+              {/* The Live Rendered Certificate Scaled to True Landscape Sheet */}
+              <div
+                ref={previewWrapperRef}
+                className="w-full rounded-xl border border-brand-200/90 p-2.5 sm:p-3 bg-sand-100/70 shadow-inner overflow-x-auto relative flex justify-center"
+              >
+                <div
+                  style={{
+                    height: `${Math.round(620 * previewScale)}px`,
+                    width: `${Math.round(960 * previewScale)}px`,
+                    position: "relative",
+                    flexShrink: 0,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "960px",
+                      transform: `scale(${previewScale})`,
+                      transformOrigin: "top left",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  >
+                    <RenderedCertificatePreview
+                      config={settings.certificate}
+                      sampleDonorName={sampleDonor}
+                      sampleAmount={sampleAmount}
+                      activeFocusSection={activeCertSection}
+                      fixedLandscapeCanvas={true}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <p className="text-[11px] text-center text-ink-muted italic">
-                Rendered preview above synchronizes instantly with any changes made in the inputs. Click &ldquo;Save &amp; Publish&rdquo; in the top bar to apply live to all certificates.
-              </p>
+              <div className="flex items-center justify-between text-[11px] text-ink-muted px-1">
+                <span className="italic">
+                  Preview dynamically scaled to fit A4 Landscape without breaking layout lines.
+                </span>
+                <span className="font-semibold text-brand-850">
+                  Current Scale: {Math.round(previewScale * 100)}%
+                </span>
+              </div>
             </div>
           </div>
+
+          {/* Full Screen High-Res Modal Dialog */}
+          {isCertModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-fadeIn">
+              <div className="relative max-w-5xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-line flex flex-col max-h-[92vh]">
+                {/* Modal Top Bar */}
+                <div className="flex items-center justify-between px-5 py-3.5 border-b border-line bg-sand-50 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Award className="h-5 w-5 text-brand-700" />
+                    <h3 className="font-display font-bold text-sm text-ink">
+                      Authentic A4 Landscape Certificate (Full Size 100% Inspection)
+                    </h3>
+                    <span className="rounded-full bg-emerald-100 text-emerald-900 px-2 py-0.5 text-[10px] font-bold">
+                      960 × 620 px Master
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsCertModalOpen(false)}
+                      className="flex h-8 px-3 items-center justify-center rounded-lg border border-line bg-white hover:bg-sand-100 font-semibold text-xs text-ink transition"
+                    >
+                      Close ✕
+                    </button>
+                  </div>
+                </div>
+
+                {/* Modal Body: Centered Real Landscape Certificate */}
+                <div className="p-6 overflow-auto bg-sand-100/50 flex justify-center items-start">
+                  <div className="shadow-2xl rounded-2xl overflow-hidden">
+                    <RenderedCertificatePreview
+                      config={settings.certificate}
+                      sampleDonorName={sampleDonor}
+                      sampleAmount={sampleAmount}
+                      activeFocusSection={activeCertSection}
+                      fixedLandscapeCanvas={true}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
