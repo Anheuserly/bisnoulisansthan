@@ -5,6 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   ArrowUpRight,
+  Award,
+  ChevronLeft,
+  ChevronRight,
   FileCheck2,
   FolderKanban,
   HeartHandshake,
@@ -81,22 +84,21 @@ export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
           label: "Website & Layout Studio",
           href: "/admin/customize",
           icon: SlidersHorizontal,
-          badge: "2026 Live",
-          badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
+        },
+        {
+          label: "Donation Certificate",
+          href: "/admin/customize?tab=certificate",
+          icon: Award,
         },
         {
           label: "Theme & Design Studio",
           href: "/admin/theme",
           icon: Palette,
-          badge: "Presets",
-          badgeColor: "bg-brand-50 text-brand-700 border-brand-200",
         },
         {
           label: "Video Archives & Films",
           href: "/admin/customize?tab=videos",
           icon: ListVideo,
-          badge: "Videos",
-          badgeColor: "bg-red-50 text-red-700 border-red-200",
         },
         {
           label: "Content Hub",

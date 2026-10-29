@@ -307,8 +307,8 @@ export default async function DonationCertificate({
               <div className="shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/images/bsgss/branding/581-logo-4.png"
-                  alt="Bisnouli Sarvodaya Gramodyog Sewa Sansthan"
+                  src={certConfig.logoUrl || "/images/bsgss/branding/581-logo-4.png"}
+                  alt={certConfig.organizationName}
                   className="h-12 sm:h-14 w-auto object-contain max-w-[200px] sm:max-w-[260px]"
                 />
               </div>

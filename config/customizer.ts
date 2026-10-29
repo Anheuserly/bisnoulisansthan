@@ -235,6 +235,7 @@ export type CertificateFontFamily = "formal" | "sans" | "serif";
 export type CertificateSerialFormat = "prefix-padded" | "prefix-number" | "number-only";
 
 export type CustomizerCertificateConfig = {
+  logoUrl?: string;
   signatoryName: string;
   signatoryRole: string;
   organizationName: string;
@@ -1615,6 +1616,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     },
   ],
   certificate: {
+    logoUrl: "/images/bsgss/branding/581-logo-4.png",
     signatoryName: "Nandita Bakshi",
     signatoryRole: "Chief Executive Officer (CEO)",
     organizationName: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",

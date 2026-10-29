@@ -282,6 +282,7 @@ export async function POST(request: Request) {
           }))
       : (current.videos || DEFAULT_CUSTOMIZER_SETTINGS.videos),
     certificate: {
+      logoUrl: String(incoming.certificate?.logoUrl ?? current.certificate.logoUrl ?? "/images/bsgss/branding/581-logo-4.png").trim(),
       signatoryName: String(incoming.certificate?.signatoryName || current.certificate.signatoryName).trim(),
       signatoryRole: String(incoming.certificate?.signatoryRole || current.certificate.signatoryRole).trim(),
       organizationName: String(incoming.certificate?.organizationName || current.certificate.organizationName).trim(),

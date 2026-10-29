@@ -60,6 +60,7 @@ export async function POST(request: Request) {
   }
 
   const mergedCert: CustomizerCertificateConfig = {
+    logoUrl: String(incoming.logoUrl ?? current.certificate.logoUrl ?? "/images/bsgss/branding/581-logo-4.png").trim(),
     signatoryName: String(incoming.signatoryName || current.certificate.signatoryName).trim(),
     signatoryRole: String(incoming.signatoryRole || current.certificate.signatoryRole).trim(),
     organizationName: String(incoming.organizationName || current.certificate.organizationName).trim(),
