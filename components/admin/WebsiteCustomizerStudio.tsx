@@ -1593,23 +1593,125 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                   </div>
                 </div>
 
+                {/* Stamp & Seal Mode Selector */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-ink">Statutory Seal Style Preset</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
+                            showDefaultSealSvg: true,
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
+                        (settings.certificate?.stampUrl === "/images/bsgss/stamps/bsgss-official-stamp.png" ||
+                          (!settings.certificate?.stampUrl && settings.certificate?.stampUrl !== ""))
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/bsgss/stamps/bsgss-official-stamp.png"
+                          alt="Official Stamp"
+                          className="h-full w-full object-contain -rotate-3"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-xs font-bold truncate">Official Rubber Stamp</p>
+                          <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Default</span>
+                        </div>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Physical blue ink seal (Regd. S-26792)</p>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            stampUrl: "",
+                            showDefaultSealSvg: true,
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
+                        settings.certificate?.stampUrl === ""
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100">
+                        <Award className="h-6 w-6 text-brand-700" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold truncate">Vector Rosette Seal</p>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Crisp SVG statutory emblem &amp; text</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-xs font-semibold text-ink">Custom Scanned Rubber Stamp Image URL (Optional)</label>
-                  <input
-                    type="text"
-                    value={settings.certificate?.stampUrl || ""}
-                    onChange={(e) =>
-                      setSettings({
-                        ...settings,
-                        certificate: {
-                          ...settings.certificate,
-                          stampUrl: e.target.value,
-                        },
-                      })
-                    }
-                    placeholder="e.g. /images/stamps/bsgss-seal.png or https://..."
-                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
-                  />
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-semibold text-ink">Custom Scanned Rubber Stamp Image URL</label>
+                    {settings.certificate?.stampUrl && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              stampUrl: "",
+                            },
+                          })
+                        }
+                        className="text-[10px] font-semibold text-ink-muted hover:text-brand-700"
+                      >
+                        Reset to Vector Seal
+                      </button>
+                    )}
+                  </div>
+                  <div className="mt-1 flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={settings.certificate?.stampUrl || ""}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            stampUrl: e.target.value,
+                          },
+                        })
+                      }
+                      placeholder="/images/bsgss/stamps/bsgss-official-stamp.png"
+                      className="w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                    />
+                    {settings.certificate?.stampUrl && (
+                      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-sand-100 p-0.5" title="Active Stamp Preview">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={settings.certificate.stampUrl}
+                          alt="Stamp Preview"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">

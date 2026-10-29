@@ -13,18 +13,18 @@ export function CertificateSeal({
   sealEstd = "ESTD. 1994",
   sealRegNo = "REGD. S-26792",
   sealBadges = "★ 80G / 12A ★",
-  stampUrl,
+  stampUrl = "/images/bsgss/stamps/bsgss-official-stamp.png",
   showDefaultSealSvg = true,
   colorClass = "text-brand-800",
 }: CertificateSealProps) {
   if (stampUrl && stampUrl.trim()) {
     return (
-      <div className="relative inline-flex items-center justify-center" aria-label="Official Organization Stamp">
+      <div className="relative inline-flex items-center justify-center -rotate-2 select-none" aria-label="Official Organization Rubber Stamp">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={stampUrl}
-          alt="Official Stamp"
-          className="h-20 w-20 sm:h-24 sm:w-24 object-contain drop-shadow-2xs select-none"
+          alt="Official Bisnouli Sarvodaya Stamp"
+          className="h-24 w-24 sm:h-28 sm:w-28 object-contain drop-shadow-2xs select-none transition-transform hover:scale-105"
         />
       </div>
     );
