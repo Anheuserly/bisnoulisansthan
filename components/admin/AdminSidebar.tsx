@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   ArrowUpRight,
   Award,
-  ChevronLeft,
+  Building2,
+  Camera,
+  ChevronDown,
   ChevronRight,
   FileCheck2,
-  FolderKanban,
-  HeartHandshake,
+  FileText,
+  Globe,
   Home,
   KeyRound,
   Layers,
@@ -22,29 +24,40 @@ import {
   MessageSquare,
   Music,
   Palette,
-  ShieldCheck,
+  Route,
+  Share2,
+  Sliders,
   SlidersHorizontal,
-  Sparkles,
+  Type,
   UsersRound,
-  WalletCards,
+  Bell,
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
-interface NavItem {
+export interface StudioSubModule {
+  id: string;
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
-  exact?: boolean;
   badge?: string;
-  badgeColor?: string;
-  count?: number;
 }
 
-interface NavGroup {
-  group: string;
-  items: NavItem[];
-}
+export const STUDIO_SUB_MODULES: StudioSubModule[] = [
+  { id: "certificate", label: "Donation Certificate", href: "/admin/customize?tab=certificate", icon: Award, badge: "Live Preview" },
+  { id: "videos", label: "Video Archives & Films", href: "/admin/customize?tab=videos", icon: ListVideo },
+  { id: "sections", label: "Homepage Sections & Order", href: "/admin/customize?tab=sections", icon: Layers },
+  { id: "story", label: "Our Story & Milestones", href: "/admin/customize?tab=story", icon: Route },
+  { id: "popup", label: "Pop-up Announcements", href: "/admin/customize?tab=popup", icon: Bell },
+  { id: "texts", label: "Website Texts & Copy", href: "/admin/customize?tab=texts", icon: FileText },
+  { id: "layout", label: "Header, Nav & Footer Size", href: "/admin/customize?tab=layout", icon: Sliders },
+  { id: "offices", label: "Offices & WhatsApp Setup", href: "/admin/customize?tab=offices", icon: Building2 },
+  { id: "collage", label: "Photo Collage & Gallery", href: "/admin/customize?tab=collage", icon: Camera },
+  { id: "audio", label: "Relaxing Ambient Music", href: "/admin/customize?tab=audio", icon: Music },
+  { id: "typing", label: "Live Mission Ticker", href: "/admin/customize?tab=typing", icon: Type },
+  { id: "social", label: "Social Media Channels", href: "/admin/customize?tab=social", icon: Share2 },
+  { id: "footprint", label: "Footprint & Reach", href: "/admin/customize?tab=footprint", icon: Globe },
+];
 
 interface AdminSidebarProps {
   admin: {
@@ -61,87 +74,358 @@ interface AdminSidebarProps {
   };
 }
 
-export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
+function SidebarNavContent({
+  counts = {},
+  onNavigate,
+}: {
+  counts?: {
+    users?: number;
+    inquiries?: number;
+    joins?: number;
+    donations?: number;
+  };
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const currentTab = searchParams?.get("tab") || "certificate";
 
-  const navGroups: NavGroup[] = [
-    {
-      group: "MAIN NAVIGATION",
-      items: [
-        {
-          label: "Dashboard Overview",
-          href: "/admin",
-          icon: LayoutDashboard,
-          exact: true,
-        },
-      ],
-    },
-    {
-      group: "STUDIO & CUSTOMIZER",
-      items: [
-        {
-          label: "Website & Layout Studio",
-          href: "/admin/customize",
-          icon: SlidersHorizontal,
-        },
-        {
-          label: "Donation Certificate",
-          href: "/admin/customize?tab=certificate",
-          icon: Award,
-        },
-        {
-          label: "Theme & Design Studio",
-          href: "/admin/theme",
-          icon: Palette,
-        },
-        {
-          label: "Video Archives & Films",
-          href: "/admin/customize?tab=videos",
-          icon: ListVideo,
-        },
-        {
-          label: "Content Hub",
-          href: "/admin/content",
-          icon: LayoutPanelTop,
-        },
-      ],
-    },
-    {
-      group: "OPERATIONS & INBOX",
-      items: [
-        {
-          label: "Contact Inquiries",
-          href: "/admin/inquiries",
-          icon: MessageSquare,
-          count: counts.inquiries,
-        },
-        {
-          label: "Join & Volunteers",
-          href: "/admin/join",
-          icon: UsersRound,
-          count: counts.joins,
-        },
-        {
-          label: "Donations & 80G",
-          href: "/admin/donations",
-          icon: FileCheck2,
-          count: counts.donations,
-        },
-      ],
-    },
-    {
-      group: "SYSTEM & ACCESS",
-      items: [
-        {
-          label: "Users & Passwords",
-          href: "/admin/admins",
-          icon: KeyRound,
-          count: counts.users,
-        },
-      ],
-    },
-  ];
+  const isCustomizerRoute = pathname === "/admin/customize";
+  const [studioExpanded, setStudioExpanded] = useState(true);
+
+  // Automatically expand when on customize route
+  useEffect(() => {
+    if (isCustomizerRoute) {
+      setStudioExpanded(true);
+    }
+  }, [isCustomizerRoute]);
+
+  return (
+    <nav className="space-y-5 px-3 py-2 overflow-y-auto max-h-[calc(100vh-210px)] scrollbar-thin">
+      {/* 1. MAIN NAVIGATION */}
+      <div>
+        <p className="px-3 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-muted/80 mb-1.5">
+          MAIN NAVIGATION
+        </p>
+        <div className="space-y-0.5">
+          <Link
+            href="/admin"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <LayoutDashboard
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Dashboard Overview</span>
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      {/* 2. STUDIO & CUSTOMIZER - ACCORDION */}
+      <div>
+        <p className="px-3 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-muted/80 mb-1.5">
+          STUDIO &amp; CUSTOMIZER
+        </p>
+        <div className="space-y-0.5">
+          {/* Main Website Studio Accordion Row */}
+          <div>
+            <div
+              className={cn(
+                "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150 select-none cursor-pointer",
+                isCustomizerRoute
+                  ? "bg-brand-50/90 text-brand-900 border border-brand-200/80 shadow-2xs"
+                  : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+              )}
+            >
+              <Link
+                href="/admin/customize"
+                onClick={onNavigate}
+                className="flex items-center gap-2.5 truncate flex-1 min-w-0"
+              >
+                <SlidersHorizontal
+                  className={cn(
+                    "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                    isCustomizerRoute ? "text-brand-800" : "text-brand-700"
+                  )}
+                />
+                <span className="truncate">Website &amp; Layout Studio</span>
+              </Link>
+
+              {/* Chevron Down / Right to toggle the nested tree */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setStudioExpanded(!studioExpanded);
+                }}
+                title={studioExpanded ? "Collapse Sub-modules" : "Expand Sub-modules"}
+                className="ml-2 flex h-5 w-5 items-center justify-center rounded text-ink-muted hover:bg-sand-200/60 hover:text-ink transition"
+              >
+                {studioExpanded ? (
+                  <ChevronDown className="h-3.5 w-3.5" />
+                ) : (
+                  <ChevronRight className="h-3.5 w-3.5" />
+                )}
+              </button>
+            </div>
+
+            {/* Indented Sub-Modules Tree with Stylish Connector Guide Line */}
+            {studioExpanded && (
+              <div className="relative ml-4 pl-3 border-l-2 border-brand-200/70 my-1 space-y-0.5 animate-fadeIn">
+                {STUDIO_SUB_MODULES.map((sub) => {
+                  const SubIcon = sub.icon;
+                  const isSubActive = isCustomizerRoute && currentTab === sub.id;
+
+                  return (
+                    <Link
+                      key={sub.id}
+                      href={sub.href}
+                      onClick={onNavigate}
+                      className={cn(
+                        "group relative flex items-center justify-between rounded-md px-2.5 py-1.5 text-xs transition-colors",
+                        isSubActive
+                          ? "bg-brand-700 text-white font-bold shadow-2xs"
+                          : "text-ink-muted hover:text-ink hover:bg-sand-100/90 font-medium"
+                      )}
+                    >
+                      {/* Active indicator pip on the connector line */}
+                      {isSubActive && (
+                        <span className="absolute -left-[14px] top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-brand-700 ring-2 ring-white" />
+                      )}
+
+                      <span className="flex items-center gap-2 truncate">
+                        <SubIcon
+                          className={cn(
+                            "h-3.5 w-3.5 shrink-0",
+                            isSubActive ? "text-white" : "text-brand-700/80 group-hover:text-brand-800"
+                          )}
+                        />
+                        <span className="truncate">{sub.label}</span>
+                      </span>
+
+                      {sub.badge && (
+                        <span
+                          className={cn(
+                            "rounded-full px-1.5 py-0.2 text-[9px] font-bold shrink-0 ml-1 border",
+                            isSubActive
+                              ? "bg-white/20 text-white border-white/30"
+                              : "bg-emerald-50 text-emerald-800 border-emerald-200"
+                          )}
+                        >
+                          {sub.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Theme & Design Studio */}
+          <Link
+            href="/admin/theme"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/theme"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <Palette
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/theme" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Theme &amp; Design Studio</span>
+            </span>
+          </Link>
+
+          {/* Content Hub */}
+          <Link
+            href="/admin/content"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/content"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <LayoutPanelTop
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/content" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Content Hub</span>
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      {/* 3. OPERATIONS & INBOX */}
+      <div>
+        <p className="px-3 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-muted/80 mb-1.5">
+          OPERATIONS &amp; INBOX
+        </p>
+        <div className="space-y-0.5">
+          {/* Donations & 80G */}
+          <Link
+            href="/admin/donations"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/donations"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <FileCheck2
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/donations" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Donations &amp; 80G</span>
+            </span>
+            {typeof counts.donations === "number" && counts.donations > 0 && (
+              <span
+                className={cn(
+                  "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.625rem] font-bold",
+                  pathname === "/admin/donations" ? "bg-white text-brand-800" : "bg-sand-200 text-ink"
+                )}
+              >
+                {counts.donations}
+              </span>
+            )}
+          </Link>
+
+          {/* Contact Inquiries */}
+          <Link
+            href="/admin/inquiries"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/inquiries"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <MessageSquare
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/inquiries" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Contact Inquiries</span>
+            </span>
+            {typeof counts.inquiries === "number" && counts.inquiries > 0 && (
+              <span
+                className={cn(
+                  "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.625rem] font-bold",
+                  pathname === "/admin/inquiries" ? "bg-white text-brand-800" : "bg-sand-200 text-ink"
+                )}
+              >
+                {counts.inquiries}
+              </span>
+            )}
+          </Link>
+
+          {/* Join & Volunteers */}
+          <Link
+            href="/admin/join"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/join"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <UsersRound
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/join" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Join &amp; Volunteers</span>
+            </span>
+            {typeof counts.joins === "number" && counts.joins > 0 && (
+              <span
+                className={cn(
+                  "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.625rem] font-bold",
+                  pathname === "/admin/join" ? "bg-white text-brand-800" : "bg-sand-200 text-ink"
+                )}
+              >
+                {counts.joins}
+              </span>
+            )}
+          </Link>
+        </div>
+      </div>
+
+      {/* 4. SYSTEM & ACCESS */}
+      <div>
+        <p className="px-3 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-muted/80 mb-1.5">
+          SYSTEM &amp; ACCESS
+        </p>
+        <div className="space-y-0.5">
+          <Link
+            href="/admin/admins"
+            onClick={onNavigate}
+            className={cn(
+              "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
+              pathname === "/admin/admins"
+                ? "bg-brand-700 text-white shadow-2xs"
+                : "text-ink-muted hover:bg-sand-100 hover:text-ink"
+            )}
+          >
+            <span className="flex items-center gap-2.5 truncate">
+              <KeyRound
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
+                  pathname === "/admin/admins" ? "text-white" : "text-brand-700"
+                )}
+              />
+              <span className="truncate">Users &amp; Passwords</span>
+            </span>
+            {typeof counts.users === "number" && counts.users > 0 && (
+              <span
+                className={cn(
+                  "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.625rem] font-bold",
+                  pathname === "/admin/admins" ? "bg-white text-brand-800" : "bg-sand-200 text-ink"
+                )}
+              >
+                {counts.users}
+              </span>
+            )}
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const sidebarContent = (
     <div className="flex h-full flex-col justify-between bg-white">
@@ -192,69 +476,10 @@ export function AdminSidebar({ admin, counts = {} }: AdminSidebarProps) {
           </Link>
         </div>
 
-        {/* Navigation Categories */}
-        <nav className="space-y-5 px-3 py-2 overflow-y-auto max-h-[calc(100vh-220px)] scrollbar-thin">
-          {navGroups.map((group) => (
-            <div key={group.group}>
-              <p className="px-3 text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-muted/80 mb-1.5">
-                {group.group}
-              </p>
-              <div className="space-y-0.5">
-                {group.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={cn(
-                        "group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-150",
-                        isActive
-                          ? "bg-brand-700 text-white shadow-2xs"
-                          : "text-ink-muted hover:bg-sand-100 hover:text-ink"
-                      )}
-                    >
-                      <span className="flex items-center gap-2.5 truncate">
-                        <Icon
-                          className={cn(
-                            "h-4 w-4 shrink-0 transition-transform duration-150 group-hover:scale-105",
-                            isActive ? "text-white" : "text-brand-700"
-                          )}
-                        />
-                        <span className="truncate">{item.label}</span>
-                      </span>
-
-                      {/* Count or Badge */}
-                      {item.badge && (
-                        <span
-                          className={cn(
-                            "rounded-full px-2 py-0.2 text-[0.625rem] font-bold border",
-                            isActive ? "bg-white/20 text-white border-white/30" : item.badgeColor
-                          )}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-
-                      {typeof item.count === "number" && item.count > 0 && (
-                        <span
-                          className={cn(
-                            "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.625rem] font-bold",
-                            isActive ? "bg-white text-brand-800" : "bg-sand-200 text-ink"
-                          )}
-                        >
-                          {item.count}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </nav>
+        {/* Navigation Categories wrapped in Suspense */}
+        <Suspense fallback={<div className="p-4 text-xs text-ink-muted">Loading navigation...</div>}>
+          <SidebarNavContent counts={counts} onNavigate={() => setMobileOpen(false)} />
+        </Suspense>
       </div>
 
       {/* Footer Profile & Logout Area */}

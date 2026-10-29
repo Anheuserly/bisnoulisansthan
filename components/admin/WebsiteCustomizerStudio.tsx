@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowDown,
   ArrowUp,
@@ -151,9 +152,35 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
       ? (initialTab as CustomizerTabId)
       : "certificate"
   );
+  const searchParams = useSearchParams();
+
+  // Sync activeTab when query string changes (e.g. from main sidebar accordion clicks)
+  useEffect(() => {
+    const tabParam = searchParams?.get("tab") as CustomizerTabId | null;
+    if (
+      tabParam &&
+      [
+        "sections",
+        "videos",
+        "certificate",
+        "story",
+        "social",
+        "popup",
+        "texts",
+        "layout",
+        "offices",
+        "footprint",
+        "collage",
+        "audio",
+        "typing",
+      ].includes(tabParam)
+    ) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
+
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [isStudioNavCollapsed, setIsStudioNavCollapsed] = useState(false);
   const [sampleDonor, setSampleDonor] = useState("Shubham Kumar");
   const [sampleAmount, setSampleAmount] = useState(20000);
   const [activeCertSection, setActiveCertSection] = useState<"header" | "appearance" | "signatory" | "seal" | "wording" | "numbering">("header");
@@ -461,15 +488,10 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
     <div className="space-y-4">
       {/* Single Compact Studio Header Bar with User Pill & Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3 shadow-2xs">
-        <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={() => setIsStudioNavCollapsed(!isStudioNavCollapsed)}
-            title={isStudioNavCollapsed ? "Show Studio Modules Menu" : "Collapse Menu (Full Screen)"}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-line bg-sand-50 text-ink-muted hover:text-ink hover:bg-sand-100 transition"
-          >
-            {isStudioNavCollapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
-          </button>
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700 border border-brand-200 shrink-0">
+            <SlidersHorizontal className="h-4 w-4" />
+          </div>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-display text-base sm:text-lg font-bold text-ink">
@@ -560,59 +582,8 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
         </div>
       )}
 
-      {/* Studio Two-Pane Layout */}
-      <div className="flex flex-col lg:flex-row gap-4 items-start w-full">
-        {/* Left Side Sub-Navigation Drawer / Module List */}
-        {!isStudioNavCollapsed && (
-          <aside className="w-full lg:w-64 shrink-0 rounded-xl border border-line bg-white p-2.5 shadow-2xs space-y-1">
-            <div className="flex items-center justify-between px-2.5 py-1.5 border-b border-line mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Studio Modules</span>
-              <button
-                type="button"
-                onClick={() => setIsStudioNavCollapsed(true)}
-                title="Collapse into full screen"
-                className="text-ink-muted hover:text-ink text-[11px] font-semibold"
-              >
-                Hide ✕
-              </button>
-            </div>
-            {CUSTOMIZER_MODULES.map((tab) => {
-              const Icon = tab.icon;
-              const active = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={cn(
-                    "w-full flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-semibold text-left transition",
-                    active
-                      ? "bg-brand-700 text-white shadow-2xs"
-                      : "text-ink-muted hover:bg-sand-100 hover:text-ink"
-                  )}
-                >
-                  <span className="flex items-center gap-2 truncate">
-                    <Icon className={cn("h-3.5 w-3.5 shrink-0", active ? "text-white" : "text-brand-700")} />
-                    <span className="truncate">{tab.label}</span>
-                  </span>
-                  {tab.badge && (
-                    <span
-                      className={cn(
-                        "text-[9px] font-bold px-1.5 py-0.2 rounded-full",
-                        active ? "bg-white/20 text-white" : "bg-brand-50 text-brand-800 border border-brand-200"
-                      )}
-                    >
-                      {tab.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </aside>
-        )}
-
-        {/* Right Side Main Content Workspace */}
-        <div className="flex-1 min-w-0 w-full space-y-6">
+      {/* Full-Width Workspace (Navigated cleanly via main sidebar accordion) */}
+      <div className="w-full space-y-6">
 
       {/* Tab Content 1: Homepage Section Reordering & Visibility */}
       {activeTab === "sections" && (
@@ -4907,7 +4878,6 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
           </div>
         </div>
       )}
-        </div>
       </div>
     </div>
   );
