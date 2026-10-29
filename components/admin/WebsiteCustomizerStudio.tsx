@@ -53,6 +53,9 @@ import {
   Instagram,
   Twitter,
   Linkedin,
+  Upload,
+  PenTool,
+  FileUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { RenderedCertificatePreview } from "@/components/support/RenderedCertificatePreview";
@@ -211,6 +214,76 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
     }
     return () => ro.disconnect();
   }, [certZoom, certViewMode]);
+
+  // Certificate Signature & Stamp File Upload Handlers
+  const signatureFileInputRef = useRef<HTMLInputElement>(null);
+  const stampFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSignatureFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file (PNG, JPG, SVG, WebP).");
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Image size should be under 3MB for optimal certificate rendering.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setSettings((prev) => ({
+          ...prev,
+          certificate: {
+            ...prev.certificate,
+            signatureUrl: result,
+            showDefaultSignatureSvg: true,
+          },
+        }));
+      }
+    };
+    reader.readAsDataURL(file);
+    // Reset input so same file can be re-selected if desired
+    e.target.value = "";
+  };
+
+  const handleStampFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file (PNG, JPG, SVG, WebP).");
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Image size should be under 3MB for optimal certificate rendering.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setSettings((prev) => ({
+          ...prev,
+          certificate: {
+            ...prev.certificate,
+            stampUrl: result,
+            showDefaultSealSvg: true,
+          },
+        }));
+      }
+    };
+    reader.readAsDataURL(file);
+    // Reset input so same file can be re-selected if desired
+    e.target.value = "";
+  };
 
   // Video Management Studio State
   const [newVideoUrl, setNewVideoUrl] = useState("");
@@ -1421,7 +1494,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
               >
                 <div className="flex items-center justify-between border-b border-line/80 pb-2">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-brand-900 flex items-center gap-1.5">
-                    <Award className="h-4 w-4 text-brand-700" />
+                    <PenTool className="h-4 w-4 text-brand-700" />
                     3. Authorized Signatory &amp; Handwritten Signature
                   </h3>
                   <span className="text-[10px] text-ink-muted">Bottom-right signature</span>
@@ -1465,23 +1538,138 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-ink">Custom Signature Image URL (Optional)</label>
+                {/* Signature Style Preset Selector */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-ink">Signature Style Preset</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            signatureUrl: "",
+                            showDefaultSignatureSvg: true,
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
+                        !settings.certificate?.signatureUrl
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-1">
+                        <PenTool className="h-5 w-5 text-brand-700" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-xs font-bold truncate">Official Blue Cursive</p>
+                          <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Default</span>
+                        </div>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Fluid blue-ink cursive SVG signature</p>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => signatureFileInputRef.current?.click()}
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
+                        settings.certificate?.signatureUrl
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-1">
+                        <Upload className="h-5 w-5 text-brand-700" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold truncate">Upload Signature</p>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Upload scanned image (PNG/JPG/SVG)</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Direct File Upload & URL Configuration */}
+                <div className="space-y-2 rounded-lg border border-line/70 bg-white p-3">
+                  {/* Hidden File Input */}
                   <input
-                    type="text"
-                    value={settings.certificate?.signatureUrl || ""}
-                    onChange={(e) =>
-                      setSettings({
-                        ...settings,
-                        certificate: {
-                          ...settings.certificate,
-                          signatureUrl: e.target.value,
-                        },
-                      })
-                    }
-                    placeholder="e.g. /images/signatures/nandita-bakshi.png or https://..."
-                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                    ref={signatureFileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    onChange={handleSignatureFileUpload}
+                    className="hidden"
                   />
+
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => signatureFileInputRef.current?.click()}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-800 transition hover:bg-brand-100 cursor-pointer"
+                    >
+                      <Upload className="h-3.5 w-3.5 text-brand-700" />
+                      Upload Signature File (PNG / JPG / SVG)
+                    </button>
+
+                    {settings.certificate?.signatureUrl && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              signatureUrl: "",
+                              showDefaultSignatureSvg: true,
+                            },
+                          })
+                        }
+                        className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline cursor-pointer"
+                      >
+                        Reset to Official Cursive SVG
+                      </button>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-ink-muted">
+                      Or Custom Signature Image URL / Base64 Data
+                    </label>
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={settings.certificate?.signatureUrl || ""}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              signatureUrl: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="e.g. /images/signatures/nandita-bakshi.png or data:image/png;base64,..."
+                        className="w-full rounded-lg border border-line bg-white px-3 py-1.5 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      />
+                      {settings.certificate?.signatureUrl && (
+                        <div
+                          className="relative h-9 w-14 shrink-0 overflow-hidden rounded-md border border-line bg-sand-100 p-0.5 flex items-center justify-center"
+                          title="Active Signature Thumbnail"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={settings.certificate.signatureUrl}
+                            alt="Active Signature"
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1664,9 +1852,27 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                   </div>
                 </div>
 
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label className="block text-xs font-semibold text-ink">Custom Scanned Rubber Stamp Image URL</label>
+                {/* Direct Stamp File Upload & URL Configuration */}
+                <div className="space-y-2 rounded-lg border border-line/70 bg-white p-3">
+                  {/* Hidden Stamp File Input */}
+                  <input
+                    ref={stampFileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    onChange={handleStampFileUpload}
+                    className="hidden"
+                  />
+
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => stampFileInputRef.current?.click()}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-800 transition hover:bg-brand-100 cursor-pointer"
+                    >
+                      <Upload className="h-3.5 w-3.5 text-brand-700" />
+                      Upload Stamp from Computer (PNG / JPG / SVG)
+                    </button>
+
                     {settings.certificate?.stampUrl && (
                       <button
                         type="button"
@@ -1676,41 +1882,48 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                             certificate: {
                               ...settings.certificate,
                               stampUrl: "",
+                              showDefaultSealSvg: true,
                             },
                           })
                         }
-                        className="text-[10px] font-semibold text-ink-muted hover:text-brand-700"
+                        className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline cursor-pointer"
                       >
                         Reset to Vector Seal
                       </button>
                     )}
                   </div>
-                  <div className="mt-1 flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={settings.certificate?.stampUrl || ""}
-                      onChange={(e) =>
-                        setSettings({
-                          ...settings,
-                          certificate: {
-                            ...settings.certificate,
-                            stampUrl: e.target.value,
-                          },
-                        })
-                      }
-                      placeholder="/images/bsgss/stamps/bsgss-official-stamp.png"
-                      className="w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
-                    />
-                    {settings.certificate?.stampUrl && (
-                      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-sand-100 p-0.5" title="Active Stamp Preview">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={settings.certificate.stampUrl}
-                          alt="Stamp Preview"
-                          className="h-full w-full object-contain"
-                        />
-                      </div>
-                    )}
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-ink-muted">
+                      Or Scanned Rubber Stamp Image URL / Base64 Data
+                    </label>
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={settings.certificate?.stampUrl || ""}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              stampUrl: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="/images/bsgss/stamps/bsgss-official-stamp.png"
+                        className="w-full rounded-lg border border-line bg-white px-3 py-1.5 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      />
+                      {settings.certificate?.stampUrl && (
+                        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-sand-100 p-0.5" title="Active Stamp Preview">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={settings.certificate.stampUrl}
+                            alt="Stamp Preview"
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 

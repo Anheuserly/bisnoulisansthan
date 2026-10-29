@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   X,
   Palette,
@@ -13,6 +13,7 @@ import {
   LoaderCircle,
   RotateCcw,
   Sparkles,
+  Upload,
 } from "lucide-react";
 import type {
   CustomizerCertificateConfig,
@@ -135,6 +136,44 @@ export function CertificateSettingsModal({
   const [activeTab, setActiveTab] = useState<"appearance" | "signatory" | "seal" | "numbering" | "wording">("appearance");
 
   const [form, setForm] = useState<CustomizerCertificateConfig | null>(null);
+  const signatureInputRef = useRef<HTMLInputElement>(null);
+  const stampInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSignatureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !form) return;
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file (PNG, JPG, SVG).");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const result = ev.target?.result as string;
+      if (result) {
+        setForm({ ...form, signatureUrl: result, showDefaultSignatureSvg: true });
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const handleStampUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !form) return;
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file (PNG, JPG, SVG).");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const result = ev.target?.result as string;
+      if (result) {
+        setForm({ ...form, stampUrl: result, showDefaultSealSvg: true });
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -421,23 +460,76 @@ export function CertificateSettingsModal({
                     />
                   </div>
 
-                  {/* Signature Image URL or SVG toggle */}
-                  <div className="rounded-xl border border-line bg-sand-50/50 p-4">
-                    <label className="block text-xs font-semibold text-ink">
-                      Custom Signature Image URL (Optional)
-                    </label>
-                    <p className="text-[11px] text-ink-muted">
-                      Upload or enter a transparent PNG/SVG link of an authorized handwritten signature.
-                    </p>
+                  {/* Signature Image URL, Upload & Presets */}
+                  <div className="rounded-xl border border-line bg-sand-50/50 p-4 space-y-3">
                     <input
-                      type="text"
-                      value={form.signatureUrl || ""}
-                      onChange={(e) => setForm({ ...form, signatureUrl: e.target.value })}
-                      placeholder="e.g. /images/signatures/nandita-bakshi.png or https://..."
-                      className="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      ref={signatureInputRef}
+                      type="file"
+                      accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                      onChange={handleSignatureUpload}
+                      className="hidden"
                     />
 
-                    <div className="mt-3 flex items-center gap-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-semibold text-ink">
+                        Signature Style &amp; Image
+                      </label>
+                      {form.signatureUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setForm({ ...form, signatureUrl: "", showDefaultSignatureSvg: true })}
+                          className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline"
+                        >
+                          Reset to Official Cursive
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => signatureInputRef.current?.click()}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-white px-3 py-1.5 text-xs font-semibold text-brand-800 shadow-2xs hover:bg-brand-50 transition cursor-pointer"
+                      >
+                        <Upload className="h-3.5 w-3.5 text-brand-700" />
+                        Upload Signature File (PNG/JPG/SVG)
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, signatureUrl: "", showDefaultSignatureSvg: true })}
+                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
+                          !form.signatureUrl
+                            ? "border-brand-700 bg-brand-700 text-white shadow-2xs"
+                            : "border-line bg-white text-ink hover:bg-sand-100"
+                        }`}
+                      >
+                        <PenTool className="h-3.5 w-3.5" />
+                        Official Cursive SVG
+                      </button>
+                    </div>
+
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={form.signatureUrl || ""}
+                        onChange={(e) => setForm({ ...form, signatureUrl: e.target.value })}
+                        placeholder="e.g. /images/signatures/nandita-bakshi.png or data:image/png;base64,..."
+                        className="w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      />
+                      {form.signatureUrl && (
+                        <div className="relative h-9 w-14 shrink-0 overflow-hidden rounded-md border border-line bg-white p-0.5 flex items-center justify-center">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={form.signatureUrl}
+                            alt="Active Signature"
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-2 flex items-center gap-2">
                       <input
                         type="checkbox"
                         id="showDefaultSignatureSvg"
@@ -511,23 +603,95 @@ export function CertificateSettingsModal({
                     </div>
                   </div>
 
-                  {/* Stamp Image URL or SVG toggle */}
-                  <div className="rounded-xl border border-line bg-sand-50/50 p-4">
-                    <label className="block text-xs font-semibold text-ink">
-                      Custom Physical Rubber Stamp Image URL (Optional)
-                    </label>
-                    <p className="text-[11px] text-ink-muted">
-                      Enter a URL to an official scanned stamp / round seal image with transparent background.
-                    </p>
+                  {/* Stamp Image URL, Upload & Presets */}
+                  <div className="rounded-xl border border-line bg-sand-50/50 p-4 space-y-3">
                     <input
-                      type="text"
-                      value={form.stampUrl || ""}
-                      onChange={(e) => setForm({ ...form, stampUrl: e.target.value })}
-                      placeholder="e.g. /images/stamps/bsgss-official-seal.png or https://..."
-                      className="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      ref={stampInputRef}
+                      type="file"
+                      accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                      onChange={handleStampUpload}
+                      className="hidden"
                     />
 
-                    <div className="mt-3 flex items-center gap-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-semibold text-ink">
+                        Statutory Seal / Rubber Stamp Style
+                      </label>
+                      {form.stampUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setForm({ ...form, stampUrl: "", showDefaultSealSvg: true })}
+                          className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline"
+                        >
+                          Reset to Vector Seal
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setForm({
+                            ...form,
+                            stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
+                            showDefaultSealSvg: true,
+                          })
+                        }
+                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
+                          form.stampUrl === "/images/bsgss/stamps/bsgss-official-stamp.png"
+                            ? "border-brand-700 bg-brand-700 text-white shadow-2xs"
+                            : "border-line bg-white text-ink hover:bg-sand-100"
+                        }`}
+                      >
+                        <Stamp className="h-3.5 w-3.5" />
+                        Official Rubber Stamp
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => stampInputRef.current?.click()}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-white px-3 py-1.5 text-xs font-semibold text-brand-800 shadow-2xs hover:bg-brand-50 transition cursor-pointer"
+                      >
+                        <Upload className="h-3.5 w-3.5 text-brand-700" />
+                        Upload Custom Stamp
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, stampUrl: "", showDefaultSealSvg: true })}
+                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
+                          !form.stampUrl
+                            ? "border-brand-700 bg-brand-700 text-white shadow-2xs"
+                            : "border-line bg-white text-ink hover:bg-sand-100"
+                        }`}
+                      >
+                        <Award className="h-3.5 w-3.5" />
+                        Vector Rosette
+                      </button>
+                    </div>
+
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={form.stampUrl || ""}
+                        onChange={(e) => setForm({ ...form, stampUrl: e.target.value })}
+                        placeholder="e.g. /images/bsgss/stamps/bsgss-official-stamp.png or data:..."
+                        className="w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      />
+                      {form.stampUrl && (
+                        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-white p-0.5 flex items-center justify-center">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={form.stampUrl}
+                            alt="Active Stamp"
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-2 flex items-center gap-2">
                       <input
                         type="checkbox"
                         id="showDefaultSealSvg"
