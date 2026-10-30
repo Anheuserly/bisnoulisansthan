@@ -300,47 +300,46 @@ export default async function DonationCertificate({
           <div className={`absolute bottom-2 right-2 h-6 w-6 border-b-2 border-r-2 ${palette.filigree}`} />
 
           {/* Inner Double Pinstripe Frame */}
-          <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6 print:p-4`}>
-            {/* 1. Header Row (Top-Center Logo Above Name or Classic Left) */}
+          <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-5.5 print:p-4`}>
             {/* 1. Header Row (Official BSGSS Layout: Dove Emblem on Left, Monotype Corsiva Calligraphic Title in Middle with Zero Middle Logo) */}
-            <div className={`grid grid-cols-[80px_1fr_160px] sm:grid-cols-[96px_1fr_170px] items-center gap-3 sm:gap-4 border-b ${palette.headerBorder} pb-3.5`}>
+            <div className={`flex items-center justify-between gap-3 border-b ${palette.headerBorder} pb-3`}>
               {/* Left: Official BSGSS Emblem (Dove Mark in Red Circle Only - No Text Tag) */}
-              <div className="shrink-0 flex items-center justify-start">
+              <div className="shrink-0 w-16 sm:w-20 flex items-center justify-start pl-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
                   alt={certConfig.organizationName}
-                  className="h-14 w-14 sm:h-16 sm:w-16 object-contain select-none drop-shadow-2xs"
+                  className="h-12 w-12 sm:h-14 sm:w-14 object-contain select-none drop-shadow-2xs"
                 />
               </div>
 
               {/* Center: Legal & Statutory Identity in Official Monotype Corsiva Calligraphic Typography */}
-              <div className="text-center px-1">
-                <h2 className="font-corsiva text-2xl sm:text-[27px] font-medium tracking-wide text-[#136338] leading-tight select-none">
+              <div className="flex-1 min-w-0 text-center px-1">
+                <h2 className="font-corsiva text-2xl sm:text-[26px] font-medium tracking-wide text-[#136338] leading-tight select-none truncate sm:overflow-visible">
                   {certConfig.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
                 </h2>
-                <p className="mt-0.5 text-[10px] sm:text-[10.5px] text-ink font-semibold leading-tight whitespace-nowrap">
+                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink font-semibold leading-tight">
                   {certConfig.legalRegText || "(Registered Under Societies Registration Act 1860)"}
                 </p>
-                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight whitespace-nowrap">
+                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight">
                   <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId || "DL/2016/0111645"}</strong>
-                  {certConfig.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
+                  {certConfig.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
                 </p>
-                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle leading-tight whitespace-nowrap">
+                <p className="mt-0.5 text-[8.5px] sm:text-[9px] text-ink-subtle leading-tight">
                   {certConfig.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
                 </p>
               </div>
 
-              {/* Right: Certificate Meta Badge */}
-              <div className="shrink-0 text-right">
+              {/* Right: Certificate Meta Badge (Anchored strictly within inner pinstripe boundary) */}
+              <div className="shrink-0 text-right pr-0.5">
                 <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1.5 sm:px-3 sm:py-2 text-right shadow-2xs`}>
-                  <span className={`block text-[8.5px] sm:text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                  <span className={`block text-[8px] sm:text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                     Receipt Number
                   </span>
                   <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
                     {donation.certificateNumber}
                   </span>
-                  <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
+                  <span className="block text-[8px] sm:text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
                     Date: <strong className="text-ink">{issued}</strong>
                   </span>
                 </div>
@@ -453,10 +452,10 @@ export default async function DonationCertificate({
               )}
             </div>
 
-            {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}
-            <div className={`mt-4 grid grid-cols-[auto_1fr_auto] items-end gap-4 border-t ${palette.headerBorder} pt-3`}>
-              {/* Left: Official Circular Rosette Seal */}
-              <div className="shrink-0 flex items-center gap-2">
+            {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid with Generous Clearance for Stamp) */}
+            <div className={`mt-3.5 grid grid-cols-[auto_1fr_auto] items-center gap-4 border-t ${palette.headerBorder} pt-3 pb-1`}>
+              {/* Left: Official Circular Rosette Seal (Safe Margin from Bottom and Left Pinstripe Frame) */}
+              <div className="shrink-0 flex items-center gap-2.5 pl-2.5 pb-1">
                 <CertificateSeal
                   sealTitle={certConfig.sealTitle}
                   sealEstd={certConfig.sealEstd}

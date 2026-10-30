@@ -160,50 +160,50 @@ export function RenderedCertificatePreview({
         <div className={`absolute bottom-2.5 right-2.5 h-6 w-6 border-b-2 border-r-2 ${palette.filigree}`} />
 
         {/* Inner Double Pinstripe Frame */}
-        <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6`}>
+        <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-5.5`}>
           {/* 1. Header Row (Official BSGSS Layout: Dove Emblem on Left, Monotype Corsiva Calligraphic Title in Middle with Zero Middle Logo) */}
           <div
-            className={`grid grid-cols-[80px_1fr_160px] sm:grid-cols-[96px_1fr_170px] items-center gap-3 sm:gap-4 border-b ${palette.headerBorder} pb-3.5 transition rounded-lg ${
-              activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
+            className={`flex items-center justify-between gap-3 border-b ${palette.headerBorder} pb-3 transition rounded-lg ${
+              activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20" : ""
             }`}
           >
             {/* Left: Official BSGSS Emblem (Dove Mark in Red Circle Only - No Text Tag) */}
-            <div className="shrink-0 flex items-center justify-start">
+            <div className="shrink-0 w-16 sm:w-20 flex items-center justify-start pl-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
                 alt={config.organizationName}
-                className="h-14 w-14 sm:h-16 sm:w-16 object-contain select-none drop-shadow-2xs transition-transform hover:scale-105"
+                className="h-12 w-12 sm:h-14 sm:w-14 object-contain select-none drop-shadow-2xs transition-transform hover:scale-105"
               />
             </div>
 
             {/* Center: Legal & Statutory Identity in Official Monotype Corsiva Calligraphic Typography */}
-            <div className="text-center px-1">
-              <h2 className="font-corsiva text-2xl sm:text-[27px] font-medium tracking-wide text-[#136338] leading-tight select-none">
+            <div className="flex-1 min-w-0 text-center px-1">
+              <h2 className="font-corsiva text-2xl sm:text-[26px] font-medium tracking-wide text-[#136338] leading-tight select-none truncate sm:overflow-visible">
                 {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
               </h2>
-              <p className="mt-0.5 text-[10px] sm:text-[10.5px] text-ink font-semibold leading-tight whitespace-nowrap">
+              <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink font-semibold leading-tight">
                 {config.legalRegText || "(Registered Under Societies Registration Act 1860)"}
               </p>
-              <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight whitespace-nowrap">
+              <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight">
                 <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
                 {config.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
               </p>
-              <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle leading-tight whitespace-nowrap">
+              <p className="mt-0.5 text-[8.5px] sm:text-[9px] text-ink-subtle leading-tight">
                 {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
               </p>
             </div>
 
-            {/* Right: Certificate Meta Badge */}
-            <div className="shrink-0 text-right">
+            {/* Right: Certificate Meta Badge (Anchored strictly within inner pinstripe boundary) */}
+            <div className="shrink-0 text-right pr-0.5">
               <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1.5 sm:px-3 sm:py-2 text-right shadow-2xs`}>
-                <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                <span className={`block text-[8px] sm:text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                   Receipt Number
                 </span>
                 <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
                   {displayReceiptNumber}
                 </span>
-                <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
+                <span className="block text-[8px] sm:text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
                   Date: <strong className="text-ink">{displayDate}</strong>
                 </span>
               </div>
@@ -325,12 +325,12 @@ export function RenderedCertificatePreview({
             )}
           </div>
 
-          {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}
-          <div className={`mt-4 grid grid-cols-[auto_1fr_auto] items-end gap-4 border-t ${palette.headerBorder} pt-3.5`}>
-            {/* Left: Official Circular Rosette Seal */}
+          {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid with Generous Clearance for Stamp) */}
+          <div className={`mt-3.5 grid grid-cols-[auto_1fr_auto] items-center gap-4 border-t ${palette.headerBorder} pt-3 pb-1`}>
+            {/* Left: Official Circular Rosette Seal (Safe Margin from Bottom and Left Pinstripe Frame) */}
             <div
-              className={`shrink-0 flex items-center gap-3 transition rounded-lg ${
-                activeFocusSection === "seal" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-1" : ""
+              className={`shrink-0 flex items-center gap-3 pl-2.5 pb-1 transition rounded-lg ${
+                activeFocusSection === "seal" ? "ring-2 ring-brand-500/50 bg-brand-50/20" : ""
               }`}
             >
               <CertificateSeal

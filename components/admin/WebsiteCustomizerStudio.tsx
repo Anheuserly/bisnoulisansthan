@@ -2505,7 +2505,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       sampleDonorName={sampleDonor}
                       sampleAmount={sampleAmount}
                       sampleDonorPan={sampleDonorPan}
-                      activeFocusSection={activeCertSection}
+                      activeFocusSection={undefined}
                       fixedLandscapeCanvas={true}
                     />
                   </div>
@@ -2557,7 +2557,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       sampleDonorName={sampleDonor}
                       sampleAmount={sampleAmount}
                       sampleDonorPan={sampleDonorPan}
-                      activeFocusSection={activeCertSection}
+                      activeFocusSection={undefined}
                       fixedLandscapeCanvas={true}
                     />
                   </div>

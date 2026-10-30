@@ -19,12 +19,12 @@ export function CertificateSeal({
 }: CertificateSealProps) {
   if (stampUrl && stampUrl.trim()) {
     return (
-      <div className="relative inline-flex items-center justify-center -rotate-2 select-none" aria-label="Official Organization Rubber Stamp">
+      <div className="relative inline-flex items-center justify-center -rotate-2 select-none p-0.5" aria-label="Official Organization Rubber Stamp">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={stampUrl}
           alt="Official Bisnouli Sarvodaya Stamp"
-          className="h-24 w-24 sm:h-28 sm:w-28 object-contain drop-shadow-2xs select-none transition-transform hover:scale-105"
+          className="h-20 w-20 sm:h-22 sm:w-22 object-contain drop-shadow-2xs select-none transition-transform hover:scale-105"
         />
       </div>
     );
@@ -38,10 +38,10 @@ export function CertificateSeal({
   const circularText = sealTitle.endsWith("•") ? sealTitle : `${sealTitle} •`;
 
   return (
-    <div className="relative inline-flex items-center justify-center" aria-label="Official BSGSS Seal">
+    <div className="relative inline-flex items-center justify-center p-0.5" aria-label="Official BSGSS Seal">
       <svg
         viewBox="0 0 160 160"
-        className={`h-24 w-24 sm:h-28 sm:w-28 drop-shadow-2xs select-none ${colorClass}`}
+        className={`h-20 w-20 sm:h-22 sm:w-22 drop-shadow-2xs select-none ${colorClass}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
