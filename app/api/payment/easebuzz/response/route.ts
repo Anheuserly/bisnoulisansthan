@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getEasebuzzSettings, verifyEasebuzzResponseHash } from "@/lib/payment/easebuzz";
+import { sendDonationCertificateEmail, sendAdminDonationAlert } from "@/lib/mail/mailer";
 
 async function handleEasebuzzResponse(
   params: Record<string, string | undefined>,
@@ -26,8 +27,18 @@ async function handleEasebuzzResponse(
   if (process.env.DATABASE_URL) {
     try {
       // Find the donation request
-      const { rows } = await db.query<{ id: string; certificate_number: string | null }>(
-        `SELECT id, certificate_number FROM donation_requests
+      const { rows } = await db.query<{
+        id: string;
+        donor_name: string;
+        donor_email: string;
+        donor_phone: string | null;
+        amount: string;
+        donor_pan: string | null;
+        donor_gst: string | null;
+        certificate_number: string | null;
+      }>(
+        `SELECT id, donor_name, donor_email, donor_phone, amount::text, donor_pan, donor_gst, certificate_number
+         FROM donation_requests
          WHERE id::text = $1 OR payment_reference = $2
          LIMIT 1`,
         [donationId || "", txnid]
@@ -57,6 +68,32 @@ async function handleEasebuzzResponse(
              WHERE id = $3`,
             [easepayid, certNumber, donation.id]
           );
+
+          const certUrl = `${baseUrl}/support/certificate/${donation.id}`;
+
+          // Automatically send official 80G Certificate email to donor
+          sendDonationCertificateEmail({
+            donorEmail: donation.donor_email,
+            donorName: donation.donor_name,
+            amount: donation.amount,
+            certificateNumber: certNumber,
+            certificateUrl: certUrl,
+            donorPan: donation.donor_pan,
+            donorGst: donation.donor_gst,
+            paymentReference: easepayid,
+          }).catch((err) => console.error("Auto certificate mail error:", err));
+
+          // Automatically send admin notification to admin@bsgssindia.org
+          sendAdminDonationAlert({
+            donorName: donation.donor_name,
+            donorEmail: donation.donor_email,
+            donorPhone: donation.donor_phone || undefined,
+            amount: donation.amount,
+            paymentMethod: "gateway (easebuzz)",
+            paymentReference: easepayid,
+            donorPan: donation.donor_pan,
+            certificateNumber: certNumber,
+          }).catch((err) => console.error("Auto admin donation alert error:", err));
 
           return NextResponse.redirect(`${baseUrl}/support/certificate/${donation.id}?payment=success`);
         } else {

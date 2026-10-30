@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/auth/session";
 import { db } from "@/lib/db";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
+import { sendDonationCertificateEmail } from "@/lib/mail/mailer";
 
 export async function POST(
   request: Request,
@@ -42,9 +43,18 @@ export async function POST(
       );
     `);
 
-    // Check if donation already has a certificate number
-    const { rows: existingRows } = await client.query<{ certificate_number: string | null }>(
-      `SELECT certificate_number FROM donation_requests WHERE id::text = $1 LIMIT 1`,
+    // Check existing donation details for certificate generation and automated email dispatch
+    const { rows: existingRows } = await client.query<{
+      donor_name: string;
+      donor_email: string;
+      amount: string;
+      donor_pan: string | null;
+      donor_gst: string | null;
+      payment_reference: string;
+      certificate_number: string | null;
+    }>(
+      `SELECT donor_name, donor_email, amount::text, donor_pan, donor_gst, payment_reference, certificate_number
+       FROM donation_requests WHERE id::text = $1 LIMIT 1`,
       [id]
     );
 
@@ -107,6 +117,24 @@ export async function POST(
     }
 
     await client.query("COMMIT");
+
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "bisnoulisansthan.in";
+    const proto = request.headers.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
+    const certificateUrl = `${proto}://${host}/support/certificate/${id}`;
+
+    if (existingRows[0]?.donor_email) {
+      sendDonationCertificateEmail({
+        donorEmail: existingRows[0].donor_email,
+        donorName: existingRows[0].donor_name,
+        amount: existingRows[0].amount,
+        certificateNumber: rows[0].certificateNumber,
+        certificateUrl,
+        donorPan: existingRows[0].donor_pan,
+        donorGst: existingRows[0].donor_gst,
+        paymentReference: existingRows[0].payment_reference,
+      }).catch((e) => console.error("Manual verify certificate mail error:", e));
+    }
+
     return NextResponse.json({
       ok: true,
       certificateNumber: rows[0].certificateNumber,
