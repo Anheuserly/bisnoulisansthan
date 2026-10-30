@@ -22,7 +22,7 @@ async function ensureDonationsTable() {
       document_name TEXT,
       amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
       currency CHAR(3) NOT NULL DEFAULT 'INR',
-      payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'other')),
+      payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'gateway', 'online', 'other')),
       payment_reference TEXT NOT NULL,
       payment_date DATE,
       status TEXT NOT NULL DEFAULT 'submitted' CHECK (status IN ('submitted', 'under_review', 'verified', 'rejected', 'certificate_issued')),
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     amount <= 0 ||
     amount > 10_000_000 ||
     !paymentReference ||
-    !["upi", "bank_transfer", "other"].includes(paymentMethod)
+    !["upi", "bank_transfer", "gateway", "online", "other"].includes(paymentMethod)
   ) {
     return NextResponse.json(
       { message: "Please provide your name, valid email, amount, payment method, and transaction reference." },

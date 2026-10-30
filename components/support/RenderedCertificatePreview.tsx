@@ -265,18 +265,23 @@ export function RenderedCertificatePreview({
                   <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                     Statutory PAN Record
                   </span>
-                  <div className="mt-0.5 inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-line shadow-2xs">
-                    <span className="text-[9.5px] font-bold text-ink-muted">ORG PAN:</span>
-                    <span className="font-mono text-xs sm:text-[13px] font-black text-brand-900 tracking-wider">
-                      {config.orgPan || "AAATB7832M"}
-                    </span>
-                  </div>
-                  {sampleDonorPan && (
-                    <div className="mt-0.5 text-[8.5px] text-ink-muted">
-                      Donor PAN: <strong className="font-mono font-semibold text-ink">{sampleDonorPan}</strong>
+                  <div className="mt-0.5 flex flex-col gap-1 items-center justify-center">
+                    <div className="inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-0.5 border border-line shadow-2xs">
+                      <span className="text-[9px] font-bold text-ink-muted">ORG PAN:</span>
+                      <span className="font-mono text-xs font-black text-brand-900 tracking-wider">
+                        {config.orgPan || "AAATB7832M"}
+                      </span>
                     </div>
-                  )}
-                  <p className="text-[8px] text-emerald-800 font-medium">
+                    {sampleDonorPan && (
+                      <div className="inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-0.5 border border-emerald-300 shadow-2xs">
+                        <span className="text-[9px] font-bold text-emerald-800">DONOR PAN:</span>
+                        <span className="font-mono text-xs font-black text-brand-950 tracking-wider">
+                          {sampleDonorPan}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-[8px] text-emerald-800 font-medium mt-0.5">
                     Valid for Section 80G Tax Exemption
                   </p>
                 </div>

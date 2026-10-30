@@ -23,6 +23,10 @@ export const metadata: Metadata = buildMetadata({
 type Certificate = {
   id: string;
   donorName: string;
+  donorPan?: string | null;
+  donorGst?: string | null;
+  documentUrl?: string | null;
+  documentName?: string | null;
   amount: string;
   currency: string;
   paymentMethod: string;
@@ -141,6 +145,8 @@ export default async function DonationCertificate({
       `SELECT
         id,
         donor_name AS "donorName",
+        donor_pan AS "donorPan",
+        donor_gst AS "donorGst",
         amount::text,
         currency,
         payment_method AS "paymentMethod",
@@ -397,11 +403,28 @@ export default async function DonationCertificate({
                     <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
                       Statutory PAN Record
                     </span>
-                    <div className="mt-0.5 inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-line shadow-2xs">
-                      <span className="text-[9.5px] font-bold text-ink-muted">ORG PAN:</span>
-                      <span className="font-mono text-xs sm:text-sm font-black text-brand-900 tracking-wider">
-                        {certConfig.orgPan || "AAATB7832M"}
-                      </span>
+                    <div className="mt-0.5 flex flex-col gap-1 items-center justify-center">
+                      <div className="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-line shadow-2xs">
+                        <span className="text-[9.5px] font-bold text-ink-muted">ORG PAN:</span>
+                        <span className="font-mono text-xs sm:text-sm font-black text-brand-900 tracking-wider">
+                          {certConfig.orgPan || "AAATB7832M"}
+                        </span>
+                      </div>
+                      {donation.donorPan ? (
+                        <div className="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-emerald-300 shadow-2xs">
+                          <span className="text-[9.5px] font-bold text-emerald-800">DONOR PAN:</span>
+                          <span className="font-mono text-xs sm:text-sm font-black text-brand-950 tracking-wider">
+                            {donation.donorPan}
+                          </span>
+                        </div>
+                      ) : donation.donorGst ? (
+                        <div className="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-emerald-300 shadow-2xs">
+                          <span className="text-[9.5px] font-bold text-emerald-800">DONOR GST:</span>
+                          <span className="font-mono text-xs sm:text-sm font-black text-brand-950 tracking-wider">
+                            {donation.donorGst}
+                          </span>
+                        </div>
+                      ) : null}
                     </div>
                     <p className="text-[8.5px] text-emerald-800 font-medium mt-0.5">
                       Valid for Section 80G Tax Exemption

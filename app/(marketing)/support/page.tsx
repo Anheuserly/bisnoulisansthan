@@ -41,8 +41,37 @@ export default function SupportPage() {
                   {support.text}
                 </p>
 
+                {/* Unified All-in-One Donation & 80G Statutory Form */}
+                <DonationVerificationForm />
+              </div>
+            </ScrollReveal>
 
-                <div className="mt-10">
+            <aside className="space-y-6">
+              <ScrollReveal direction="scale" delay={100}>
+                {/* Instant 0% MDR UPI Donation */}
+                <div className="border-t-2 border-brand-850 pt-6 text-center rounded-2xl border border-line bg-sand-50/40 p-5">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 border border-emerald-200">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                    <span>0% Transaction Fee • Direct UPI</span>
+                  </div>
+                  <h3 className="mt-3 text-base sm:text-lg font-bold text-ink">
+                    {support.upiEyebrow}
+                  </h3>
+                  <div className="relative mx-auto mt-3 w-full max-w-[17rem] overflow-hidden rounded-xl border border-line bg-white p-2.5 shadow-2xs">
+                    <img
+                      src={support.qrImage}
+                      alt="BSGSS UPI donation QR code"
+                      className="mx-auto w-full rounded-lg"
+                    />
+                  </div>
+                  <p className="mt-3 text-xs font-semibold text-ink sm:text-sm">{support.upiText}</p>
+                  <p className="mt-1 text-xs font-mono font-bold text-brand-800">
+                    UPI ID: bsgssindia@yahoo.co.in
+                  </p>
+                </div>
+
+                {/* Official Bank Transfer Details */}
+                <div className="mt-6">
                   <BankDetailsCard
                     bankTitle={support.bankTitle}
                     bankName={support.bankName}
@@ -54,36 +83,18 @@ export default function SupportPage() {
                   />
                 </div>
 
+                <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-line bg-white p-4 text-left">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-700" />
+                  <p className="text-xs leading-relaxed text-ink-muted">{support.assurance}</p>
+                </div>
+
                 <a
                   href="mailto:bsgssindia@yahoo.co.in?subject=Support%20BSGSS"
-                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-brand-700 bg-white px-5 py-2.5 text-xs font-semibold text-brand-800 shadow-2xs transition hover:bg-brand-50 sm:text-sm"
                 >
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-4 w-4 text-brand-700" />
                   <span>{support.contactCta}</span>
                 </a>
-                <DonationVerificationForm />
-              </div>
-            </ScrollReveal>
-
-            <aside>
-              <ScrollReveal direction="scale" delay={100}>
-                <div className="border-t-2 border-brand-850 pt-6 text-center">
-                  <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">
-                    {support.upiEyebrow}
-                  </p>
-                  <div className="relative mx-auto mt-4 w-full max-w-[18rem] overflow-hidden rounded-xl border border-line bg-white p-2">
-                    <img
-                      src={support.qrImage}
-                      alt="BSGSS UPI donation QR code"
-                      className="mx-auto w-full rounded-lg"
-                    />
-                  </div>
-                  <p className="mt-4 text-xs font-semibold text-ink sm:text-sm">{support.upiText}</p>
-                  <div className="mt-5 flex items-start gap-2.5 border-t border-line/60 pt-4 text-left">
-                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-ink" />
-                    <p className="text-xs leading-relaxed text-ink-muted">{support.assurance}</p>
-                  </div>
-                </div>
               </ScrollReveal>
             </aside>
           </section>

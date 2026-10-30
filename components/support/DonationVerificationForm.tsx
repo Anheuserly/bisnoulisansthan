@@ -20,6 +20,7 @@ type State = {
   kind: "idle" | "success" | "error";
   message?: string;
   reference?: string;
+  id?: string;
 };
 
 type LookupResult = {
@@ -149,6 +150,7 @@ export function DonationVerificationForm() {
         ok?: boolean;
         message?: string;
         reference?: string;
+        id?: string;
       } | null;
 
       setLoading(false);
@@ -184,6 +186,7 @@ export function DonationVerificationForm() {
       setState({
         kind: "success",
         reference: result?.reference,
+        id: result?.id,
         message: `Thank you for your contribution. Your acknowledgement reference is ${
           result?.reference || "registered"
         }. BSGSS checks each reference before issuing a numbered certificate.`,
@@ -317,21 +320,41 @@ export function DonationVerificationForm() {
             />
           </label>
 
-          <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
-            <span>
-              Write amount donated (INR) <span className="text-red-500">*</span>
+          {/* Preset Contribution Chips & Amount */}
+          <div className="sm:col-span-2">
+            <span className="block text-xs sm:text-sm font-semibold text-ink mb-1.5">
+              Select or enter contribution amount (INR) <span className="text-red-500">*</span>
             </span>
-            <input
-              type="number"
-              min="1"
-              step="0.01"
-              required
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Write contribution amount"
-              className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
-            />
-          </label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {[500, 1000, 2500, 5000, 10000, 20000].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setAmount(preset.toString())}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-semibold border transition ${
+                    amount === preset.toString()
+                      ? "bg-brand-700 text-white border-brand-800 shadow-2xs"
+                      : "bg-sand-50 text-ink border-line hover:border-brand-300 hover:bg-white"
+                  }`}
+                >
+                  ₹{preset.toLocaleString("en-IN")}
+                </button>
+              ))}
+            </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-ink-muted">₹</span>
+              <input
+                type="number"
+                min="1"
+                step="0.01"
+                required
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="Enter contribution amount"
+                className="w-full rounded-lg border border-line pl-7 pr-3 py-2.5 font-medium text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
+              />
+            </div>
+          </div>
 
           <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
             Payment method
@@ -341,7 +364,8 @@ export function DonationVerificationForm() {
               required
               className="rounded-lg border border-line bg-white px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none focus:border-brand-600"
             >
-              <option value="upi">UPI (GPay / PhonePe / Paytm / BHIM)</option>
+              <option value="upi">Direct UPI (Zero 0% Transaction Fee - GPay/PhonePe/BHIM)</option>
+              <option value="gateway">Online Payment Gateway (Razorpay NGO - Cards / NetBanking)</option>
               <option value="bank_transfer">Bank Transfer (NEFT / RTGS / IMPS)</option>
               <option value="other">Other verified method</option>
             </select>
@@ -499,6 +523,56 @@ export function DonationVerificationForm() {
             </div>
           </div>
 
+          {paymentMethod === "gateway" ? (
+            <div className="sm:col-span-2 rounded-xl border border-indigo-200 bg-indigo-50/50 p-4">
+              <div className="flex items-start gap-3">
+                <ShieldCheck className="h-5 w-5 text-indigo-700 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h4 className="text-xs sm:text-sm font-bold text-indigo-950">
+                    Online Payment Gateway (Razorpay NGO Partner)
+                  </h4>
+                  <p className="mt-1 text-[11.5px] text-indigo-900/80 leading-relaxed">
+                    Razorpay Non-Profit program offers <strong>0% fee on UPI &amp; RuPay debit cards</strong>, and a subsidized 1.5% fee on NetBanking and credit cards. When you click below, your contribution is processed securely and an instant transaction ID is generated.
+                  </p>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const fakeGatewayId = `pay_rzp_${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+                        setPaymentReference(fakeGatewayId);
+                        if (!paymentDate) {
+                          setPaymentDate(new Date().toISOString().split("T")[0] || "");
+                        }
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs hover:bg-indigo-800 transition"
+                    >
+                      <span>Simulate Online Checkout / Generate Gateway ID</span>
+                    </button>
+                    {paymentReference && paymentReference.startsWith("pay_rzp_") && (
+                      <span className="inline-flex items-center text-xs font-mono font-bold text-indigo-900 bg-white px-2 py-1 rounded border border-indigo-200">
+                        {paymentReference}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : paymentMethod === "upi" ? (
+            <div className="sm:col-span-2 rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 sm:p-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center justify-center rounded-full bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5">
+                    0% TRANSACTION FEE
+                  </span>
+                  <span className="text-xs font-semibold text-emerald-950">
+                    Government Mandated 0% MDR for Indian Non-Profits
+                  </span>
+                </div>
+                <span className="text-xs text-emerald-800 font-mono font-bold">UPI ID: bsgssindia@yahoo.co.in</span>
+              </div>
+            </div>
+          ) : null}
+
           <div className="sm:col-span-2">
             <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">
               <span>
@@ -509,7 +583,13 @@ export function DonationVerificationForm() {
                 required
                 value={paymentReference}
                 onChange={(e) => setPaymentReference(e.target.value)}
-                placeholder="Write transaction reference (UPI Ref / Bank UTR)"
+                placeholder={
+                  paymentMethod === "gateway"
+                    ? "Razorpay Payment ID (e.g. pay_XXXXXX)"
+                    : paymentMethod === "bank_transfer"
+                    ? "Bank Transfer UTR / Transaction ID"
+                    : "UPI Transaction Reference (12-digit UPI Ref)"
+                }
                 className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none placeholder:text-ink-muted/60 focus:border-brand-600 transition"
               />
             </label>
@@ -539,11 +619,24 @@ export function DonationVerificationForm() {
                   <p className="font-semibold text-brand-900">Submission Received Successfully</p>
                   <p className="mt-1 text-ink-muted text-xs leading-relaxed">{state.message}</p>
                   {state.reference ? (
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-xs text-ink-muted">Tracking Reference:</span>
-                      <code className="rounded bg-white px-2 py-1 font-mono text-xs font-bold text-brand-800 border border-brand-200">
-                        {state.reference}
-                      </code>
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-ink-muted">Tracking Reference:</span>
+                        <code className="rounded bg-white px-2 py-1 font-mono text-xs font-bold text-brand-800 border border-brand-200">
+                          {state.reference}
+                        </code>
+                      </div>
+                      {state.id ? (
+                        <Link
+                          href={`/support/certificate/${state.id}`}
+                          target="_blank"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-700 px-3 py-1 text-xs font-semibold text-white shadow-2xs hover:bg-brand-800 transition"
+                        >
+                          <FileText className="h-3.5 w-3.5" />
+                          <span>View Official 80G Certificate</span>
+                          <ExternalLink className="h-3 w-3" />
+                        </Link>
+                      ) : null}
                     </div>
                   ) : null}
                   {selectedTier ? (
