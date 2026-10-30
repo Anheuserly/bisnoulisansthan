@@ -17,6 +17,10 @@ export default async function DonationsAdminPage() {
           donor_email TEXT NOT NULL,
           donor_phone TEXT,
           donor_address TEXT,
+          donor_pan TEXT,
+          donor_gst TEXT,
+          document_url TEXT,
+          document_name TEXT,
           amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
           currency CHAR(3) NOT NULL DEFAULT 'INR',
           payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'other')),
@@ -31,6 +35,11 @@ export default async function DonationsAdminPage() {
           created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
         );
+
+        ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS donor_pan TEXT;
+        ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS donor_gst TEXT;
+        ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS document_url TEXT;
+        ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS document_name TEXT;
       `);
     } catch (e) {
       console.error("Auto create donation_requests table failed:", e);
@@ -50,6 +59,10 @@ export default async function DonationsAdminPage() {
             donor_name AS "donorName",
             donor_email AS "donorEmail",
             donor_phone AS "donorPhone",
+            donor_pan AS "donorPan",
+            donor_gst AS "donorGst",
+            document_url AS "documentUrl",
+            document_name AS "documentName",
             amount::text,
             currency,
             payment_method AS "paymentMethod",

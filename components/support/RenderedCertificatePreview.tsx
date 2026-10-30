@@ -161,115 +161,54 @@ export function RenderedCertificatePreview({
 
         {/* Inner Double Pinstripe Frame */}
         <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6`}>
-          {/* 1. Header Row (Support for Top-Center Logo Above Name or Classic Left) */}
-          {config.logoPosition === "left" ? (
-            <div
-              className={`grid grid-cols-[160px_1fr_160px] items-center gap-4 border-b ${palette.headerBorder} pb-3.5 transition rounded-lg ${
-                activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
-              }`}
-            >
-              {/* Left: Official BSGSS Logo */}
-              <div className="shrink-0 flex items-center justify-start">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
-                  alt={config.organizationName}
-                  className="h-12 w-auto object-contain max-h-12 max-w-[150px]"
-                />
-              </div>
+          {/* 1. Header Row (Official BSGSS Layout: Dove Emblem on Left, Monotype Corsiva Calligraphic Title in Middle with Zero Middle Logo) */}
+          <div
+            className={`grid grid-cols-[80px_1fr_160px] sm:grid-cols-[96px_1fr_170px] items-center gap-3 sm:gap-4 border-b ${palette.headerBorder} pb-3.5 transition rounded-lg ${
+              activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
+            }`}
+          >
+            {/* Left: Official BSGSS Emblem (Dove Mark in Red Circle Only - No Text Tag) */}
+            <div className="shrink-0 flex items-center justify-start">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                alt={config.organizationName}
+                className="h-14 w-14 sm:h-16 sm:w-16 object-contain select-none drop-shadow-2xs transition-transform hover:scale-105"
+              />
+            </div>
 
-              {/* Center: Legal & Statutory Identity */}
-              <div className="text-center px-2">
-                <p className={`text-[11.5px] font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight whitespace-nowrap`}>
-                  {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
-                </p>
-                <p className="mt-1 text-[9.5px] text-ink-muted leading-tight font-medium whitespace-nowrap">
-                  {config.legalRegText || "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)"}
-                </p>
-                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight whitespace-nowrap">
-                  <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
-                  {config.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
-                </p>
-                <p className="mt-0.5 text-[9px] text-ink-subtle leading-tight whitespace-nowrap">
-                  {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
-                </p>
-              </div>
+            {/* Center: Legal & Statutory Identity in Official Monotype Corsiva Calligraphic Typography */}
+            <div className="text-center px-1">
+              <h2 className="font-corsiva text-2xl sm:text-[27px] font-medium tracking-wide text-[#136338] leading-tight select-none">
+                {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
+              </h2>
+              <p className="mt-0.5 text-[10px] sm:text-[10.5px] text-ink font-semibold leading-tight whitespace-nowrap">
+                {config.legalRegText || "(Registered Under Societies Registration Act 1860)"}
+              </p>
+              <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight whitespace-nowrap">
+                <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
+                {config.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
+              </p>
+              <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle leading-tight whitespace-nowrap">
+                {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
+              </p>
+            </div>
 
-              {/* Right: Certificate Meta Badge */}
-              <div className="shrink-0 text-right">
-                <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
-                  <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                    Receipt Number
-                  </span>
-                  <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
-                    {displayReceiptNumber}
-                  </span>
-                  <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
-                    Date: <strong className="text-ink">{displayDate}</strong>
-                  </span>
-                </div>
+            {/* Right: Certificate Meta Badge */}
+            <div className="shrink-0 text-right">
+              <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1.5 sm:px-3 sm:py-2 text-right shadow-2xs`}>
+                <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                  Receipt Number
+                </span>
+                <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
+                  {displayReceiptNumber}
+                </span>
+                <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
+                  Date: <strong className="text-ink">{displayDate}</strong>
+                </span>
               </div>
             </div>
-          ) : (
-            <div
-              className={`border-b ${palette.headerBorder} pb-3 transition rounded-lg ${
-                activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
-              }`}
-            >
-              {/* Top Row: Left Tag, Centered Official Emblem, Right Receipt Badge */}
-              <div className="relative flex items-center justify-center min-h-[44px]">
-                {/* Left: Accreditation Ribbon */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2">
-                  <span className={`inline-flex items-center gap-1.5 rounded-md border ${palette.metaBadgeBorder} bg-sand-50/90 px-2.5 py-1 text-[8.5px] font-bold uppercase tracking-wider ${palette.subAccent} shadow-2xs`}>
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-700 animate-pulse" />
-                    Govt. Regd. Society · Estd. 1994
-                  </span>
-                </div>
-
-                {/* Center: Official Dove Emblem Placed Above the Name */}
-                <div className="flex flex-col items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
-                    alt={config.organizationName}
-                    className="h-11 sm:h-12 w-auto object-contain select-none drop-shadow-2xs transition-transform hover:scale-105"
-                  />
-                </div>
-
-                {/* Right: Certificate Meta Badge */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 text-right">
-                  <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1 text-right shadow-2xs`}>
-                    <span className={`block text-[8px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                      Receipt Number
-                    </span>
-                    <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
-                      {displayReceiptNumber}
-                    </span>
-                    <span className="block text-[8px] text-ink-muted mt-0.5 whitespace-nowrap">
-                      Date: <strong className="text-ink">{displayDate}</strong>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Center Masthead: Name & Legal Accreditations with Prominent PAN */}
-              <div className="text-center mt-1 px-4">
-                <p className={`text-[12px] sm:text-[13px] font-black uppercase tracking-[.18em] ${palette.headingAccent} leading-tight whitespace-nowrap`}>
-                  {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
-                </p>
-                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight font-medium whitespace-nowrap">
-                  {config.legalRegText || "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)"}
-                </p>
-                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight whitespace-nowrap">
-                  <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
-                  {config.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
-                </p>
-                <p className="mt-0.5 text-[9px] text-ink-subtle leading-tight whitespace-nowrap">
-                  {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
-                </p>
-              </div>
-            </div>
-          )}
+          </div>
 
           {/* 2. Certificate Title Ribbon */}
           <div

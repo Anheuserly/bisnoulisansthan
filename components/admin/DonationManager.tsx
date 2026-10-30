@@ -16,6 +16,7 @@ import {
   Edit3,
   Sliders,
   Settings,
+  Paperclip,
 } from "lucide-react";
 import { SITE_URL } from "@/lib/site";
 import { EditCertificateModal } from "./EditCertificateModal";
@@ -27,6 +28,10 @@ export type DonationRow = {
   donorEmail: string;
   donorPhone?: string | null;
   donorAddress?: string | null;
+  donorPan?: string | null;
+  donorGst?: string | null;
+  documentUrl?: string | null;
+  documentName?: string | null;
   amount: string;
   currency: string;
   paymentMethod: string;
@@ -244,6 +249,33 @@ export function DonationManager({
                       {donation.donorPhone ? (
                         <p className="mt-0.5 text-[11px] text-ink-muted">{donation.donorPhone}</p>
                       ) : null}
+
+                      {/* Statutory Identity Badges (PAN, GSTIN, Attached Document) */}
+                      <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        {donation.donorPan ? (
+                          <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-2 py-0.5 font-mono text-[10.5px] font-bold text-blue-800 border border-blue-200">
+                            PAN: {donation.donorPan}
+                          </span>
+                        ) : null}
+                        {donation.donorGst ? (
+                          <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 font-mono text-[10.5px] font-bold text-indigo-800 border border-indigo-200">
+                            GSTIN: {donation.donorGst}
+                          </span>
+                        ) : null}
+                        {donation.documentUrl ? (
+                          <a
+                            href={donation.documentUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            download={donation.documentName || "statutory-document"}
+                            className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[10.5px] font-semibold text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition"
+                            title="Click to view or download attached document"
+                          >
+                            <Paperclip className="h-3 w-3" />
+                            {donation.documentName || "View Doc"}
+                          </a>
+                        ) : null}
+                      </div>
                     </td>
 
                     <td className="px-4 py-4">

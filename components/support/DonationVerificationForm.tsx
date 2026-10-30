@@ -7,9 +7,13 @@ import {
   CheckCircle2,
   ExternalLink,
   FileCheck2,
+  FileText,
   HeartHandshake,
   LoaderCircle,
+  Paperclip,
   Search,
+  ShieldCheck,
+  X,
 } from "lucide-react";
 
 type State = {
@@ -40,6 +44,14 @@ export function DonationVerificationForm() {
   const [paymentReference, setPaymentReference] = useState("");
   const [selectedTier, setSelectedTier] = useState<string>("");
 
+  // Statutory 80G Tax Exemption & Identity Compliance
+  const [complianceMode, setComplianceMode] = useState<"pan" | "gst" | "attach">("pan");
+  const [donorPan, setDonorPan] = useState("");
+  const [donorGst, setDonorGst] = useState("");
+  const [documentUrl, setDocumentUrl] = useState("");
+  const [documentName, setDocumentName] = useState("");
+  const [documentSize, setDocumentSize] = useState("");
+
   const [state, setState] = useState<State>({ kind: "idle" });
   const [loading, setLoading] = useState(false);
 
@@ -57,6 +69,31 @@ export function DonationVerificationForm() {
     }
   }, []);
 
+  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setState({ kind: "error", message: "Attached document must be smaller than 5MB." });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setDocumentUrl(reader.result as string);
+      setDocumentName(file.name);
+      setDocumentSize(`${(file.size / 1024).toFixed(0)} KB`);
+      setState({ kind: "idle" });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearAttachedDocument() {
+    setDocumentUrl("");
+    setDocumentName("");
+    setDocumentSize("");
+  }
+
   // Status check state
   const [query, setQuery] = useState("");
   const [lookupLoading, setLookupLoading] = useState(false);
@@ -64,6 +101,26 @@ export function DonationVerificationForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    // Mandatory Statutory Compliance Validation
+    const cleanPan = donorPan.trim().toUpperCase();
+    const cleanGst = donorGst.trim().toUpperCase();
+
+    if (!cleanPan && !cleanGst && !documentUrl) {
+      return setState({
+        kind: "error",
+        message:
+          "Statutory 80G Tax Compliance: Please provide your PAN Number, GST Number, or attach your PAN card / 80G Certificate before submitting.",
+      });
+    }
+
+    if (cleanPan && !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(cleanPan)) {
+      return setState({
+        kind: "error",
+        message: "Invalid PAN format. PAN must be exactly 10 alphanumeric characters (e.g. ABCDE1234F).",
+      });
+    }
+
     setLoading(true);
     setState({ kind: "idle" });
 
@@ -71,6 +128,10 @@ export function DonationVerificationForm() {
       donorName: donorName.trim(),
       donorEmail: donorEmail.trim(),
       donorPhone: donorPhone.trim(),
+      donorPan: cleanPan || undefined,
+      donorGst: cleanGst || undefined,
+      documentUrl: documentUrl || undefined,
+      documentName: documentName || undefined,
       amount: amount.trim(),
       paymentMethod,
       paymentDate: paymentDate.trim(),
@@ -104,6 +165,16 @@ export function DonationVerificationForm() {
       // Reset controlled states safely
       setDonorName("");
       setDonorEmail("");
+      setDonorPhone("");
+      setDonorPan("");
+      setDonorGst("");
+      setDocumentUrl("");
+      setDocumentName("");
+      setDocumentSize("");
+      setAmount("");
+      setPaymentMethod("upi");
+      setPaymentDate("");
+      setPaymentReference("");
       setDonorPhone("");
       setAmount("");
       setPaymentMethod("upi");
@@ -285,6 +356,148 @@ export function DonationVerificationForm() {
               className="rounded-lg border border-line px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none focus:border-brand-600 transition"
             />
           </label>
+
+          {/* Statutory 80G Tax Exemption & Verification Details */}
+          <div className="sm:col-span-2 rounded-xl border border-brand-200 bg-sand-50/70 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-line/70 pb-3">
+              <div>
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-ink">
+                  <ShieldCheck className="h-4 w-4 text-brand-700 shrink-0" />
+                  <span>Section 80G Tax Exemption &amp; Statutory Compliance</span>
+                  <span className="text-red-500">*</span>
+                </div>
+                <p className="mt-0.5 text-[11px] text-ink-muted">
+                  Under Income Tax Act Section 80G regulations, please provide your PAN Number, GST Number, or attach your PAN card / Certificate.
+                </p>
+              </div>
+
+              {/* Selector Buttons */}
+              <div className="flex items-center gap-1 rounded-lg border border-line bg-white p-1 self-start sm:self-auto shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setComplianceMode("pan")}
+                  className={`rounded px-2.5 py-1 text-[11px] font-semibold transition ${
+                    complianceMode === "pan"
+                      ? "bg-brand-700 text-white shadow-2xs"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  PAN Card
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setComplianceMode("gst")}
+                  className={`rounded px-2.5 py-1 text-[11px] font-semibold transition ${
+                    complianceMode === "gst"
+                      ? "bg-brand-700 text-white shadow-2xs"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  GST Number
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setComplianceMode("attach")}
+                  className={`rounded px-2.5 py-1 text-[11px] font-semibold transition ${
+                    complianceMode === "attach"
+                      ? "bg-brand-700 text-white shadow-2xs"
+                      : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  Attach File
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3.5 grid gap-3 sm:grid-cols-2 items-start">
+              {/* PAN Number Input */}
+              {complianceMode === "pan" ? (
+                <div>
+                  <label className="block text-xs font-semibold text-ink">
+                    <span>
+                      Donor PAN Number <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      maxLength={10}
+                      value={donorPan}
+                      onChange={(e) => setDonorPan(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
+                      placeholder="e.g. ABCDE1234F"
+                      className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs sm:text-sm uppercase tracking-wider text-ink outline-none focus:border-brand-600 transition"
+                    />
+                  </label>
+                  <p className="mt-1 text-[10.5px] text-ink-muted">
+                    10-digit PAN required for Indian 80G tax benefit claim
+                  </p>
+                </div>
+              ) : null}
+
+              {/* GST Number Input */}
+              {complianceMode === "gst" ? (
+                <div>
+                  <label className="block text-xs font-semibold text-ink">
+                    <span>
+                      Donor GSTIN / Organization Number <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      maxLength={15}
+                      value={donorGst}
+                      onChange={(e) => setDonorGst(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
+                      placeholder="e.g. 07AAATB7832M1ZH"
+                      className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs sm:text-sm uppercase tracking-wider text-ink outline-none focus:border-brand-600 transition"
+                    />
+                  </label>
+                  <p className="mt-1 text-[10.5px] text-ink-muted">
+                    15-character GSTIN for registered trusts, companies or CSR donors
+                  </p>
+                </div>
+              ) : null}
+
+              {/* Document Attachment Field */}
+              <div className={complianceMode === "attach" ? "sm:col-span-2" : ""}>
+                <span className="block text-xs font-semibold text-ink">
+                  {complianceMode === "attach"
+                    ? "Attach PAN Card, 80G Document, or Certificate *"
+                    : "Attach Certificate or PAN Card (Optional)"}
+                </span>
+
+                {documentUrl ? (
+                  <div className="mt-1 flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-900 shadow-2xs">
+                    <div className="flex items-center gap-2 truncate">
+                      <FileCheck2 className="h-4 w-4 text-emerald-700 shrink-0" />
+                      <span className="font-semibold truncate">{documentName || "Document Attached"}</span>
+                      {documentSize ? (
+                        <span className="text-[10.5px] text-emerald-700">({documentSize})</span>
+                      ) : null}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={clearAttachedDocument}
+                      className="rounded p-1 text-emerald-700 hover:bg-emerald-100 hover:text-red-600 transition"
+                      title="Remove file"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="mt-1 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-brand-300 bg-white px-3 py-2.5 text-xs font-medium text-ink-muted hover:border-brand-600 hover:bg-brand-50/20 hover:text-brand-800 transition">
+                    <Paperclip className="h-4 w-4 text-brand-700" />
+                    <span>Upload PAN Card / Registration Certificate (PDF, PNG, JPG)</span>
+                    <input
+                      type="file"
+                      accept="image/*,application/pdf"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+                <p className="mt-1 text-[10px] text-ink-muted">
+                  Max file size: 5MB. Attached documents are stored securely for accounting audit records.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div className="sm:col-span-2">
             <label className="grid gap-1.5 text-xs sm:text-sm font-semibold text-ink">

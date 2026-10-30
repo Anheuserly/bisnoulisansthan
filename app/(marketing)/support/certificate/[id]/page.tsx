@@ -302,106 +302,50 @@ export default async function DonationCertificate({
           {/* Inner Double Pinstripe Frame */}
           <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6 print:p-4`}>
             {/* 1. Header Row (Top-Center Logo Above Name or Classic Left) */}
-            {certConfig.logoPosition === "left" ? (
-              <div className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b ${palette.headerBorder} pb-4`}>
-                {/* Left: Official BSGSS Logo */}
-                <div className="shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
-                    alt={certConfig.organizationName}
-                    className="h-12 sm:h-14 w-auto object-contain max-w-[150px] sm:max-w-[180px]"
-                  />
-                </div>
+            {/* 1. Header Row (Official BSGSS Layout: Dove Emblem on Left, Monotype Corsiva Calligraphic Title in Middle with Zero Middle Logo) */}
+            <div className={`grid grid-cols-[80px_1fr_160px] sm:grid-cols-[96px_1fr_170px] items-center gap-3 sm:gap-4 border-b ${palette.headerBorder} pb-3.5`}>
+              {/* Left: Official BSGSS Emblem (Dove Mark in Red Circle Only - No Text Tag) */}
+              <div className="shrink-0 flex items-center justify-start">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                  alt={certConfig.organizationName}
+                  className="h-14 w-14 sm:h-16 sm:w-16 object-contain select-none drop-shadow-2xs"
+                />
+              </div>
 
-                {/* Center: Legal & Statutory Identity */}
-                <div className="text-center px-2">
-                  <p className={`text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
-                    {certConfig.organizationName}
-                  </p>
-                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
-                    {certConfig.legalRegText}
-                  </p>
-                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
-                    <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong>
-                    {certConfig.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
-                  </p>
-                  <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
-                    {certConfig.officeAddressText}
-                  </p>
-                </div>
+              {/* Center: Legal & Statutory Identity in Official Monotype Corsiva Calligraphic Typography */}
+              <div className="text-center px-1">
+                <h2 className="font-corsiva text-2xl sm:text-[27px] font-medium tracking-wide text-[#136338] leading-tight select-none">
+                  {certConfig.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
+                </h2>
+                <p className="mt-0.5 text-[10px] sm:text-[10.5px] text-ink font-semibold leading-tight whitespace-nowrap">
+                  {certConfig.legalRegText || "(Registered Under Societies Registration Act 1860)"}
+                </p>
+                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight whitespace-nowrap">
+                  <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId || "DL/2016/0111645"}</strong>
+                  {certConfig.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
+                </p>
+                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle leading-tight whitespace-nowrap">
+                  {certConfig.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
+                </p>
+              </div>
 
-                {/* Right: Certificate Meta Badge */}
-                <div className="shrink-0 text-right">
-                  <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
-                    <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                      Receipt Number
-                    </span>
-                    <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
-                      {donation.certificateNumber}
-                    </span>
-                    <span className="block text-[9px] text-ink-muted mt-0.5">
-                      Date: <strong className="text-ink">{issued}</strong>
-                    </span>
-                  </div>
+              {/* Right: Certificate Meta Badge */}
+              <div className="shrink-0 text-right">
+                <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1.5 sm:px-3 sm:py-2 text-right shadow-2xs`}>
+                  <span className={`block text-[8.5px] sm:text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                    Receipt Number
+                  </span>
+                  <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
+                    {donation.certificateNumber}
+                  </span>
+                  <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
+                    Date: <strong className="text-ink">{issued}</strong>
+                  </span>
                 </div>
               </div>
-            ) : (
-              <div className={`border-b ${palette.headerBorder} pb-3.5`}>
-                {/* Top Row: Left Tag, Centered Official Emblem Above Name, Right Receipt Badge */}
-                <div className="relative flex items-center justify-center min-h-[44px]">
-                  {/* Left: Statutory Tag */}
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2">
-                    <span className={`inline-flex items-center gap-1.5 rounded-md border ${palette.metaBadgeBorder} bg-sand-50/90 px-2.5 py-1 text-[8.5px] sm:text-[9px] font-bold uppercase tracking-wider ${palette.subAccent} shadow-2xs`}>
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-700" />
-                      Govt. Regd. Society · Estd. 1994
-                    </span>
-                  </div>
-
-                  {/* Center: Official Emblem Placed Directly Above Organization Name */}
-                  <div className="flex flex-col items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
-                      alt={certConfig.organizationName}
-                      className="h-11 sm:h-12 w-auto object-contain select-none drop-shadow-2xs"
-                    />
-                  </div>
-
-                  {/* Right: Receipt Meta Badge */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 text-right">
-                    <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1 sm:px-3 sm:py-1.5 text-right shadow-2xs`}>
-                      <span className={`block text-[8.5px] sm:text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                        Receipt Number
-                      </span>
-                      <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
-                        {donation.certificateNumber}
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-ink-muted mt-0.5">
-                        Date: <strong className="text-ink">{issued}</strong>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Center Masthead: Name & Legal Accreditations with Prominent PAN */}
-                <div className="text-center mt-1 px-4">
-                  <p className={`text-[12px] sm:text-[13px] font-black uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
-                    {certConfig.organizationName}
-                  </p>
-                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
-                    {certConfig.legalRegText}
-                  </p>
-                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
-                    <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong>
-                    {certConfig.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
-                  </p>
-                  <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
-                    {certConfig.officeAddressText}
-                  </p>
-                </div>
-              </div>
-            )}
+            </div>
 
             {/* 2. Certificate Title Ribbon */}
             <div className="mt-4 text-center">

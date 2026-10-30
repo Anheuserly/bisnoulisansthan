@@ -2018,6 +2018,43 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                           ...settings,
                           certificate: {
                             ...settings.certificate,
+                            stampUrl: "/images/bsgss/stamps/bsgss-original-seal.png",
+                            showDefaultSealSvg: true,
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
+                        settings.certificate?.stampUrl === "/images/bsgss/stamps/bsgss-original-seal.png" ||
+                          (!settings.certificate?.stampUrl && settings.certificate?.stampUrl !== "")
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-0.5">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/bsgss/stamps/bsgss-original-seal.png"
+                          alt="Authentic Original Stamp"
+                          className="h-full w-full object-contain -rotate-2"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-xs font-bold truncate">Original Circular Stamp</p>
+                          <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Authentic</span>
+                        </div>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">New Delhi-24 verified physical rubber seal</p>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
                             stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
                             showDefaultSealSvg: true,
                           },
@@ -2025,8 +2062,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       }
                       className={cn(
                         "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
-                        (settings.certificate?.stampUrl === "/images/bsgss/stamps/bsgss-official-stamp.png" ||
-                          (!settings.certificate?.stampUrl && settings.certificate?.stampUrl !== ""))
+                        settings.certificate?.stampUrl === "/images/bsgss/stamps/bsgss-official-stamp.png"
                           ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
                           : "border-line bg-white hover:border-brand-300 text-ink"
                       )}
@@ -2040,10 +2076,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-xs font-bold truncate">Official Rubber Stamp</p>
-                          <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Default</span>
-                        </div>
+                        <p className="text-xs font-bold truncate">Rectangular / Badge Stamp</p>
                         <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Physical blue ink seal (Regd. S-26792)</p>
                       </div>
                     </button>

@@ -16,6 +16,10 @@ async function ensureDonationsTable() {
       donor_email TEXT NOT NULL,
       donor_phone TEXT,
       donor_address TEXT,
+      donor_pan TEXT,
+      donor_gst TEXT,
+      document_url TEXT,
+      document_name TEXT,
       amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
       currency CHAR(3) NOT NULL DEFAULT 'INR',
       payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'other')),
@@ -30,6 +34,11 @@ async function ensureDonationsTable() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
+
+    ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS donor_pan TEXT;
+    ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS donor_gst TEXT;
+    ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS document_url TEXT;
+    ALTER TABLE donation_requests ADD COLUMN IF NOT EXISTS document_name TEXT;
   `);
 }
 
@@ -42,6 +51,10 @@ export async function POST(request: Request) {
   const donorName = text(body.donorName, 160);
   const donorEmail = text(body.donorEmail, 254).toLowerCase();
   const donorPhone = text(body.donorPhone, 32);
+  const donorPan = text(body.donorPan, 10).toUpperCase();
+  const donorGst = text(body.donorGst, 15).toUpperCase();
+  const documentUrl = typeof body.documentUrl === "string" ? body.documentUrl.trim() : null;
+  const documentName = text(body.documentName, 255);
   const paymentReference = text(body.paymentReference, 120);
   const paymentMethod = text(body.paymentMethod, 24);
   const paymentDate = text(body.paymentDate, 10);
@@ -62,6 +75,24 @@ export async function POST(request: Request) {
     );
   }
 
+  // Statutory Tax Exemption Requirement: Under Section 80G / CSR rules, donor must provide PAN, GST, or attach document
+  if (!donorPan && !donorGst && !documentUrl) {
+    return NextResponse.json(
+      {
+        message:
+          "Under Section 80G statutory tax exemption regulations, please provide your PAN Number, GST Number, or attach your PAN card / Certificate.",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (donorPan && !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(donorPan)) {
+    return NextResponse.json(
+      { message: "Please enter a valid 10-character PAN Number (e.g. ABCDE1234F)." },
+      { status: 400 }
+    );
+  }
+
   if (paymentDate && !/^\d{4}-\d{2}-\d{2}$/.test(paymentDate)) {
     return NextResponse.json({ message: "Please provide a valid payment date (YYYY-MM-DD)." }, { status: 400 });
   }
@@ -74,10 +105,23 @@ export async function POST(request: Request) {
 
       const { rows } = await db.query<{ id: string }>(
         `INSERT INTO donation_requests (
-          donor_name, donor_email, donor_phone, amount, payment_method, payment_reference, payment_date, status
-        ) VALUES ($1, $2, $3, $4, $5, $6, NULLIF($7, '')::date, 'submitted')
+          donor_name, donor_email, donor_phone, donor_pan, donor_gst, document_url, document_name,
+          amount, payment_method, payment_reference, payment_date, status
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NULLIF($11, '')::date, 'submitted')
         RETURNING id`,
-        [donorName, donorEmail, donorPhone || null, amount, paymentMethod, paymentReference, paymentDate]
+        [
+          donorName,
+          donorEmail,
+          donorPhone || null,
+          donorPan || null,
+          donorGst || null,
+          documentUrl || null,
+          documentName || null,
+          amount,
+          paymentMethod,
+          paymentReference,
+          paymentDate,
+        ]
       );
 
       const created = rows[0];
@@ -124,6 +168,10 @@ export async function GET(request: Request) {
     const { rows } = await db.query<{
       id: string;
       donor_name: string;
+      donor_pan: string | null;
+      donor_gst: string | null;
+      document_url: string | null;
+      document_name: string | null;
       amount: string;
       currency: string;
       payment_method: string;
@@ -136,6 +184,10 @@ export async function GET(request: Request) {
       `SELECT
         id,
         donor_name,
+        donor_pan,
+        donor_gst,
+        document_url,
+        document_name,
         amount::text,
         currency,
         payment_method,
@@ -164,6 +216,10 @@ export async function GET(request: Request) {
       found: true,
       id: record.id,
       donorName: record.donor_name,
+      donorPan: record.donor_pan,
+      donorGst: record.donor_gst,
+      documentUrl: record.document_url,
+      documentName: record.document_name,
       amount: record.amount,
       currency: record.currency,
       status: record.status,
