@@ -179,17 +179,19 @@ export function RenderedCertificatePreview({
 
             {/* Center: Legal & Statutory Identity in Official Monotype Corsiva Calligraphic Typography */}
             <div className="flex-1 min-w-0 text-center px-1">
-              <h2 className="font-corsiva text-2xl sm:text-[26px] font-medium tracking-wide text-[#136338] leading-tight select-none truncate sm:overflow-visible">
+              <h2 className="font-corsiva text-2xl sm:text-[26px] font-medium tracking-wide text-[#136338] leading-normal pb-1 select-none truncate sm:overflow-visible">
                 {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
               </h2>
-              <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink font-semibold leading-tight">
-                {config.legalRegText || "(Registered Under Societies Registration Act 1860)"}
-              </p>
-              <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight">
+              {config.legalRegText ? (
+                <p className="mt-2 text-[9.5px] sm:text-[10px] text-ink font-semibold leading-tight">
+                  {config.legalRegText}
+                </p>
+              ) : null}
+              <p className="mt-1 text-[9px] sm:text-[9.5px] text-ink-muted leading-tight">
                 <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
                 {config.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
               </p>
-              <p className="mt-0.5 text-[8.5px] sm:text-[9px] text-ink-subtle leading-tight">
+              <p className="mt-1 text-[8.5px] sm:text-[9px] text-ink-subtle leading-tight">
                 {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
               </p>
             </div>

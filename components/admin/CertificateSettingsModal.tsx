@@ -834,10 +834,14 @@ export function CertificateSettingsModal({
                       </label>
                       <input
                         type="text"
-                        value={form.legalRegText}
+                        value={form.legalRegText ?? ""}
                         onChange={(e) => setForm({ ...form, legalRegText: e.target.value })}
+                        placeholder="Registered under the Societies Registration Act XXI of 1860"
                         className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
                       />
+                      <p className="mt-1 text-[11px] text-ink-muted">
+                        Customise or clear to modify the registration line.
+                      </p>
                     </div>
 
                     <div>

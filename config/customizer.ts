@@ -1635,7 +1635,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
     showDefaultSealSvg: true,
 
-    legalRegText: "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)",
+    legalRegText: "Registered under the Societies Registration Act XXI of 1860",
     darpanId: "DL/2016/0111645",
     exemptionsText: "Tax Exemptions under 12A & 80G",
     officeAddressText: "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in",

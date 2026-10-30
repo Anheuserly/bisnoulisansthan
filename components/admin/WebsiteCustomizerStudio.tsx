@@ -1346,7 +1346,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                   <label className="block text-xs font-semibold text-ink">Societies Registration Act Text</label>
                   <input
                     type="text"
-                    value={settings.certificate?.legalRegText || ""}
+                    value={settings.certificate?.legalRegText ?? ""}
                     onChange={(e) =>
                       setSettings({
                         ...settings,
@@ -1356,9 +1356,12 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                         },
                       })
                     }
-                    placeholder="Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)"
+                    placeholder="Registered under the Societies Registration Act XXI of 1860"
                     className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
                   />
+                  <p className="mt-1 text-[11px] text-ink-muted">
+                    Customise the statutory legal text or leave blank to remove.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

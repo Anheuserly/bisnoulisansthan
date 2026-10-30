@@ -79,7 +79,7 @@ export async function POST(request: Request) {
       ? Boolean(incoming.showDefaultSealSvg)
       : current.certificate.showDefaultSealSvg,
 
-    legalRegText: String(incoming.legalRegText || current.certificate.legalRegText).trim(),
+    legalRegText: incoming.legalRegText !== undefined ? String(incoming.legalRegText).trim() : current.certificate.legalRegText,
     darpanId: String(incoming.darpanId || current.certificate.darpanId).trim(),
     exemptionsText: String(incoming.exemptionsText || current.certificate.exemptionsText).trim(),
     officeAddressText: String(incoming.officeAddressText || current.certificate.officeAddressText).trim(),
