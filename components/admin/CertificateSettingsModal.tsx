@@ -634,25 +634,6 @@ export function CertificateSettingsModal({
                         onClick={() =>
                           setForm({
                             ...form,
-                            stampUrl: "/images/bsgss/stamps/bsgss-original-seal.png",
-                            showDefaultSealSvg: true,
-                          })
-                        }
-                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
-                          form.stampUrl === "/images/bsgss/stamps/bsgss-original-seal.png"
-                            ? "border-brand-700 bg-brand-700 text-white shadow-2xs"
-                            : "border-line bg-white text-ink hover:bg-sand-100"
-                        }`}
-                      >
-                        <Stamp className="h-3.5 w-3.5" />
-                        Original Circular Stamp
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setForm({
-                            ...form,
                             stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
                             showDefaultSealSvg: true,
                           })
@@ -664,7 +645,7 @@ export function CertificateSettingsModal({
                         }`}
                       >
                         <Stamp className="h-3.5 w-3.5" />
-                        Badge Stamp
+                        Official Rubber Stamp
                       </button>
 
                       <button

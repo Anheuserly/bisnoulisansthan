@@ -1632,7 +1632,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     sealEstd: "ESTD. 1994",
     sealRegNo: "REGD. S-26792",
     sealBadges: "★ 80G / 12A ★",
-    stampUrl: "/images/bsgss/stamps/bsgss-original-seal.png",
+    stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
     showDefaultSealSvg: true,
 
     legalRegText: "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)",
