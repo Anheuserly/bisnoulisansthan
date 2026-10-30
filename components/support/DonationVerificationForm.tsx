@@ -14,6 +14,7 @@ import {
   Search,
   ShieldCheck,
   X,
+  Zap,
 } from "lucide-react";
 
 type State = {
@@ -55,6 +56,54 @@ export function DonationVerificationForm() {
 
   const [state, setState] = useState<State>({ kind: "idle" });
   const [loading, setLoading] = useState(false);
+  const [initiatingEasebuzz, setInitiatingEasebuzz] = useState(false);
+
+  async function handleEasebuzzCheckout() {
+    if (!donorName.trim() || !donorEmail.trim() || !amount.trim()) {
+      setState({ kind: "error", message: "Please enter your name, email, and contribution amount first." });
+      return;
+    }
+    const cleanPan = donorPan.trim().toUpperCase();
+    const cleanGst = donorGst.trim().toUpperCase();
+    if (!cleanPan && !cleanGst && !documentUrl) {
+      setState({
+        kind: "error",
+        message: "Under Section 80G statutory tax rules, please provide your PAN Number or GSTIN before proceeding.",
+      });
+      return;
+    }
+
+    setInitiatingEasebuzz(true);
+    setState({ kind: "idle" });
+
+    try {
+      const res = await fetch("/api/payment/easebuzz/initiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          donorName: donorName.trim(),
+          donorEmail: donorEmail.trim(),
+          donorPhone: donorPhone.trim(),
+          donorPan: cleanPan || undefined,
+          donorGst: cleanGst || undefined,
+          amount: amount.trim(),
+        }),
+      });
+      const data = await res.json();
+      setInitiatingEasebuzz(false);
+      if (res.ok && data.paymentUrl) {
+        window.location.href = data.paymentUrl;
+      } else {
+        setState({
+          kind: "error",
+          message: data.message || "Could not connect to Easebuzz payment gateway. Please try again or use direct UPI.",
+        });
+      }
+    } catch {
+      setInitiatingEasebuzz(false);
+      setState({ kind: "error", message: "Network connection error. Please check your internet and try again." });
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -365,7 +414,7 @@ export function DonationVerificationForm() {
               className="rounded-lg border border-line bg-white px-3 py-2.5 font-normal text-xs sm:text-sm text-ink outline-none focus:border-brand-600"
             >
               <option value="upi">Direct UPI (Zero 0% Transaction Fee - GPay/PhonePe/BHIM)</option>
-              <option value="gateway">Online Payment Gateway (Razorpay NGO - Cards / NetBanking)</option>
+              <option value="gateway">Online Payment Gateway (Easebuzz - UPI 0% / Cards / NetBanking)</option>
               <option value="bank_transfer">Bank Transfer (NEFT / RTGS / IMPS)</option>
               <option value="other">Other verified method</option>
             </select>
@@ -524,35 +573,39 @@ export function DonationVerificationForm() {
           </div>
 
           {paymentMethod === "gateway" ? (
-            <div className="sm:col-span-2 rounded-xl border border-indigo-200 bg-indigo-50/50 p-4">
+            <div className="sm:col-span-2 rounded-xl border border-emerald-300 bg-emerald-50/70 p-4 shadow-2xs">
               <div className="flex items-start gap-3">
-                <ShieldCheck className="h-5 w-5 text-indigo-700 shrink-0 mt-0.5" />
+                <Zap className="h-5 w-5 text-emerald-700 shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="text-xs sm:text-sm font-bold text-indigo-950">
-                    Online Payment Gateway (Razorpay NGO Partner)
-                  </h4>
-                  <p className="mt-1 text-[11.5px] text-indigo-900/80 leading-relaxed">
-                    Razorpay Non-Profit program offers <strong>0% fee on UPI &amp; RuPay debit cards</strong>, and a subsidized 1.5% fee on NetBanking and credit cards. When you click below, your contribution is processed securely and an instant transaction ID is generated.
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-xs sm:text-sm font-bold text-emerald-950">
+                      Easebuzz NGO Payment Gateway
+                    </h4>
+                    <span className="rounded-full bg-emerald-200/90 px-2 py-0.5 text-[10px] font-bold text-emerald-900">
+                      Direct Checkout
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[11.5px] text-emerald-900/80 leading-relaxed">
+                    Pay securely with <strong>UPI (0% fee)</strong>, Indian &amp; International Debit/Credit Cards, or 50+ NetBanking options. You will be redirected to Easebuzz's secure checkout page, and your official 80G certificate with PAN will be generated immediately upon confirmation.
                   </p>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => {
-                        const fakeGatewayId = `pay_rzp_${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
-                        setPaymentReference(fakeGatewayId);
-                        if (!paymentDate) {
-                          setPaymentDate(new Date().toISOString().split("T")[0] || "");
-                        }
-                      }}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs hover:bg-indigo-800 transition"
+                      disabled={initiatingEasebuzz}
+                      onClick={handleEasebuzzCheckout}
+                      className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-emerald-800 disabled:opacity-60 transition"
                     >
-                      <span>Simulate Online Checkout / Generate Gateway ID</span>
+                      {initiatingEasebuzz ? (
+                        <LoaderCircle className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Zap className="h-4 w-4" />
+                      )}
+                      <span>{initiatingEasebuzz ? "Connecting to Easebuzz…" : "Proceed to Pay with Easebuzz"}</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </button>
-                    {paymentReference && paymentReference.startsWith("pay_rzp_") && (
-                      <span className="inline-flex items-center text-xs font-mono font-bold text-indigo-900 bg-white px-2 py-1 rounded border border-indigo-200">
-                        {paymentReference}
-                      </span>
-                    )}
+                    <span className="text-[11px] text-emerald-800 font-medium">
+                      Instant 80G Tax Exemption Certificate
+                    </span>
                   </div>
                 </div>
               </div>

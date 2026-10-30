@@ -45,6 +45,7 @@ export interface StudioSubModule {
 
 export const STUDIO_SUB_MODULES: StudioSubModule[] = [
   { id: "certificate", label: "Donation Certificate", href: "/admin/customize?tab=certificate", icon: Award, badge: "Live Preview" },
+  { id: "payment", label: "Payment Gateway (Easebuzz)", href: "/admin/customize?tab=payment", icon: KeyRound, badge: "Easebuzz" },
   { id: "videos", label: "Video Archives & Films", href: "/admin/customize?tab=videos", icon: ListVideo },
   { id: "sections", label: "Homepage Sections & Order", href: "/admin/customize?tab=sections", icon: Layers },
   { id: "story", label: "Our Story & Milestones", href: "/admin/customize?tab=story", icon: Route },

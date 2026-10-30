@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, FileCheck2 } from "lucide-react";
+import { ArrowLeft, FileCheck2, KeyRound } from "lucide-react";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { db } from "@/lib/db";
 import { DonationManager, type DonationRow } from "@/components/admin/DonationManager";
@@ -23,7 +23,7 @@ export default async function DonationsAdminPage() {
           document_name TEXT,
           amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
           currency CHAR(3) NOT NULL DEFAULT 'INR',
-          payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'other')),
+          payment_method TEXT NOT NULL CHECK (payment_method IN ('upi', 'bank_transfer', 'gateway', 'online', 'other')),
           payment_reference TEXT NOT NULL,
           payment_date DATE,
           status TEXT NOT NULL DEFAULT 'submitted' CHECK (status IN ('submitted', 'under_review', 'verified', 'rejected', 'certificate_issued')),
@@ -86,9 +86,18 @@ export default async function DonationsAdminPage() {
             <p className="text-xs font-bold uppercase tracking-[.18em] text-brand-700">BSGSS Control Centre</p>
             <h1 className="font-display text-xl font-bold text-ink">Donation & Payment Verification</h1>
           </div>
-          <Link href="/admin" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:underline">
-            <ArrowLeft className="h-4 w-4" />Dashboard
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/admin/customize?tab=payment"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink shadow-2xs hover:bg-sand-50 transition"
+            >
+              <KeyRound className="h-3.5 w-3.5 text-brand-700" />
+              <span>Easebuzz Gateway Keys</span>
+            </Link>
+            <Link href="/admin" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:underline">
+              <ArrowLeft className="h-4 w-4" />Dashboard
+            </Link>
+          </div>
         </div>
       </header>
       <div className="mx-auto max-w-7xl px-5 py-8 md:px-8">

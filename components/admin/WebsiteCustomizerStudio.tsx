@@ -20,6 +20,7 @@ import {
   Globe,
   HelpCircle,
   Image as ImageIcon,
+  KeyRound,
   Layers,
   MapPin,
   MessageCircle,
@@ -59,6 +60,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { RenderedCertificatePreview } from "@/components/support/RenderedCertificatePreview";
+import { EasebuzzSettingsPanel } from "@/components/admin/EasebuzzSettingsPanel";
 import {
   AMBIENT_TRACK_PRESETS,
   DEFAULT_CUSTOMIZER_SETTINGS,
@@ -100,6 +102,7 @@ type CustomizerTabId =
   | "sections"
   | "videos"
   | "certificate"
+  | "payment"
   | "story"
   | "social"
   | "popup"
@@ -119,6 +122,7 @@ export const CUSTOMIZER_MODULES: {
   category: string;
 }[] = [
   { id: "certificate", label: "Donation Certificate", icon: Award, badge: "Live Preview", category: "DONATIONS" },
+  { id: "payment", label: "Payment Gateway (Easebuzz)", icon: KeyRound, badge: "Easebuzz", category: "DONATIONS" },
   { id: "videos", label: "Video Archives & Films", icon: ListVideo, category: "MEDIA" },
   { id: "sections", label: "Homepage Sections & Order", icon: Layers, category: "STRUCTURE" },
   { id: "story", label: "Our Story & Milestones", icon: Route, category: "CONTENT" },
@@ -718,6 +722,13 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
 
       {/* Full-Width Workspace (Navigated cleanly via main sidebar accordion) */}
       <div className="w-full space-y-6">
+
+      {/* Tab Content: Easebuzz Payment Gateway */}
+      {activeTab === "payment" && (
+        <div className="rounded-xl border border-line bg-white p-6 shadow-sm">
+          <EasebuzzSettingsPanel />
+        </div>
+      )}
 
       {/* Tab Content 1: Homepage Section Reordering & Visibility */}
       {activeTab === "sections" && (
