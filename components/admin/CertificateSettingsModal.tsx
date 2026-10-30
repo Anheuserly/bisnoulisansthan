@@ -617,13 +617,13 @@ export function CertificateSettingsModal({
                       <label className="block text-xs font-semibold text-ink">
                         Statutory Seal / Rubber Stamp Style
                       </label>
-                      {form.stampUrl && (
+                      {form.stampUrl && form.stampUrl !== "/images/bsgss/stamps/bsgss-official-stamp.png" && (
                         <button
                           type="button"
-                          onClick={() => setForm({ ...form, stampUrl: "", showDefaultSealSvg: true })}
-                          className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline"
+                          onClick={() => setForm({ ...form, stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png", showDefaultSealSvg: true })}
+                          className="text-[10px] font-semibold text-brand-700 hover:text-brand-900 underline"
                         >
-                          Reset to Vector Seal
+                          Reset to Official Stamp
                         </button>
                       )}
                     </div>
@@ -655,19 +655,6 @@ export function CertificateSettingsModal({
                       >
                         <Upload className="h-3.5 w-3.5 text-brand-700" />
                         Upload Custom Stamp
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setForm({ ...form, stampUrl: "", showDefaultSealSvg: true })}
-                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition cursor-pointer ${
-                          !form.stampUrl
-                            ? "border-brand-700 bg-brand-700 text-white shadow-2xs"
-                            : "border-line bg-white text-ink hover:bg-sand-100"
-                        }`}
-                      >
-                        <Award className="h-3.5 w-3.5" />
-                        Vector Rosette
                       </button>
                     </div>
 

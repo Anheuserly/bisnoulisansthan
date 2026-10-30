@@ -2010,7 +2010,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                 {/* Stamp & Seal Mode Selector */}
                 <div className="space-y-2">
                   <label className="block text-xs font-semibold text-ink">Statutory Seal Style Preset</label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
                     <button
                       type="button"
                       onClick={() =>
@@ -2023,13 +2023,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                           },
                         })
                       }
-                      className={cn(
-                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
-                        (settings.certificate?.stampUrl === "/images/bsgss/stamps/bsgss-official-stamp.png" ||
-                          (!settings.certificate?.stampUrl && settings.certificate?.stampUrl !== ""))
-                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
-                          : "border-line bg-white hover:border-brand-300 text-ink"
-                      )}
+                      className="w-full flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-1">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -2045,34 +2039,6 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                           <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Default</span>
                         </div>
                         <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Physical blue ink seal (Regd. S-26792)</p>
-                      </div>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSettings({
-                          ...settings,
-                          certificate: {
-                            ...settings.certificate,
-                            stampUrl: "",
-                            showDefaultSealSvg: true,
-                          },
-                        })
-                      }
-                      className={cn(
-                        "flex items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all",
-                        settings.certificate?.stampUrl === ""
-                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
-                          : "border-line bg-white hover:border-brand-300 text-ink"
-                      )}
-                    >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-100">
-                        <Award className="h-6 w-6 text-brand-700" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-bold truncate">Vector Rosette Seal</p>
-                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Crisp SVG statutory emblem &amp; text</p>
                       </div>
                     </button>
                   </div>
