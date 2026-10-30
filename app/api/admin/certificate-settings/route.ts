@@ -60,7 +60,8 @@ export async function POST(request: Request) {
   }
 
   const mergedCert: CustomizerCertificateConfig = {
-    logoUrl: String(incoming.logoUrl ?? current.certificate.logoUrl ?? "/images/bsgss/branding/581-logo-4.png").trim(),
+    logoUrl: String(incoming.logoUrl ?? current.certificate.logoUrl ?? "/images/bsgss/bsgss-emblem.png").trim(),
+    logoPosition: incoming.logoPosition === "left" ? "left" : "top-center",
     signatoryName: String(incoming.signatoryName || current.certificate.signatoryName).trim(),
     signatoryRole: String(incoming.signatoryRole || current.certificate.signatoryRole).trim(),
     organizationName: String(incoming.organizationName || current.certificate.organizationName).trim(),
@@ -82,6 +83,11 @@ export async function POST(request: Request) {
     darpanId: String(incoming.darpanId || current.certificate.darpanId).trim(),
     exemptionsText: String(incoming.exemptionsText || current.certificate.exemptionsText).trim(),
     officeAddressText: String(incoming.officeAddressText || current.certificate.officeAddressText).trim(),
+    orgPan: String(incoming.orgPan || current.certificate.orgPan || "AAATB7832M").trim(),
+    csrRegNo: String(incoming.csrRegNo || current.certificate.csrRegNo || "CSR00001405").trim(),
+    showPanColumn: incoming.showPanColumn !== undefined
+      ? Boolean(incoming.showPanColumn)
+      : (current.certificate.showPanColumn ?? true),
 
     certificateTitle: String(incoming.certificateTitle || current.certificate.certificateTitle).trim(),
     certificateSubtitle: String(incoming.certificateSubtitle || current.certificate.certificateSubtitle).trim(),

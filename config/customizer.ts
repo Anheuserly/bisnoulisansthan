@@ -236,6 +236,7 @@ export type CertificateSerialFormat = "prefix-padded" | "prefix-number" | "numbe
 
 export type CustomizerCertificateConfig = {
   logoUrl?: string;
+  logoPosition?: "top-center" | "left";
   signatoryName: string;
   signatoryRole: string;
   organizationName: string;
@@ -253,6 +254,9 @@ export type CustomizerCertificateConfig = {
   darpanId: string;
   exemptionsText: string;
   officeAddressText: string;
+  orgPan?: string;
+  csrRegNo?: string;
+  showPanColumn?: boolean;
 
   certificateTitle: string;
   certificateSubtitle: string;
@@ -1616,7 +1620,8 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     },
   ],
   certificate: {
-    logoUrl: "/images/bsgss/branding/581-logo-4.png",
+    logoUrl: "/images/bsgss/bsgss-emblem.png",
+    logoPosition: "top-center",
     signatoryName: "Nandita Bakshi",
     signatoryRole: "Chief Executive Officer (CEO)",
     organizationName: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
@@ -1630,10 +1635,13 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     stampUrl: "/images/bsgss/stamps/bsgss-official-stamp.png",
     showDefaultSealSvg: true,
 
-    legalRegText: "Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)",
+    legalRegText: "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)",
     darpanId: "DL/2016/0111645",
     exemptionsText: "Tax Exemptions under 12A & 80G",
-    officeAddressText: "Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in",
+    officeAddressText: "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in",
+    orgPan: "AAATB7832M",
+    csrRegNo: "CSR00001405",
+    showPanColumn: true,
 
     certificateTitle: "DONATION ACKNOWLEDGEMENT CERTIFICATE",
     certificateSubtitle: "Official Receipt Issued for Voluntary Support Towards Social & Community Welfare",

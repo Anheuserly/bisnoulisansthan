@@ -100,6 +100,7 @@ export interface RenderedCertificatePreviewProps {
   sampleAmount?: number;
   sampleReceiptNumber?: string;
   sampleIssuedDate?: string;
+  sampleDonorPan?: string;
   activeFocusSection?: string;
   /** When true, forces the locked 960px A4 landscape canvas */
   fixedLandscapeCanvas?: boolean;
@@ -111,6 +112,7 @@ export function RenderedCertificatePreview({
   sampleAmount = 20000,
   sampleReceiptNumber,
   sampleIssuedDate,
+  sampleDonorPan = "ABCDE1234F",
   activeFocusSection,
   fixedLandscapeCanvas = true,
 }: RenderedCertificatePreviewProps) {
@@ -159,57 +161,119 @@ export function RenderedCertificatePreview({
 
         {/* Inner Double Pinstripe Frame */}
         <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6`}>
-          {/* 1. Header Row (Horizontal 3-Section Balance: Logo Left, Legal Center, Receipt Right) */}
-          <div
-            className={`grid grid-cols-[180px_1fr_180px] items-center gap-4 border-b ${palette.headerBorder} pb-3.5 transition rounded-lg ${
-              activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
-            }`}
-          >
-            {/* Left: Official BSGSS Logo */}
-            <div className="shrink-0 flex items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={config.logoUrl || "/images/bsgss/branding/581-logo-4.png"}
-                alt={config.organizationName}
-                className="h-12 w-auto object-contain max-h-12 max-w-[175px]"
-              />
-            </div>
+          {/* 1. Header Row (Support for Top-Center Logo Above Name or Classic Left) */}
+          {config.logoPosition === "left" ? (
+            <div
+              className={`grid grid-cols-[160px_1fr_160px] items-center gap-4 border-b ${palette.headerBorder} pb-3.5 transition rounded-lg ${
+                activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
+              }`}
+            >
+              {/* Left: Official BSGSS Logo */}
+              <div className="shrink-0 flex items-center justify-start">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                  alt={config.organizationName}
+                  className="h-12 w-auto object-contain max-h-12 max-w-[150px]"
+                />
+              </div>
 
-            {/* Center: Legal & Statutory Identity */}
-            <div className="text-center px-2">
-              <p className={`text-[11.5px] font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight whitespace-nowrap`}>
-                {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
-              </p>
-              <p className="mt-1 text-[9.5px] text-ink-muted leading-tight font-medium whitespace-nowrap">
-                {config.legalRegText || "Registered under the Societies Registration Act XXI of 1860 (Registration No. S-26792/1994)"}
-              </p>
-              <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight whitespace-nowrap">
-                NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"}
-              </p>
-              <p className="mt-0.5 text-[9px] text-ink-subtle leading-tight whitespace-nowrap">
-                {config.officeAddressText || "Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in"}
-              </p>
-            </div>
+              {/* Center: Legal & Statutory Identity */}
+              <div className="text-center px-2">
+                <p className={`text-[11.5px] font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight whitespace-nowrap`}>
+                  {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
+                </p>
+                <p className="mt-1 text-[9.5px] text-ink-muted leading-tight font-medium whitespace-nowrap">
+                  {config.legalRegText || "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)"}
+                </p>
+                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight whitespace-nowrap">
+                  <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
+                  {config.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
+                </p>
+                <p className="mt-0.5 text-[9px] text-ink-subtle leading-tight whitespace-nowrap">
+                  {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
+                </p>
+              </div>
 
-            {/* Right: Certificate Meta Badge */}
-            <div className="shrink-0 text-right">
-              <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
-                <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                  Receipt Number
-                </span>
-                <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
-                  {displayReceiptNumber}
-                </span>
-                <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
-                  Date: <strong className="text-ink">{displayDate}</strong>
-                </span>
+              {/* Right: Certificate Meta Badge */}
+              <div className="shrink-0 text-right">
+                <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
+                  <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                    Receipt Number
+                  </span>
+                  <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
+                    {displayReceiptNumber}
+                  </span>
+                  <span className="block text-[8.5px] text-ink-muted mt-0.5 whitespace-nowrap">
+                    Date: <strong className="text-ink">{displayDate}</strong>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div
+              className={`border-b ${palette.headerBorder} pb-3 transition rounded-lg ${
+                activeFocusSection === "header" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
+              }`}
+            >
+              {/* Top Row: Left Tag, Centered Official Emblem, Right Receipt Badge */}
+              <div className="relative flex items-center justify-center min-h-[44px]">
+                {/* Left: Accreditation Ribbon */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2">
+                  <span className={`inline-flex items-center gap-1.5 rounded-md border ${palette.metaBadgeBorder} bg-sand-50/90 px-2.5 py-1 text-[8.5px] font-bold uppercase tracking-wider ${palette.subAccent} shadow-2xs`}>
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-700 animate-pulse" />
+                    Govt. Regd. Society · Estd. 1994
+                  </span>
+                </div>
+
+                {/* Center: Official Dove Emblem Placed Above the Name */}
+                <div className="flex flex-col items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={config.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                    alt={config.organizationName}
+                    className="h-11 sm:h-12 w-auto object-contain select-none drop-shadow-2xs transition-transform hover:scale-105"
+                  />
+                </div>
+
+                {/* Right: Certificate Meta Badge */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 text-right">
+                  <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1 text-right shadow-2xs`}>
+                    <span className={`block text-[8px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                      Receipt Number
+                    </span>
+                    <span className={`font-mono text-xs sm:text-sm font-bold whitespace-nowrap ${palette.metaNumber}`}>
+                      {displayReceiptNumber}
+                    </span>
+                    <span className="block text-[8px] text-ink-muted mt-0.5 whitespace-nowrap">
+                      Date: <strong className="text-ink">{displayDate}</strong>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Center Masthead: Name & Legal Accreditations with Prominent PAN */}
+              <div className="text-center mt-1 px-4">
+                <p className={`text-[12px] sm:text-[13px] font-black uppercase tracking-[.18em] ${palette.headingAccent} leading-tight whitespace-nowrap`}>
+                  {config.organizationName || "Bisnouli Sarvodaya Gramodyog Sewa Sansthan"}
+                </p>
+                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight font-medium whitespace-nowrap">
+                  {config.legalRegText || "Registered under the Societies Registration Act XXI of 1860 (Registration No. 226/1994-95 · S-26792/1994)"}
+                </p>
+                <p className="mt-0.5 text-[9.5px] text-ink-muted leading-tight whitespace-nowrap">
+                  <strong className="text-ink font-semibold">PAN: {config.orgPan || "AAATB7832M"}</strong> • {config.exemptionsText || "Tax Exemptions under 12A & 80G"} • NITI Aayog: <strong className="text-ink font-semibold">{config.darpanId || "DL/2016/0111645"}</strong>
+                  {config.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{config.csrRegNo}</strong></span> : null}
+                </p>
+                <p className="mt-0.5 text-[9px] text-ink-subtle leading-tight whitespace-nowrap">
+                  {config.officeAddressText || "Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* 2. Certificate Title Ribbon */}
           <div
-            className={`mt-4 text-center transition rounded-lg ${
+            className={`mt-3.5 text-center transition rounded-lg ${
               activeFocusSection === "wording" ? "ring-2 ring-brand-500/50 bg-brand-50/20 p-2" : ""
             }`}
           >
@@ -222,7 +286,7 @@ export function RenderedCertificatePreview({
           </div>
 
           {/* 3. Citation & Donor Highlight */}
-          <div className="mt-3 text-center">
+          <div className="mt-2.5 text-center">
             <p className="text-xs text-ink-muted leading-relaxed">
               {config.appreciationText || "This certifies with deepest appreciation and heartfelt gratitude that a voluntary contribution has been generously received from"}
             </p>
@@ -231,42 +295,95 @@ export function RenderedCertificatePreview({
               {sampleDonorName}
             </h2>
 
-            <p className="mx-auto mt-1.5 max-w-2xl text-[11px] text-ink-muted leading-relaxed">
+            <p className="mx-auto mt-1 max-w-2xl text-[11px] text-ink-muted leading-relaxed">
               {config.causeText || "towards advancing rural healthcare clinics, women's vocational skill training, education, and community self-reliance initiatives across underprivileged regions."}
             </p>
           </div>
 
-          {/* 4. Contribution Details Box (Horizontal Split - Clean without UPI/Ref) */}
-          <div className={`mt-3.5 rounded-xl border ${palette.boxBorder} ${palette.boxBg} p-3.5`}>
-            <div className="grid grid-cols-[1.3fr_1fr] gap-4 items-center">
-              {/* Left: Amount Highlight */}
-              <div className={`text-left border-r ${palette.boxDivider} pr-4`}>
-                <span className={`text-[9.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                  Contribution Received
-                </span>
-                <div className="mt-0.5 flex items-baseline gap-2.5">
-                  <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
-                    {formattedAmount}
+          {/* 4. Contribution Details Box (Dedicated PAN Column as requested in handwritten notes) */}
+          <div className={`mt-3 rounded-xl border ${palette.boxBorder} ${palette.boxBg} p-3 sm:p-3.5`}>
+            {config.showPanColumn !== false ? (
+              <div className="grid grid-cols-[1.2fr_auto_1.1fr] gap-3 sm:gap-4 items-center">
+                {/* Left: Amount Highlight */}
+                <div className={`text-left border-r ${palette.boxDivider} pr-3 sm:pr-4`}>
+                  <span className={`text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                    Contribution Received
                   </span>
-                  {inWords && (
-                    <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
-                      ({inWords})
+                  <div className="mt-0.5 flex flex-wrap items-baseline gap-2">
+                    <span className={`font-display text-2xl sm:text-[1.75rem] font-black ${palette.boxAmount} tracking-tight`}>
+                      {formattedAmount}
                     </span>
-                  )}
+                    {inWords && (
+                      <span className={`text-[11px] font-semibold italic ${palette.subAccent}`}>
+                        ({inWords})
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
-              <div className="flex flex-col items-end justify-center text-right space-y-1">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                  <span>Statutory Banking Reconciled &amp; Approved</span>
+                {/* Center: Dedicated PAN Column */}
+                <div className={`text-center px-3 sm:px-4 border-r ${palette.boxDivider}`}>
+                  <span className={`block text-[8.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                    Statutory PAN Record
+                  </span>
+                  <div className="mt-0.5 inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-line shadow-2xs">
+                    <span className="text-[9.5px] font-bold text-ink-muted">ORG PAN:</span>
+                    <span className="font-mono text-xs sm:text-[13px] font-black text-brand-900 tracking-wider">
+                      {config.orgPan || "AAATB7832M"}
+                    </span>
+                  </div>
+                  {sampleDonorPan && (
+                    <div className="mt-0.5 text-[8.5px] text-ink-muted">
+                      Donor PAN: <strong className="font-mono font-semibold text-ink">{sampleDonorPan}</strong>
+                    </div>
+                  )}
+                  <p className="text-[8px] text-emerald-800 font-medium">
+                    Valid for Section 80G Tax Exemption
+                  </p>
                 </div>
-                <p className="text-[9.5px] text-ink-muted">
-                  Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
-                </p>
+
+                {/* Right: Statutory Banking Certification & Tax Deductible */}
+                <div className="flex flex-col items-end justify-center text-right space-y-0.5 pl-1">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>Statutory Banking Reconciled</span>
+                  </div>
+                  <p className="text-[9px] text-ink-muted">
+                    Voluntary donation recognized under Section 80G &amp; 12A
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="grid grid-cols-[1.3fr_1fr] gap-4 items-center">
+                {/* Left: Amount Highlight */}
+                <div className={`text-left border-r ${palette.boxDivider} pr-4`}>
+                  <span className={`text-[9.5px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                    Contribution Received
+                  </span>
+                  <div className="mt-0.5 flex items-baseline gap-2.5">
+                    <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
+                      {formattedAmount}
+                    </span>
+                    {inWords && (
+                      <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
+                        ({inWords})
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
+                <div className="flex flex-col items-end justify-center text-right space-y-1">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span>Statutory Banking Reconciled &amp; Approved</span>
+                  </div>
+                  <p className="text-[9.5px] text-ink-muted">
+                    Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}

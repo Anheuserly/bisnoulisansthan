@@ -877,6 +877,47 @@ export function CertificateSettingsModal({
                       className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
                     />
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-ink">
+                        Organization PAN Number
+                      </label>
+                      <input
+                        type="text"
+                        value={form.orgPan || "AAATB7832M"}
+                        onChange={(e) => setForm({ ...form, orgPan: e.target.value.toUpperCase() })}
+                        placeholder="AAATB7832M"
+                        className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs uppercase font-bold text-ink outline-none transition focus:border-brand-600"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-ink">
+                        MCA CSR-1 Registration Number
+                      </label>
+                      <input
+                        type="text"
+                        value={form.csrRegNo || "CSR00001405"}
+                        onChange={(e) => setForm({ ...form, csrRegNo: e.target.value.toUpperCase() })}
+                        placeholder="CSR00001405"
+                        className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs uppercase text-ink outline-none transition focus:border-brand-600"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <input
+                      type="checkbox"
+                      id="showPanColumn_modal"
+                      checked={form.showPanColumn !== false}
+                      onChange={(e) => setForm({ ...form, showPanColumn: e.target.checked })}
+                      className="h-4 w-4 rounded border-line text-brand-700"
+                    />
+                    <label htmlFor="showPanColumn_modal" className="text-xs font-medium text-ink cursor-pointer">
+                      Display dedicated <strong>Statutory PAN Record</strong> column in the Contribution box
+                    </label>
+                  </div>
                 </div>
               )}
             </form>

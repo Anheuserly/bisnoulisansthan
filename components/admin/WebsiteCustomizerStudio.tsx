@@ -186,6 +186,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [sampleDonor, setSampleDonor] = useState("Shubham Kumar");
   const [sampleAmount, setSampleAmount] = useState(20000);
+  const [sampleDonorPan, setSampleDonorPan] = useState("ABCDE1234F");
   const [activeCertSection, setActiveCertSection] = useState<"header" | "appearance" | "signatory" | "seal" | "wording" | "numbering">("header");
 
   // Certificate A4 Landscape Zoom & Scaling Controls
@@ -282,6 +283,39 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
     };
     reader.readAsDataURL(file);
     // Reset input so same file can be re-selected if desired
+    e.target.value = "";
+  };
+
+  const logoFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleLogoFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file (PNG, JPG, SVG, WebP).");
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Image size should be under 3MB for optimal certificate rendering.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setSettings((prev) => ({
+          ...prev,
+          certificate: {
+            ...prev.certificate,
+            logoUrl: result,
+          },
+        }));
+      }
+    };
+    reader.readAsDataURL(file);
     e.target.value = "";
   };
 
@@ -1367,6 +1401,51 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                   </div>
                 </div>
 
+                {/* Statutory PAN Number & MCA CSR Registration */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-ink">
+                      Organization PAN Number <span className="text-brand-700">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={settings.certificate?.orgPan || "AAATB7832M"}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            orgPan: e.target.value.toUpperCase(),
+                          },
+                        })
+                      }
+                      placeholder="AAATB7832M"
+                      className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs uppercase font-bold text-ink outline-none transition focus:border-brand-600"
+                    />
+                    <p className="mt-0.5 text-[10px] text-ink-muted">Official Income Tax PAN for Section 80G</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-ink">MCA CSR Registration Number</label>
+                    <input
+                      type="text"
+                      value={settings.certificate?.csrRegNo || "CSR00001405"}
+                      onChange={(e) =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            csrRegNo: e.target.value.toUpperCase(),
+                          },
+                        })
+                      }
+                      placeholder="CSR00001405"
+                      className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs uppercase font-medium text-ink outline-none transition focus:border-brand-600"
+                    />
+                    <p className="mt-0.5 text-[10px] text-ink-muted">Ministry of Corporate Affairs CSR-1 ID</p>
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-xs font-semibold text-ink">Head Office Address &amp; Contact String</label>
                   <input
@@ -1381,28 +1460,175 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                         },
                       })
                     }
-                    placeholder="Head Office: B-180, Sector–31, Noida – 201301, U.P. | Tel: 011-46548002/03 | bsgssindia@yahoo.co.in"
+                    placeholder="Head Office: A-171, Ground Floor, Defence Colony, New Delhi - 110024 | Regd: B-180, Sector-31, Noida - 201301 | bsgssindia@yahoo.co.in"
                     className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink outline-none transition focus:border-brand-600"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-ink">Official Logo Image URL</label>
+                {/* Logo Placement & Presets */}
+                <div className="space-y-2 rounded-lg border border-line/70 bg-white p-3">
                   <input
-                    type="text"
-                    value={settings.certificate?.logoUrl || ""}
+                    ref={logoFileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    onChange={handleLogoFileUpload}
+                    className="hidden"
+                  />
+
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-semibold text-ink">Official Emblem / Logo Layout</label>
+                    <span className="text-[10px] text-ink-muted font-medium">Top Center is recommended</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            logoPosition: "top-center",
+                            logoUrl: "/images/bsgss/bsgss-emblem.png",
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2 text-left transition-all",
+                        settings.certificate?.logoPosition !== "left"
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sand-100 p-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/bsgss/bsgss-emblem.png"
+                          alt="Dove Emblem"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-xs font-bold truncate">Top Center (Above Name)</p>
+                          <span className="rounded bg-brand-700 px-1 py-0.2 text-[8px] font-bold text-white">Default</span>
+                        </div>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Emblem centered directly above name</p>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettings({
+                          ...settings,
+                          certificate: {
+                            ...settings.certificate,
+                            logoPosition: "left",
+                          },
+                        })
+                      }
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-lg border p-2 text-left transition-all",
+                        settings.certificate?.logoPosition === "left"
+                          ? "border-brand-700 bg-brand-50/70 text-brand-900 shadow-2xs ring-1 ring-brand-700"
+                          : "border-line bg-white hover:border-brand-300 text-ink"
+                      )}
+                    >
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sand-100">
+                        <Building2 className="h-4 w-4 text-brand-700" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold truncate">Classic Left Corner</p>
+                        <p className="text-[10px] text-ink-muted leading-tight mt-0.5">Side-by-side header row layout</p>
+                      </div>
+                    </button>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => logoFileInputRef.current?.click()}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-brand-300 bg-sand-50 px-3 py-1.5 text-xs font-semibold text-brand-800 shadow-2xs hover:bg-brand-100 transition cursor-pointer"
+                    >
+                      <Upload className="h-3.5 w-3.5 text-brand-700" />
+                      Upload Logo from Computer (PNG / JPG / SVG)
+                    </button>
+
+                    {settings.certificate?.logoUrl && settings.certificate?.logoUrl !== "/images/bsgss/bsgss-emblem.png" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              logoUrl: "/images/bsgss/bsgss-emblem.png",
+                              logoPosition: "top-center",
+                            },
+                          })
+                        }
+                        className="text-[10px] font-semibold text-amber-800 hover:text-amber-900 underline"
+                      >
+                        Reset to Official Emblem
+                      </button>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-ink-muted">
+                      Or Custom Logo Image URL / Path
+                    </label>
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={settings.certificate?.logoUrl || ""}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            certificate: {
+                              ...settings.certificate,
+                              logoUrl: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="/images/bsgss/bsgss-emblem.png"
+                        className="w-full rounded-lg border border-line bg-white px-3 py-1.5 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                      />
+                      {settings.certificate?.logoUrl && (
+                        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-sand-100 p-0.5 flex items-center justify-center">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={settings.certificate.logoUrl}
+                            alt="Logo Preview"
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Toggle for Dedicated PAN Column in Middle Box */}
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="showPanColumn_interactive"
+                    checked={settings.certificate?.showPanColumn !== false}
                     onChange={(e) =>
                       setSettings({
                         ...settings,
                         certificate: {
                           ...settings.certificate,
-                          logoUrl: e.target.value,
+                          showPanColumn: e.target.checked,
                         },
                       })
                     }
-                    placeholder="/images/bsgss/branding/581-logo-4.png"
-                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-xs text-ink outline-none transition focus:border-brand-600"
+                    className="h-4 w-4 rounded border-line text-brand-700"
                   />
+                  <label htmlFor="showPanColumn_interactive" className="text-xs font-medium text-ink cursor-pointer">
+                    Display dedicated <strong>Statutory PAN Record</strong> column in the Contribution box
+                  </label>
                 </div>
               </div>
 
@@ -2177,6 +2403,18 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       className="rounded border border-line bg-white px-2 py-1 text-xs font-medium text-ink w-32 outline-none focus:border-brand-600"
                     />
                   </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-ink-muted">Donor PAN:</span>
+                    <input
+                      type="text"
+                      value={sampleDonorPan}
+                      onChange={(e) => setSampleDonorPan(e.target.value.toUpperCase())}
+                      placeholder="ABCDE1234F"
+                      className="rounded border border-line bg-white px-2 py-1 font-mono text-xs uppercase font-medium text-ink w-28 outline-none focus:border-brand-600"
+                    />
+                  </div>
+
                   <div className="flex items-center gap-1.5">
                     <span className="text-[11px] font-semibold text-ink-muted">Amount:</span>
                     <div className="flex items-center gap-1">
@@ -2233,6 +2471,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       config={settings.certificate}
                       sampleDonorName={sampleDonor}
                       sampleAmount={sampleAmount}
+                      sampleDonorPan={sampleDonorPan}
                       activeFocusSection={activeCertSection}
                       fixedLandscapeCanvas={true}
                     />
@@ -2284,6 +2523,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
                       config={settings.certificate}
                       sampleDonorName={sampleDonor}
                       sampleAmount={sampleAmount}
+                      sampleDonorPan={sampleDonorPan}
                       activeFocusSection={activeCertSection}
                       fixedLandscapeCanvas={true}
                     />

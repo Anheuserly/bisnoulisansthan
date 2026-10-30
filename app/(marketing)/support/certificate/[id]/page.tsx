@@ -301,49 +301,107 @@ export default async function DonationCertificate({
 
           {/* Inner Double Pinstripe Frame */}
           <div className={`relative rounded-lg border ${palette.innerBorder} p-4 sm:p-6 print:p-4`}>
-            {/* 1. Header Row (Horizontal 3-Section Balance) */}
-            <div className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b ${palette.headerBorder} pb-4`}>
-              {/* Left: Official BSGSS Logo */}
-              <div className="shrink-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={certConfig.logoUrl || "/images/bsgss/branding/581-logo-4.png"}
-                  alt={certConfig.organizationName}
-                  className="h-12 sm:h-14 w-auto object-contain max-w-[200px] sm:max-w-[260px]"
-                />
-              </div>
+            {/* 1. Header Row (Top-Center Logo Above Name or Classic Left) */}
+            {certConfig.logoPosition === "left" ? (
+              <div className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6 border-b ${palette.headerBorder} pb-4`}>
+                {/* Left: Official BSGSS Logo */}
+                <div className="shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                    alt={certConfig.organizationName}
+                    className="h-12 sm:h-14 w-auto object-contain max-w-[150px] sm:max-w-[180px]"
+                  />
+                </div>
 
-              {/* Center: Legal & Statutory Identity */}
-              <div className="text-center px-2">
-                <p className={`text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
-                  {certConfig.organizationName}
-                </p>
-                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
-                  {certConfig.legalRegText}
-                </p>
-                <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
-                  NITI Aayog NGO Darpan: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong> • {certConfig.exemptionsText}
-                </p>
-                <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
-                  {certConfig.officeAddressText}
-                </p>
-              </div>
+                {/* Center: Legal & Statutory Identity */}
+                <div className="text-center px-2">
+                  <p className={`text-[11px] sm:text-xs font-extrabold uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
+                    {certConfig.organizationName}
+                  </p>
+                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
+                    {certConfig.legalRegText}
+                  </p>
+                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
+                    <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong>
+                    {certConfig.csrRegNo ? <span> • CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
+                  </p>
+                  <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
+                    {certConfig.officeAddressText}
+                  </p>
+                </div>
 
-              {/* Right: Certificate Meta Badge */}
-              <div className="shrink-0 text-right">
-                <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
-                  <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                    Receipt Number
-                  </span>
-                  <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
-                    {donation.certificateNumber}
-                  </span>
-                  <span className="block text-[9px] text-ink-muted mt-0.5">
-                    Date: <strong className="text-ink">{issued}</strong>
-                  </span>
+                {/* Right: Certificate Meta Badge */}
+                <div className="shrink-0 text-right">
+                  <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-3 py-1.5 text-right shadow-2xs`}>
+                    <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                      Receipt Number
+                    </span>
+                    <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
+                      {donation.certificateNumber}
+                    </span>
+                    <span className="block text-[9px] text-ink-muted mt-0.5">
+                      Date: <strong className="text-ink">{issued}</strong>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className={`border-b ${palette.headerBorder} pb-3.5`}>
+                {/* Top Row: Left Tag, Centered Official Emblem Above Name, Right Receipt Badge */}
+                <div className="relative flex items-center justify-center min-h-[44px]">
+                  {/* Left: Statutory Tag */}
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2">
+                    <span className={`inline-flex items-center gap-1.5 rounded-md border ${palette.metaBadgeBorder} bg-sand-50/90 px-2.5 py-1 text-[8.5px] sm:text-[9px] font-bold uppercase tracking-wider ${palette.subAccent} shadow-2xs`}>
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-700" />
+                      Govt. Regd. Society · Estd. 1994
+                    </span>
+                  </div>
+
+                  {/* Center: Official Emblem Placed Directly Above Organization Name */}
+                  <div className="flex flex-col items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={certConfig.logoUrl || "/images/bsgss/bsgss-emblem.png"}
+                      alt={certConfig.organizationName}
+                      className="h-11 sm:h-12 w-auto object-contain select-none drop-shadow-2xs"
+                    />
+                  </div>
+
+                  {/* Right: Receipt Meta Badge */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 text-right">
+                    <div className={`inline-block rounded-lg border ${palette.metaBadgeBorder} bg-sand-50/80 px-2.5 py-1 sm:px-3 sm:py-1.5 text-right shadow-2xs`}>
+                      <span className={`block text-[8.5px] sm:text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                        Receipt Number
+                      </span>
+                      <span className={`font-mono text-xs sm:text-sm font-bold ${palette.metaNumber}`}>
+                        {donation.certificateNumber}
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-ink-muted mt-0.5">
+                        Date: <strong className="text-ink">{issued}</strong>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Center Masthead: Name & Legal Accreditations with Prominent PAN */}
+                <div className="text-center mt-1 px-4">
+                  <p className={`text-[12px] sm:text-[13px] font-black uppercase tracking-[.18em] ${palette.headingAccent} leading-tight`}>
+                    {certConfig.organizationName}
+                  </p>
+                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight font-medium">
+                    {certConfig.legalRegText}
+                  </p>
+                  <p className="mt-0.5 text-[9.5px] sm:text-[10px] text-ink-muted leading-tight">
+                    <strong className="text-ink font-semibold">PAN: {certConfig.orgPan || "AAATB7832M"}</strong> • {certConfig.exemptionsText} • NITI Aayog: <strong className="text-ink font-semibold">{certConfig.darpanId}</strong>
+                    {certConfig.csrRegNo ? <span> • MCA CSR: <strong className="text-ink font-semibold">{certConfig.csrRegNo}</strong></span> : null}
+                  </p>
+                  <p className="mt-0.5 text-[9px] sm:text-[9.5px] text-ink-subtle">
+                    {certConfig.officeAddressText}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* 2. Certificate Title Ribbon */}
             <div className="mt-4 text-center">
@@ -370,37 +428,85 @@ export default async function DonationCertificate({
               </p>
             </div>
 
-            {/* 4. Contribution Details Box (Horizontal Split - Clean & Dignified without UPI/Ref clutter) */}
-            <div className={`mt-3.5 rounded-xl border ${palette.boxBorder} ${palette.boxBg} p-3.5 sm:p-4`}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-                {/* Left: Amount Highlight */}
-                <div className={`text-center sm:text-left sm:border-r ${palette.boxDivider} sm:pr-4`}>
-                  <span className={`text-[10px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
-                    Contribution Received
-                  </span>
-                  <div className="mt-0.5 flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
-                    <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
-                      {formattedAmount}
+            {/* 4. Contribution Details Box (Dedicated PAN Column as requested in handwritten notes) */}
+            <div className={`mt-3.5 rounded-xl border ${palette.boxBorder} ${palette.boxBg} p-3 sm:p-4`}>
+              {certConfig.showPanColumn !== false ? (
+                <div className="grid grid-cols-1 sm:grid-cols-[1.2fr_auto_1.1fr] gap-4 items-center">
+                  {/* Left: Amount Highlight */}
+                  <div className={`text-center sm:text-left sm:border-r ${palette.boxDivider} sm:pr-4`}>
+                    <span className={`text-[10px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                      Contribution Received
                     </span>
-                    {inWords && (
-                      <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
-                        ({inWords})
+                    <div className="mt-0.5 flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
+                      <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
+                        {formattedAmount}
                       </span>
-                    )}
+                      {inWords && (
+                        <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
+                          ({inWords})
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
-                <div className="flex flex-col items-center sm:items-end justify-center text-center sm:text-right space-y-1">
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span>Statutory Banking Reconciled &amp; Approved</span>
+                  {/* Center: Dedicated PAN Column */}
+                  <div className={`text-center sm:px-4 sm:border-r ${palette.boxDivider}`}>
+                    <span className={`block text-[9px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                      Statutory PAN Record
+                    </span>
+                    <div className="mt-0.5 inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-0.5 border border-line shadow-2xs">
+                      <span className="text-[9.5px] font-bold text-ink-muted">ORG PAN:</span>
+                      <span className="font-mono text-xs sm:text-sm font-black text-brand-900 tracking-wider">
+                        {certConfig.orgPan || "AAATB7832M"}
+                      </span>
+                    </div>
+                    <p className="text-[8.5px] text-emerald-800 font-medium mt-0.5">
+                      Valid for Section 80G Tax Exemption
+                    </p>
                   </div>
-                  <p className="text-[10px] text-ink-muted">
-                    Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
-                  </p>
+
+                  {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
+                  <div className="flex flex-col items-center sm:items-end justify-center text-center sm:text-right space-y-1">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                      <span>Statutory Banking Reconciled &amp; Approved</span>
+                    </div>
+                    <p className="text-[10px] text-ink-muted">
+                      Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                  {/* Left: Amount Highlight */}
+                  <div className={`text-center sm:text-left sm:border-r ${palette.boxDivider} sm:pr-4`}>
+                    <span className={`text-[10px] uppercase font-bold tracking-wider ${palette.subAccent}`}>
+                      Contribution Received
+                    </span>
+                    <div className="mt-0.5 flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
+                      <span className={`font-display text-2xl sm:text-3xl font-black ${palette.boxAmount} tracking-tight`}>
+                        {formattedAmount}
+                      </span>
+                      {inWords && (
+                        <span className={`text-xs font-semibold italic ${palette.subAccent}`}>
+                          ({inWords})
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Right: Statutory Banking Certification & Section 80G Tax Exemption */}
+                  <div className="flex flex-col items-center sm:items-end justify-center text-center sm:text-right space-y-1">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200 shadow-2xs">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                      <span>Statutory Banking Reconciled &amp; Approved</span>
+                    </div>
+                    <p className="text-[10px] text-ink-muted">
+                      Voluntary donation recognized under Section 80G &amp; 12A of the Income Tax Act
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 5. Bottom Formal Signatory & Authentication (Horizontal 3-Part Grid) */}
