@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL;
+const rawConnStr = process.env.DATABASE_URL;
+const connectionString = rawConnStr ? rawConnStr.replace(/^["']|["']$/g, "").trim() : undefined;
 const ssl =
   process.env.DATABASE_SSL === "true"
     ? { rejectUnauthorized: false }
