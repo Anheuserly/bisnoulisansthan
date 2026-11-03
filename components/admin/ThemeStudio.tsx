@@ -769,7 +769,7 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
         </div>
       </section>
 
-      {/* 3. Interactive Neon Card Glow & Corner Light Studio */}
+      {/* 3. Luminous Card Border & Atmospheric Shadow Studio (Presentation Style) */}
       <section className="rounded-2xl border border-line bg-white p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-line pb-5">
           <div>
@@ -778,35 +778,47 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
                 <Sparkles className="h-3.5 w-3.5" />
               </span>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">
-                Modern Interactive Atmosphere
+                Presentation Card Style
               </span>
-              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[0.6875rem] font-bold text-emerald-800">
-                Default: Green Active
+              <span
+                className={`rounded-full px-2.5 py-0.5 text-[0.6875rem] font-bold ${
+                  currentNeon.enabled
+                    ? "bg-emerald-100 text-emerald-800"
+                    : "bg-slate-100 text-slate-600"
+                }`}
+              >
+                {currentNeon.enabled ? "🟢 Active on Public Cards" : "⚪ Disabled (Original Cards)"}
               </span>
             </div>
             <h3 className="mt-1 font-display text-xl font-bold text-ink">
-              3. Interactive Neon Card Glow &amp; Corner Light Engine
+              3. Luminous Card Border &amp; Atmospheric Shadow Option
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-ink-muted">
-              Add glowing neon lights to card corners and responsive atmospheric shadow effects across all public and control centre cards.
+              Choose whether you want the glowing card effect from the presentation on or off across the website. Features an outer glowing border with atmospheric shadow radiating below each card.
             </p>
           </div>
 
           {/* Master Enable/Disable Toggle */}
           <div className="flex items-center gap-3 bg-sand-50 border border-line rounded-xl px-4 py-2.5 shrink-0">
-            <span className="text-xs font-bold text-ink">
-              {currentNeon.enabled !== false ? "Neon Glow Active" : "Neon Glow Disabled"}
-            </span>
+            <div className="text-right">
+              <div className="text-xs font-bold text-ink">
+                {currentNeon.enabled ? "Card Effect is ON" : "Card Effect is OFF"}
+              </div>
+              <div className="text-[0.6875rem] text-ink-muted">
+                {currentNeon.enabled ? "Glow & shadow active" : "Using standard clean cards"}
+              </div>
+            </div>
             <button
               type="button"
-              onClick={() => updateNeonGlow({ enabled: currentNeon.enabled === false ? true : false })}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
-                currentNeon.enabled !== false ? "bg-emerald-600" : "bg-slate-300"
+              onClick={() => updateNeonGlow({ enabled: !currentNeon.enabled })}
+              aria-label={currentNeon.enabled ? "Turn Off Card Effect" : "Turn On Card Effect"}
+              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+                currentNeon.enabled ? "bg-emerald-600 ring-2 ring-emerald-500/30" : "bg-slate-300"
               }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 shadow-sm ${
-                  currentNeon.enabled !== false ? "translate-x-6" : "translate-x-1"
+                className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-200 shadow-sm ${
+                  currentNeon.enabled ? "translate-x-6" : "translate-x-1"
                 }`}
               />
             </button>
@@ -822,10 +834,10 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
               <div className="flex items-center justify-between">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
-                    Neon Light &amp; Shadow Color
+                    Outer Border &amp; Below Shadow Color
                   </label>
                   <p className="mt-0.5 text-xs text-ink-muted">
-                    Color used for corner rays, border reflection and outer shadow
+                    Color used for the 2px outer border and radiant lower atmospheric shadow
                   </p>
                 </div>
                 <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-md">
@@ -837,13 +849,11 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {[
                   { name: "Emerald Green (Default)", color: "#10b981" },
+                  { name: "Amber Gold (Reference)", color: "#ffaa00" },
                   { name: "Cyber Lime", color: "#22c55e" },
-                  { name: "Matrix Green", color: "#00ff66" },
                   { name: "Electric Cyan", color: "#06b6d4" },
-                  { name: "Amber Gold", color: "#f59e0b" },
-                  { name: "Royal Violet", color: "#8b5cf6" },
-                  { name: "Neon Magenta", color: "#d946ef" },
-                  { name: "Coral Rose", color: "#f43f5e" },
+                  { name: "Royal Purple", color: "#8b5cf6" },
+                  { name: "Coral Pink", color: "#f43f5e" },
                 ].map((item) => (
                   <button
                     key={item.color}
@@ -890,114 +900,44 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
               </div>
             </div>
 
-            {/* Corner Light Style */}
+            {/* Intensity Selection */}
             <div className="rounded-xl border border-line bg-sand-50/50 p-4">
               <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
-                Corner Light &amp; Shadow Style
+                Shadow &amp; Glow Intensity
               </label>
               <p className="mt-0.5 text-xs text-ink-muted">
-                Choose how the luminous neon accents manifest on cards
+                Controls the spread and opacity of the atmospheric shadow below cards
               </p>
-              <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <div className="mt-3 grid grid-cols-3 gap-2">
                 {[
-                  {
-                    id: "corner-radiant",
-                    name: "Radiant Corner Glow",
-                    desc: "Luminous corner light flare & smooth ambient drop shadow",
-                  },
-                  {
-                    id: "corner-bracket",
-                    name: "Cyber Corner Bracket",
-                    desc: "High-tech neon angle brackets on corners with drop flare",
-                  },
-                  {
-                    id: "full-aura",
-                    name: "360° Neon Border Aura",
-                    desc: "Continuous illuminated neon border & outer atmospheric aura",
-                  },
-                  {
-                    id: "minimal-shadow",
-                    name: "Ambient Shadow Only",
-                    desc: "Soft colored atmospheric drop shadow without corner flares",
-                  },
-                ].map((s) => (
+                  { id: "subtle", name: "Subtle", desc: "Soft ambient drop shadow" },
+                  { id: "vibrant", name: "Vibrant", desc: "Balanced luminous glow" },
+                  { id: "intense", name: "Intense", desc: "Deep high-contrast bloom" },
+                ].map((lvl) => (
                   <button
-                    key={s.id}
+                    key={lvl.id}
                     type="button"
-                    onClick={() => updateNeonGlow({ style: s.id as NeonGlowStyle })}
-                    className={`flex flex-col text-left rounded-xl border p-3 transition ${
-                      (currentNeon.style || "corner-radiant") === s.id
-                        ? "border-emerald-600 bg-white shadow-xs ring-2 ring-emerald-500/30"
-                        : "border-line bg-white/70 hover:bg-white text-ink-muted"
+                    onClick={() => updateNeonGlow({ intensity: lvl.id as NeonGlowIntensity })}
+                    className={`flex flex-col text-left rounded-lg border p-3 transition ${
+                      (currentNeon.intensity || "vibrant") === lvl.id
+                        ? "border-emerald-600 bg-white text-ink shadow-xs ring-2 ring-emerald-500/30"
+                        : "border-line bg-white text-ink-muted hover:bg-sand-50"
                     }`}
                   >
-                    <span className="text-xs font-bold text-ink">{s.name}</span>
-                    <span className="mt-1 text-[0.6875rem] text-ink-muted leading-tight">{s.desc}</span>
+                    <span className="text-xs font-bold">{lvl.name}</span>
+                    <span className="mt-0.5 text-[0.6875rem] text-ink-muted">{lvl.desc}</span>
                   </button>
                 ))}
-              </div>
-            </div>
-
-            {/* Intensity & Corner Position */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {/* Intensity */}
-              <div className="rounded-xl border border-line bg-sand-50/50 p-4">
-                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
-                  Glow Intensity
-                </label>
-                <p className="mt-0.5 text-xs text-ink-muted">Luminance &amp; shadow spread</p>
-                <div className="mt-3 grid grid-cols-3 gap-1.5">
-                  {(["subtle", "vibrant", "intense"] as NeonGlowIntensity[]).map((lvl) => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={() => updateNeonGlow({ intensity: lvl })}
-                      className={`rounded-lg border py-2 text-xs font-semibold capitalize transition ${
-                        (currentNeon.intensity || "vibrant") === lvl
-                          ? "border-emerald-600 bg-emerald-600 text-white shadow-xs"
-                          : "border-line bg-white text-ink hover:bg-sand-50"
-                      }`}
-                    >
-                      {lvl}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Corner Position */}
-              <div className="rounded-xl border border-line bg-sand-50/50 p-4">
-                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
-                  Corner Positions
-                </label>
-                <p className="mt-0.5 text-xs text-ink-muted">Where the light accents sit</p>
-                <div className="mt-3 grid grid-cols-3 gap-1.5">
-                  {[
-                    { id: "both", label: "Diagonal (2)" },
-                    { id: "top-right", label: "Top-Right" },
-                    { id: "all", label: "All 4" },
-                  ].map((pos) => (
-                    <button
-                      key={pos.id}
-                      type="button"
-                      onClick={() => updateNeonGlow({ cornerPosition: pos.id as NeonCornerPosition })}
-                      className={`rounded-lg border py-2 text-xs font-semibold transition ${
-                        (currentNeon.cornerPosition || "both") === pos.id
-                          ? "border-emerald-600 bg-emerald-600 text-white shadow-xs"
-                          : "border-line bg-white text-ink hover:bg-sand-50"
-                      }`}
-                    >
-                      {pos.label}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
 
             {/* Interactive Hover Checkbox */}
             <div className="rounded-xl border border-line bg-sand-50/50 p-4 flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold text-ink">Interactive Hover Bloom &amp; Lift</span>
-                <p className="text-xs text-ink-muted">Card dynamically lifts and expands its neon corner flare when hovered.</p>
+                <span className="text-xs font-bold text-ink">Interactive Hover Elevation &amp; Lower Bloom</span>
+                <p className="text-xs text-ink-muted">
+                  Cards smoothly lift 5px and deepen their atmospheric glow underneath when hovered by the cursor.
+                </p>
               </div>
               <input
                 type="checkbox"
@@ -1008,68 +948,89 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
             </div>
           </div>
 
-          {/* Live Interactive Sandbox Card */}
+          {/* Live Interactive Sandbox Card (Matches Presentation Reference Design) */}
           <div className="lg:col-span-5 bg-sand-50/80 rounded-2xl border border-line p-6 flex flex-col items-center">
-            <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted mb-4">
-              Live Interactive Card Simulation (Try Hovering)
-            </span>
+            <div className="w-full flex items-center justify-between mb-4">
+              <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
+                Live Card Sandbox (Try Hovering)
+              </span>
+              <span
+                className="text-[0.6875rem] font-mono font-bold px-2 py-0.5 rounded"
+                style={{
+                  backgroundColor: currentNeon.enabled ? `${currentNeon.color || "#10b981"}22` : "#f1f5f9",
+                  color: currentNeon.enabled ? (currentNeon.color || "#10b981") : "#64748b",
+                }}
+              >
+                {currentNeon.enabled ? "Effect: ON" : "Effect: OFF"}
+              </span>
+            </div>
 
-            {/* The Sample Card with Live Neon Glow */}
+            {/* Presentation Spec Sample Card */}
             <div
-              className="design-card neon-card w-full max-w-sm rounded-2xl border bg-white p-6 transition-all duration-300 cursor-pointer select-none"
+              className="w-full max-w-sm rounded-[20px] bg-white p-3.5 transition-all duration-300 cursor-pointer select-none group"
               style={{
-                borderColor: currentNeon.enabled !== false ? `${currentNeon.color || "#10b981"}66` : undefined,
-                boxShadow: currentNeon.enabled !== false
-                  ? `0 0 24px -2px ${currentNeon.color || "#10b981"}44, 0 4px 14px rgba(16, 40, 48, 0.06)`
-                  : undefined,
+                border: currentNeon.enabled
+                  ? `2px solid ${currentNeon.color || "#10b981"}`
+                  : "1px solid #e2e8f0",
+                boxShadow: currentNeon.enabled
+                  ? `0 0 0 1px ${currentNeon.color || "#10b981"}66, 0 8px 24px -4px ${currentNeon.color || "#10b981"}88, 0 18px 36px -8px ${currentNeon.color || "#10b981"}44, 0 4px 12px rgba(0, 0, 0, 0.04)`
+                  : "0 1px 3px rgba(0,0,0,0.05)",
+                transform: "translateY(0px)",
+              }}
+              onMouseEnter={(e) => {
+                if (currentNeon.enabled && currentNeon.interactiveHover !== false) {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.boxShadow = `0 0 0 1.5px ${currentNeon.color || "#10b981"}cc, 0 14px 32px -2px ${currentNeon.color || "#10b981"}aa, 0 24px 48px -10px ${currentNeon.color || "#10b981"}66, 0 8px 16px rgba(0, 0, 0, 0.06)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (currentNeon.enabled) {
+                  e.currentTarget.style.transform = "translateY(0px)";
+                  e.currentTarget.style.boxShadow = `0 0 0 1px ${currentNeon.color || "#10b981"}66, 0 8px 24px -4px ${currentNeon.color || "#10b981"}88, 0 18px 36px -8px ${currentNeon.color || "#10b981"}44, 0 4px 12px rgba(0, 0, 0, 0.04)`;
+                } else {
+                  e.currentTarget.style.transform = "translateY(0px)";
+                  e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+                }
               }}
             >
-              {/* Category & Badge */}
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 font-mono">
-                  WOMEN EMPOWERMENT
-                </span>
-                <span
-                  className="rounded-full px-2.5 py-0.5 text-[0.6875rem] font-semibold text-white shadow-xs"
-                  style={{ backgroundColor: currentNeon.color || "#10b981" }}
-                >
-                  Active Flare
-                </span>
+              {/* Media Container at Top with Rounded Corners */}
+              <div className="aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-slate-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/bsgss/healthcare-camps/149-camp1.jpeg"
+                  alt="Rural Healthcare Clinic"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
               </div>
 
-              {/* Title & Body */}
-              <h4 className="mt-3 font-display text-lg font-bold text-ink">
-                Self-Help Group Weaving Guild
-              </h4>
-              <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-                Providing sustainable handloom skill training and micro-finance access to over 36,000 rural artisans.
-              </p>
-
-              {/* Interactive footer */}
-              <div className="mt-5 flex items-center justify-between border-t border-line/70 pt-3 text-xs">
-                <span className="font-semibold text-ink-muted">36,000+ Certified</span>
+              {/* Title & Body Below Image */}
+              <div className="p-3 text-center">
                 <span
-                  className="font-bold flex items-center gap-1 transition-transform group-hover:translate-x-1"
-                  style={{ color: currentNeon.color || "#10b981" }}
+                  className="text-[0.6875rem] font-bold uppercase tracking-wider block mb-1"
+                  style={{ color: currentNeon.enabled ? (currentNeon.color || "#10b981") : "#236873" }}
                 >
-                  Explore Guild →
+                  Healthcare Outreach
                 </span>
+                <h4 className="font-display text-sm font-bold text-ink leading-snug">
+                  Mobile Cancer Screening &amp; Diagnostic Camp
+                </h4>
               </div>
             </div>
 
+            {/* Sandbox Details */}
             <div className="mt-6 w-full space-y-2 border-t border-slate-200/70 pt-4 text-xs text-ink-muted">
               <div className="flex justify-between">
-                <span>Selected Glow:</span>
-                <span className="font-mono font-bold text-ink">{currentNeon.color || "#10b981"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Active Style:</span>
-                <span className="font-semibold capitalize text-ink">
-                  {currentNeon.style || "corner-radiant"}
+                <span>Card Status:</span>
+                <span className="font-bold text-ink">
+                  {currentNeon.enabled ? "Enabled on Cards" : "Disabled (Original)"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Intensity:</span>
+                <span>Selected Glow Color:</span>
+                <span className="font-mono font-bold text-ink">{currentNeon.color || "#10b981"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Shadow Intensity:</span>
                 <span className="font-semibold capitalize text-ink">
                   {currentNeon.intensity || "vibrant"}
                 </span>
@@ -1081,7 +1042,7 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
         {/* Section Save & Publish Button */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
           <p className="text-xs text-ink-muted">
-            Click <strong>Publish Site-wide</strong> to push these neon corner glow and shadow settings live across all public cards.
+            Click <strong>Publish Card Effect Site-wide</strong> to save and apply this setting across all public cards.
           </p>
           <button
             type="button"
@@ -1090,7 +1051,7 @@ export function ThemeStudio({ initialTheme }: { initialTheme: ThemeConfig }) {
             className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 shadow-xs disabled:opacity-50"
           >
             <Save className="h-4 w-4" />
-            {saving ? "Publishing…" : "Publish Neon Card Glow"}
+            {saving ? "Publishing…" : "Publish Card Effect Site-wide"}
           </button>
         </div>
       </section>
