@@ -43,10 +43,10 @@ export type NeonCardGlowConfig = {
 };
 
 export const DEFAULT_NEON_CARD_GLOW: NeonCardGlowConfig = {
-  enabled: true,
-  color: "#10b981",          // Green is default as requested
-  style: "corner-radiant",
-  intensity: "vibrant",
+  enabled: false,
+  color: "#10b981",          // Green is default
+  style: "full-aura",
+  intensity: "subtle",
   cornerPosition: "both",
   interactiveHover: true,
 };

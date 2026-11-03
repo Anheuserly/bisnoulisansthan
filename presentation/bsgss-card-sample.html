@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSGSS Field Chronicle - Card Glow Presentation</title>
+  <style>
+    :root {
+      --neon-color: #10b981; /* Green Default */
+      --neon-rgb: 16, 185, 129;
+      --card-radius: 20px;
+      --card-img-radius: 14px;
+      --card-bg: #ffffff;
+      --card-border-width: 2px;
+      --page-bg: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --glow-blur: 24px;
+      --glow-opacity: 0.55;
+    }
+
+    [data-theme="dark"] {
+      --page-bg: #090d16;
+      --card-bg: #111827;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 3rem 1.5rem 5rem;
+      transition: background-color 300ms ease, color 300ms ease;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--neon-color);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin: 2rem auto 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toolbar-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .color-swatches {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .swatch {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .swatch.active {
+      box-shadow: 0 0 0 2.5px var(--card-bg), 0 0 0 4.5px var(--neon-color);
+      transform: scale(1.1);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: var(--card-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+
+    .btn:hover {
+      background: rgba(var(--neon-rgb), 0.1);
+      border-color: var(--neon-color);
+      color: var(--neon-color);
+    }
+
+    .btn.active {
+      background: var(--neon-color);
+      border-color: var(--neon-color);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(var(--neon-rgb), 0.4);
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 1100px) {
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card Component */
+    .neon-spec-card {
+      background-color: var(--card-bg);
+      border-radius: var(--card-radius);
+      padding: 0.875rem;
+      border: var(--card-border-width) solid var(--neon-color);
+      box-shadow:
+        0 0 0 1px rgba(var(--neon-rgb), 0.5),
+        0 8px var(--glow-blur) -4px rgba(var(--neon-rgb), var(--glow-opacity)),
+        0 18px 36px -8px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 0.45)),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 280ms ease;
+    }
+
+    .neon-spec-card:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 0 0 1.5px rgba(var(--neon-rgb), 0.8),
+        0 14px calc(var(--glow-blur) * 1.35) -2px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 1.3)),
+        0 24px 48px -10px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 0.7)),
+        0 8px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-media {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--card-img-radius);
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 400ms ease;
+    }
+
+    .neon-spec-card:hover .card-media img {
+      transform: scale(1.05);
+    }
+
+    .card-body {
+      padding: 1rem 0.5rem 0.5rem;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-category {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--neon-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="eyebrow">Community Action & Public Record</div>
+      <h1>Moments & Stories from the Field</h1>
+      <p class="subtitle">
+        Authentic photographs from BSGSS programs using the outer neon border and bottom atmospheric shadow.
+      </p>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <span class="toolbar-label">Glow Color:</span>
+        <div class="color-swatches">
+          <button class="swatch active" style="background: #10b981;" onclick="setColor('#10b981', '16, 185, 129')"></button>
+          <button class="swatch" style="background: #ffaa00;" onclick="setColor('#ffaa00', '255, 170, 0')"></button>
+          <button class="swatch" style="background: #06b6d4;" onclick="setColor('#06b6d4', '6, 182, 212')"></button>
+          <button class="swatch" style="background: #8b5cf6;" onclick="setColor('#8b5cf6', '139, 92, 246')"></button>
+          <button class="swatch" style="background: #f43f5e;" onclick="setColor('#f43f5e', '244, 63, 94')"></button>
+        </div>
+      </div>
+
+      <div class="toolbar-group">
+        <span class="toolbar-label">Intensity:</span>
+        <button class="btn" onclick="setIntensity('subtle', this)">Subtle</button>
+        <button class="btn active" onclick="setIntensity('vibrant', this)">Vibrant</button>
+        <button class="btn" onclick="setIntensity('intense', this)">Intense</button>
+      </div>
+
+      <div class="toolbar-group">
+        <button class="btn" onclick="toggleDarkMode()">🌙 Toggle Dark Background</button>
+      </div>
+    </div>
+
+    <!-- BSGSS Authentic Photo Cards Grid -->
+    <div class="card-grid">
+      
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/healthcare-camps/149-camp1.jpeg" alt="Mobile Cancer Screening" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Healthcare Outreach</span>
+          <h3 class="card-title">Mobile Cancer Screening &amp; Diagnostic Camp</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/gallery-training/185-tal1.jpeg" alt="Tailoring Craft Guild" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Skills &amp; Livelihoods</span>
+          <h3 class="card-title">Vocational Tailoring &amp; Garment Craft Guild</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/gallery-community/200-whatsapp-image-2025-10-09-at-16-49-32-aab7df99.jpg" alt="SHG Council" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Women Empowerment</span>
+          <h3 class="card-title">Gramodyog Self Help Group Council</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/healthcare-camps/150-camp3.jpeg" alt="Physician Consultations" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Healthcare Outreach</span>
+          <h3 class="card-title">Physician Consultations &amp; Free Medication</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/education/146-class1.jpeg" alt="Rural Literacy" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Education &amp; Literacy</span>
+          <h3 class="card-title">Rural Literacy &amp; Digital Classroom</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/gallery-training/186-tal2.jpeg" alt="Sewing Workshop" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Skills &amp; Livelihoods</span>
+          <h3 class="card-title">Advanced Sewing &amp; Pattern Cutting Workshop</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/healthcare-camps/151-camp4.jpeg" alt="Eye Care Clinic" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Healthcare Outreach</span>
+          <h3 class="card-title">Preventive Eye Care &amp; Spectacle Distribution</h3>
+        </div>
+      </div>
+
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="../public/images/bsgss/gallery-community/199-whatsapp-image-2025-10-09-at-16-49-32-991a8f3a.jpg" alt="Panchayat Dialogue" />
+        </div>
+        <div class="card-body">
+          <span class="card-category">Women Empowerment</span>
+          <h3 class="card-title">Village Leadership &amp; Panchayat Dialogue</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function setColor(hex, rgb) {
+      document.documentElement.style.setProperty('--neon-color', hex);
+      document.documentElement.style.setProperty('--neon-rgb', rgb);
+      document.querySelectorAll('.swatch').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('style').includes(hex));
+      });
+    }
+
+    function setIntensity(level, buttonEl) {
+      const root = document.documentElement;
+      if (level === 'subtle') {
+        root.style.setProperty('--glow-blur', '14px');
+        root.style.setProperty('--glow-opacity', '0.35');
+      } else if (level === 'vibrant') {
+        root.style.setProperty('--glow-blur', '24px');
+        root.style.setProperty('--glow-opacity', '0.55');
+      } else if (level === 'intense') {
+        root.style.setProperty('--glow-blur', '36px');
+        root.style.setProperty('--glow-opacity', '0.78');
+      }
+
+      buttonEl.parentElement.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+      buttonEl.classList.add('active');
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    }
+  </script>
+</body>
+</html>

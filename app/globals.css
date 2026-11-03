@@ -276,146 +276,32 @@ html[data-card-style="outlined"] .design-card:hover {
 }
 
 /* ==============================================================================
-   INTERACTIVE NEON CORNER GLOW & ATMOSPHERIC CARD SHADOW SYSTEM
-   Managed via Admin Theme Studio. Green (#10b981) is default.
+   OPTIONAL NEON CARD BORDER & SHADOW GLOW SYSTEM (MATCHING REFERENCE SPEC)
+   Managed via Admin Theme Studio. Off by default to preserve original design.
    ============================================================================== */
 
 html[data-card-neon-glow="true"] .neon-card,
 html[data-card-neon-glow="true"] .design-card,
-html[data-card-neon-glow="true"] [data-neon-card],
-html[data-card-neon-glow="true"] article.rounded-xl,
-html[data-card-neon-glow="true"] article.rounded-2xl,
-html[data-card-neon-glow="true"] .group.rounded-2xl.border,
-html[data-card-neon-glow="true"] .group.rounded-xl.border {
+html[data-card-neon-glow="true"] [data-neon-card] {
   position: relative;
-  box-shadow: 0 0 var(--neon-glow-blur, 20px) -4px rgba(var(--neon-glow-rgb, 16, 185, 129), calc(var(--neon-glow-opacity, 0.6) * 0.45)),
-              0 4px 14px rgba(16, 40, 48, 0.05);
-  border-color: rgba(var(--neon-glow-rgb, 16, 185, 129), 0.35) !important;
+  box-shadow: 0 0 0 1.5px var(--neon-glow-color, #10b981),
+              0 8px 24px -4px rgba(var(--neon-glow-rgb, 16, 185, 129), calc(var(--neon-glow-opacity, 0.5) * 0.7)),
+              0 4px 12px rgba(16, 40, 48, 0.05);
+  border-color: var(--neon-glow-color, #10b981) !important;
   transition: box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
               border-color 300ms ease,
               transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Interactive Hover Neon Blooming & Elevation */
+/* Interactive Hover Neon Blooming & Elevation (Shadow strictly below & around card) */
 html[data-card-neon-glow="true"] .neon-card:hover,
 html[data-card-neon-glow="true"] .design-card:hover,
-html[data-card-neon-glow="true"] [data-neon-card]:hover,
-html[data-card-neon-glow="true"] article.rounded-xl:hover,
-html[data-card-neon-glow="true"] article.rounded-2xl:hover,
-html[data-card-neon-glow="true"] .group.rounded-2xl.border:hover,
-html[data-card-neon-glow="true"] .group.rounded-xl.border:hover {
-  box-shadow: 0 0 calc(var(--neon-glow-blur, 24px) * 1.4) 2px rgba(var(--neon-glow-rgb, 16, 185, 129), calc(var(--neon-glow-opacity, 0.65) * 0.85)),
-              0 14px 28px -4px rgba(16, 40, 48, 0.1);
-  border-color: rgba(var(--neon-glow-rgb, 16, 185, 129), 0.85) !important;
-  transform: translateY(-3px);
-}
-
-/* Top-Right Corner Neon Light Ray/Glow */
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .neon-card::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .design-card::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) [data-neon-card]::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) article.rounded-xl::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) article.rounded-2xl::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .group.rounded-2xl.border::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .group.rounded-xl.border::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 4.25rem;
-  height: 4.25rem;
-  background: radial-gradient(circle at 100% 0%, rgba(var(--neon-glow-rgb, 16, 185, 129), 0.85) 0%, rgba(var(--neon-glow-rgb, 16, 185, 129), 0.3) 38%, transparent 72%);
-  border-top-right-radius: inherit;
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0.85;
-  transition: opacity 280ms ease, width 280ms cubic-bezier(0.16, 1, 0.3, 1), height 280ms cubic-bezier(0.16, 1, 0.3, 1), filter 280ms ease;
-}
-
-/* Bottom-Left Corner Neon Light (Diagonal Balance for "both" & "all") */
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .neon-card::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .design-card::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) [data-neon-card]::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) article.rounded-xl::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) article.rounded-2xl::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .group.rounded-2xl.border::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .group.rounded-xl.border::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 3.75rem;
-  height: 3.75rem;
-  background: radial-gradient(circle at 0% 100%, rgba(var(--neon-glow-rgb, 16, 185, 129), 0.72) 0%, rgba(var(--neon-glow-rgb, 16, 185, 129), 0.22) 38%, transparent 72%);
-  border-bottom-left-radius: inherit;
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0.75;
-  transition: opacity 280ms ease, width 280ms cubic-bezier(0.16, 1, 0.3, 1), height 280ms cubic-bezier(0.16, 1, 0.3, 1), filter 280ms ease;
-}
-
-/* Interactive Hover Neon Flare Expansion */
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .neon-card:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .design-card:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) [data-neon-card]:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) article.rounded-xl:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) article.rounded-2xl:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .group.rounded-2xl.border:hover::before,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]) .group.rounded-xl.border:hover::before {
-  opacity: 1;
-  width: 5.75rem;
-  height: 5.75rem;
-  filter: brightness(1.28);
-}
-
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .neon-card:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .design-card:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) [data-neon-card]:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) article.rounded-xl:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) article.rounded-2xl:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .group.rounded-2xl.border:hover::after,
-html[data-card-neon-glow="true"]:not([data-neon-style="minimal-shadow"]):not([data-neon-corners="top-right"]) .group.rounded-xl.border:hover::after {
-  opacity: 1;
-  width: 5rem;
-  height: 5rem;
-  filter: brightness(1.28);
-}
-
-/* Corner Bracket High-Tech Neon Accent Style */
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] .neon-card::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] .design-card::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] [data-neon-card]::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] article.rounded-xl::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] article.rounded-2xl::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] .group.rounded-2xl.border::before,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"] .group.rounded-xl.border::before {
-  border-top: 3px solid var(--neon-glow-color, #10b981);
-  border-right: 3px solid var(--neon-glow-color, #10b981);
-  box-shadow: 0 0 12px rgba(var(--neon-glow-rgb, 16, 185, 129), 0.7);
-}
-
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) .neon-card::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) .design-card::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) [data-neon-card]::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) article.rounded-xl::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) article.rounded-2xl::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) .group.rounded-2xl.border::after,
-html[data-card-neon-glow="true"][data-neon-style="corner-bracket"]:not([data-neon-corners="top-right"]) .group.rounded-xl.border::after {
-  border-bottom: 3px solid var(--neon-glow-color, #10b981);
-  border-left: 3px solid var(--neon-glow-color, #10b981);
-  box-shadow: 0 0 12px rgba(var(--neon-glow-rgb, 16, 185, 129), 0.7);
-}
-
-/* Full 360° Neon Border Aura Style */
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] .neon-card,
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] .design-card,
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] [data-neon-card],
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] article.rounded-xl,
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] article.rounded-2xl,
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] .group.rounded-2xl.border,
-html[data-card-neon-glow="true"][data-neon-style="full-aura"] .group.rounded-xl.border {
-  box-shadow: 0 0 calc(var(--neon-glow-blur, 24px) * 1.25) -2px rgba(var(--neon-glow-rgb, 16, 185, 129), 0.6),
-              inset 0 0 18px -4px rgba(var(--neon-glow-rgb, 16, 185, 129), 0.28);
+html[data-card-neon-glow="true"] [data-neon-card]:hover {
+  box-shadow: 0 0 0 2px var(--neon-glow-color, #10b981),
+              0 14px 32px -4px rgba(var(--neon-glow-rgb, 16, 185, 129), calc(var(--neon-glow-opacity, 0.65) * 0.9)),
+              0 4px 16px rgba(var(--neon-glow-rgb, 16, 185, 129), 0.4);
+  border-color: var(--neon-glow-color, #10b981) !important;
+  transform: translateY(-4px);
 }
 
 

@@ -3,7 +3,7 @@ import { themeToCssString, DEFAULT_NEON_CARD_GLOW, type ThemeConfig } from "@/co
 export function ThemeScript({ initialTheme }: { initialTheme: ThemeConfig }) {
   const cssString = themeToCssString(initialTheme);
   const neon = initialTheme.cardNeonGlow ?? DEFAULT_NEON_CARD_GLOW;
-  const neonEnabled = neon.enabled !== false;
+  const neonEnabled = Boolean(neon?.enabled);
 
   // Script that executes before HTML paints to avoid FOUC
   const scriptContent = `
@@ -15,10 +15,10 @@ export function ThemeScript({ initialTheme }: { initialTheme: ThemeConfig }) {
     root.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
     root.dataset.cardStyle = theme.cardStyle || 'standard';
     var neon = theme.cardNeonGlow;
-    var neonEnabled = (neon && neon.enabled !== undefined) ? neon.enabled : true;
+    var neonEnabled = (neon && neon.enabled !== undefined) ? Boolean(neon.enabled) : false;
     root.dataset.cardNeonGlow = neonEnabled ? 'true' : 'false';
-    root.dataset.neonStyle = (neon && neon.style) || 'corner-radiant';
-    root.dataset.neonIntensity = (neon && neon.intensity) || 'vibrant';
+    root.dataset.neonStyle = (neon && neon.style) || 'full-aura';
+    root.dataset.neonIntensity = (neon && neon.intensity) || 'subtle';
     root.dataset.neonCorners = (neon && neon.cornerPosition) || 'both';
   }
 

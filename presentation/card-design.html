@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Neon Card Design Presentation</title>
+  <style>
+    :root {
+      --neon-color: #ffaa00; /* Default amber-gold from user reference */
+      --neon-rgb: 255, 170, 0;
+      --card-radius: 20px;
+      --card-img-radius: 14px;
+      --card-bg: #ffffff;
+      --card-border-width: 2px;
+      --page-bg: #f8fafc;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --glow-blur: 24px;
+      --glow-spread: 2px;
+      --glow-opacity: 0.55;
+    }
+
+    [data-theme="dark"] {
+      --page-bg: #0b0f19;
+      --card-bg: #111827;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem 5rem;
+      transition: background-color 300ms ease, color 300ms ease;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Presentation Header */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      background: rgba(var(--neon-rgb), 0.12);
+      color: var(--neon-color);
+      border: 1px solid rgba(var(--neon-rgb), 0.3);
+      margin-bottom: 0.75rem;
+      transition: all 300ms ease;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Interactive Control Toolbar */
+    .toolbar {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin: 2rem auto 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+      transition: background-color 300ms ease, border-color 300ms ease;
+    }
+
+    [data-theme="dark"] .toolbar {
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toolbar-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Color Swatch Buttons */
+    .color-swatches {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .swatch {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      position: relative;
+    }
+
+    .swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .swatch.active {
+      box-shadow: 0 0 0 2.5px var(--card-bg), 0 0 0 4.5px var(--neon-color);
+      transform: scale(1.1);
+    }
+
+    /* Buttons & Toggles */
+    .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: var(--card-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    [data-theme="dark"] .btn {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn:hover {
+      background: rgba(var(--neon-rgb), 0.1);
+      border-color: var(--neon-color);
+      color: var(--neon-color);
+    }
+
+    .btn.active {
+      background: var(--neon-color);
+      border-color: var(--neon-color);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(var(--neon-rgb), 0.4);
+    }
+
+    /* ==========================================================================
+       THE EXACT CARD DESIGN AS PER SCREENSHOT REFERENCE
+       ========================================================================== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 1100px) {
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* The Neon Card */
+    .neon-spec-card {
+      background-color: var(--card-bg);
+      border-radius: var(--card-radius);
+      padding: 0.875rem;
+      border: var(--card-border-width) solid var(--neon-color);
+      
+      /* Outer Neon Glow radiating around and below the card */
+      box-shadow:
+        0 0 0 1px rgba(var(--neon-rgb), 0.5),
+        0 8px var(--glow-blur) -4px rgba(var(--neon-rgb), var(--glow-opacity)),
+        0 18px 36px -8px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 0.45)),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+        
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 280ms ease,
+                  background-color 280ms ease;
+      position: relative;
+    }
+
+    /* Hover State: Elevation + Deep Blooming Lower Glow */
+    .neon-spec-card:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 0 0 1.5px rgba(var(--neon-rgb), 0.8),
+        0 14px calc(var(--glow-blur) * 1.35) -2px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 1.3)),
+        0 24px 48px -10px rgba(var(--neon-rgb), calc(var(--glow-opacity) * 0.7)),
+        0 8px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Image Container at Top */
+    .card-media {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: var(--card-img-radius);
+      overflow: hidden;
+      background: #e2e8f0;
+      position: relative;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 400ms ease;
+    }
+
+    .neon-spec-card:hover .card-media img {
+      transform: scale(1.04);
+    }
+
+    /* Typography & Description Below Image */
+    .card-body {
+      padding: 1.1rem 0.5rem 0.6rem;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      transition: color 200ms ease;
+    }
+
+    .neon-spec-card:hover .card-title {
+      color: var(--neon-color);
+    }
+
+    /* Documentation Section */
+    .code-docs {
+      margin-top: 4rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .code-docs {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .code-docs h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .code-docs p {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.84rem;
+      line-height: 1.6;
+      border: 1px solid #1e293b;
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <div class="container">
+    <header>
+      <div class="badge" id="activeColorBadge">Active Glow: Amber Gold (#ffaa00)</div>
+      <h1>Card Design with Outer Neon Glow & Below Shadow</h1>
+      <p class="subtitle">
+        Authentic replication of your reference design. Features a crisp glowing border with radiant atmospheric shadow extending below the card, smooth inner image framing, and clean typography below.
+      </p>
+    </header>
+
+    <!-- Interactive Customization Toolbar -->
+    <div class="toolbar">
+      <!-- Glow Color Presets -->
+      <div class="toolbar-group">
+        <span class="toolbar-label">Glow Color:</span>
+        <div class="color-swatches">
+          <!-- Amber Gold (Screenshot Match) -->
+          <button class="swatch active" style="background: #ffaa00;" onclick="setColor('#ffaa00', '255, 170, 0', 'Amber Gold (#ffaa00)')" title="Amber Gold (Screenshot Match)"></button>
+          <!-- Emerald Green (BSGSS Default) -->
+          <button class="swatch" style="background: #10b981;" onclick="setColor('#10b981', '16, 185, 129', 'Emerald Green (#10b981)')" title="Emerald Green (Default)"></button>
+          <!-- Cyber Lime -->
+          <button class="swatch" style="background: #22c55e;" onclick="setColor('#22c55e', '34, 197, 94', 'Cyber Lime (#22c55e)')" title="Cyber Lime"></button>
+          <!-- Electric Cyan -->
+          <button class="swatch" style="background: #06b6d4;" onclick="setColor('#06b6d4', '6, 182, 212', 'Electric Cyan (#06b6d4)')" title="Electric Cyan"></button>
+          <!-- Royal Purple -->
+          <button class="swatch" style="background: #8b5cf6;" onclick="setColor('#8b5cf6', '139, 92, 246', 'Royal Purple (#8b5cf6)')" title="Royal Purple"></button>
+          <!-- Coral Pink -->
+          <button class="swatch" style="background: #f43f5e;" onclick="setColor('#f43f5e', '244, 63, 94', 'Coral Pink (#f43f5e)')" title="Coral Pink"></button>
+        </div>
+      </div>
+
+      <!-- Intensity Selection -->
+      <div class="toolbar-group">
+        <span class="toolbar-label">Intensity:</span>
+        <button class="btn" onclick="setIntensity('subtle', this)">Subtle</button>
+        <button class="btn active" onclick="setIntensity('vibrant', this)">Vibrant</button>
+        <button class="btn" onclick="setIntensity('intense', this)">Intense</button>
+      </div>
+
+      <!-- Mode Toggle -->
+      <div class="toolbar-group">
+        <span class="toolbar-label">Preview Mode:</span>
+        <button class="btn" id="themeToggleBtn" onclick="toggleDarkMode()">🌙 Dark Background</button>
+      </div>
+    </div>
+
+    <!-- 8 Cards Grid (Exact Content from Reference Screenshot) -->
+    <div class="card-grid">
+      
+      <!-- Card 1 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="Residential Buildings" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Residential Buildings.</h3>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=700&q=80" alt="Industrial Structures" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of large Span Industrial Structures</h3>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?auto=format&fit=crop&w=700&q=80" alt="Malls & Commercial Complexes" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Malls &amp; Commercial Complexes</h3>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=700&q=80" alt="Hospitals" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Hospitals</h3>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=80" alt="Hotel" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Hotel</h3>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" alt="Refineries" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Refineries</h3>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=700&q=80" alt="Switchyard Structures" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Structural Design of Switchyard Structures</h3>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="neon-spec-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=80" alt="Proof Consultancy" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Proof Consultancy &amp; Value Engineering on above works</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Production CSS Implementation Code Block -->
+    <div class="code-docs">
+      <h2>CSS Implementation Guide</h2>
+      <p>
+        Notice how this implementation avoids internal corner overlays. The glow lives strictly <strong>outside and beneath</strong> the card container:
+      </p>
+      <pre><code>/* 1. Neon Card Container */
+.neon-spec-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 14px;
+  border: 2px solid var(--neon-color, #ffaa00);
+  
+  /* Outer glow radiating around perimeter and blooming below */
+  box-shadow:
+    0 0 0 1px rgba(var(--neon-rgb), 0.5),
+    0 8px 24px -4px rgba(var(--neon-rgb), 0.55),
+    0 18px 36px -8px rgba(var(--neon-rgb), 0.25);
+  transition: transform 280ms ease, box-shadow 280ms ease;
+}
+
+/* 2. Interactive Hover: Smooth Lift + Lower Atmospheric Flare */
+.neon-spec-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 0 1.5px rgba(var(--neon-rgb), 0.8),
+    0 14px 32px -2px rgba(var(--neon-rgb), 0.72),
+    0 24px 48px -10px rgba(var(--neon-rgb), 0.38);
+}
+
+/* 3. Media at Top */
+.card-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* 4. Text Below Media */
+.card-title {
+  padding: 1rem 0.5rem 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Color Switcher
+    function setColor(hex, rgb, label) {
+      document.documentElement.style.setProperty('--neon-color', hex);
+      document.documentElement.style.setProperty('--neon-rgb', rgb);
+      document.getElementById('activeColorBadge').textContent = 'Active Glow: ' + label;
+      
+      document.querySelectorAll('.swatch').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('style').includes(hex));
+      });
+    }
+
+    // Intensity Switcher
+    function setIntensity(level, buttonEl) {
+      const root = document.documentElement;
+      if (level === 'subtle') {
+        root.style.setProperty('--glow-blur', '14px');
+        root.style.setProperty('--glow-opacity', '0.35');
+      } else if (level === 'vibrant') {
+        root.style.setProperty('--glow-blur', '24px');
+        root.style.setProperty('--glow-opacity', '0.55');
+      } else if (level === 'intense') {
+        root.style.setProperty('--glow-blur', '36px');
+        root.style.setProperty('--glow-opacity', '0.78');
+      }
+
+      buttonEl.parentElement.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+      buttonEl.classList.add('active');
+    }
+
+    // Dark/Light Mode Switcher
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      const btn = document.getElementById('themeToggleBtn');
+      btn.textContent = isDark ? '🌙 Dark Background' : '☀️ Light Background';
+    }
+  </script>
+</body>
+</html>
