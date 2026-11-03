@@ -29,6 +29,28 @@ export type PageHeaderStyle = "standard" | "centred" | "minimal";
 export type CardStyle = "standard" | "soft" | "outlined";
 export type DensityPreset = "comfortable" | "compact" | "spacious";
 
+export type NeonGlowStyle = "corner-radiant" | "corner-bracket" | "full-aura" | "minimal-shadow";
+export type NeonGlowIntensity = "subtle" | "vibrant" | "intense";
+export type NeonCornerPosition = "top-right" | "both" | "all";
+
+export type NeonCardGlowConfig = {
+  enabled: boolean;
+  color: string;             // Green is default (#10b981)
+  style: NeonGlowStyle;      // Default: "corner-radiant"
+  intensity: NeonGlowIntensity; // Default: "vibrant"
+  cornerPosition: NeonCornerPosition; // Default: "both"
+  interactiveHover: boolean; // Default: true
+};
+
+export const DEFAULT_NEON_CARD_GLOW: NeonCardGlowConfig = {
+  enabled: true,
+  color: "#10b981",          // Green is default as requested
+  style: "corner-radiant",
+  intensity: "vibrant",
+  cornerPosition: "both",
+  interactiveHover: true,
+};
+
 export type ThemeConfig = {
   id: ThemePresetId;
   name: string;
@@ -48,6 +70,7 @@ export type ThemeConfig = {
   pageHeaderStyle?: PageHeaderStyle;
   cardStyle?: CardStyle;
   density?: DensityPreset;
+  cardNeonGlow?: NeonCardGlowConfig;
   // Optional full overrides
   customPalette?: {
     brand50?: string;
@@ -87,6 +110,7 @@ export const THEME_PRESETS: Record<Exclude<ThemePresetId, "custom">, ThemeConfig
     pageHeaderStyle: "standard",
     cardStyle: "standard",
     density: "comfortable",
+    cardNeonGlow: DEFAULT_NEON_CARD_GLOW,
     customPalette: {
       brand50: "#F0F8F8",
       brand100: "#DDEEEF",
@@ -391,6 +415,15 @@ export function computeThemeCssVariables(theme: ThemeConfig): Record<string, str
   };
   const currentDensity = densityMap[theme.density ?? "comfortable"];
 
+  const neon = theme.cardNeonGlow ?? DEFAULT_NEON_CARD_GLOW;
+  const neonRgb = hexToRgb(neon.color || "#10b981");
+  const intensityMap: Record<NeonGlowIntensity, { opacity: string; spread: string; blur: string }> = {
+    subtle: { opacity: "0.35", spread: "8px", blur: "16px" },
+    vibrant: { opacity: "0.65", spread: "14px", blur: "24px" },
+    intense: { opacity: "0.92", spread: "22px", blur: "36px" },
+  };
+  const currentIntensity = intensityMap[neon.intensity] ?? intensityMap.vibrant;
+
   return {
     "--brand-50": brand[50],
     "--brand-100": brand[100],
@@ -428,6 +461,13 @@ export function computeThemeCssVariables(theme: ThemeConfig): Record<string, str
     "--design-section-space": currentDensity.section,
     "--design-page-header-space": currentDensity.pageHeader,
     "--design-hero-height": currentDensity.hero,
+
+    "--neon-glow-enabled": neon.enabled !== false ? "1" : "0",
+    "--neon-glow-color": neon.color || "#10b981",
+    "--neon-glow-rgb": `${neonRgb[0]}, ${neonRgb[1]}, ${neonRgb[2]}`,
+    "--neon-glow-opacity": currentIntensity.opacity,
+    "--neon-glow-spread": currentIntensity.spread,
+    "--neon-glow-blur": currentIntensity.blur,
   };
 }
 

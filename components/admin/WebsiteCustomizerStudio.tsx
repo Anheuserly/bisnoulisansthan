@@ -4017,6 +4017,32 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
             </p>
           </div>
 
+          {/* Neon Card Glow & Corner Light Spotlight */}
+          <div className="rounded-2xl border-2 border-emerald-400/80 bg-gradient-to-r from-emerald-50/90 via-teal-50/50 to-white p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/30">
+                <Sparkles className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-ink">Interactive Neon Card Glow &amp; Corner Light</h3>
+                  <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[0.6875rem] font-bold text-emerald-800">
+                    Active (Green #10b981)
+                  </span>
+                </div>
+                <p className="mt-0.5 text-xs text-ink-muted">
+                  Every card features an interactive neon light flare in its corners and atmospheric glowing shadows. Configured live with colors, intensity, and styles.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/admin/theme"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-700 transition"
+            >
+              <span>Manage Neon Card Glow in Theme Studio →</span>
+            </Link>
+          </div>
+
           <div className="grid gap-6 md:grid-cols-2">
             {/* Header Logo Size */}
             <div className="rounded-xl border border-line p-4 bg-sand-50/50">

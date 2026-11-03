@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/auth/session";
 import { db } from "@/lib/db";
-import { DEFAULT_THEME, type ThemeConfig } from "@/config/themes";
+import { DEFAULT_THEME, DEFAULT_NEON_CARD_GLOW, type ThemeConfig } from "@/config/themes";
 
 const allowed = {
   fontPairing: ["classic-editorial", "modern-grotesk", "clean-geometric", "warm-humanist"],
@@ -12,6 +12,9 @@ const allowed = {
   pageHeaderStyle: ["standard", "centred", "minimal"],
   cardStyle: ["standard", "soft", "outlined"],
   density: ["comfortable", "compact", "spacious"],
+  neonGlowStyle: ["corner-radiant", "corner-bracket", "full-aura", "minimal-shadow"],
+  neonGlowIntensity: ["subtle", "vibrant", "intense"],
+  neonCornerPosition: ["top-right", "both", "all"],
 } as const;
 
 function choice<T extends readonly string[]>(value: unknown, options: T, fallback: T[number]) {

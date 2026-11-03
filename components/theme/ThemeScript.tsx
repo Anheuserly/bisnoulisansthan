@@ -1,11 +1,27 @@
-import { themeToCssString, type ThemeConfig } from "@/config/themes";
+import { themeToCssString, DEFAULT_NEON_CARD_GLOW, type ThemeConfig } from "@/config/themes";
 
 export function ThemeScript({ initialTheme }: { initialTheme: ThemeConfig }) {
   const cssString = themeToCssString(initialTheme);
+  const neon = initialTheme.cardNeonGlow ?? DEFAULT_NEON_CARD_GLOW;
+  const neonEnabled = neon.enabled !== false;
 
   // Script that executes before HTML paints to avoid FOUC
   const scriptContent = `
 (function() {
+  function applyPresentation(theme) {
+    var root = document.documentElement;
+    root.dataset.headerStyle = theme.headerStyle || 'standard';
+    root.dataset.heroStyle = theme.heroStyle || 'immersive';
+    root.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
+    root.dataset.cardStyle = theme.cardStyle || 'standard';
+    var neon = theme.cardNeonGlow;
+    var neonEnabled = (neon && neon.enabled !== undefined) ? neon.enabled : true;
+    root.dataset.cardNeonGlow = neonEnabled ? 'true' : 'false';
+    root.dataset.neonStyle = (neon && neon.style) || 'corner-radiant';
+    root.dataset.neonIntensity = (neon && neon.intensity) || 'vibrant';
+    root.dataset.neonCorners = (neon && neon.cornerPosition) || 'both';
+  }
+
   try {
     var stored = localStorage.getItem('bsgss_theme_preview');
     if (stored) {
@@ -15,21 +31,36 @@ export function ThemeScript({ initialTheme }: { initialTheme: ThemeConfig }) {
         if (el && theme.cssString) {
           el.innerHTML = ':root { ' + theme.cssString + ' }';
         }
-        document.documentElement.dataset.headerStyle = theme.headerStyle || 'standard';
-        document.documentElement.dataset.heroStyle = theme.heroStyle || 'immersive';
-        document.documentElement.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
-        document.documentElement.dataset.cardStyle = theme.cardStyle || 'standard';
+        applyPresentation(theme);
+      } else {
+        applyPresentation({
+          headerStyle: '${initialTheme.headerStyle || "standard"}',
+          heroStyle: '${initialTheme.heroStyle || "immersive"}',
+          pageHeaderStyle: '${initialTheme.pageHeaderStyle || "standard"}',
+          cardStyle: '${initialTheme.cardStyle || "standard"}',
+          cardNeonGlow: {
+            enabled: ${neonEnabled},
+            style: '${neon.style || "corner-radiant"}',
+            intensity: '${neon.intensity || "vibrant"}',
+            cornerPosition: '${neon.cornerPosition || "both"}'
+          }
+        });
       }
+    } else {
+      applyPresentation({
+        headerStyle: '${initialTheme.headerStyle || "standard"}',
+        heroStyle: '${initialTheme.heroStyle || "immersive"}',
+        pageHeaderStyle: '${initialTheme.pageHeaderStyle || "standard"}',
+        cardStyle: '${initialTheme.cardStyle || "standard"}',
+        cardNeonGlow: {
+          enabled: ${neonEnabled},
+          style: '${neon.style || "corner-radiant"}',
+          intensity: '${neon.intensity || "vibrant"}',
+          cornerPosition: '${neon.cornerPosition || "both"}'
+        }
+      });
     }
   } catch (e) {}
-
-  function applyPresentation(theme) {
-    var root = document.documentElement;
-    root.dataset.headerStyle = theme.headerStyle || 'standard';
-    root.dataset.heroStyle = theme.heroStyle || 'immersive';
-    root.dataset.pageHeaderStyle = theme.pageHeaderStyle || 'standard';
-    root.dataset.cardStyle = theme.cardStyle || 'standard';
-  }
 
   window.__applyThemeCss = function(cssText, theme) {
     var el = document.getElementById('bsgss-theme-style');
