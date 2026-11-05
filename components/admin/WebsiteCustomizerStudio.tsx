@@ -3778,10 +3778,10 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
         <div className="space-y-6 rounded-b-xl border border-t-0 border-line bg-white p-6 shadow-sm">
           <div>
             <h3 className="font-display text-lg font-bold text-ink">
-              Interactive Map &amp; Global Outreach Horizon
+              States Covered &amp; Interactive India Map
             </h3>
             <p className="mt-1 text-xs text-ink-muted">
-              Configure the headline narrative, default view mode, and strategic vision statements for both the World Map and India Grassroots Network.
+              Configure the headline narrative, state coverage highlights, and strategic vision statements for the India Grassroots Network across covered states.
             </p>
           </div>
 

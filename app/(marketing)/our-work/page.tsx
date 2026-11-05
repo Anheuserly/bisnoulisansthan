@@ -118,7 +118,7 @@ export default function OurWorkPage() {
                   href="/about/partners"
                   className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
                 >
-                  <span>Explore our 30+ CSR Partners</span>
+                  <span>Explore our 35+ CSR Partners</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link

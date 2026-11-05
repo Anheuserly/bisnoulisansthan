@@ -77,20 +77,13 @@ function useCountUp(value: number) {
 }
 
 export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapProps) {
-  const [viewMode, setViewMode] = useState<MapViewMode>(customizerConfig?.defaultMode || "india");
-  const [selectedRegionId, setSelectedRegionId] = useState<string>("india");
   const [selectedStateName, setSelectedStateName] = useState<string>("Uttar Pradesh");
   const [tooltip, setTooltip] = useState<TooltipState>(null);
 
-  // Selected entities
-  const selectedRegion = getGlobalRegion(selectedRegionId);
+  // Selected state entity
   const selectedState = getIndiaStateProgram(selectedStateName);
 
   // Animated metric counters with real, accurate data
-  const verifiedStatesCount = useCountUp(GLOBAL_SUMMARY_TOTALS.verifiedStates);
-  const verifiedDistrictsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.verifiedDistricts);
-  const globalTargetHubsCount = useCountUp(GLOBAL_SUMMARY_TOTALS.targetGlobalHubs);
-
   const indiaStatesCount = useCountUp(indiaProgrammeTotals.states);
   const indiaDistrictsCount = useCountUp(indiaProgrammeTotals.districts);
   const indiaVillagesCount = useCountUp(350);
@@ -130,111 +123,49 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
         {/* Main Cockpit Grid: Left Context & Telemetry (5 cols) + Right Map Canvas (7 cols) */}
         <div className="grid gap-8 lg:grid-cols-12 lg:items-stretch">
           
-          {/* Left Column: Context, Mode Switcher & Metric Telemetry (Balanced with Map height) */}
+          {/* Left Column: Context & Metric Telemetry (Balanced with Map height) */}
           <div className="flex flex-col justify-between rounded-3xl bg-white p-6 sm:p-8 shadow-soft lg:col-span-5">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-sand-100/80 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-800">
-                <Globe2 className="h-4 w-4 text-brand-600" />
-                <span>{customizerConfig?.eyebrow || "Global Alliances & Verified Grassroots Footprint"}</span>
+                <MapPin className="h-4 w-4 text-brand-600" />
+                <span>{customizerConfig?.eyebrow || "States Covered & Verified Grassroots Footprint"}</span>
               </div>
 
               <h2 className="mt-3.5 font-display text-2xl font-bold leading-tight text-ink sm:text-3xl lg:text-[2.25rem]">
-                {customizerConfig?.heading || "Where grassroots action meets international vision."}
+                {customizerConfig?.heading || "Grassroots field presence across Indian states."}
               </h2>
 
               <p className="mt-3.5 text-xs leading-relaxed text-ink-muted sm:text-sm">
                 {customizerConfig?.description ||
-                  "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in India, with our institutional target to reach, connect, and collaborate globally across diaspora networks and UN SDG frameworks."}
+                  "Bisnouli Sarvodaya Gramodyog Sewa Sansthan anchors 30+ years of verified grassroots field execution across 350+ villages in Delhi NCR, Uttar Pradesh, Haryana, Punjab, Rajasthan, Chhattisgarh, and Uttarakhand."}
               </p>
-
-              {/* Seamless View Mode Switcher Pills */}
-              <div className="mt-5 flex items-center rounded-xl bg-sand-50 p-1.5 shadow-2xs">
-                <button
-                  type="button"
-                  onClick={() => setViewMode("world")}
-                  className={cn(
-                    "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 px-3 text-xs font-bold transition-all duration-200",
-                    viewMode === "world"
-                      ? "bg-brand-700 text-white shadow-soft"
-                      : "text-ink-muted hover:text-brand-900 hover:bg-white/80"
-                  )}
-                >
-                  <Globe2 className="h-4 w-4" />
-                  <span>World / International</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setViewMode("india")}
-                  className={cn(
-                    "flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 px-3 text-xs font-bold transition-all duration-200",
-                    viewMode === "india"
-                      ? "bg-brand-700 text-white shadow-soft"
-                      : "text-ink-muted hover:text-brand-900 hover:bg-white/80"
-                  )}
-                >
-                  <MapPin className="h-4 w-4" />
-                  <span>India Grassroots</span>
-                </button>
-              </div>
 
               {/* 3 High-Impact Numeric Badges with Accurate Verified Data */}
               <div className="mt-6 grid grid-cols-3 gap-2.5 border-y border-line/50 py-4">
-                {viewMode === "world" ? (
-                  <>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {customizerConfig?.statesCount || "7 states"}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        States Covered
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {customizerConfig?.districtsCount || "20+ districts"}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        Districts
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-emerald-500 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
-                        {customizerConfig?.villagesCount || "350+ villages"}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
-                        Villages
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {customizerConfig?.statesCount || `${indiaStatesCount} states`}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        States Covered
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-brand-400 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
-                        {customizerConfig?.districtsCount || "20+ districts"}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
-                        Districts
-                      </p>
-                    </div>
-                    <div className="border-l-2 border-emerald-500 pl-2.5">
-                      <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
-                        {customizerConfig?.villagesCount || "350+ villages"}
-                      </p>
-                      <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
-                        Villages
-                      </p>
-                    </div>
-                  </>
-                )}
+                <div className="border-l-2 border-brand-400 pl-2.5">
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                    {customizerConfig?.statesCount || `${indiaStatesCount} states`}
+                  </p>
+                  <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
+                    States Covered
+                  </p>
+                </div>
+                <div className="border-l-2 border-brand-400 pl-2.5">
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-ink">
+                    {customizerConfig?.districtsCount || "20+ districts"}
+                  </p>
+                  <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted">
+                    Districts
+                  </p>
+                </div>
+                <div className="border-l-2 border-emerald-500 pl-2.5">
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-emerald-800">
+                    {customizerConfig?.villagesCount || "350+ villages"}
+                  </p>
+                  <p className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-emerald-700">
+                    Villages
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -275,246 +206,76 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
                 <div className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                   <span className="text-xs font-bold uppercase tracking-wider text-ink">
-                    {viewMode === "world"
-                      ? "Global Outreach Horizon & Alliances Map"
-                      : "Interactive India Grassroots Map"}
+                    Interactive India Grassroots Map
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-[0.6875rem] font-semibold text-ink-muted">
-                  {viewMode === "world" ? (
-                    <>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
-                        <span>India (Field Base HQ)</span>
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
-                        <span>Target Global Hubs</span>
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
-                        <span>Global Horizon</span>
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
-                        <span>Active Field State</span>
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
-                        <span>Other States</span>
-                      </span>
-                    </>
-                  )}
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-brand-700" />
+                    <span>Active Field State</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-slate-200" />
+                    <span>Other States</span>
+                  </span>
                 </div>
               </div>
 
-              {/* WORLD MAP VIEW - Uncolored, honest global map with target hubs */}
-              {viewMode === "world" ? (
-                <div className="relative mt-4">
-                  <svg
-                    viewBox={World.viewBox}
-                    className="h-auto w-full max-h-[34rem] overflow-visible"
-                    role="group"
-                    aria-label="Interactive world map showing BSGSS international reach and global alliances"
-                  >
-                    <defs>
-                      {/* Radial gradient for glowing hub pins */}
-                      <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#2D7D88" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#2D7D88" stopOpacity="0" />
-                      </radialGradient>
-                    </defs>
+              {/* INDIA MAP VIEW */}
+              <div className="relative mt-4">
+                <svg
+                  viewBox={India.viewBox}
+                  className="h-auto w-full max-h-[34rem] overflow-visible"
+                  role="group"
+                  aria-label="Interactive map of India showing BSGSS programme states"
+                >
+                  {indiaLocations.map((location) => {
+                    const data = getIndiaStateProgram(location.name);
+                    const active = Boolean(data);
+                    const selected = selectedStateName === location.name;
 
-                    {/* All World Countries: Uncolored clean neutral paths as requested */}
-                    {worldLocations.map((location) => {
-                      const isIndia = location.id.toLowerCase() === "in";
-
-                      return (
-                        <path
-                          key={location.id}
-                          d={location.path}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={
-                            isIndia
-                              ? "India: National Grassroots Headquarters & 350+ Village Operations"
-                              : `${location.name}: Global Expansion Horizon`
+                    return (
+                      <path
+                        key={location.id}
+                        d={location.path}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`${location.name}${data ? `: ${data.districts.length} districts and ${data.programs} programme records` : ", no BSGSS record listed"}`}
+                        aria-pressed={selected}
+                        onClick={() => handleIndiaStateClick(location.name)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleIndiaStateClick(location.name);
                           }
-                          onClick={() => {
-                            if (isIndia) {
-                              setSelectedRegionId("india");
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            if ((e.key === "Enter" || e.key === " ") && isIndia) {
-                              e.preventDefault();
-                              setSelectedRegionId("india");
-                            }
-                          }}
-                          onMouseEnter={(e) =>
-                            updateTooltip(
-                              location.name,
-                              isIndia
-                                ? "🇮🇳 National Grassroots Base & 350+ Village Network"
-                                : "Global Expansion Horizon (Target Outreach)",
-                              e
-                            )
-                          }
-                          onMouseMove={(e) =>
-                            updateTooltip(
-                              location.name,
-                              isIndia
-                                ? "🇮🇳 National Grassroots Base & 350+ Village Network"
-                                : "Global Expansion Horizon (Target Outreach)",
-                              e
-                            )
-                          }
-                          onMouseLeave={() => setTooltip(null)}
-                          className={cn(
-                            "cursor-default stroke-white stroke-[0.8] outline-none transition-all duration-300",
-                            isIndia
-                              ? "cursor-pointer fill-brand-700 hover:fill-brand-600 hover:drop-shadow-[0_2px_8px_rgba(45,125,136,0.35)]"
-                              : "fill-slate-100 hover:fill-slate-200"
-                          )}
-                        />
-                      );
-                    })}
-
-                    {/* Target Connection Arcs radiating from New Delhi Headquarters to International Target Hubs */}
-                    {GLOBAL_REGIONS.filter((r) => r.id !== "india").map((r) => {
-                      const hq = { x: 707, y: 400 };
-                      const target = r.hub;
-                      const dx = target.x - hq.x;
-                      const dy = target.y - hq.y;
-                      const cx = (hq.x + target.x) / 2 - dy * 0.15;
-                      const cy = (hq.y + target.y) / 2 + dx * 0.15;
-                      const pathData = `M ${hq.x} ${hq.y} Q ${cx} ${cy} ${target.x} ${target.y}`;
-
-                      return (
-                        <path
-                          key={`arc-${r.id}`}
-                          d={pathData}
-                          fill="none"
-                          stroke="rgba(45, 125, 136, 0.45)"
-                          strokeWidth="1.2"
-                          strokeDasharray="4 3"
-                          className="pointer-events-none"
-                        />
-                      );
-                    })}
-
-                    {/* Target Radar Hubs at International Strategic Centres */}
-                    {GLOBAL_REGIONS.map((region) => {
-                      const { x, y } = region.hub;
-                      const isSelected = selectedRegionId === region.id;
-                      const isHQ = region.id === "india";
-
-                      return (
-                        <g
-                          key={`hub-${region.id}`}
-                          className="cursor-pointer"
-                          onClick={() => setSelectedRegionId(region.id)}
-                          onMouseEnter={(e) =>
-                            updateTooltip(
-                              region.name,
-                              isHQ
-                                ? "🇮🇳 National Operational Headquarters"
-                                : `Target Hub: ${region.hub.city}`,
-                              e
-                            )
-                          }
-                          onMouseMove={(e) =>
-                            updateTooltip(
-                              region.name,
-                              isHQ
-                                ? "🇮🇳 National Operational Headquarters"
-                                : `Target Hub: ${region.hub.city}`,
-                              e
-                            )
-                          }
-                          onMouseLeave={() => setTooltip(null)}
-                        >
-                          <circle
-                            cx={x}
-                            cy={y}
-                            r={isHQ ? 14 : 10}
-                            fill="url(#hubGlow)"
-                            className="opacity-30"
-                          />
-                          <circle
-                            cx={x}
-                            cy={y}
-                            r={isHQ ? 6 : 4.5}
-                            fill={isHQ ? "#D97706" : isSelected ? "#0F766E" : "#2D7D88"}
-                            stroke="#FFFFFF"
-                            strokeWidth={1.5}
-                            className="transition-transform duration-200 hover:scale-125"
-                          />
-                        </g>
-                      );
-                    })}
-                  </svg>
-                </div>
-              ) : (
-                /* INDIA MAP VIEW */
-                <div className="relative mt-4">
-                  <svg
-                    viewBox={India.viewBox}
-                    className="h-auto w-full max-h-[34rem] overflow-visible"
-                    role="group"
-                    aria-label="Interactive map of India showing BSGSS programme states"
-                  >
-                    {indiaLocations.map((location) => {
-                      const data = getIndiaStateProgram(location.name);
-                      const active = Boolean(data);
-                      const selected = selectedStateName === location.name;
-
-                      return (
-                        <path
-                          key={location.id}
-                          d={location.path}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`${location.name}${data ? `: ${data.districts.length} districts and ${data.programs} programme records` : ", no BSGSS record listed"}`}
-                          aria-pressed={selected}
-                          onClick={() => handleIndiaStateClick(location.name)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                              e.preventDefault();
-                              handleIndiaStateClick(location.name);
-                            }
-                          }}
-                          onMouseEnter={(e) =>
-                            updateTooltip(
-                              location.name,
-                              data ? `${data.districts.length} Districts · ${data.programs} Programmes` : "No direct programme records",
-                              e
-                            )
-                          }
-                          onMouseMove={(e) =>
-                            updateTooltip(
-                              location.name,
-                              data ? `${data.districts.length} Districts · ${data.programs} Programmes` : "No direct programme records",
-                              e
-                            )
-                          }
-                          onMouseLeave={() => setTooltip(null)}
-                          className={cn(
-                            "cursor-pointer stroke-white stroke-[1.2] outline-none transition-all duration-200",
-                            active
-                              ? "fill-brand-700 hover:scale-[1.015] hover:fill-brand-600 hover:drop-shadow-[0_2px_6px_rgba(9,83,92,.35)]"
-                              : "fill-slate-100 hover:fill-slate-200",
-                            selected && "fill-brand-900 stroke-brand-200 stroke-[2.2]"
-                          )}
-                        />
-                      );
-                    })}
-                  </svg>
-                </div>
-              )}
+                        }}
+                        onMouseEnter={(e) =>
+                          updateTooltip(
+                            location.name,
+                            data ? `${data.districts.length} Districts · ${data.programs} Programmes` : "No direct programme records",
+                            e
+                          )
+                        }
+                        onMouseMove={(e) =>
+                          updateTooltip(
+                            location.name,
+                            data ? `${data.districts.length} Districts · ${data.programs} Programmes` : "No direct programme records",
+                            e
+                          )
+                        }
+                        onMouseLeave={() => setTooltip(null)}
+                        className={cn(
+                          "cursor-pointer stroke-white stroke-[1.2] outline-none transition-all duration-200",
+                          active
+                            ? "fill-brand-700 hover:scale-[1.015] hover:fill-brand-600 hover:drop-shadow-[0_2px_6px_rgba(9,83,92,.35)]"
+                            : "fill-slate-100 hover:fill-slate-200",
+                          selected && "fill-brand-900 stroke-brand-200 stroke-[2.2]"
+                        )}
+                      />
+                    );
+                  })}
+                </svg>
+              </div>
 
               {/* Dynamic Hover Tooltip */}
               {tooltip && (
@@ -529,95 +290,159 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
               )}
             </div>
 
-            {/* Bottom Instructions / Strategic Vision Goal Note */}
+            {/* Bottom Instructions Note */}
             <div className="mt-5 border-t border-line/60 pt-3.5">
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-ink-muted">
-                <span>
-                  {viewMode === "world"
-                    ? (customizerConfig?.worldNote ||
-                        "Uncolored international territories represent our strategic global outreach roadmap and diaspora engagement horizon.")
-                    : (customizerConfig?.indiaNote ||
-                        "Click any highlighted Indian state to view district-level program records transcribed from statutory filings.")}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setViewMode(viewMode === "world" ? "india" : "world")}
-                  className="font-semibold text-brand-700 hover:text-brand-900 underline underline-offset-2"
-                >
-                  Switch to {viewMode === "world" ? "India Grassroots Network →" : "World Map View →"}
-                </button>
-              </div>
-
-              {/* Global Vision Banner */}
-              {viewMode === "world" && customizerConfig?.globalVisionGoal && (
-                <div className="mt-3 rounded-xl bg-emerald-50/80 px-3.5 py-2 text-xs font-medium text-emerald-900">
-                  <span className="font-bold text-emerald-800">Global Vision: </span>
-                  {customizerConfig.globalVisionGoal}
-                </div>
-              )}
+              <p className="text-xs text-ink-muted">
+                {customizerConfig?.indiaNote ||
+                  "Click any highlighted Indian state to view district-level program records transcribed from statutory filings."}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* FULL-WIDTH DEDICATED REGIONAL STRATEGY & FIELD INTELLIGENCE DOSSIER (Eliminates empty right space) */}
+        {/* FULL-WIDTH DEDICATED REGIONAL STRATEGY & FIELD INTELLIGENCE DOSSIER */}
         <div className="mt-8 rounded-3xl bg-white p-6 sm:p-8 lg:p-9 shadow-soft">
-          {viewMode === "world" ? (
-            <div>
-              {/* Dossier Header Bar with Navigation Tabs */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/50 pb-6">
-                <div className="flex items-center gap-3.5">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sand-100 text-2xl shadow-2xs">
-                    {selectedRegion.flag}
+          <div>
+            {/* Dossier Header Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/50 pb-6">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-emerald-50 px-3 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800">
+                    Statutory Field Records
                   </span>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-full bg-sand-100 px-3 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-brand-900">
-                        {selectedRegion.category}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-brand-700">
-                        <MapPin className="h-3.5 w-3.5 text-brand-600" />
-                        <span>Hub: {selectedRegion.hub.city}</span>
-                      </span>
-                    </div>
-                    <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-ink">
-                      {selectedRegion.name}
-                    </h3>
-                  </div>
+                  <span className="text-xs font-semibold text-brand-700">
+                    Field Execution Hub: Northern India
+                  </span>
                 </div>
-
-                {/* Hub Quick Filter Tabs */}
-                {GLOBAL_REGIONS.length > 1 && (
-                  <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-sand-50/80 p-1">
-                    {GLOBAL_REGIONS.map((r) => (
-                      <button
-                        key={r.id}
-                        type="button"
-                        onClick={() => setSelectedRegionId(r.id)}
-                        className={cn(
-                          "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-150",
-                          selectedRegionId === r.id
-                            ? "bg-brand-700 text-white shadow-2xs"
-                            : "text-ink-muted hover:text-ink hover:bg-white/60"
-                        )}
-                      >
-                        <span>{r.flag}</span>{" "}
-                        <span className="hidden sm:inline">{r.hub.city.split("&")[0]?.trim()}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
+                <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-ink">
+                  {selectedState?.state || "Select a State"}
+                </h3>
               </div>
 
-              {/* 2-Column Balanced Executive Panel */}
+              {/* State Quick Filter Tabs */}
+              <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-sand-50/80 p-1">
+                {indiaProgramData.map((item) => (
+                  <button
+                    key={item.state}
+                    type="button"
+                    onClick={() => handleIndiaStateClick(item.state)}
+                    className={cn(
+                      "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-150",
+                      selectedStateName === item.state
+                        ? "bg-brand-700 text-white shadow-2xs"
+                        : "text-ink-muted hover:text-ink hover:bg-white/60"
+                    )}
+                  >
+                    <span>{item.state}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {selectedState ? (
               <div className="mt-7 grid gap-8 lg:grid-cols-12 lg:items-start">
                 
-                {/* Left Half: Verified Metrics & Mission Narrative */}
+                {/* Left Column: Metrics & Active Districts */}
                 <div className="space-y-6 lg:col-span-6">
                   <div>
                     <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
-                      Quantitative Footprint &amp; Telemetry
+                      State Field Statistics
                     </p>
-                    <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
+                        <p className="font-display text-2xl font-bold text-brand-900">
+                          {selectedState.districts.length}
+                        </p>
+                        <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                          Covered Districts
+                        </p>
+                      </div>
+                      <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
+                        <p className="font-display text-2xl font-bold text-brand-900">
+                          {selectedState.programs}
+                        </p>
+                        <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                          CSR Projects Undertaken
+                        </p>
+                      </div>
+                      <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
+                        <p className="font-display text-2xl font-bold text-emerald-800">
+                          {selectedState.villages || 50}+
+                        </p>
+                        <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                          Villages Covered
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-sand-50/50 p-5">
+                    <p className="text-xs font-bold uppercase tracking-wider text-brand-900">
+                      Active Operational Districts in {selectedState.state}
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-ink-muted">
+                      Program records and CSR allocations deployed across:
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {selectedState.districts.map((district) => (
+                        <span
+                          key={district}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-2.5 py-1 text-xs font-medium text-ink shadow-2xs"
+                        >
+                          <MapPin className="h-3 w-3 text-brand-700" />
+                          <span>{district}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Key Focus Areas & Field Action */}
+                <div className="space-y-6 lg:col-span-6">
+                  <div className="rounded-2xl border border-line bg-sand-50/30 p-5 sm:p-6">
+                    <h4 className="font-display text-base font-bold text-ink">
+                      Active Interventions &amp; Grassroots Mission in {selectedState.state}
+                    </h4>
+                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-ink-muted">
+                      In {selectedState.state}, BSGSS operates sustainable community development programs aligned with verified statutory mandates. Field teams work alongside district administrations and CSR partners to bring healthcare, women&apos;s self-reliance, and youth vocational skills directly to village doorsteps.
+                    </p>
+
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      <div className="flex items-start gap-2.5 rounded-xl bg-white p-3 shadow-2xs border border-line/60">
+                        <HeartPulse className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-bold text-ink">Preventive Health</p>
+                          <p className="text-[0.6875rem] text-ink-muted">Medical screening camps &amp; medicine distribution</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2.5 rounded-xl bg-white p-3 shadow-2xs border border-line/60">
+                        <Sparkles className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-bold text-ink">Women SHGs &amp; Skills</p>
+                          <p className="text-[0.6875rem] text-ink-muted">Tailoring, handlooms &amp; micro-credit circles</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2.5 rounded-xl bg-white p-3 shadow-2xs border border-line/60">
+                        <Users className="h-4 w-4 text-brand-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-bold text-ink">Community Councils</p>
+                          <p className="text-[0.6875rem] text-ink-muted">Gramodyog leadership &amp; welfare awareness</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2.5 rounded-xl bg-white p-3 shadow-2xs border border-line/60">
+                        <Handshake className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-bold text-ink">CSR Alliances</p>
+                          <p className="text-[0.6875rem] text-ink-muted">Audited public sector partner execution</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
                       {selectedRegion.metrics.map((metric) => (
                         <div key={metric.label} className="rounded-2xl bg-sand-50/70 p-3.5 shadow-2xs">
                           <p className="font-display text-xl font-bold text-brand-900">{metric.value}</p>

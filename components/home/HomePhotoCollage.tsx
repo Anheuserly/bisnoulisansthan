@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { ArrowRight, Camera, Sparkles, X, ZoomIn, Heart, MapPin, Tag, ShieldCheck } from "lucide-react";
+import { Camera, Sparkles, X, ZoomIn, Heart, MapPin, Tag } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { type CollagePhotoItem } from "@/config/customizer";
 
@@ -16,15 +15,31 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
 
   const categories = [
     { id: "all", label: "All Field Moments" },
-    { id: "Skill Development", label: "Skills & Tailoring" },
+    { id: "Sustainable Livelihood", label: "Sustainable Livelihood Training Programme" },
     { id: "Healthcare", label: "Medical Camps" },
     { id: "Empowerment", label: "Women SHGs" },
-    { id: "Social Justice", label: "Village Councils" },
+    { id: "Jan Arogyam", label: "Jan Arogyam Community Healthcare Centres" },
   ];
 
   const filteredPhotos = activeCategory === "all"
     ? photos
-    : photos.filter((p) => p.category.toLowerCase().includes(activeCategory.toLowerCase()));
+    : photos.filter((p) => {
+        const cat = (p.category || "").toLowerCase();
+        const active = activeCategory.toLowerCase();
+        if (active === "sustainable livelihood") {
+          return cat.includes("livelihood") || cat.includes("skill");
+        }
+        if (active === "jan arogyam") {
+          return cat.includes("jan arogyam") || cat.includes("healthcare") || cat.includes("wellness");
+        }
+        if (active === "healthcare") {
+          return cat.includes("healthcare") || cat.includes("wellness") || cat.includes("camp");
+        }
+        if (active === "empowerment") {
+          return cat.includes("empowerment") || cat.includes("women") || cat.includes("shg") || cat.includes("social");
+        }
+        return cat.includes(active);
+      });
 
   return (
     <section className="relative overflow-hidden bg-sand-50/60 py-12 sm:py-16 border-b border-brand-100" id="photo-collage">
@@ -41,10 +56,10 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
               <span>Photographic Chronicle</span>
             </div>
             <h2 className="mt-3 font-display text-3xl font-black leading-tight text-ink sm:text-4xl lg:text-5xl">
-              Authentic faces, real dignity, lived change.
+              Authentic faces, real dignity, lives changed.
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">
-              A curated photographic mosaic from BSGSS field centres, mobile clinics, and village self-help craft guilds across North India.
+              A curated photographic mosaic from BSGSS field centres, mobile clinics, and village self-help groups across North India.
             </p>
           </div>
 
@@ -146,24 +161,6 @@ export function HomePhotoCollage({ photos = [] }: HomePhotoCollageProps) {
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom CTA to view full archive */}
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-brand-200/80 bg-white p-4 shadow-2xs">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-              <ShieldCheck className="h-5 w-5" />
-            </span>
-            <p className="text-xs sm:text-sm text-ink-muted">
-              Over <strong>500+ verified activity photos</strong> and field reports documented since 1994.
-            </p>
-          </div>
-          <Link
-            href="/activities/gallery"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-brand-700 hover:text-brand-900 transition-colors"
-          >
-            Explore Complete Activity Albums <ArrowRight className="h-4 w-4" />
-          </Link>
         </div>
       </div>
 

@@ -10,7 +10,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "CSR & Institutional Partners Directory | BSGSS",
   description:
-    "Browse 30+ public sector enterprises and government departments partnered with BSGSS for impactful community development.",
+    "Browse 35+ public sector enterprises and government departments partnered with BSGSS for impactful community development.",
   path: "/about/partners",
 });
 

@@ -13,14 +13,14 @@ const defaultPhrases = [
   "Empowering 1,00,000+ rural women through skill training & economic self-reliance.",
   "Conducting free cancer screenings & preventive healthcare in 350+ villages.",
   "Nurturing sustainable livelihoods with Khadi, embroidery & Self Help Groups.",
-  "Delivering transparent, verified grassroots change alongside 30+ CSR partners.",
+  "Delivering transparent, verified grassroots change alongside 35+ CSR partners.",
   "Serving communities with dedication, dignity & equal opportunity since 1994.",
 ];
 
 export function HomeLiveTyping({ data }: HomeLiveTypingProps) {
   const phrases = data?.phrases && data.phrases.length > 0 ? data.phrases : defaultPhrases;
-  const eyebrow = data?.eyebrow || "LIVE SARVODAYA MISSION · ACTIVE ACROSS 5 STATES";
-  const statusText = data?.statusText || "Field Operations Active in Delhi NCR · Haryana · UP · Punjab · Rajasthan";
+  const eyebrow = data?.eyebrow || "LIVE SARVODAYA MISSION · ACTIVE ACROSS 7 STATES";
+  const statusText = data?.statusText || "States Covered: Delhi NCR · Haryana · UP · Punjab · Rajasthan · Chhattisgarh · Uttarakhand";
 
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");

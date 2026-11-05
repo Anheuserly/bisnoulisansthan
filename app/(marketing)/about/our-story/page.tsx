@@ -74,7 +74,7 @@ export default async function OurStoryPage() {
                       <Handshake className="h-5 w-5 text-slate-900" />
                       <div>
                         <p className="font-display text-base font-bold text-ink group-hover:text-brand-800">CSR &amp; Statutory Partners</p>
-                        <p className="text-xs text-ink-muted">30+ leading PSU collaborations and public ministries</p>
+                        <p className="text-xs text-ink-muted">35+ leading PSU collaborations and public ministries</p>
                       </div>
                     </div>
                     <ArrowRight className="h-4 w-4 text-slate-900 transition group-hover:translate-x-1" />
