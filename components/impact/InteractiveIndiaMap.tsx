@@ -1,44 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import World from "@svg-maps/world";
 import India from "@svg-maps/india";
-import Link from "next/link";
 import {
-  ArrowRight,
-  Compass,
-  Globe2,
   Handshake,
   HeartPulse,
-  Landmark,
   MapPin,
-  ShieldCheck,
   Sparkles,
   Users,
 } from "lucide-react";
 import {
-  GLOBAL_REGIONS,
-  GLOBAL_SUMMARY_TOTALS,
-  getGlobalRegion,
-  type GlobalRegion,
-} from "@/data/global-program-data";
-import {
   getIndiaStateProgram,
   indiaProgramData,
   indiaProgrammeTotals,
-  type IndiaStateProgram,
 } from "@/data/india-program-data";
 import { type MapFootprintConfig } from "@/config/customizer";
 import { cn } from "@/lib/utils/cn";
 
-type MapViewMode = "world" | "india";
 type TooltipState = { title: string; subtitle: string; x: number; y: number } | null;
-
-interface WorldLocation {
-  id: string;
-  name: string;
-  path: string;
-}
 
 interface IndiaLocation {
   id: string;
@@ -50,7 +29,6 @@ interface InteractiveIndiaMapProps {
   customizerConfig?: MapFootprintConfig;
 }
 
-const worldLocations = (World.locations || []) as WorldLocation[];
 const indiaLocations = (India.locations || []) as IndiaLocation[];
 
 function useCountUp(value: number) {
@@ -443,233 +421,9 @@ export function InteractiveIndiaMap({ customizerConfig }: InteractiveIndiaMapPro
             ) : null}
           </div>
         </div>
-                      {selectedRegion.metrics.map((metric) => (
-                        <div key={metric.label} className="rounded-2xl bg-sand-50/70 p-3.5 shadow-2xs">
-                          <p className="font-display text-xl font-bold text-brand-900">{metric.value}</p>
-                          <p className="mt-1 text-[0.6875rem] font-semibold text-ink-muted leading-tight">{metric.label}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl bg-sand-50/50 p-5">
-                    <p className="text-xs font-bold uppercase tracking-wider text-brand-900">
-                      Institutional Narrative &amp; Strategic Roadmap
-                    </p>
-                    <p className="mt-2.5 text-xs leading-relaxed text-ink-muted sm:text-sm">
-                      {selectedRegion.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Half: Focus Areas, UN SDGs & CSR Governance */}
-                <div className="space-y-6 lg:col-span-6">
-                  <div>
-                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-800">
-                      Strategic Focus &amp; Execution Pillars
-                    </p>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      {selectedRegion.focusAreas.map((focus) => (
-                        <span
-                          key={focus}
-                          className="rounded-xl bg-sand-100/70 px-3 py-1.5 text-xs font-medium text-ink"
-                        >
-                          {focus}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="border-t border-line/40 pt-5">
-                    <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800">
-                      UN Sustainable Development Goals (SDG) Alignment
-                    </p>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      {selectedRegion.sdgAlignments.map((sdg) => (
-                        <span
-                          key={sdg}
-                          className="rounded-xl bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800"
-                        >
-                          {sdg}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl bg-brand-50/40 p-4 border-l-4 border-brand-500">
-                    <p className="text-xs font-bold text-brand-900">
-                      Global CSR &amp; Philanthropic Engagement
-                    </p>
-                    <p className="mt-1 text-xs text-ink-muted leading-relaxed">
-                      BSGSS welcomes institutional partnerships, diaspora foundations, and academic research collaborations to scale proven rural socio-economic models globally.
-                    </p>
-                    <div className="mt-3 flex items-center gap-4">
-                      <Link
-                        href="/support"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-700 hover:text-brand-900 underline underline-offset-2"
-                      >
-                        Partner With Us <ArrowRight className="h-3 w-3" />
-                      </Link>
-                      <Link
-                        href="/transparency"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-muted hover:text-ink"
-                      >
-                        Statutory Disclosures <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          ) : (
-            /* India Selected State Dossier */
-            <div>
-              {/* Dossier Header Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/50 pb-6">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-emerald-50 px-3 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-emerald-800">
-                      Statutory Field Records
-                    </span>
-                    <span className="text-xs font-semibold text-brand-700">
-                      Field Execution Hub: Northern India
-                    </span>
-                  </div>
-                  <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-ink">
-                    {selectedState?.state || "Select a State"}
-                  </h3>
-                </div>
-
-                {/* State Quick Filter Tabs */}
-                <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-sand-50/80 p-1">
-                  {indiaProgramData.map((item) => (
-                    <button
-                      key={item.state}
-                      type="button"
-                      onClick={() => handleIndiaStateClick(item.state)}
-                      className={cn(
-                        "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-150",
-                        selectedStateName === item.state
-                          ? "bg-brand-700 text-white shadow-2xs"
-                          : "text-ink-muted hover:text-ink hover:bg-white/60"
-                      )}
-                    >
-                      <span>{item.state}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {selectedState ? (
-                <div className="mt-7 grid gap-8 lg:grid-cols-12 lg:items-start">
-                  
-                  {/* Left Column: Metrics & Active Districts */}
-                  <div className="space-y-6 lg:col-span-6">
-                    <div>
-                      <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted">
-                        State Field Statistics
-                      </p>
-                      <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                        <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
-                          <p className="font-display text-2xl font-bold text-brand-900">
-                            {selectedState.districts.length}
-                          </p>
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            Covered Districts
-                          </p>
-                        </div>
-                        <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
-                          <p className="font-display text-2xl font-bold text-brand-900">
-                            {selectedState.programs}
-                          </p>
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            CSR Projects Undertaken
-                          </p>
-                        </div>
-                        <div className="rounded-2xl bg-sand-50/70 p-4 shadow-2xs">
-                          <p className="font-display text-2xl font-bold text-emerald-800">
-                            {selectedState.villages || 50}+
-                          </p>
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-muted">
-                            Villages Covered
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-sand-50/50 p-5">
-                      <p className="text-xs font-bold uppercase tracking-wider text-brand-900">
-                        Active Operational Districts in {selectedState.state}
-                      </p>
-                      <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-                        Statutory records and partner project documentation verify active field programmes across the following district clusters:
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {selectedState.districts.map((district) => (
-                          <span
-                            key={district}
-                            className="inline-flex items-center gap-1 rounded-xl bg-white px-3 py-1.5 text-xs font-semibold text-brand-850 shadow-2xs"
-                          >
-                            <MapPin className="h-3 w-3 text-brand-600" />
-                            <span>{district}</span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Statutory Governance & PSU CSR Compliance */}
-                  <div className="space-y-6 lg:col-span-6">
-                    <div>
-                      <p className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-800">
-                        Operational Delivery Areas
-                      </p>
-                      <div className="mt-2.5 flex flex-wrap gap-2">
-                        <span className="rounded-xl bg-sand-100/70 px-3 py-1.5 text-xs font-medium text-ink">
-                          Mobile Preventive Healthcare &amp; Cancer Screening
-                        </span>
-                        <span className="rounded-xl bg-sand-100/70 px-3 py-1.5 text-xs font-medium text-ink">
-                          Women Self-Help Guilds &amp; Tailoring Training
-                        </span>
-                        <span className="rounded-xl bg-sand-100/70 px-3 py-1.5 text-xs font-medium text-ink">
-                          Remedial Computer Literacy &amp; Youth Skills
-                        </span>
-                        <span className="rounded-xl bg-sand-100/70 px-3 py-1.5 text-xs font-medium text-ink">
-                          Community Potable Water Purification Plants
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-emerald-50/50 p-5 border-l-4 border-emerald-500">
-                      <p className="text-xs font-bold text-emerald-950">
-                        MCA &amp; Statutory Public-Purpose Compliance
-                      </p>
-                      <p className="mt-1 text-xs text-ink-muted leading-relaxed">
-                        All programmatic operations in {selectedState.state} comply with Ministry of Corporate Affairs CSR Schedule VII mandates, supported by major public sector enterprises including REC Limited, PFC, IOCL, GAIL, and ONGC.
-                      </p>
-                      <div className="mt-3">
-                        <Link
-                          href="/activities/key-programmes"
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 underline underline-offset-2"
-                        >
-                          View Detailed Field Project Case Studies <ArrowRight className="h-3 w-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              ) : (
-                <div className="py-8 text-center text-sm text-ink-muted">
-                  Select any state above or click directly on the map to inspect district programmes.
-                </div>
-              )}
-            </div>
-          )}
-        </div>
       </div>
     </section>
   );
 }
+
 
