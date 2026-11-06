@@ -9,7 +9,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Verified Social Impact & Outcomes | BSGSS",
   description:
-    "Examine verified outcomes from 30+ years of BSGSS service: 50,000+ individuals reached, 30,000+ medical patients, and 350+ villages.",
+    "Examine verified outcomes from 30+ years of BSGSS service: 50 Lac+ underprivileged lives empowered, 20 Lac+ patients screened & treated, and 350+ villages across 7 states.",
   path: "/impact",
 });
 

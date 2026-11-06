@@ -200,7 +200,7 @@ export function ProductInquiryModal({ productName, onClose }: ProductInquiryModa
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 99102 43454"
                     className="mt-1 block w-full rounded-lg border border-line bg-sand-50/50 px-3 py-2 text-xs text-ink placeholder:text-ink-muted/60 transition focus:border-brand-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-100 sm:text-sm"
                   />
                 </div>

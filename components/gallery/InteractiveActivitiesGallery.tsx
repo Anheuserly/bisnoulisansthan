@@ -22,8 +22,8 @@ import { GalleryLightbox } from "./GalleryLightbox";
 const CATEGORIES = [
   { id: "all", label: "All Chronicles" },
   { id: "healthcare", label: "Medical & Cancer Camps" },
-  { id: "skills", label: "Tailoring & Handloom Guilds" },
-  { id: "community", label: "Village Councils & SHGs" },
+  { id: "skills", label: "Sustainable Livelihood & SHGs" },
+  { id: "community", label: "Gramodyog & Community Councils" },
   { id: "education", label: "Education & Literacy" },
   { id: "csr", label: "CSR Alliances & Governance" },
 ];

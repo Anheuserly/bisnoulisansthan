@@ -29,7 +29,7 @@ export const GALLERY_ARCHIVE_DATA: GalleryItem[] = [
   {
     id: "tal-tailoring-1",
     src: "/images/bsgss/gallery-training/185-tal1.jpeg",
-    title: "Vocational Tailoring & Garment Craft Guild",
+    title: "Vocational Tailoring & SHG Livelihood Center",
     category: "skills",
     categoryLabel: "Skills & Livelihoods",
     location: "Khora Colony, Ghaziabad, UP",

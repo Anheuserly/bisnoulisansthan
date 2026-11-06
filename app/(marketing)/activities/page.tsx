@@ -8,7 +8,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Activities & Field Initiatives | BSGSS",
   description:
-    "Discover field initiatives by BSGSS: medical screening camps, vocational guilds, women's empowerment drives, and rural workshops.",
+    "Discover field initiatives by BSGSS: medical screening camps, vocational self-help groups, women's empowerment drives, and rural workshops.",
   path: "/activities",
 });
 
@@ -26,7 +26,7 @@ const activities = [
     desc: "Free oncology checkups, eye testing, and essential medicine distributions.",
   },
   {
-    title: "Vocational Tailoring & Craft Guilds",
+    title: "Sustainable Livelihoods & Women SHGs",
     tag: "Women Livelihood",
     image: "gallery-training/186-tal2.jpeg",
     desc: "Skill certification and self-reliance for rural women and youth.",

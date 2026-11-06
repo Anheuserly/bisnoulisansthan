@@ -1148,7 +1148,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       category: "impact",
       enabled: true,
       order: 8,
-      description: "Key verifiable metrics: 50,000+ reached, 30,000+ patients treated, 5,000+ women trained.",
+      description: "Key verifiable metrics: 50 Lac+ empowered, 20 Lac+ patients treated, 36,000+ women certified.",
     },
     {
       id: "india_map",
@@ -1156,7 +1156,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       category: "impact",
       enabled: true,
       order: 9,
-      description: "Interactive SVG map highlighting the 5 states and active districts of BSGSS presence.",
+      description: "Interactive SVG map highlighting the 7 states and active districts of BSGSS presence.",
     },
     {
       id: "partners",

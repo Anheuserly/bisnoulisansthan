@@ -381,7 +381,7 @@ export default async function HomePage() {
                 <span>Verified corporate partnerships from statutory records. Hover over any column to pause scrolling.</span>
               </span>
               <Link href="/about/partners" className="font-semibold text-brand-700 hover:text-brand-900 transition-colors underline-offset-4 hover:underline">
-                View all 30 partner profiles &amp; projects →
+                View all 35+ partner profiles &amp; projects →
               </Link>
             </div>
           </section>

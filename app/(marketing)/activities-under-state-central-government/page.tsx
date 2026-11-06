@@ -79,7 +79,7 @@ export default function GovernmentActivitiesPage() {
                 Working with communities to make public support directly accessible.
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
-                BSGSS implements community-oriented activities supported through Central and State Government schemes. The work brings community mobilisation together with awareness, training, healthcare, and livelihood components across Uttar Pradesh, Delhi NCR, and neighbouring states.
+                BSGSS implements community-oriented activities supported through Central and State Government schemes. The work brings community mobilisation together with awareness, training, healthcare, and livelihood components across 7 states including Delhi NCR, Uttar Pradesh, Haryana, Punjab, Rajasthan, Chhattisgarh, and Uttarakhand.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
                 The aim is practical: help individuals and women&apos;s self-help groups understand statutory rights, build technical skills, access public services, and participate in their own self-reliance.

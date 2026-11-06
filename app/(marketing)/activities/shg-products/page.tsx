@@ -21,7 +21,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Women SHG Handcrafted Products | BSGSS",
   description:
-    "Support rural women artisans. Explore handcrafted Khadi apparel, handloom textiles, and craft items produced by BSGSS SHG guilds.",
+    "Support rural women artisans. Explore handcrafted Khadi apparel, handloom textiles, and craft items produced by BSGSS village self-help groups (SHGs).",
   path: "/activities/shg-products",
 });
 
@@ -261,7 +261,7 @@ export default function ShgProductsPage() {
                   Artisanal craft that builds direct household agency.
                 </h2>
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
-                  BSGSS trains, organizes, and supports over 5,000 women in village Self-Help Groups (SHGs) across Uttar Pradesh and Delhi NCR. Every item ordered directly strengthens a family&apos;s dignity, children&apos;s education, and healthcare resilience.
+                  BSGSS trains, organizes, and supports women in village Self-Help Groups (SHGs) across our active field clusters. Every item ordered directly strengthens a family&apos;s dignity, children&apos;s education, and healthcare resilience.
                 </p>
                 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -279,13 +279,13 @@ export default function ShgProductsPage() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="border-t border-line pt-4">
                   <Users className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">5,000+</p>
+                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">36,000+</p>
                   <p className="mt-0.5 text-xs text-ink-muted">Women Artisans Certified</p>
                 </div>
                 <div className="border-t border-line pt-4">
                   <PackageCheck className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">60+</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Village Self-Help Guilds</p>
+                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">350+</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">Villages Reached</p>
                 </div>
                 <div className="border-t border-line pt-4">
                   <Sparkles className="h-5 w-5 text-ink" />
@@ -346,7 +346,7 @@ export default function ShgProductsPage() {
                       {/* Meet the Artisan Guild Detail */}
                       <div className="mt-4 border-t border-line/60 pt-3 text-xs text-ink/80 space-y-1">
                         <p>
-                          <span className="font-semibold text-ink">Artisan Guild:</span> {idx === 0 ? "Bisnouli Craft Guild, Dadri (12 Women Artisans)" : "Hindon Basin Women's Livelihood Center"}
+                          <span className="font-semibold text-ink">Artisan Group:</span> {idx === 0 ? "Bisnouli SHG Producer Group, Dadri (12 Women Artisans)" : "Hindon Basin Women's Livelihood Center"}
                         </p>
                         <p>
                           <span className="font-semibold text-ink">Technique:</span> {idx === 0 ? "Heritage Charkha hand-spun yarn & border embroidery" : "Hand-knitted pure woolen yarn with traditional rib stitch"}
@@ -406,7 +406,7 @@ export default function ShgProductsPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3 text-white">
-                      <p className="font-display text-sm font-bold sm:text-base">Cooperative Guild Production</p>
+                      <p className="font-display text-sm font-bold sm:text-base">Cooperative SHG Production</p>
                       <p className="text-xs text-white/80">Graduates pool capital and resources to fulfill local school uniforms and market orders.</p>
                     </div>
                   </div>

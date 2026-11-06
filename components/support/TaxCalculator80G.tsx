@@ -59,7 +59,7 @@ export function TaxCalculator80G() {
     : amount >= 25000
     ? "Directly establishes and equips rural vocational workstations, providing sustainable monthly self-reliance for village women."
     : amount >= 10000
-    ? "Sponsors vocational certification and materials for rural youth and women artisans in Uttar Pradesh & Delhi NCR."
+    ? "Sponsors vocational certification and materials for rural youth and women artisans across our active field centers in 7 states."
     : amount >= 5000
     ? "Funds preventive diagnostic camps and health awareness drives across high-need rural habitations."
     : "Supports classroom learning materials, digital literacy, and tailoring training supplies.";

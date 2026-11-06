@@ -185,7 +185,7 @@ export const content = {
       instagram: "https://www.instagram.com/bisnoulisansthan/",
       twitter: "https://twitter.com/bisnoulisansthan",
       linkedin: "https://www.linkedin.com/company/bisnouli-sarvodaya-gramodyog-sewa-sansthan/",
-      whatsapp: "https://wa.me/919871324838?text=Hello%20BSGSS,%20I%20would%20like%20to%20connect%20regarding%20community%20programmes",
+      whatsapp: "https://wa.me/919910243454?text=Hello%20BSGSS,%20I%20would%20like%20to%20connect%20regarding%20community%20programmes",
     },
   },
   home: {
@@ -241,7 +241,7 @@ export const content = {
   },
   about: {
     metadataTitle: "About BSGSS", title: "Building self-reliant communities since 1994.", eyebrow: "About BSGSS",
-    introduction: ["Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS) is a registered voluntary organisation founded in Bisnouli village, Dadri Tehsil, Uttar Pradesh. We foster sustainable socio-economic development through education, healthcare, vocational training and women’s empowerment.", "Working across Uttar Pradesh, Delhi, Punjab and Haryana, BSGSS brings together professionals, local partners and volunteers to help underprivileged communities build capability, confidence and economic independence."],
+    introduction: ["Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS) is a registered voluntary organisation founded in Bisnouli village, Dadri Tehsil, Uttar Pradesh. We foster sustainable socio-economic development through education, healthcare, vocational training and women’s empowerment.", "Working across Delhi NCR, Uttar Pradesh, Haryana, Punjab, Rajasthan, Chhattisgarh, and Uttarakhand, BSGSS brings together professionals, local partners and volunteers to help underprivileged communities build capability, confidence and economic independence."],
     images: { skills: "/images/bsgss/other-source-assets/233-1.jpg", health: "/images/bsgss/gallery-jac/161-jac3.jpg" },
     journey: { eyebrow: "Our journey", title: "From village-rooted self-reliance to wider community action.", heading: "A practical idea, carried forward by people.", body: ["BSGSS began with a vision to empower rural communities by promoting village and cottage industries and strengthening self-reliance among underprivileged groups. Socially conscious leaders and activists came together around a shared aim: inclusive growth that could be sustained locally.", "Over time, the organisation expanded its work under the guidance of Shri Vijay Kumar Jha (Ex-IPS) and Smt. Nandita Bakshi (Ex-IRS), establishing an administrative office in New Delhi and building community-development programmes with broader reach.", "Today, the same commitment shapes BSGSS work across learning, health, livelihoods, women’s agency and community participation."] },
     mission: { eyebrow: "Our mission", title: "Create positive change through practical, sustainable and community-driven solutions.", text: "Our mission is to bring positive change to the lives of poor and marginalised people. We focus on empowering women, enabling access to quality healthcare, promoting education and skill training, and encouraging micro-finance for economic independence." },
@@ -283,7 +283,7 @@ export const content = {
       source: "https://bisnoulisansthan.in/gallery/",
       images: [
         { title: "Mobile Cancer Screening & Diagnostic Camp", src: "/images/bsgss/healthcare-camps/149-camp1.jpeg" },
-        { title: "Vocational Tailoring & Garment Craft Guild", src: "/images/bsgss/gallery-training/185-tal1.jpeg" },
+        { title: "Vocational Tailoring & SHG Training Center", src: "/images/bsgss/gallery-training/185-tal1.jpeg" },
         { title: "Gramodyog Self Help Group Council", src: "/images/bsgss/gallery-community/200-whatsapp-image-2025-10-09-at-16-49-32-aab7df99.jpg" },
         { title: "Physician Consultations & Free Medication", src: "/images/bsgss/healthcare-camps/150-camp3.jpeg" },
         { title: "Rural Literacy & Digital Classroom", src: "/images/bsgss/education/146-class1.jpeg" },
@@ -555,7 +555,7 @@ export const content = {
         previewImage: "/images/documents/legal/bsgss-organisational-profile.jpg",
         fileType: "PDF",
         fileSize: "3.9 MB",
-        description: "Official 48-page comprehensive organisational profile dossier featuring statutory registrations, founder members, board of advisors, 22 PSU CSR projects, training centers, SHG handicrafts, and Doordarshan media coverage.",
+        description: "Official 48-page comprehensive organisational profile dossier featuring statutory registrations, founder members, board of advisors, 35+ institutional and PSU CSR partnerships, training centers, SHG handicrafts, and Doordarshan media coverage.",
       },
       {
         title: "Legal Status Summary Dossier",

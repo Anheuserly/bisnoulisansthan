@@ -58,12 +58,12 @@ const LEADERS: LeaderMessage[] = [
       "BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women.",
     fullMessage: [
       "BSGSS is fundamentally grounded in the values of dignity, justice, and equal economic opportunity. Its steady, persistent work in villages and small towns creates meaningful change for people who are too often left out of mainstream conversations—especially rural women.",
-      "Through Action for Micro-Finance and Rehabilitation (AMAR), we nurture self-help craft guilds, vocational tailoring centers, and micro-savings networks where women transition from dependence to confident economic leadership in their families.",
+      "Through Action for Micro-Finance and Rehabilitation (AMAR), we nurture village self-help groups (SHGs), vocational training centers, and micro-savings networks where women transition from dependence to confident economic leadership in their families.",
       "When a woman earns and holds savings in her own name, the future of the entire household transforms.",
     ],
     keyHighlights: [
       "1,00,000+ women empowered through skill pathways",
-      "AMAR Micro-Finance & craft cooperative federation",
+      "AMAR Micro-Finance & women's self-help federation",
       "Certified 12A & 80G governance with 30 years unbroken service",
     ],
     tenure: "Leading executive operations & rural enterprise",

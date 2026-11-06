@@ -66,7 +66,7 @@ export default function JoinUsPage() {
                   </li>
                   <li className="flex items-center gap-2.5 text-ink">
                     <UsersRound className="h-4 w-4 shrink-0 text-slate-900" />
-                    <span className="font-medium">5,000+ Women Trained across 60+ Villages</span>
+                    <span className="font-medium">36,000+ Women Certified across 350+ Villages</span>
                   </li>
                   <li className="flex items-center gap-2.5 text-ink">
                     <Building2 className="h-4 w-4 shrink-0 text-slate-900" />

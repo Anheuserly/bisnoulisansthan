@@ -76,7 +76,7 @@ export default function SponsorPage() {
                   </h3>
                 </div>
                 <p className="text-xs text-ink-muted leading-relaxed">
-                  All micro-giving funds are allocated directly to certified instructor compensation, practice textiles, and machinery maintenance in Dadri, UP, and Delhi NCR centers.
+                  All micro-giving funds are allocated directly to certified instructor compensation, practice textiles, and machinery maintenance across our verified village training centers.
                 </p>
                 <div className="pt-2 border-t border-line/60 flex items-center justify-between text-xs text-ink-subtle">
                   <span>Tracked via Open Books</span>
