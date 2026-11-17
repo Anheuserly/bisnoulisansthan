@@ -281,7 +281,11 @@ export default function ShgProductsPage() {
                       </p>
 
                       <div className="mt-3 pt-2.5 border-t border-line/60">
-                        <ProductInquiryButton productName={product.name} />
+                        <ProductInquiryButton
+                          productName={product.name}
+                          productTag={product.tag}
+                          productImage={product.image}
+                        />
                       </div>
                     </div>
                   </article>
