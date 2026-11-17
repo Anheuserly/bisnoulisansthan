@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { VideoGallery } from "@/components/activities/VideoGallery";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { getChannelVideos } from "@/lib/youtube";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
@@ -31,18 +30,9 @@ export default async function VideosPage() {
           { name: "Videos", path: links.videos },
         ]}
       />
-      <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
+      <div className="pt-5 pb-12 sm:pt-7 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <ScrollReveal direction="up" delay={40}>
-            <div className="mb-8">
-              <p className="text-xs font-bold uppercase tracking-wider text-brand-700">{videoGallery.eyebrow}</p>
-              <h2 className="mt-1 font-display text-2xl font-bold text-ink sm:text-3xl">{videoGallery.heading}</h2>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" delay={80}>
-            <VideoGallery videos={videos} youtubeUrl={content.site.youtubeUrl} />
-          </ScrollReveal>
+          <VideoGallery videos={videos} youtubeUrl={content.site.youtubeUrl} />
         </div>
       </div>
     </>
