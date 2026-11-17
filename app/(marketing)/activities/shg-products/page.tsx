@@ -1,18 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Award,
-  CheckCircle2,
-  HandHeart,
-  Heart,
-  Mail,
-  MapPin,
-  PackageCheck,
-  ShoppingBag,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ProductInquiryButton } from "@/components/products/ProductInquiryButton";
@@ -250,59 +238,8 @@ export default function ShgProductsPage() {
       />
       <div className="pt-8 pb-14 sm:pt-10 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          {/* Top Mission Banner (Borderless, Open Editorial) */}
-          <ScrollReveal direction="up" delay={40}>
-            <section className="grid gap-10 border-t-2 border-brand-850 pt-6 md:grid-cols-[1.1fr_0.9fr] md:items-start">
-              <div>
-                <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-700">
-                  Women-Led Rural Enterprise
-                </p>
-                <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl lg:text-4xl">
-                  Artisanal craft that builds direct household agency.
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
-                  BSGSS trains, organizes, and supports women in village Self-Help Groups (SHGs) across our active field clusters. Every item ordered directly strengthens a family&apos;s dignity, children&apos;s education, and healthcare resilience.
-                </p>
-                
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="mailto:bsgssindia@yahoo.co.in?subject=Bulk%20SHG%20Products%20Catalogue%20Enquiry"
-                    className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-brand-800 sm:text-sm"
-                  >
-                    <Mail className="h-4 w-4" />
-                    <span>Inquire for Institutional &amp; Festive Bulk Gifting</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Trust Indicators (Borderless, Open Editorial) */}
-              <div className="grid grid-cols-2 gap-6">
-                <div className="border-t border-line pt-4">
-                  <Users className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">36,000+</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Women Artisans Certified</p>
-                </div>
-                <div className="border-t border-line pt-4">
-                  <PackageCheck className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">350+</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Villages Reached</p>
-                </div>
-                <div className="border-t border-line pt-4">
-                  <Sparkles className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">100%</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Fair Community Proceeds</p>
-                </div>
-                <div className="border-t border-line pt-4">
-                  <Award className="h-5 w-5 text-ink" />
-                  <p className="mt-2 font-display text-base font-bold text-ink sm:text-lg">Verified</p>
-                  <p className="mt-0.5 text-xs text-ink-muted">Handloom &amp; Khadi Standard</p>
-                </div>
-              </div>
-            </section>
-          </ScrollReveal>
-
           {/* Current Collection Grid (Borderless, Open Editorial) */}
-          <section className="mt-14 sm:mt-18">
+          <section>
             <ScrollReveal direction="up" delay={40}>
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between border-b border-line pb-3">
                 <div>
@@ -318,32 +255,32 @@ export default function ShgProductsPage() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-8 grid gap-8 sm:grid-cols-2 max-w-5xl">
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
               {products.map((product, idx) => (
                 <ScrollReveal key={product.name} staggerIndex={idx} direction="up">
-                  <article className="group flex h-full flex-col border-t-2 border-line pt-5 transition hover:border-brand-700">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-sand-50/70 p-4 rounded-xl">
+                  <article className="group flex h-full flex-col border-t-2 border-line pt-4 transition hover:border-brand-700">
+                    <div className="relative aspect-square overflow-hidden bg-sand-50/70 p-3 rounded-xl border border-line/50 flex items-center justify-center">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="h-full w-full object-contain transition duration-500 group-hover:scale-106"
+                        className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute top-3 left-3">
-                        <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-ink-muted bg-white/90 px-2 py-0.5 rounded-sm">
+                      <div className="absolute top-2.5 left-2.5">
+                        <span className="text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted bg-white/95 px-2 py-0.5 rounded-sm shadow-2xs">
                           {product.tag}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex flex-1 flex-col pt-5">
-                      <h3 className="font-display text-lg font-bold text-ink group-hover:text-brand-800">
+                    <div className="flex flex-1 flex-col pt-3">
+                      <h3 className="font-display text-sm sm:text-base font-bold text-ink group-hover:text-brand-800 line-clamp-1">
                         {product.name}
                       </h3>
-                      <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+                      <p className="mt-1 flex-1 text-xs leading-relaxed text-ink-muted line-clamp-2">
                         {product.description}
                       </p>
 
-                      <div className="mt-4 pt-3 border-t border-line/60">
+                      <div className="mt-3 pt-2.5 border-t border-line/60">
                         <ProductInquiryButton productName={product.name} />
                       </div>
                     </div>

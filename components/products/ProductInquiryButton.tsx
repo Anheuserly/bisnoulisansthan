@@ -16,10 +16,10 @@ export function ProductInquiryButton({ productName }: ProductInquiryButtonProps)
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline cursor-pointer transition text-left"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-900 hover:underline cursor-pointer transition text-left"
         aria-label={`Request pricing and sample for ${productName}`}
       >
-        <Mail className="h-3.5 w-3.5" />
+        <Mail className="h-3.5 w-3.5 shrink-0" />
         <span>Request pricing &amp; sample</span>
       </button>
 
