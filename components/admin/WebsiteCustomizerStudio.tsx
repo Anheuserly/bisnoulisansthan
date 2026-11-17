@@ -24,6 +24,7 @@ import {
   Layers,
   MapPin,
   MessageCircle,
+  Mic,
   Music,
   Palette,
   Pause,
@@ -66,6 +67,7 @@ import {
   DEFAULT_CUSTOMIZER_SETTINGS,
   type CustomizerSettings,
   type CustomizerVideoItem,
+  type CustomizerVoiceItem,
   type SectionConfig,
   type CollagePhotoItem,
   type PopupNotificationType,
@@ -101,6 +103,7 @@ const GALLERY_PRESET_IMAGES = [
 type CustomizerTabId =
   | "sections"
   | "videos"
+  | "voices"
   | "certificate"
   | "payment"
   | "story"
@@ -124,6 +127,7 @@ export const CUSTOMIZER_MODULES: {
   { id: "certificate", label: "Donation Certificate", icon: Award, badge: "Live Preview", category: "DONATIONS" },
   { id: "payment", label: "Payment Gateway (Easebuzz)", icon: KeyRound, badge: "Easebuzz", category: "DONATIONS" },
   { id: "videos", label: "Video Archives & Films", icon: ListVideo, category: "MEDIA" },
+  { id: "voices", label: "Voice of the Village (Audio)", icon: Mic, badge: "Audio", category: "MEDIA" },
   { id: "sections", label: "Homepage Sections & Order", icon: Layers, category: "STRUCTURE" },
   { id: "story", label: "Our Story & Milestones", icon: Route, category: "CONTENT" },
   { id: "popup", label: "Pop-up Announcements", icon: Bell, category: "ENGAGEMENT" },
@@ -144,6 +148,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
     [
       "sections",
       "videos",
+      "voices",
       "certificate",
       "story",
       "social",
@@ -169,6 +174,7 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
       [
         "sections",
         "videos",
+        "voices",
         "certificate",
         "story",
         "social",
@@ -447,6 +453,129 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
         v.id === id ? { ...v, ...updates } : v
       ),
     }));
+  };
+
+  // Community Voices Management State
+  const [newVoiceName, setNewVoiceName] = useState("");
+  const [newVoiceVillage, setNewVoiceVillage] = useState("");
+  const [newVoicePhoto, setNewVoicePhoto] = useState("/images/bsgss/gallery-community/200-whatsapp-image-2025-10-09-at-16-49-32-aab7df99.jpg");
+  const [newVoiceAudio, setNewVoiceAudio] = useState("");
+  const [newVoiceDuration, setNewVoiceDuration] = useState(30);
+  const [newVoiceLanguage, setNewVoiceLanguage] = useState<"hi" | "en">("hi");
+  const [newVoiceTranscriptHi, setNewVoiceTranscriptHi] = useState("");
+  const [newVoiceTranscriptEn, setNewVoiceTranscriptEn] = useState("");
+  const [newVoiceConsent, setNewVoiceConsent] = useState(true);
+  const [newVoiceYear, setNewVoiceYear] = useState(new Date().getFullYear());
+  const [voiceFormError, setVoiceFormError] = useState<string | null>(null);
+  const [playingVoiceId, setPlayingVoiceId] = useState<string | null>(null);
+  const adminVoiceAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const handleAddVoice = () => {
+    const rawName = newVoiceName.trim();
+    if (!rawName) {
+      setVoiceFormError("Please enter the artisan or community member's name.");
+      return;
+    }
+    // Strict privacy standard: First name only
+    const firstName = rawName.split(" ")[0];
+    if (!newVoiceVillage.trim()) {
+      setVoiceFormError("Please enter the village or district name.");
+      return;
+    }
+    if (!newVoiceAudio.trim()) {
+      setVoiceFormError("Please enter an audio recording URL or relative path.");
+      return;
+    }
+    if (!newVoiceTranscriptHi.trim() && !newVoiceTranscriptEn.trim()) {
+      setVoiceFormError("Please provide at least one transcript (Hindi or English).");
+      return;
+    }
+
+    const newVoice: CustomizerVoiceItem = {
+      id: `voice-${Date.now()}`,
+      name: firstName || "Artisan",
+      village: newVoiceVillage.trim(),
+      photo: newVoicePhoto.trim() || "/images/bsgss/gallery-community/200-whatsapp-image-2025-10-09-at-16-49-32-aab7df99.jpg",
+      audio: newVoiceAudio.trim(),
+      durationSec: Math.max(5, Number(newVoiceDuration) || 30),
+      language: newVoiceLanguage,
+      transcriptHi: newVoiceTranscriptHi.trim() || newVoiceTranscriptEn.trim(),
+      transcriptEn: newVoiceTranscriptEn.trim() || newVoiceTranscriptHi.trim(),
+      consentOnFile: Boolean(newVoiceConsent),
+      year: Number(newVoiceYear) || new Date().getFullYear(),
+    };
+
+    setSettings((prev) => ({
+      ...prev,
+      voices: [...(prev.voices || []), newVoice],
+    }));
+
+    setNewVoiceName("");
+    setNewVoiceVillage("");
+    setNewVoiceAudio("");
+    setNewVoiceTranscriptHi("");
+    setNewVoiceTranscriptEn("");
+    setNewVoiceConsent(true);
+    setVoiceFormError(null);
+  };
+
+  const handleDeleteVoice = (id: string) => {
+    if (playingVoiceId === id && adminVoiceAudioRef.current) {
+      adminVoiceAudioRef.current.pause();
+      setPlayingVoiceId(null);
+    }
+    setSettings((prev) => ({
+      ...prev,
+      voices: (prev.voices || []).filter((v) => v.id !== id),
+    }));
+  };
+
+  const handleToggleVoiceConsent = (id: string) => {
+    setSettings((prev) => ({
+      ...prev,
+      voices: (prev.voices || []).map((v) =>
+        v.id === id ? { ...v, consentOnFile: !v.consentOnFile } : v
+      ),
+    }));
+  };
+
+  const handleMoveVoice = (index: number, direction: "up" | "down") => {
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    const list = [...(settings.voices || [])];
+    if (targetIndex < 0 || targetIndex >= list.length) return;
+    const current = list[index];
+    const target = list[targetIndex];
+    if (!current || !target) return;
+    list[index] = target;
+    list[targetIndex] = current;
+    setSettings((prev) => ({ ...prev, voices: list }));
+  };
+
+  const handlePlayVoicePreview = (voice: CustomizerVoiceItem) => {
+    if (playingVoiceId === voice.id) {
+      if (adminVoiceAudioRef.current) {
+        adminVoiceAudioRef.current.pause();
+      }
+      setPlayingVoiceId(null);
+      return;
+    }
+
+    if (!adminVoiceAudioRef.current) {
+      adminVoiceAudioRef.current = new Audio();
+      adminVoiceAudioRef.current.onended = () => setPlayingVoiceId(null);
+      adminVoiceAudioRef.current.onerror = () => {
+        setPlayingVoiceId(null);
+        alert("Could not load audio from: " + voice.audio);
+      };
+    }
+
+    adminVoiceAudioRef.current.src = voice.audio;
+    adminVoiceAudioRef.current.play().then(() => {
+      setPlayingVoiceId(voice.id);
+    }).catch((err) => {
+      console.warn("Audio play error:", err);
+      setPlayingVoiceId(null);
+    });
   };
 
   // Section Reordering Helpers
@@ -1248,6 +1377,377 @@ export function WebsiteCustomizerStudio({ initialSettings, initialTab, admin }: 
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Tab Content: Community Audio Dispatches (Voice of the Village) */}
+      {activeTab === "voices" && (
+        <div className="space-y-6">
+          {/* Header Banner */}
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-line pb-5">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-800 text-white">
+                    <Mic className="h-4 w-4" />
+                  </span>
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Voice of the Village · Community Audio Dispatches
+                  </h3>
+                </div>
+                <p className="mt-1 text-xs sm:text-sm text-ink-muted">
+                  Add and manage authentic voice recordings from rural women artisans, self-help groups, and field beneficiaries.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Link
+                  href="/stories"
+                  target="_blank"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-sand-50 transition"
+                >
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                  View Public Stories Page
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm("Clear all voice dispatches? The homepage section will remain hidden until real recordings are added.")) {
+                      setSettings((prev) => ({ ...prev, voices: [] }));
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 hover:border-red-200 transition"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Clear All Voices
+                </button>
+              </div>
+            </div>
+
+            {/* Zero Fake Disclaimer Banner */}
+            <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50/60 p-4 text-xs text-emerald-950 flex items-start gap-3">
+              <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-bold">Zero-Placeholder Integrity Standard</p>
+                <p className="mt-0.5 text-emerald-900/90 leading-relaxed">
+                  Placeholder or fabricated entries are completely disabled. The homepage &ldquo;Voice of the Village&rdquo; section will automatically remain hidden from public view until you add real recordings here with signed consent and click &ldquo;Save &amp; Publish&rdquo;.
+                </p>
+              </div>
+            </div>
+
+            {/* Form: Add New Voice Dispatch */}
+            <div className="mt-6 rounded-xl border border-line bg-sand-50/50 p-5 space-y-4">
+              <div className="flex items-center justify-between border-b border-line/60 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-850">
+                  + Add Real Community Audio Dispatch
+                </span>
+                <span className="text-[11px] text-ink-muted">
+                  First name only for privacy · Documented consent mandatory
+                </span>
+              </div>
+
+              {voiceFormError && (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-800">
+                  {voiceFormError}
+                </div>
+              )}
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    First Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newVoiceName}
+                    onChange={(e) => setNewVoiceName(e.target.value)}
+                    placeholder="e.g. Sunita"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                  <p className="mt-1 text-[10px] text-ink-muted">Strict privacy standard: only first names are published.</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Village &amp; State <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newVoiceVillage}
+                    onChange={(e) => setNewVoiceVillage(e.target.value)}
+                    placeholder="e.g. Bisnouli, Uttar Pradesh"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Year of Dispatch
+                  </label>
+                  <input
+                    type="number"
+                    value={newVoiceYear}
+                    onChange={(e) => setNewVoiceYear(Number(e.target.value))}
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Audio File URL / Path <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newVoiceAudio}
+                    onChange={(e) => setNewVoiceAudio(e.target.value)}
+                    placeholder="e.g. /audio/voices/sunita-bisnouli.m4a or https://cdn.bsgssindia.org/audio/voice-01.mp3"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Duration (Seconds)
+                  </label>
+                  <input
+                    type="number"
+                    value={newVoiceDuration}
+                    onChange={(e) => setNewVoiceDuration(Number(e.target.value))}
+                    min={5}
+                    max={600}
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Photo Image Path
+                  </label>
+                  <input
+                    type="text"
+                    value={newVoicePhoto}
+                    onChange={(e) => setNewVoicePhoto(e.target.value)}
+                    placeholder="/images/bsgss/people/photo.jpg"
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                  <div className="mt-1.5 flex flex-wrap gap-1">
+                    {GALLERY_PRESET_IMAGES.slice(0, 4).map((p, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setNewVoicePhoto(p.src)}
+                        className="rounded border border-line bg-white px-1.5 py-0.5 text-[10px] text-ink-muted hover:text-ink hover:bg-sand-100"
+                      >
+                        Preset {idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Spoken Language
+                  </label>
+                  <select
+                    value={newVoiceLanguage}
+                    onChange={(e) => setNewVoiceLanguage(e.target.value as "hi" | "en")}
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  >
+                    <option value="hi">Hindi (हिंदी)</option>
+                    <option value="en">English</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    Hindi Transcript (हिंदी प्रतिलेख)
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={newVoiceTranscriptHi}
+                    onChange={(e) => setNewVoiceTranscriptHi(e.target.value)}
+                    placeholder="गाँव में प्रशिक्षण केंद्र शुरू होने से पहले..."
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
+                    English Translation Transcript
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={newVoiceTranscriptEn}
+                    onChange={(e) => setNewVoiceTranscriptEn(e.target.value)}
+                    placeholder="Before the tailoring training started..."
+                    className="mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-xs text-ink focus:border-brand-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2 border-t border-line/60">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={newVoiceConsent}
+                    onChange={(e) => setNewVoiceConsent(e.target.checked)}
+                    className="h-4 w-4 rounded border-line text-emerald-600 focus:ring-emerald-500"
+                  />
+                  <span className="text-xs font-semibold text-ink">
+                    Documented Participant Consent on File (Statutory Requirement)
+                  </span>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleAddVoice}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-teal-800 px-4 py-2 text-xs font-bold text-white hover:bg-teal-900 shadow-2xs transition"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  <span>Add Audio Dispatch</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* List of Configured Voices */}
+          <div className="rounded-2xl border border-line bg-white p-6 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-4">
+              <div>
+                <h4 className="font-display text-sm font-bold text-ink">
+                  Configured Community Voices ({settings.voices?.length || 0})
+                </h4>
+                <p className="text-xs text-ink-muted">
+                  Reorder or update dispatches. Entries without consent on file are automatically withheld by the gate.
+                </p>
+              </div>
+              <span className="rounded-full bg-sand-100 px-2.5 py-1 text-[11px] font-bold text-ink-muted">
+                {(settings.voices || []).filter((v) => v.consentOnFile).length} Active on Public Site
+              </span>
+            </div>
+
+            {(!settings.voices || settings.voices.length === 0) ? (
+              <div className="rounded-xl border border-dashed border-line bg-sand-50/50 p-10 text-center">
+                <Mic className="mx-auto h-8 w-8 text-stone-400" />
+                <h5 className="mt-2 text-sm font-bold text-ink">No Audio Dispatches Currently Stored</h5>
+                <p className="mt-1 text-xs text-ink-muted max-w-md mx-auto">
+                  All placeholder entries have been removed. The public site will cleanly hide the Voice of the Village section until real community recordings are added using the form above.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-line">
+                {settings.voices.map((voice, idx) => (
+                  <div key={voice.id} className="py-4 first:pt-0 last:pb-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
+                      <div className="relative h-12 w-12 rounded-full overflow-hidden bg-sand-200 shrink-0 border border-line">
+                        {voice.photo ? (
+                          <img src={voice.photo} alt={voice.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-xs font-bold text-stone-500">
+                            {voice.name.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-bold text-ink text-sm">{voice.name}</span>
+                          <span className="text-xs text-ink-muted">· {voice.village}</span>
+                          <span className="text-[10px] text-ink-muted">({voice.year})</span>
+                          {voice.consentOnFile ? (
+                            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                              ✓ Consent on File
+                            </span>
+                          ) : (
+                            <span className="rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-700 border border-red-200">
+                              ✕ No Consent (Hidden)
+                            </span>
+                          )}
+                        </div>
+
+                        <p className="mt-1 text-xs text-ink-muted line-clamp-2">
+                          &ldquo;{voice.transcriptHi || voice.transcriptEn}&rdquo;
+                        </p>
+
+                        <div className="mt-1 flex items-center gap-3 text-[11px] text-ink-muted">
+                          <span>Audio: <code className="text-[10px] font-mono bg-sand-100 px-1 py-0.5 rounded">{voice.audio}</code></span>
+                          <span>Duration: {voice.durationSec}s</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
+                      <button
+                        type="button"
+                        onClick={() => handlePlayVoicePreview(voice)}
+                        className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-semibold transition ${
+                          playingVoiceId === voice.id
+                            ? "border-brand-500 bg-brand-50 text-brand-800"
+                            : "border-line bg-white text-ink hover:bg-sand-50"
+                        }`}
+                      >
+                        {playingVoiceId === voice.id ? (
+                          <>
+                            <Pause className="h-3.5 w-3.5 text-brand-600" />
+                            <span>Pause</span>
+                          </>
+                        ) : (
+                          <>
+                            <Play className="h-3.5 w-3.5 text-brand-600" />
+                            <span>Play Test</span>
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleToggleVoiceConsent(voice.id)}
+                        className="rounded-lg border border-line bg-white px-2 py-1 text-xs font-medium text-ink hover:bg-sand-50 transition"
+                        title={voice.consentOnFile ? "Revoke consent" : "Mark consent verified"}
+                      >
+                        {voice.consentOnFile ? <EyeOff className="h-3.5 w-3.5 text-stone-500" /> : <Eye className="h-3.5 w-3.5 text-emerald-600" />}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleMoveVoice(idx, "up")}
+                        disabled={idx === 0}
+                        className="rounded-lg border border-line bg-white p-1 text-ink disabled:opacity-30 hover:bg-sand-50 transition"
+                        title="Move Up"
+                      >
+                        <ArrowUp className="h-3.5 w-3.5" />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleMoveVoice(idx, "down")}
+                        disabled={idx === (settings.voices?.length || 0) - 1}
+                        className="rounded-lg border border-line bg-white p-1 text-ink disabled:opacity-30 hover:bg-sand-50 transition"
+                        title="Move Down"
+                      >
+                        <ArrowDown className="h-3.5 w-3.5" />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteVoice(voice.id)}
+                        className="rounded-lg border border-line bg-white p-1 text-ink-muted hover:text-red-700 hover:border-red-200 hover:bg-red-50 transition"
+                        title="Delete Dispatch"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
 

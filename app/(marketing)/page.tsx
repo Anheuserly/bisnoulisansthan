@@ -43,7 +43,7 @@ const programs = content.home.programmes.map((programme) => ({
 
 export default async function HomePage() {
   const customizer = await getCustomizerSettings();
-  const voices = getConsentedVoices().slice(0, 3);
+  const voices = getConsentedVoices(undefined, customizer.voices).slice(0, 3);
 
   // Dynamic texts from customizer with resilient fallback
   const texts = customizer.texts || DEFAULT_CUSTOMIZER_SETTINGS.texts;

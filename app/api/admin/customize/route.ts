@@ -45,6 +45,7 @@ export async function POST(request: Request) {
       revalidatePath("/contact");
       revalidatePath("/about");
       revalidatePath("/about/our-story");
+      revalidatePath("/stories");
     } catch (revalidateErr) {
       console.warn("Revalidation warning on reset:", revalidateErr);
     }
@@ -328,6 +329,21 @@ export async function POST(request: Request) {
         ? incoming.certificate.nextSerialNumber
         : current.certificate.nextSerialNumber,
     },
+    voices: Array.isArray(incoming.voices)
+      ? incoming.voices.map((v, idx) => ({
+          id: String(v.id || `voice-${Date.now()}-${idx}`).trim(),
+          name: String(v.name || "Artisan").trim().split(" ")[0] || "Artisan", // First name only
+          village: String(v.village || "").trim(),
+          photo: String(v.photo || "").trim(),
+          audio: String(v.audio || "").trim(),
+          durationSec: typeof v.durationSec === "number" ? Math.max(0, v.durationSec) : 30,
+          language: (v.language === "en" ? "en" : "hi") as "hi" | "en",
+          transcriptHi: String(v.transcriptHi || "").trim(),
+          transcriptEn: String(v.transcriptEn || "").trim(),
+          consentOnFile: Boolean(v.consentOnFile),
+          year: typeof v.year === "number" ? v.year : new Date().getFullYear(),
+        }))
+      : (current.voices || []),
   };
 
   await db.query(
@@ -345,6 +361,7 @@ export async function POST(request: Request) {
     revalidatePath("/about");
     revalidatePath("/about/our-story");
     revalidatePath("/activities/videos");
+    revalidatePath("/stories");
     revalidatePath("/support", "layout");
   } catch (revalidateErr) {
     console.warn("Revalidation warning on save:", revalidateErr);

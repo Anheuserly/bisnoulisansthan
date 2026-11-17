@@ -20,39 +20,46 @@ const DEFAULT_VOICES_PATH = path.join(process.cwd(), "content", "voices.json");
 /**
  * HARD GATE: Only returns records where consentOnFile === true.
  * Any entry with false or missing consent is strictly excluded and logged.
+ * Optionally accepts customizer-managed voices.
  */
-export function getConsentedVoices(filePath?: string): VoiceEntry[] {
-  const targetPath = filePath || DEFAULT_VOICES_PATH;
-  if (!fs.existsSync(/* turbopackIgnore: true */ targetPath)) {
-    return [];
-  }
+export function getConsentedVoices(filePath?: string, customVoices?: VoiceEntry[]): VoiceEntry[] {
+  let parsed: VoiceEntry[] = [];
 
-  try {
-    const raw = fs.readFileSync(/* turbopackIgnore: true */ targetPath, "utf-8");
-    const parsed: VoiceEntry[] = JSON.parse(raw);
-
-    const filtered: VoiceEntry[] = [];
-    const omitted: string[] = [];
-
-    for (const entry of parsed) {
-      if (entry && entry.consentOnFile === true) {
-        filtered.push(entry);
-      } else {
-        omitted.push(entry?.id || "unnamed");
-      }
+  if (Array.isArray(customVoices) && customVoices.length > 0) {
+    parsed = customVoices;
+  } else {
+    const targetPath = filePath || DEFAULT_VOICES_PATH;
+    if (!fs.existsSync(/* turbopackIgnore: true */ targetPath)) {
+      return [];
     }
 
-    if (omitted.length > 0) {
-      console.warn(
-        `[VOICE CONSENT GATE] Filtered out ${omitted.length} record(s) lacking documented consent: ${omitted.join(
-          ", "
-        )}`
-      );
+    try {
+      const raw = fs.readFileSync(/* turbopackIgnore: true */ targetPath, "utf-8");
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      console.warn("Error reading voices file:", err);
+      return [];
     }
-
-    return filtered;
-  } catch (err) {
-    console.warn("Error reading voices file:", err);
-    return [];
   }
+
+  const filtered: VoiceEntry[] = [];
+  const omitted: string[] = [];
+
+  for (const entry of parsed) {
+    if (entry && entry.consentOnFile === true) {
+      filtered.push(entry);
+    } else {
+      omitted.push(entry?.id || "unnamed");
+    }
+  }
+
+  if (omitted.length > 0) {
+    console.warn(
+      `[VOICE CONSENT GATE] Filtered out ${omitted.length} record(s) lacking documented consent: ${omitted.join(
+        ", "
+      )}`
+    );
+  }
+
+  return filtered;
 }

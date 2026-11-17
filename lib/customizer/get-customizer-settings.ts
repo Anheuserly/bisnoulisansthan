@@ -109,6 +109,9 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           ...DEFAULT_CUSTOMIZER_SETTINGS.certificate,
           ...(val.certificate || {}),
         },
+        voices: Array.isArray(val.voices)
+          ? val.voices
+          : DEFAULT_CUSTOMIZER_SETTINGS.voices,
       };
     }
   } catch (err) {

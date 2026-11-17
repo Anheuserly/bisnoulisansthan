@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, MessageSquare, Mic, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { buildMetadata } from "@/lib/seo";
+import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
 import { getConsentedVoices } from "@/lib/voices";
 import { VoiceCard } from "@/components/voice/VoiceCard";
 
@@ -13,8 +14,9 @@ export const metadata: Metadata = buildMetadata({
   path: "/stories",
 });
 
-export default function StoriesPage() {
-  const voices = getConsentedVoices();
+export default async function StoriesPage() {
+  const customizer = await getCustomizerSettings();
+  const voices = getConsentedVoices(undefined, customizer.voices);
 
   return (
     <>

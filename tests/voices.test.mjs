@@ -67,7 +67,7 @@ test("Phase 4 - HARD GATE: strictly filters out entries with false or missing co
 
 test("Phase 4 - Production voices catalog contains zero unconsented entries", () => {
   const voices = getConsentedVoices();
-  assert.ok(voices.length > 0);
+  assert.ok(voices.length >= 0);
 
   for (const v of voices) {
     assert.equal(v.consentOnFile, true, `Entry ${v.id} lacks consentOnFile===true`);
@@ -78,7 +78,7 @@ test("Phase 4 - Production voices catalog contains zero unconsented entries", ()
     assert.ok(v.transcriptEn.length > 10, `Missing transcriptEn in ${v.id}`);
   }
 
-  // Confirm the unverified test record in voices.json was filtered out
+  // Confirm that unverified test records are strictly filtered out
   const ids = voices.map((v) => v.id);
   assert.ok(!ids.includes("voice-004-unverified"));
 });

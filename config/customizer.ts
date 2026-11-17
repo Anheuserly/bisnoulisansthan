@@ -272,6 +272,20 @@ export type CustomizerCertificateConfig = {
   nextSerialNumber?: number;
 };
 
+export type CustomizerVoiceItem = {
+  id: string;
+  name: string; // first name only
+  village: string;
+  photo: string;
+  audio: string;
+  durationSec: number;
+  language: "hi" | "en";
+  transcriptHi: string;
+  transcriptEn: string;
+  consentOnFile: boolean;
+  year: number;
+};
+
 export type CustomizerSettings = {
   sections: SectionConfig[];
   audio: AmbientAudioConfig;
@@ -289,6 +303,7 @@ export type CustomizerSettings = {
   socialLinks: CustomizerSocialLinksConfig;
   videos: CustomizerVideoItem[];
   certificate: CustomizerCertificateConfig;
+  voices: CustomizerVoiceItem[];
 };
 
 export const AMBIENT_TRACK_PRESETS: AmbientTrackPreset[] = [
@@ -1655,4 +1670,5 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     serialPrefix: "BSGSS-2026-",
     serialPadding: 4,
   },
+  voices: [],
 };
