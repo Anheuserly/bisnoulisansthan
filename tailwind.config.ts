@@ -41,7 +41,7 @@ const config: Config = {
         danger: "#B42318",
       },
       fontFamily: {
-        sans: ["var(--theme-font-sans)", "var(--font-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--theme-font-sans)", "Arial Nova", "Arial", "var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--theme-font-display)", "var(--font-display)", "Georgia", "serif"],
       },
       fontSize: {

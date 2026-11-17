@@ -201,10 +201,10 @@ export default async function SponsorReceiptPage({ params }: ReceiptPageProps) {
               <span>Submit payment reference for numbered 80G certificate &rarr;</span>
             </Link>
             <Link
-              href="/transparency"
+              href="/about/legal-status"
               className="inline-flex items-center gap-1.5 font-semibold text-ink-muted hover:text-ink"
             >
-              <span>Audit our monthly finances on Open Books &rarr;</span>
+              <span>View statutory compliance &amp; 12A/80G records &rarr;</span>
             </Link>
           </div>
         </div>

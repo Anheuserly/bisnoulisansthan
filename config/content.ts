@@ -185,7 +185,7 @@ export const content = {
       instagram: "https://www.instagram.com/bisnoulisansthan/",
       twitter: "https://twitter.com/bisnoulisansthan",
       linkedin: "https://www.linkedin.com/company/bisnouli-sarvodaya-gramodyog-sewa-sansthan/",
-      whatsapp: "https://wa.me/919910243454?text=Hello%20BSGSS,%20I%20would%20like%20to%20connect%20regarding%20community%20programmes",
+      whatsapp: "https://wa.me/919350507520?text=Hello%20BSGSS,%20I%20would%20like%20to%20connect%20regarding%20community%20programmes",
     },
   },
   home: {
@@ -435,7 +435,7 @@ export const content = {
     },
     officeNoida: {
       title: "Registered Office · Noida",
-      address: "B-180, Sector-31, NOIDA, Uttar Pradesh, PIN- 201301",
+      address: "B-180, Sector–31, Near Community Centre, Noida, Uttar Pradesh – 201301",
     },
     officeDelhi: {
       title: "Administrative Office · New Delhi",

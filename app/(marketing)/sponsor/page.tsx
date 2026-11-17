@@ -79,9 +79,9 @@ export default function SponsorPage() {
                   All micro-giving funds are allocated directly to certified instructor compensation, practice textiles, and machinery maintenance across our verified village training centers.
                 </p>
                 <div className="pt-2 border-t border-line/60 flex items-center justify-between text-xs text-ink-subtle">
-                  <span>Tracked via Open Books</span>
-                  <Link href="/transparency" className="font-semibold text-brand-700 hover:underline">
-                    View Monthly Ledger &rarr;
+                  <span>Audited statutory records</span>
+                  <Link href="/about/legal-status" className="font-semibold text-brand-700 hover:underline">
+                    View Legal Disclosures &rarr;
                   </Link>
                 </div>
               </div>

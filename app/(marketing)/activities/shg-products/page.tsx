@@ -343,20 +343,6 @@ export default function ShgProductsPage() {
                         {product.description}
                       </p>
 
-                      {/* Meet the Artisan Guild Detail */}
-                      <div className="mt-4 border-t border-line/60 pt-3 text-xs text-ink/80 space-y-1">
-                        <p>
-                          <span className="font-semibold text-ink">Artisan Group:</span> {idx === 0 ? "Bisnouli SHG Producer Group, Dadri (12 Women Artisans)" : "Hindon Basin Women's Livelihood Center"}
-                        </p>
-                        <p>
-                          <span className="font-semibold text-ink">Technique:</span> {idx === 0 ? "Heritage Charkha hand-spun yarn & border embroidery" : "Hand-knitted pure woolen yarn with traditional rib stitch"}
-                        </p>
-                        <p className="text-[0.6875rem] text-ink-muted pt-1">
-                          <span className="font-medium text-ink-muted">Availability: </span>
-                          {product.leadTime}
-                        </p>
-                      </div>
-
                       <div className="mt-4 pt-3 border-t border-line/60">
                         <ProductInquiryButton productName={product.name} />
                       </div>

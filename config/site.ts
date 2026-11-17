@@ -14,17 +14,17 @@ export const site = {
   url: SITE_URL,
   description: content.site.description,
   address: {
-    line1: "B-180, Sector–31", line2: "Noida – 201301", locality: "Noida", district: "Gautam Buddha Nagar",
+    line1: "B-180, Sector–31, Near Community Centre", line2: "Noida – 201301", locality: "Noida", district: "Gautam Buddha Nagar",
     region: "Uttar Pradesh", country: "India", countryCode: "IN", postalCode: "201301",
   },
   contact: {
     phone: env("NEXT_PUBLIC_BSGSS_PHONE") ?? "011-46548002/03", emergencyPhone: null,
-    email: env("NEXT_PUBLIC_BSGSS_EMAIL") ?? "bisnoulisansthan@gmail.com", whatsapp: env("NEXT_PUBLIC_BSGSS_WHATSAPP") ?? "+91 99102 43454",
+    email: env("NEXT_PUBLIC_BSGSS_EMAIL") ?? "bisnoulisansthan@gmail.com", whatsapp: env("NEXT_PUBLIC_BSGSS_WHATSAPP") ?? "+91 93505 07520",
   },
   maps: { embedUrl: env("NEXT_PUBLIC_MAPS_EMBED_URL"), directionsUrl: env("NEXT_PUBLIC_MAPS_DIRECTIONS_URL") },
   hours: [] as OpeningHours[],
   ownership: [
-    { name: "Vijay Kumar Jha", relation: "Ex-IPS · Chairperson, BSGSS" },
+    { name: "Vijay Kumar Jha", relation: "Ex-IPS · Patron, BSGSS" },
     { name: "Nandita Bakshi", relation: "Ex-IRS · CEO, BSGSS" },
   ],
   facts: {

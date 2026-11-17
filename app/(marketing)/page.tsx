@@ -159,7 +159,7 @@ export default async function HomePage() {
                       <div className="absolute top-3 right-3 z-10">
                         <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-0.5 text-[0.6875rem] font-semibold text-white backdrop-blur-md border border-white/20">
                           <MapPin className="h-3 w-3 text-emerald-400" />
-                          <span>Bisnouli Village, Dadri</span>
+                          <span>Noida &amp; Delhi NCR Field Center</span>
                         </span>
                       </div>
 

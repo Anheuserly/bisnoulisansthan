@@ -9,7 +9,7 @@ import { openContactModal } from "@/components/contact/ContactModal";
 
 export function QuickActions() {
   const [open, setOpen] = useState(false);
-  const rawNumber = site.contact.whatsapp || "919910243454";
+  const rawNumber = site.contact.whatsapp || "919350507520";
   const whatsappNumber = rawNumber.replace(/[^\d]/g, "");
 
   return (
@@ -31,7 +31,7 @@ export function QuickActions() {
         <QuickAction href="/contact" icon={MessageCircle} label="Contact details" internal />
         <QuickAction href={telHref(site.contact.phone)} icon={Phone} label={`Call ${site.contact.phone}`} />
         <QuickAction href={`mailto:${site.contact.email}`} icon={Mail} label="Email BSGSS" />
-        <QuickAction href={`https://wa.me/${whatsappNumber}`} icon={Send} label={`WhatsApp (${site.contact.whatsapp || "+91 99102 43454"})`} external />
+        <QuickAction href={`https://wa.me/${whatsappNumber}`} icon={Send} label={`WhatsApp (${site.contact.whatsapp || "+91 93505 07520"})`} external />
       </div>}
       <button type="button" onClick={() => setOpen((current) => !current)} aria-expanded={open} aria-label={open ? "Close quick contact options" : "Open quick contact options"} className="grid h-14 w-14 place-items-center rounded-full bg-slate-900 text-white shadow-lift transition hover:scale-105 hover:bg-black focus:outline-none focus:ring-4 focus:ring-slate-300">
         {open ? <X className="h-7 w-7" /> : <MessageCircle className="h-7 w-7" />}

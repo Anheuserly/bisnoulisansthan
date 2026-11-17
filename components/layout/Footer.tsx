@@ -144,7 +144,6 @@ export async function Footer() {
             <FooterLink href="/contact">Volunteer With Us</FooterLink>
             <FooterLink href="/contact">Student Internships</FooterLink>
             <FooterLink href="/contact">CSR Alliances</FooterLink>
-            <FooterLink href="/transparency">Public Ledger</FooterLink>
           </FooterColumn>
 
           <div>

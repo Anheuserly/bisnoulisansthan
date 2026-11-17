@@ -1346,7 +1346,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
         },
         {
           stat: "Khadi Skills",
-          desc: "Self Help Groups & Micro-Credit",
+          desc: "Self Help Groups & Micro-Finance",
         },
       ],
     },
@@ -1436,14 +1436,14 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     registeredOffice: {
       title: "Registered Office · Noida",
       tag: "Statutory Seat Since 1994",
-      line1: "B-180, Sector-31",
+      line1: "B-180, Sector–31, Near Community Centre",
       line2: "",
-      city: "NOIDA",
+      city: "Noida",
       state: "Uttar Pradesh",
       pincode: "201301",
       phone: "011-46548002/03",
       email: "bisnoulisansthan@gmail.com",
-      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=B-180+Sector+31+Noida+201301",
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=B-180%2C+Sector-31%2C+Near+Community+Centre%2C+Noida%2C+Uttar+Pradesh+201301",
     },
     adminOffice: {
       title: "Administrative Office · New Delhi",
@@ -1459,7 +1459,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
     },
   },
   contactActions: {
-    whatsappNumber: "919910243454",
+    whatsappNumber: "919350507520",
     whatsappMessage: "Namaste BSGSS Team, I am reaching out through the official website regarding community programmes.",
     showInHeader: true,
     showInQuickActions: true,

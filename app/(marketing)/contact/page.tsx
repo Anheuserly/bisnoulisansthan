@@ -87,21 +87,6 @@ export default async function ContactPage() {
                         <p className="text-sm font-bold text-ink truncate group-hover:text-brand-800">{activeEmail}</p>
                       </div>
                     </a>
-
-                    {whatsappNumber && (
-                      <a
-                        href={`https://wa.me/${whatsappNumber}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="group flex items-center gap-4 py-3.5 transition hover:text-brand-800"
-                      >
-                        <Send className="h-5 w-5 text-ink shrink-0 group-hover:text-brand-800" />
-                        <div>
-                          <p className="text-xs font-semibold text-ink-muted">WhatsApp assistance</p>
-                          <p className="text-sm font-bold text-ink group-hover:text-brand-800">{site.contact.whatsapp}</p>
-                        </div>
-                      </a>
-                    )}
                   </div>
                 </div>
               </ScrollReveal>
@@ -123,7 +108,7 @@ export default async function ContactPage() {
                           </span>
                         </div>
                         <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-                          {offices.registeredOffice.line1}, {offices.registeredOffice.line2}, {offices.registeredOffice.city}, {offices.registeredOffice.state} – {offices.registeredOffice.pincode}
+                          {[offices.registeredOffice.line1, offices.registeredOffice.line2].filter(Boolean).join(", ")}, {offices.registeredOffice.city}, {offices.registeredOffice.state} – {offices.registeredOffice.pincode}
                         </p>
                         <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs font-semibold text-brand-800">
                           <a

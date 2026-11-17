@@ -3,7 +3,6 @@ import { Heart, Mail, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BankDetailsCard } from "@/components/support/BankDetailsCard";
 import { DonationVerificationForm } from "@/components/support/DonationVerificationForm";
-import { RupeeAllocationBreakdown } from "@/components/transparency/RupeeAllocationBreakdown";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { content, links } from "@/config/content";
 import { buildMetadata } from "@/lib/seo";
@@ -98,11 +97,6 @@ export default function SupportPage() {
               </ScrollReveal>
             </aside>
           </section>
-
-          {/* Fund Efficiency Breakdown: Where Every ₹100 Goes */}
-          <ScrollReveal direction="up" delay={80}>
-            <RupeeAllocationBreakdown />
-          </ScrollReveal>
         </div>
       </div>
     </>

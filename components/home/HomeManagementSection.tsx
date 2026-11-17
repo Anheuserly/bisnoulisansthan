@@ -29,10 +29,10 @@ export interface LeaderMessage {
 
 const LEADERS: LeaderMessage[] = [
   {
-    id: "chairperson",
+    id: "patron",
     name: "Vijay Kumar Jha",
-    role: "Ex-IPS · Chairperson, BSGSS, New Delhi",
-    titleBadge: "Chairperson's Address",
+    role: "Ex-IPS · Patron, BSGSS, New Delhi",
+    titleBadge: "Message from the Patron",
     image: "/images/bsgss/other-source-assets/335-11111.jpg",
     shortQuote:
       "Our mission is practical and sustainable: empower communities, support women and enable access to quality healthcare.",
@@ -46,13 +46,13 @@ const LEADERS: LeaderMessage[] = [
       "Pioneering mobile oncology & diagnostic screening clinics",
       "Long-standing CSR collaborations with RITES, IRCON, REC & NTPC",
     ],
-    tenure: "Serving as Chairperson since foundational expansion",
+    tenure: "Serving as Patron since foundational expansion",
   },
   {
     id: "ceo",
     name: "Nandita Bakshi",
     role: "Ex-IRS · CEO, BSGSS, New Delhi",
-    titleBadge: "Chief Executive's Vision",
+    titleBadge: "Message from Chief Executive’s Vision",
     image: "/images/bsgss/other-source-assets/334-111.jpg",
     shortQuote:
       "BSGSS is grounded in dignity, justice and equal opportunity—creating meaningful change for people who are often left out, especially women.",
@@ -62,7 +62,7 @@ const LEADERS: LeaderMessage[] = [
       "When a woman earns and holds savings in her own name, the future of the entire household transforms.",
     ],
     keyHighlights: [
-      "1,00,000+ women empowered through skill pathways",
+      "36,000+ women empowered through skill pathways",
       "AMAR Micro-Finance & women's self-help federation",
       "Certified 12A & 80G governance with 30 years unbroken service",
     ],
@@ -221,7 +221,7 @@ export function HomeManagementSection() {
               <div className="flex items-center gap-2">
                 <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-700">
-                  {activeLeader.titleBadge} · Direct Address
+                  {activeLeader.titleBadge}
                 </span>
               </div>
               <button
