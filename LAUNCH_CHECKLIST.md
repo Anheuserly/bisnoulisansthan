@@ -1,6 +1,6 @@
 # Production Domain Launch & Post-DNS-Cutover Verification Checklist
 
-This checklist documents the exact step-by-step verification commands to run once DNS records for `bisnoulisansthan.in` have cut over to the production deployment.
+This checklist documents the exact step-by-step verification commands to run once DNS records for `www.bsgssindia.org` / `bsgssindia.org` have cut over to the production deployment.
 
 ---
 
@@ -10,7 +10,7 @@ Run these five diagnostic commands from any terminal:
 
 ### 1.1 Apex Domain Response & Security Headers
 ```bash
-curl -I https://bisnoulisansthan.in
+curl -I https://www.bsgssindia.org
 ```
 **Expected Output:**
 - HTTP status `200 OK`
@@ -24,7 +24,7 @@ curl -I https://bisnoulisansthan.in
 
 ### 1.2 Production Robots.txt Verification
 ```bash
-curl -s https://bisnoulisansthan.in/robots.txt
+curl -s https://www.bsgssindia.org/robots.txt
 ```
 **Expected Output:**
 ```text
@@ -34,73 +34,81 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /support/certificate/
 
-Sitemap: https://bisnoulisansthan.in/sitemap.xml
+Sitemap: https://www.bsgssindia.org/sitemap.xml
 ```
 - Disallows private administrative and API routes
 - Disallows transactional donation receipts (`/support/certificate/`)
-- References `https://bisnoulisansthan.in/sitemap.xml`
+- References `https://www.bsgssindia.org/sitemap.xml`
 - **CRITICAL**: Confirm that `Disallow: /` and `X-Robots-Tag: noindex` are **ABSENT**!
 
 ### 1.3 Sitemap Index & Canonical Locs
 ```bash
-curl -s https://bisnoulisansthan.in/sitemap.xml | head -50
+curl -s https://www.bsgssindia.org/sitemap.xml | head -50
 ```
 **Expected Output:**
 - Valid XML `<urlset>`
-- Every `<loc>` begins strictly with `https://bisnoulisansthan.in/...`
-- Zero occurrences of `.vercel.app` or localhost
-- Includes all 18 core marketing routes and all 30 verified partner profile routes
+- Every `<loc>` begins strictly with `https://www.bsgssindia.org/...`
 
 ### 1.4 Homepage Canonical Tag Verification
 ```bash
-curl -s https://bisnoulisansthan.in/ | grep -i canonical
+curl -s https://www.bsgssindia.org/ | grep -i canonical
 ```
 **Expected Output:**
 ```html
-<link rel="canonical" href="https://bisnoulisansthan.in"/>
+<link rel="canonical" href="https://www.bsgssindia.org"/>
 ```
-- The canonical points strictly to `https://bisnoulisansthan.in` (never a staging domain)
+- The canonical points strictly to `https://www.bsgssindia.org` (never a staging domain)
 
-### 1.5 WWW to Apex Redirection (Canonical Apex Domain)
+### 1.5 Subdomain / Apex Redirect Verification
 ```bash
-curl -I https://www.bisnoulisansthan.in
+curl -I https://bsgssindia.org
 ```
 **Expected Output:**
-- HTTP status `301 Moved Permanently` (or `308 Permanent Redirect`)
-- `Location: https://bisnoulisansthan.in/`
-- Verifies a single clean hop from `www` to apex without redirect loops
+- HTTP `301 Moved Permanently` or `308 Permanent Redirect`
+- `Location: https://www.bsgssindia.org/`
 
 ---
 
-## 2. Google Search Console (GSC) & Multilateral Indexing Steps
+## 2. Google Search Console Setup Protocol
 
-1. **Verify Domain Property in Search Console**:
-   - Add Domain property: `bisnoulisansthan.in` (DNS TXT verification method recommended).
-   - Alternatively, verify URL-prefix property: `https://bisnoulisansthan.in/`.
+Once DNS has propagated and curl checks pass:
 
-2. **Submit Production Sitemap**:
-   - Navigate to: **Index** > **Sitemaps**.
-   - Submit: `https://bisnoulisansthan.in/sitemap.xml`.
-   - Confirm status reports **Success** with all indexable routes discovered.
-
-3. **Confirm Zero Noindex on Production**:
-   - Use the **URL Inspection** tool on `https://bisnoulisansthan.in/`.
-   - Confirm: "URL is available to Google" / "Crawl allowed: Yes" / "Indexing allowed: Yes".
-
-4. **Verify Staging Domain Quarantine**:
-   - Run: `curl -I https://bisnoulisansthan.vercel.app/`
-   - Confirm response header includes: `X-Robots-Tag: noindex, nofollow`
-   - Run: `curl -s https://bisnoulisansthan.vercel.app/robots.txt`
-   - Confirm output is `User-agent: *\nDisallow: /`
-   - This prevents duplicate content penalties and keeps staging completely out of search indexes.
+1. Navigate to [Google Search Console](https://search.google.com/search-console).
+2. Click **Add Property**:
+   - Add Domain property: `bsgssindia.org` (DNS TXT verification method recommended).
+   - Alternatively, verify URL-prefix property: `https://www.bsgssindia.org/`.
+3. Add the DNS TXT verification token to DNS manager.
+4. Once verified, navigate to **Sitemaps** in the left sidebar:
+   - Submit: `https://www.bsgssindia.org/sitemap.xml`.
+   - Verify status shows `Success` and all URLs are discovered.
+5. In **URL Inspection**:
+   - Use the **URL Inspection** tool on `https://www.bsgssindia.org/`.
+   - Click **Request Indexing** for the homepage.
 
 ---
 
-## 3. Schema.org & Rich Results Validation
+## 3. Verify Vercel / Cloudflare Staging Domain Has `noindex` Header
+
+To ensure duplicate content penalties are avoided, verify the staging URL has `X-Robots-Tag: noindex, nofollow`:
+
+```bash
+curl -I https://bisnoulisansthan.vercel.app/
+```
+- Confirm `X-Robots-Tag: noindex, nofollow, noarchive` is present on non-production domains.
+
+```bash
+curl -s https://bisnoulisansthan.vercel.app/robots.txt
+```
+- Confirm returns `Disallow: /`.
+
+---
+
+## 4. Google Rich Results Test (JSON-LD Validation)
 
 1. Open [Google Rich Results Test](https://search.google.com/test/rich-results).
-2. Enter: `https://bisnoulisansthan.in/`.
-3. Verify:
-   - Valid **Organization / NGO** schema with verified NITI Aayog Darpan ID (`DL/2016/0111645`), MCA CSR-1 (`CSR00001405`), and Society Reg (`226/1994-95`).
-   - Valid **WebSite** schema linked via `@id`.
-   - 0 errors, 0 critical warnings.
+2. Enter: `https://www.bsgssindia.org/`.
+3. Verify that the following structured data schemas are detected with **0 errors**:
+   - `NGO` / `Organization`
+   - `BreadcrumbList`
+   - `WebSite`
+4. Confirm `name`, `taxID`, `foundingDate`, `address`, and `telephone` match statutory records.

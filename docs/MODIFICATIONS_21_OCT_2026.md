@@ -47,7 +47,7 @@ This document serves as the authoritative blueprint and change log for the compr
   - Telephone: +91-11-46548002, +91-11-46548003
   - Mobile (CEO): +91 93505 07520
 - **Official Email**: `bisnoulisansthan@gmail.com`, `bsgssindia@yahoo.co.in`
-- **Official Websites**: `https://bisnoulisansthan.in` | `www.bsgssindia.org`
+- **Official Website**: `https://www.bsgssindia.org`
 - **Permanent Field Project Offices**:
   1. **Delhi**: Central & South Delhi field operational desks
   2. **Punjab**: Gurdaspur & Pathankot regional centers

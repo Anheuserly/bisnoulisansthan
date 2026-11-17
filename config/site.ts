@@ -7,7 +7,7 @@ const env = (key: string): string | null => {
   return value && value.trim() ? value.trim() : null;
 };
 
-/** Public information imported from bisnoulisansthan.in. */
+/** Public information for bsgssindia.org. */
 export const site = {
   name: "Bisnouli Sarvodaya Gramodyog Sewa Sansthan",
   shortName: "BSGSS",

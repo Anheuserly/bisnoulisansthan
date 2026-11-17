@@ -178,7 +178,7 @@ export const content = {
     developerCredit: "Developed by Star Computer Solutions & Infosys",
     developerUrl: "https://www.scsi.in/",
     email: "bisnoulisansthan@gmail.com",
-    website: "https://bisnoulisansthan.in",
+    website: "https://www.bsgssindia.org",
     social: {
       youtube: "https://www.youtube.com/@BISNOULISANSTHAN",
       facebook: "https://www.facebook.com/bisnoulisansthan/",
@@ -280,7 +280,7 @@ export const content = {
       metadataTitle: "Photo Gallery",
       title: "Photo Gallery",
       lead: "A visual record of BSGSS programmes, people and community participation.",
-      source: "https://bisnoulisansthan.in/gallery/",
+      source: "https://www.bsgssindia.org/activities/gallery",
       images: [
         { title: "Mobile Cancer Screening & Diagnostic Camp", src: "/images/bsgss/healthcare-camps/149-camp1.jpeg" },
         { title: "Vocational Tailoring & SHG Training Center", src: "/images/bsgss/gallery-training/185-tal1.jpeg" },

@@ -118,7 +118,7 @@ export async function POST(
 
     await client.query("COMMIT");
 
-    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "bisnoulisansthan.in";
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "www.bsgssindia.org";
     const proto = request.headers.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
     const certificateUrl = `${proto}://${host}/support/certificate/${id}`;
 

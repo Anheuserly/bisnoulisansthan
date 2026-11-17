@@ -1,6 +1,6 @@
 # BSGSS media catalogue
 
-All files in this directory were downloaded from the public media library of `bisnoulisansthan.in`. Files retain their WordPress media ID as a prefix, followed by a readable source name.
+All files in this directory are part of the media library of `bsgssindia.org`. Files retain their WordPress media ID as a prefix, followed by a readable source name.
 
 | Folder | Contents |
 | --- | --- |

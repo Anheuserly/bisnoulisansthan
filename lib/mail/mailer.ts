@@ -346,7 +346,7 @@ export async function sendAdminDonationAlert(params: {
           <tr><td style="padding: 6px; font-weight: bold;">Certificate:</td><td style="padding: 6px; font-weight: bold; color: #0f3d2e;">${params.certificateNumber || "Pending Issuance"}</td></tr>
         </table>
         <p style="margin-top: 20px; font-size: 12px; color: #64748b;">
-          Log into <a href="https://bisnoulisansthan.in/admin/donations">BSGSS Control Centre</a> to review or manage.
+          Log into <a href="https://www.bsgssindia.org/admin/donations">BSGSS Control Centre</a> to review or manage.
         </p>
       </div>
     `;

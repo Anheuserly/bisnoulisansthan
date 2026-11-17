@@ -174,7 +174,7 @@ export default async function SponsorReceiptPage({ params }: ReceiptPageProps) {
                 </span>
               </div>
               <span className="font-semibold text-brand-700">
-                bisnoulisansthan.in
+                bsgssindia.org
               </span>
             </div>
           </section>

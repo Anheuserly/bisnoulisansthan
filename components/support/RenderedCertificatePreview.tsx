@@ -363,7 +363,7 @@ export function RenderedCertificatePreview({
                 <span>Official Digital Acknowledgement Record</span>
               </div>
               <p className="mt-0.5 text-[9px] text-ink-muted leading-tight max-w-sm mx-auto">
-                Issued under the authority of BSGSS Executive Committee. Authenticity verifiable online at <strong className="text-ink">bisnoulisansthan.in</strong>.
+                Issued under the authority of BSGSS Executive Committee. Authenticity verifiable online at <strong className="text-ink">bsgssindia.org</strong>.
               </p>
             </div>
 

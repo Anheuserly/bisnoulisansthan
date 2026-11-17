@@ -72,7 +72,7 @@ export function EasebuzzSettingsPanel() {
     }
   }
 
-  const webhookUrl = typeof window !== "undefined" ? `${window.location.origin}/api/payment/easebuzz/response` : "https://bisnoulisansthan.in/api/payment/easebuzz/response";
+  const webhookUrl = typeof window !== "undefined" ? `${window.location.origin}/api/payment/easebuzz/response` : "https://www.bsgssindia.org/api/payment/easebuzz/response";
 
   function copyWebhook() {
     navigator.clipboard.writeText(webhookUrl);

@@ -116,7 +116,7 @@ export default async function Image({
           }}
         >
           <span style={{ fontSize: "16px", color: "#4B5563", fontWeight: "bold" }}>
-            bisnoulisansthan.in • Registered NGO (12A / 80G Certified)
+            bsgssindia.org • Registered NGO (12A / 80G Certified)
           </span>
           <span style={{ fontSize: "14px", color: "#6B7280" }}>
             Verified Community Development In Action
