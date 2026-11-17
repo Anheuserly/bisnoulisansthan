@@ -4,6 +4,7 @@ import { ArrowRight, ShoppingBag } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ProductInquiryButton } from "@/components/products/ProductInquiryButton";
+import { SHG_PRODUCTS } from "@/config/shg-products";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -12,218 +13,6 @@ export const metadata: Metadata = buildMetadata({
     "Support rural women artisans. Explore handcrafted Khadi apparel, handloom textiles, and craft items produced by BSGSS village self-help groups (SHGs).",
   path: "/activities/shg-products",
 });
-
-const products = [
-  {
-    name: "Shawls",
-    tag: "Traditional Woolens",
-    description:
-      "Warm, handcrafted shawls available in a variety of colours and textures, showcasing traditional artisan craftsmanship.",
-    image: "/images/bsgss/shg-products/Shawl_01.jpg",
-    leadTime: "Crafted on Order & Ready Stock",
-  },
-  {
-    name: "Woollen Stoles",
-    tag: "Everyday Elegance",
-    description:
-      "Soft woollen stoles available in multiple colours, created by self-help group artisans.",
-    image: "/images/bsgss/shg-products/Woollen_Stole_01.jpg",
-    leadTime: "Available in Multiple Colours",
-  },
-  {
-    name: "Woollen Shawls",
-    tag: "Winter Collection",
-    description:
-      "Traditional woollen shawls combining warmth, comfort and skilled textile craftsmanship.",
-    image: "/images/bsgss/shg-products/Woollen_Shawl_01.jpg",
-    leadTime: "Crafted on Order & Ready Stock",
-  },
-  {
-    name: "Woollen Mufflers",
-    tag: "Winter Warmth",
-    description:
-      "Comfortable woollen mufflers featuring practical designs and traditional textile finishes.",
-    image: "/images/bsgss/shg-products/Woollen_Muffler_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Silk Stoles",
-    tag: "Artisan Accessories",
-    description:
-      "Decorative silk stoles featuring distinctive colours, patterns and traditional craftsmanship.",
-    image: "/images/bsgss/shg-products/Silk_Stole_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Madhubani Cushion Covers",
-    tag: "Ethnic Home Decor",
-    description:
-      "Decorative cushion covers featuring colourful Madhubani-inspired designs for traditional and contemporary interiors.",
-    image: "/images/bsgss/shg-products/Madhubani_Cushion_Cover_01.jpg",
-    leadTime: "Multiple Designs Available",
-  },
-  {
-    name: "Bed Covers with Pillow Covers",
-    tag: "Bedroom Collection",
-    description:
-      "Coordinated bed and pillow covers featuring traditional patterns and decorative textile details.",
-    image: "/images/bsgss/shg-products/Bed_Cover_with_Pillow_Cover_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Pillow Covers",
-    tag: "Textile Essentials",
-    description:
-      "Decorative pillow covers with colourful fabrics and traditional printed or woven patterns.",
-    image: "/images/bsgss/shg-products/Pillow_Cover_01.jpg",
-    leadTime: "Multiple Designs Available",
-  },
-  {
-    name: "Table Runners",
-    tag: "Dining & Table Decor",
-    description:
-      "Handcrafted table runners featuring intricate traditional patterns to enhance dining tables and living spaces.",
-    image: "/images/bsgss/shg-products/Table_Runner_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Sets of Cushion Covers",
-    tag: "Coordinated Home Decor",
-    description:
-      "Coordinated cushion cover sets with colourful decorative designs for living rooms and hospitality spaces.",
-    image: "/images/bsgss/shg-products/Set_of_Cushion_Covers_01.jpg",
-    leadTime: "Sets Available",
-  },
-  {
-    name: "Madhubani Silk Sarees",
-    tag: "Traditional Indian Wear",
-    description:
-      "Colourful silk sarees featuring Madhubani-inspired artwork and traditional decorative motifs.",
-    image: "/images/bsgss/shg-products/Madhubani_Silk_Saree_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Hand-Painted Ties",
-    tag: "Artisan Fashion",
-    description:
-      "Distinctive hand-painted ties featuring artistic patterns and colourful designs for a unique formal accessory.",
-    image: "/images/bsgss/shg-products/Hand_painted_Tie_01.jpg",
-    leadTime: "Multiple Designs Available",
-  },
-  {
-    name: "Woollen Carpets",
-    tag: "Artisan Floor Decor",
-    description:
-      "Decorative woollen carpets featuring intricate patterns and traditional textile styling.",
-    image: "/images/bsgss/shg-products/Woollen_Carpet_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Madhubani Pen Holders",
-    tag: "Handcrafted Desk Accessories",
-    description:
-      "Colourful handcrafted pen holders decorated with traditional Madhubani-inspired artwork for desks and workspaces.",
-    image: "/images/bsgss/shg-products/Madhubani_Pen_Holder_01.jpg",
-    leadTime: "Multiple Designs Available",
-  },
-  {
-    name: "Madhubani Wall Hangings",
-    tag: "Traditional Wall Art",
-    description:
-      "Decorative wall hangings showcasing vibrant folk-art styling and handcrafted artistic details.",
-    image: "/images/bsgss/shg-products/Wall_Hanging_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Madhubani Trays",
-    tag: "Artisan Serveware",
-    description:
-      "Decorative handcrafted trays featuring colourful artwork, suitable for serving and display.",
-    image: "/images/bsgss/shg-products/Madhubani_Tray_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Madhubani Boxes",
-    tag: "Decorative Storage",
-    description:
-      "Handcrafted decorative boxes featuring colourful Madhubani-inspired patterns for storing keepsakes and accessories.",
-    image: "/images/bsgss/shg-products/Madhubani_Box_01.jpg",
-    leadTime: "Multiple Designs Available",
-  },
-  {
-    name: "Madhubani Jewellery Boxes",
-    tag: "Artisan Gift Collection",
-    description:
-      "Decorative jewellery boxes featuring traditional artwork, designed for organising and presenting personal accessories.",
-    image: "/images/bsgss/shg-products/Madhubani_Jewellery_Box_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Madhubani Tissue Boxes",
-    tag: "Artistic Home Accessories",
-    description:
-      "Decorative tissue boxes with colourful handcrafted patterns that add a traditional artistic touch to interiors.",
-    image: "/images/bsgss/shg-products/Madhubani_Tissue_Box_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Madhubani Coaster Sets",
-    tag: "Table Accessories",
-    description:
-      "Artistic coaster sets featuring colourful folk-art motifs, ideal for dining tables, offices and gifting.",
-    image: "/images/bsgss/shg-products/Madhubani_Coaster_Set_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Madhubani Paintings",
-    tag: "Traditional Folk Art",
-    description:
-      "Decorative Madhubani paintings showcasing expressive folk-art motifs, vibrant colours and traditional artistic styles.",
-    image: "/images/bsgss/shg-products/Madhubani_Painting_01.jpg",
-    leadTime: "Multiple Artwork Designs Available",
-  },
-  {
-    name: "Madhubani Wall Clocks",
-    tag: "Functional Art",
-    description:
-      "Decorative wall clocks featuring colourful Madhubani-inspired artwork that combines everyday utility with artistic design.",
-    image: "/images/bsgss/shg-products/Wall_Clock_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Madhubani Lampshades",
-    tag: "Artistic Lighting",
-    description:
-      "Colourful decorative lampshades featuring traditional Madhubani-inspired patterns for distinctive interior styling.",
-    image: "/images/bsgss/shg-products/Lampshade_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Ladies' Clutch Purses & Spectacles Cases",
-    tag: "Handcrafted Accessories",
-    description:
-      "Coordinated handcrafted accessories featuring practical storage and refined finishes.",
-    image:
-      "/images/bsgss/shg-products/Ladies_Clutch_Purse_Spectacles_Case_01.jpg",
-    leadTime: "Available in Multiple Designs",
-  },
-  {
-    name: "Clutch Purses",
-    tag: "Everyday Accessories",
-    description:
-      "Compact clutch purses featuring clean designs and practical storage for everyday essentials.",
-    image: "/images/bsgss/shg-products/Clutch_Purse_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-  {
-    name: "Spectacles Cases",
-    tag: "Protective Accessories",
-    description:
-      "Compact spectacles cases designed to help protect eyewear while maintaining a simple, practical appearance.",
-    image: "/images/bsgss/shg-products/Spectacles_Case_01.jpg",
-    leadTime: "Subject to Availability",
-  },
-];
 
 export default function ShgProductsPage() {
   return (
@@ -250,32 +39,39 @@ export default function ShgProductsPage() {
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-brand-700">
                   <ShoppingBag className="h-4 w-4" />
-                  <span>{products.length} Collections Available</span>
+                  <span>{SHG_PRODUCTS.length} Collections Available</span>
                 </div>
               </div>
             </ScrollReveal>
 
             <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
-              {products.map((product, idx) => (
-                <ScrollReveal key={product.name} staggerIndex={idx} direction="up">
+              {SHG_PRODUCTS.map((product, idx) => (
+                <ScrollReveal key={product.slug} staggerIndex={idx} direction="up">
                   <article className="group flex h-full flex-col border-t-2 border-line pt-4 transition hover:border-brand-700">
-                    <div className="relative aspect-square overflow-hidden bg-sand-50/70 p-3 rounded-xl border border-line/50 flex items-center justify-center">
+                    <Link
+                      href={`/activities/shg-products/${product.slug}`}
+                      className="relative aspect-square overflow-hidden bg-sand-50/70 p-3 rounded-xl border border-line/50 flex items-center justify-center block"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
                         className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                        loading={idx < 10 ? "eager" : "lazy"}
                       />
                       <div className="absolute top-2.5 left-2.5">
                         <span className="text-[0.625rem] font-bold uppercase tracking-wider text-ink-muted bg-white/95 px-2 py-0.5 rounded-sm shadow-2xs">
                           {product.tag}
                         </span>
                       </div>
-                    </div>
+                    </Link>
 
                     <div className="flex flex-1 flex-col pt-3">
-                      <h3 className="font-display text-sm sm:text-base font-bold text-ink group-hover:text-brand-800 line-clamp-1">
+                      <Link
+                        href={`/activities/shg-products/${product.slug}`}
+                        className="font-display text-sm sm:text-base font-bold text-ink group-hover:text-brand-800 line-clamp-1 hover:underline"
+                      >
                         {product.name}
-                      </h3>
+                      </Link>
                       <p className="mt-1 flex-1 text-xs leading-relaxed text-ink-muted line-clamp-2">
                         {product.description}
                       </p>
@@ -285,6 +81,7 @@ export default function ShgProductsPage() {
                           productName={product.name}
                           productTag={product.tag}
                           productImage={product.image}
+                          productSlug={product.slug}
                         />
                       </div>
                     </div>
