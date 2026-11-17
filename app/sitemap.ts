@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { partners } from "@/components/partners/partners-data";
+import { SHG_PRODUCTS } from "@/config/shg-products";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
+  const staticRoutes = [
     "",
     "/about",
     "/about/our-story",
@@ -24,13 +25,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/stories",
     "/join-us",
     "/contact",
-    ...partners.map((partner) => partner.href),
   ];
 
-  return routes.map((route) => ({
+  const partnerRoutes = partners.map((partner) => partner.href);
+  const productRoutes = SHG_PRODUCTS.map((product) => `/activities/shg-products/${product.slug}`);
+
+  const allRoutes = [...staticRoutes, ...partnerRoutes, ...productRoutes];
+
+  return allRoutes.map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1.0 : route.startsWith("/about/partners/") ? 0.6 : 0.8,
+    priority:
+      route === ""
+        ? 1.0
+        : route.startsWith("/activities/shg-products/")
+          ? 0.7
+          : route.startsWith("/about/partners/")
+            ? 0.6
+            : 0.8,
   }));
 }

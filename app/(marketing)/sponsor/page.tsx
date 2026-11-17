@@ -12,8 +12,32 @@ import {
   Sparkles,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { buildMetadata } from "@/lib/seo";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { buildMetadata, type FaqItem } from "@/lib/seo";
 import { getSponsorTiers } from "@/lib/sponsor-tiers";
+
+const SPONSOR_FAQS: FaqItem[] = [
+  {
+    question: "Is BSGSS eligible for Corporate Social Responsibility (CSR) Schedule VII funding?",
+    answer:
+      "Yes. BSGSS holds active MCA CSR-1 registration (CSR00001405), NITI Aayog NGO Darpan ID (DL/2016/0111645), and Section 12A/80G certification, and partners with 35+ PSU and corporate organisations across 7 states.",
+  },
+  {
+    question: "What does sponsoring a 30-woman vocational or SHG batch include?",
+    answer:
+      "Batch sponsorships cover certified master artisan trainers, sewing/vocational raw material kits, 3-month hands-on training, field monitoring, and audited outcome & impact dossiers for CSR board reporting.",
+  },
+  {
+    question: "Can individual donors sponsor a single trainee or tool kit?",
+    answer:
+      "Yes. Individuals can choose any micro-sponsorship tier on this page and immediately preview an impact receipt, with Section 80G tax deduction eligibility on verified contributions.",
+  },
+  {
+    question: "Where are BSGSS skill and SHG sponsorship programmes implemented?",
+    answer:
+      "Programmes operate across 350+ villages in Delhi NCR, Uttar Pradesh, Haryana, Punjab, Rajasthan, Chhattisgarh, and Uttarakhand.",
+  },
+];
 
 export const metadata: Metadata = buildMetadata({
   title: "Sponsor a Skill | Tiered Micro-Giving | BSGSS",
@@ -171,7 +195,7 @@ export default function SponsorPage() {
           <section className="border-t border-line pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h4 className="font-display text-base sm:text-lg font-bold text-ink">
-                Looking to sponsor an entire village guild or batch?
+                Looking to sponsor an entire village self-help group (SHG) or batch?
               </h4>
               <p className="mt-1 text-xs sm:text-sm text-ink-muted max-w-2xl leading-relaxed">
                 Corporates and CSR partners can sponsor complete 30-woman batches with full compliance documentation, audited outcome reports, and branding rights on graduation kits.
@@ -185,6 +209,11 @@ export default function SponsorPage() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </section>
+
+          <FaqSection
+            heading="CSR compliance, batch sponsorship & impact reporting"
+            items={SPONSOR_FAQS}
+          />
         </div>
       </div>
     </>

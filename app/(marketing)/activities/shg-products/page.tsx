@@ -4,8 +4,32 @@ import { ArrowRight, ShoppingBag } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ProductInquiryButton } from "@/components/products/ProductInquiryButton";
+import { FaqSection } from "@/components/seo/FaqSection";
 import { SHG_PRODUCTS } from "@/config/shg-products";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, type FaqItem } from "@/lib/seo";
+
+const SHG_FAQS: FaqItem[] = [
+  {
+    question: "How can we order samples or bulk quantities of BSGSS SHG products?",
+    answer:
+      "Click 'Request pricing & sample' on any product card to connect directly with our WhatsApp desk (+91 93505 07520) with the product photo and reference link pre-filled, or email bisnoulisansthan@gmail.com for institutional and festive gifting quotes.",
+  },
+  {
+    question: "Do product proceeds directly benefit rural women artisans?",
+    answer:
+      "Yes. 100% of net community proceeds go directly to the women Self-Help Groups (SHGs) trained and supported by BSGSS across our active field clusters, building sustainable household income and financial independence.",
+  },
+  {
+    question: "Does BSGSS supply customised conference kits and corporate CSR gifting?",
+    answer:
+      "Yes. Corporates and PSU partners regularly procure handcrafted jute/cotton conference bags, woollen shawls, stoles, and Madhubani home decor sets from BSGSS SHGs to meet ESG and social procurement goals.",
+  },
+  {
+    question: "What is the typical dispatch timeline for ready stock vs. crafted-on-order items?",
+    answer:
+      "Ready-stock items are dispatched within 3–5 working days from our Delhi NCR / Noida coordination desk. Custom bulk orders for corporate events are crafted on order with timelines confirmed upfront.",
+  },
+];
 
 export const metadata: Metadata = buildMetadata({
   title: "Women SHG Handcrafted Products | BSGSS",
@@ -165,6 +189,12 @@ export default function ShgProductsPage() {
               </div>
             </section>
           </ScrollReveal>
+
+          <FaqSection
+            className="mt-14"
+            heading="Ordering, bulk CSR gifting & artisan proceeds"
+            items={SHG_FAQS}
+          />
         </div>
       </div>
     </>

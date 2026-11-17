@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { VideoGallery } from "@/components/activities/VideoGallery";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { content, links } from "@/config/content";
 import { getChannelVideos } from "@/lib/youtube";
 import { getCustomizerSettings } from "@/lib/customizer/get-customizer-settings";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, videoListJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Video Archives & Field Films | BSGSS",
@@ -22,6 +23,7 @@ export default async function VideosPage() {
 
   return (
     <>
+      <JsonLd data={videoListJsonLd(videos)} />
       <PageHeader
         title={videoGallery.title}
         lead={videoGallery.lead}

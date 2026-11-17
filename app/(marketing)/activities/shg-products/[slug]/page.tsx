@@ -5,7 +5,9 @@ import { ArrowLeft, CheckCircle2, HeartHandshake, Mail, MessageCircle, PackageCh
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ProductInquiryButton } from "@/components/products/ProductInquiryButton";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SHG_PRODUCTS, getProductBySlug } from "@/config/shg-products";
+import { productJsonLd } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import { site } from "@/config/site";
 
@@ -79,6 +81,7 @@ export default async function ProductDetailPage({
 
   return (
     <>
+      <JsonLd data={productJsonLd(product)} />
       <PageHeader
         title={product.name}
         lead={`${product.tag} · Handcrafted by rural women self-help group artisans supported by BSGSS.`}

@@ -4,8 +4,32 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { BankDetailsCard } from "@/components/support/BankDetailsCard";
 import { DonationVerificationForm } from "@/components/support/DonationVerificationForm";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { FaqSection } from "@/components/seo/FaqSection";
 import { content, links } from "@/config/content";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, type FaqItem } from "@/lib/seo";
+
+const SUPPORT_FAQS: FaqItem[] = [
+  {
+    question: "Are donations to BSGSS eligible for Section 80G tax deduction?",
+    answer:
+      "Yes. Bisnouli Sarvodaya Gramodyog Sewa Sansthan (BSGSS) is registered under Section 12A and Section 80G of the Income Tax Act, 1961. Donors receive an official 80G acknowledgement certificate and Form 10BE compliance support.",
+  },
+  {
+    question: "How do I receive my official 80G donation receipt?",
+    answer:
+      "After completing your contribution via UPI, NEFT/RTGS, or online payment, submit your transaction reference and PAN details in the verification form on this page. Once verified, your digital certificate is emailed and verifiable online at bsgssindia.org.",
+  },
+  {
+    question: "How does BSGSS allocate donated funds?",
+    answer:
+      "BSGSS maintains lean overheads: ₹88 (88%) goes directly to grassroots programmes (medicines, training kits, educators), ₹7 (7%) to field operations & auditing, and ₹5 (5%) to statutory & administrative compliance.",
+  },
+  {
+    question: "Which states and communities does my contribution support?",
+    answer:
+      "Your contribution supports rural communities across 350+ villages in 7 states: Delhi NCR, Uttar Pradesh, Haryana, Punjab, Rajasthan, Chhattisgarh, and Uttarakhand.",
+  },
+];
 
 export const metadata: Metadata = buildMetadata({
   title: "Support Our Work | 80G Tax Exemption | BSGSS",
@@ -97,6 +121,11 @@ export default function SupportPage() {
               </ScrollReveal>
             </aside>
           </section>
+
+          <FaqSection
+            heading="80G tax exemption, receipts & fund transparency"
+            items={SUPPORT_FAQS}
+          />
         </div>
       </div>
     </>
