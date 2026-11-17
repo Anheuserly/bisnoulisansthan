@@ -1458,7 +1458,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       pincode: "201301",
       phone: "011-46548002/03",
       email: "bisnoulisansthan@gmail.com",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=B-180%2C+Sector-31%2C+Near+Community+Centre%2C+Noida%2C+Uttar+Pradesh+201301",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=B-180%2C+Sector-31%2C+Near+Community+Centre%2C+Noida%2C+Uttar+Pradesh+201301",
     },
     adminOffice: {
       title: "Administrative Office · New Delhi",
@@ -1470,7 +1470,7 @@ export const DEFAULT_CUSTOMIZER_SETTINGS: CustomizerSettings = {
       pincode: "110024",
       phone: "011-46548002/03",
       email: "bisnoulisansthan@gmail.com",
-      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=A-171+Ground+Floor+Defence+Colony+New+Delhi+110024",
+      mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=A-171%2C+Ground+Floor%2C+Defence+Colony%2C+New+Delhi%2C+Delhi+110024",
     },
   },
   contactActions: {

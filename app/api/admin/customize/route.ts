@@ -206,7 +206,11 @@ export async function POST(request: Request) {
         pincode: incoming.offices?.registeredOffice?.pincode || current.offices?.registeredOffice?.pincode || DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.pincode,
         phone: incoming.offices?.registeredOffice?.phone || current.offices?.registeredOffice?.phone || DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.phone,
         email: incoming.offices?.registeredOffice?.email || current.offices?.registeredOffice?.email || DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.email,
-        mapsUrl: incoming.offices?.registeredOffice?.mapsUrl || current.offices?.registeredOffice?.mapsUrl || DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.mapsUrl,
+        mapsUrl: (incoming.offices?.registeredOffice?.mapsUrl && !incoming.offices.registeredOffice.mapsUrl.includes("Dadri") && !incoming.offices.registeredOffice.mapsUrl.includes("Tilapta"))
+          ? incoming.offices.registeredOffice.mapsUrl
+          : (current.offices?.registeredOffice?.mapsUrl && !current.offices.registeredOffice.mapsUrl.includes("Dadri") && !current.offices.registeredOffice.mapsUrl.includes("Tilapta"))
+          ? current.offices.registeredOffice.mapsUrl
+          : DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.mapsUrl,
       },
       adminOffice: {
         title: incoming.offices?.adminOffice?.title || current.offices?.adminOffice?.title || DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.title,
@@ -218,7 +222,11 @@ export async function POST(request: Request) {
         pincode: incoming.offices?.adminOffice?.pincode || current.offices?.adminOffice?.pincode || DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.pincode,
         phone: incoming.offices?.adminOffice?.phone || current.offices?.adminOffice?.phone || DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.phone,
         email: incoming.offices?.adminOffice?.email || current.offices?.adminOffice?.email || DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.email,
-        mapsUrl: incoming.offices?.adminOffice?.mapsUrl || current.offices?.adminOffice?.mapsUrl || DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.mapsUrl,
+        mapsUrl: (incoming.offices?.adminOffice?.mapsUrl && !incoming.offices.adminOffice.mapsUrl.includes("Dadri") && !incoming.offices.adminOffice.mapsUrl.includes("Tilapta") && !incoming.offices.adminOffice.mapsUrl.includes("Bisnouli+Village"))
+          ? incoming.offices.adminOffice.mapsUrl
+          : (current.offices?.adminOffice?.mapsUrl && !current.offices.adminOffice.mapsUrl.includes("Dadri") && !current.offices.adminOffice.mapsUrl.includes("Tilapta") && !current.offices.adminOffice.mapsUrl.includes("Bisnouli+Village"))
+          ? current.offices.adminOffice.mapsUrl
+          : DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.mapsUrl,
       },
     },
     contactActions: {

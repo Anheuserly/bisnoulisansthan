@@ -78,10 +78,16 @@ export async function getCustomizerSettings(): Promise<CustomizerSettings> {
           registeredOffice: {
             ...DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice,
             ...(val.offices?.registeredOffice || {}),
+            mapsUrl: (val.offices?.registeredOffice?.mapsUrl && !val.offices.registeredOffice.mapsUrl.includes("Dadri") && !val.offices.registeredOffice.mapsUrl.includes("Tilapta"))
+              ? val.offices.registeredOffice.mapsUrl
+              : DEFAULT_CUSTOMIZER_SETTINGS.offices.registeredOffice.mapsUrl,
           },
           adminOffice: {
             ...DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice,
             ...(val.offices?.adminOffice || {}),
+            mapsUrl: (val.offices?.adminOffice?.mapsUrl && !val.offices.adminOffice.mapsUrl.includes("Dadri") && !val.offices.adminOffice.mapsUrl.includes("Tilapta") && !val.offices.adminOffice.mapsUrl.includes("Bisnouli+Village"))
+              ? val.offices.adminOffice.mapsUrl
+              : DEFAULT_CUSTOMIZER_SETTINGS.offices.adminOffice.mapsUrl,
           },
         },
         contactActions: {
